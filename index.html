@@ -45,7 +45,7 @@
   .eyebrow::before { content: ""; width: 26px; height: 1px; background: var(--glow); box-shadow: 0 0 12px var(--glow); }
   .h2 { font-size: clamp(30px, 4.4vw, 56px); font-weight: 700; }
   .lead { font-size: 18px; color: var(--ink-soft); max-width: 58ch; }
-  section { position: relative; padding-block: 120px; }
+  section { position: relative; padding-block: 104px; }
   @media (max-width: 720px) { section { padding-block: 80px; } }
   html, body { overflow-x: clip; }
 
@@ -246,6 +246,66 @@
   .duo { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: start; margin-top: 46px; }
   @media (max-width: 900px) { .duo { grid-template-columns: 1fr; } }
   .cap-label { margin-top: 12px; font-size: 13px; color: var(--ink-faint); }
+
+
+  /* ── Seções claras: quebram a sequência de blocos escuros e fazem as
+        capturas do sistema (que são claras) parecerem parte da página ── */
+  .paper { background: #EFF3FA; color: #16233A; position: relative; }
+  .paper::before, .paper::after { content: ""; position: absolute; left: 0; right: 0; height: 120px; pointer-events: none; }
+  .paper::before { top: -120px; background: linear-gradient(180deg, var(--navy-0), #EFF3FA); }
+  .paper::after { bottom: -120px; background: linear-gradient(180deg, #EFF3FA, var(--navy-0)); }
+  .paper .h2, .paper h3 { color: #071A34; }
+  .paper .lead, .paper p { color: #4B5A73; }
+  .paper .hl { color: #15498D; -webkit-text-fill-color: currentColor; background: none; }
+  .paper .tag b { color: #15498D; }
+  .paper .tag span { color: #56657F; }
+  .paper .tag i { background: linear-gradient(90deg, #C3D1E6, transparent); }
+  .paper li { color: #1F2D44; }
+  .paper .split li::before { background: #15498D; box-shadow: none; }
+  .paper .note { color: #6B7A93; }
+  .paper .cap-label { color: #6B7A93; }
+  .paper.caps { background: #EFF3FA; }
+  .paper .cap { border-color: rgba(7,26,52,.10); background: #fff; }
+  .paper .hs-slide.active .cap { border-color: rgba(21,73,141,.35); background: linear-gradient(180deg, rgba(21,73,141,.07), #fff); box-shadow: 0 26px 50px -34px rgba(7,26,52,.5); }
+  .paper .cap .idx { color: #15498D; }
+  .paper .cap h3 { color: #071A34; }
+  .paper .cap p { color: #4B5A73; }
+  .paper .hs-count b { color: #071A34; }
+  .paper .hs-count { color: #7A8AA3; }
+  .paper .hs-bar { background: rgba(7,26,52,.12); }
+  .paper .hs-hint { color: #7A8AA3; }
+  .paper .hs-hint i { background: #15498D; }
+  .paper .hs-hint i::after { border-color: #15498D; }
+  .paper .hs-hint i::before { background: #15498D; box-shadow: none; }
+  .paper .frame { border-color: rgba(7,26,52,.10); background: #fff; box-shadow: 0 50px 90px -46px rgba(7,26,52,.55), 0 2px 6px rgba(7,26,52,.06); }
+  .paper .frame::after { box-shadow: none; }
+  .paper .frame-bar { background: #F7F9FD; border-bottom-color: rgba(7,26,52,.08); }
+  .paper .frame-bar i { background: rgba(7,26,52,.14); }
+  .paper .frame-bar span { color: #8494AC; }
+  .paper .shot-glow::before { background: radial-gradient(closest-side, rgba(21,73,141,.16), transparent 70%); }
+
+  /* Faixa larga: a imagem sai da coluna e ocupa quase a tela, tirando o
+     site da monotonia de blocos empilhados do mesmo tamanho. */
+  .bleed { width: min(1460px, 100% - 40px); margin-inline: auto; }
+  .bleed-wide { width: min(1680px, 100% - 32px); margin-inline: auto; }
+
+  /* Selo flutuante sobre a captura, com parallax próprio. */
+  .pin { position: absolute; z-index: 3; display: flex; align-items: center; gap: 10px; padding: 12px 16px; border-radius: 14px; background: rgba(7,26,52,.92); color: #fff; border: 1px solid rgba(143,193,255,.28); box-shadow: 0 24px 50px -22px rgba(0,0,0,.8); font-size: 13px; max-width: 280px; backdrop-filter: blur(8px); }
+  .pin b { color: var(--glow-2); font-weight: 700; }
+  .pin small { display: block; font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--glow-2); font-weight: 700; margin-bottom: 3px; }
+  @media (max-width: 900px) { .pin { position: static; max-width: none; margin-top: 14px; } }
+
+  /* Texto alinhado verticalmente com a imagem grande ao lado. */
+  .stage-row { display: grid; grid-template-columns: .78fr 1.22fr; gap: 64px; align-items: center; }
+  .stage-row.flip .txt { order: 2; }
+  .stage-row h3 { font-size: clamp(26px, 3vw, 40px); font-weight: 700; letter-spacing: -.02em; }
+  .stage-row ul { margin: 24px 0 0; padding: 0; list-style: none; display: grid; gap: 11px; }
+  .stage-row li { position: relative; padding-left: 24px; font-size: 15.5px; color: var(--ink); }
+  .stage-row li::before { content: ""; position: absolute; left: 0; top: 9px; width: 8px; height: 8px; border-radius: 50%; background: var(--glow); box-shadow: 0 0 10px var(--glow); }
+  .stage-row .note { margin-top: 20px; font-size: 13.5px; color: var(--ink-faint); }
+  .paper .stage-row li::before { background: #15498D; box-shadow: none; }
+  .paper .stage-row li { color: #1F2D44; }
+  @media (max-width: 1000px) { .stage-row, .stage-row.flip { grid-template-columns: 1fr; gap: 34px; } .stage-row.flip .txt { order: 0; } }
 
   /* ── Produto: brilhos de fundo ── */
   .product { overflow: visible; }
@@ -506,139 +566,154 @@
   </div>
 </section>
 
-<!-- ── Produto (capturas reais do sistema) ─────────────────────────────── -->
-<section class="product" id="produto">
-  <div class="bg-glow" style="left:-300px;top:8%" data-px="-0.18" aria-hidden="true"></div>
+<!-- ── Produto: claro, imagens largas, parallax em camadas ───────────────── -->
+<section class="product paper" id="produto">
   <div class="wrap">
     <div class="tag reveal"><b>01</b><span>O produto</span><i></i></div>
-    <div class="reveal">
+    <div class="reveal" data-px="0.03">
       <h2 class="h2">Não é transcrição.<br>É a sua <span class="hl">metodologia</span> aplicada em cada conversa.</h2>
-      <p class="lead" style="margin-top:18px">As telas abaixo são do sistema rodando — não são ilustração.</p>
+      <p class="lead" style="margin-top:18px;max-width:54ch">As telas abaixo são do sistema rodando, com dados de uma operação de demonstração — não são ilustração.</p>
     </div>
+  </div>
 
-    <div class="split reveal" style="margin-top:56px">
-      <div class="txt">
-        <h3>Cada reunião sai com nota, temperatura e o que faltou perguntar</h3>
-        <p class="lead">Minutos depois da conversa, vendedor e gestor veem a mesma coisa: score, temperatura pela metodologia da empresa e cada critério com a justificativa tirada do que o lead disse.</p>
+  <!-- faixa larga: a análise ocupa quase toda a tela -->
+  <div class="bleed-wide reveal" style="margin-top:56px;position:relative">
+    <div class="shot-glow" data-px="0.06">
+      <div class="frame">
+        <div class="frame-bar"><i></i><i></i><i></i><span>Análise da reunião · Demo · Atacado Norte</span></div>
+        <img src="assets/app/analise.webp" alt="Score 91, temperatura muito quente e os critérios BANT, MEDDIC e SPIN, cada um com a justificativa" loading="lazy" width="1800" height="893">
+      </div>
+    </div>
+    <div class="pin" style="left:-28px;bottom:9%" data-px="-0.14"><div><small>Cada nota tem evidência</small>Não é um número solto: é a <b>frase do lead</b> que justifica o critério.</div></div>
+  </div>
+
+  <div class="wrap" style="margin-top:92px">
+    <div class="stage-row reveal">
+      <div class="txt" data-px="0.05">
+        <h3>Nota, temperatura e o que faltou perguntar</h3>
+        <p class="lead">Minutos depois da conversa, vendedor e gestor veem a mesma coisa — e ninguém precisa reabrir a gravação para discordar.</p>
         <ul>
-          <li>BANT, MEDDIC e SPIN prontos — ou os seus critérios, com pesos</li>
-          <li>Cada nota vem com a frase que a justifica, não com um número solto</li>
+          <li>BANT, MEDDIC e SPIN prontos, ou os seus critérios com pesos</li>
           <li>Talk ratio: quanto o vendedor falou e quanto o lead falou</li>
-        </ul>
-      </div>
-      <div class="shot-glow" data-px="0.05">
-        <div class="frame">
-          <div class="frame-bar"><i></i><i></i><i></i><span>Análise da reunião</span></div>
-          <img src="assets/app/analise.webp" alt="Tela de análise de uma reunião: score 91, temperatura muito quente e os critérios BANT, MEDDIC e SPIN com justificativa" loading="lazy" width="1600" height="1088">
-        </div>
-      </div>
-    </div>
-
-    <div class="split flip reveal" style="margin-top:110px">
-      <div class="txt">
-        <h3>O que foi bem, o que faltou e o próximo passo</h3>
-        <p class="lead">A análise não para na nota. Ela aponta o que o vendedor fez certo, o que deixou passar e o que fazer na sequência — e confere se o discurso bateu com o portfólio da empresa.</p>
-        <ul>
-          <li>Oportunidade perdida: o item da base que resolvia a dor e não foi citado</li>
-          <li>Sugestões de cross-sell a partir do que o lead falou</li>
-          <li>Aderência ao portfólio, com preço e prazo conferidos contra a tabela</li>
+          <li>Objeções e sinais de compra recortados da própria fala</li>
         </ul>
       </div>
       <div class="shot-glow" data-px="-0.05">
         <div class="frame">
-          <div class="frame-bar"><i></i><i></i><i></i><span>Insights e aderência à base</span></div>
-          <img src="assets/app/insights.webp" alt="Insights da reunião, próximos passos sugeridos e score de aderência à base de conhecimento" loading="lazy" width="1600" height="738">
+          <div class="frame-bar"><i></i><i></i><i></i><span>Agendas</span></div>
+          <img src="assets/app/agendas.webp" alt="Lista de agendas com score, temperatura e status de cada reunião" loading="lazy" width="1600" height="751">
         </div>
       </div>
     </div>
+  </div>
 
-    <div class="split reveal" style="margin-top:110px">
-      <div class="txt">
-        <h3>O gestor vê o time inteiro sem ouvir uma gravação</h3>
-        <p class="lead">Score médio, evolução mês a mês por executivo, distribuição de temperatura das agendas e em quais critérios o time mais falha. Em vinte minutos, o que levaria uma semana de escuta.</p>
+  <div class="bleed reveal" style="margin-top:92px;position:relative">
+    <div class="shot-glow" data-px="0.04">
+      <div class="frame">
+        <div class="frame-bar"><i></i><i></i><i></i><span>Insights e próximos passos</span></div>
+        <img src="assets/app/insights.webp" alt="O que foi bem, o que faltou e os próximos passos sugeridos pela análise" loading="lazy" width="1600" height="323">
+      </div>
+    </div>
+    <div class="pin" style="right:-14px;bottom:-26px" data-px="0.14"><div><small>Oportunidade perdida</small>O item do portfólio que <b>resolvia a dor</b> e ninguém citou.</div></div>
+  </div>
+
+  <div class="wrap" style="margin-top:100px">
+    <div class="stage-row flip reveal">
+      <div class="txt" data-px="0.05">
+        <h3>O gestor vê o time inteiro<br>sem ouvir uma gravação</h3>
+        <p class="lead">Score médio, evolução mês a mês por executivo, distribuição de temperatura e em quais critérios o time mais falha. Em vinte minutos, o que levaria uma semana de escuta.</p>
         <ul>
           <li>Ranking por vendedor e comparação entre períodos</li>
           <li>Onde o discurso perde pontos, em todo mundo ao mesmo tempo</li>
           <li>Análise compartilhável por link, com prazo e revogação</li>
         </ul>
       </div>
-      <div class="shot-glow" data-px="0.05">
+      <div class="shot-glow" data-px="-0.06">
         <div class="frame">
           <div class="frame-bar"><i></i><i></i><i></i><span>Visão do gestor</span></div>
-          <img src="assets/app/dashboard.webp" alt="Painel do gestor com total de agendas, score médio, taxa de reuniões quentes e evolução por executivo" loading="lazy" width="1600" height="1000">
+          <img src="assets/app/dashboard.webp" alt="Painel do gestor com indicadores, evolução de scores por executivo e distribuição de temperatura" loading="lazy" width="1800" height="941">
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<div class="divider"></div>
-
-<!-- ── Coach ao vivo ────────────────────────────────────────────────────── -->
-<section class="band" id="ao-vivo">
+<!-- ── Coach ao vivo (escuro, contraste depois do claro) ─────────────────── -->
+<section id="ao-vivo">
+  <div class="bg-glow" style="left:-260px;top:18%" data-px="-0.16" aria-hidden="true"></div>
   <div class="wrap">
     <div class="tag reveal"><b>02</b><span>Durante a reunião</span><i></i></div>
-    <div class="split reveal">
-      <div class="txt">
+    <div class="stage-row reveal">
+      <div class="txt" data-px="0.04">
         <h3>O coach está na reunião.<br>Na tela. Na hora.</h3>
-        <p class="lead">A extensão acompanha a conversa no Meet ou no Teams e mostra ao vendedor a frase exata para dizer nos próximos segundos — pela metodologia da empresa, com o portfólio certo, sem inventar preço ou funcionalidade.</p>
+        <p class="lead">A extensão acompanha a conversa no Meet ou no Teams e mostra a frase exata para dizer nos próximos segundos — pela metodologia da empresa, com o portfólio certo, sem inventar preço nem funcionalidade.</p>
         <ul>
           <li>Objeção ou sinal de compra que acabou de surgir vem primeiro</li>
-          <li>Critério de qualificação ainda não coberto vira a próxima pergunta</li>
-          <li>Produto, dado e diferencial citados pelo nome que está na base</li>
+          <li>Critério ainda não coberto vira a próxima pergunta</li>
+          <li>Produto e dado citados pelo nome que está na base</li>
           <li>Painel discreto, sem trocar de tela, sem o lead perceber</li>
         </ul>
       </div>
-      <div class="shot-glow" style="max-width:420px;margin-inline:auto" data-px="-0.06">
+      <div class="shot-glow" style="max-width:380px;margin-inline:auto;position:relative" data-px="-0.08">
         <div class="frame">
           <img src="assets/app/extensao.webp" alt="Painel da extensão durante a reunião, com a dica FALE AGORA e a transcrição ao vivo" loading="lazy" width="760" height="1302">
         </div>
+        <div class="pin" style="left:-150px;bottom:14%" data-px="0.16"><div><small>Fale agora</small>Resposta pronta para a objeção que <b>acabou de aparecer</b>.</div></div>
       </div>
     </div>
   </div>
 </section>
 
-<div class="divider"></div>
-
-<!-- ── Modo de treino ───────────────────────────────────────────────────── -->
-<section id="treino">
-  <div class="bg-glow" style="right:-320px;top:20%" data-px="0.15" aria-hidden="true"></div>
+<!-- ── Modo de treino (claro) ────────────────────────────────────────────── -->
+<section class="paper" id="treino">
   <div class="wrap">
     <div class="tag reveal"><b>03</b><span>Antes da reunião</span><i></i></div>
-    <div class="reveal">
+    <div class="reveal" data-px="0.03">
       <h2 class="h2">Treine com um lead simulado<br>antes de queimar o <span class="hl">de verdade</span>.</h2>
-      <p class="lead" style="margin-top:18px">A IA assume o papel do cliente, com uma dor do seu catálogo e as objeções que realmente apareceram nas suas reuniões. Por texto ou por voz. No fim, a conversa recebe a mesma nota e o mesmo feedback de uma reunião real.</p>
+      <p class="lead" style="margin-top:18px;max-width:58ch">A IA assume o papel do cliente, com uma dor do seu catálogo e as objeções que realmente apareceram nas suas reuniões. Por texto ou por voz.</p>
     </div>
-    <div class="duo">
-      <div class="reveal">
-        <div class="frame">
-          <div class="frame-bar"><i></i><i></i><i></i><span>Treino em andamento</span></div>
-          <img src="assets/app/treino-conversa.webp" alt="Conversa de treino: o lead simulado levanta a objeção de que o time não usou a ferramenta anterior" loading="lazy" width="1200" height="743">
-        </div>
-        <p class="cap-label">O lead simulado não facilita — ele levanta as objeções que o seu time ouve de verdade.</p>
+  </div>
+
+  <div class="bleed reveal" style="margin-top:52px;position:relative">
+    <div class="shot-glow" data-px="0.05">
+      <div class="frame">
+        <div class="frame-bar"><i></i><i></i><i></i><span>Treino em andamento</span></div>
+        <img src="assets/app/treino-conversa.webp" alt="Conversa de treino em que o lead simulado diz que já testou uma ferramenta parecida e a equipe não se adaptou" loading="lazy" width="1500" height="593">
       </div>
-      <div class="reveal">
+    </div>
+    <div class="pin" style="left:-16px;bottom:-24px" data-px="-0.14"><div><small>Não facilita</small>Ele levanta as objeções que o <b>seu time ouve de verdade</b>.</div></div>
+  </div>
+
+  <div class="wrap" style="margin-top:92px">
+    <div class="stage-row flip reveal">
+      <div class="txt" data-px="0.05">
+        <h3>No fim, a mesma nota<br>de uma reunião real</h3>
+        <p class="lead">A conversa de treino passa pelo mesmo motor de análise das reuniões de verdade: score, temperatura, critério a critério e o que faltou — com a linguagem que o time já conhece do painel.</p>
+        <ul>
+          <li>Quem entrou ontem pratica a conversa difícil dez vezes antes da primeira</li>
+          <li>Sem gastar um lead real no treinamento</li>
+          <li>O gestor acompanha a evolução dos treinos junto com a das reuniões</li>
+        </ul>
+      </div>
+      <div class="shot-glow" data-px="-0.05">
         <div class="frame">
           <div class="frame-bar"><i></i><i></i><i></i><span>Avaliação do treino</span></div>
-          <img src="assets/app/treino-nota.webp" alt="Avaliação do treino com score, temperatura, critérios da metodologia e o que faltou" loading="lazy" width="1200" height="934">
+          <img src="assets/app/treino-nota.webp" alt="Avaliação do treino com score, temperatura e número de falas trocadas" loading="lazy" width="1500" height="501">
         </div>
-        <p class="cap-label">Mesma metodologia da reunião real: critério a critério, com o que faltou.</p>
       </div>
     </div>
-    <p class="split note reveal" style="margin-top:28px">Quem entrou ontem pratica a conversa difícil dez vezes antes de fazer a primeira — sem gastar um lead nisso.</p>
   </div>
 </section>
 
-<div class="divider"></div>
-
-<!-- ── Assistente ───────────────────────────────────────────────────────── -->
-<section class="band" id="assistente">
+<!-- ── Assistente (escuro: o painel é escuro e conversa com o fundo) ─────── -->
+<section id="assistente">
+  <div class="bg-glow" style="right:-300px;top:10%" data-px="0.16" aria-hidden="true"></div>
   <div class="wrap">
     <div class="tag reveal"><b>04</b><span>Depois da reunião</span><i></i></div>
-    <div class="split flip reveal" style="grid-template-columns:1.05fr .95fr">
-      <div class="txt">
-        <h3>Pergunte. Ele já leu<br>todas as reuniões.</h3>
-        <p class="lead">Um assistente em qualquer tela do sistema, que consulta as agendas de verdade antes de responder — não um resumo genérico. Pergunte em português e ele busca, cruza e responde.</p>
+    <div class="stage-row reveal" style="grid-template-columns:1fr .62fr">
+      <div class="txt" data-px="0.04">
+        <h2 class="h2">Pergunte.<br>Ele já leu <span class="hl">todas as reuniões</span>.</h2>
+        <p class="lead" style="margin-top:18px">Um assistente em qualquer tela, que consulta as agendas de verdade antes de responder — não um resumo genérico. Pergunte em português; ele busca, cruza e responde citando as reuniões pelo nome.</p>
         <ul>
           <li>"Quais as 3 agendas mais quentes agora?"</li>
           <li>"Qual o score médio do time este mês?"</li>
@@ -647,17 +722,14 @@
         </ul>
         <p class="note">Respeita o papel de quem pergunta: vendedor vê o que é dele, gestor e admin veem o time.</p>
       </div>
-      <div class="shot-glow" data-px="0.05">
+      <div class="shot-glow" style="max-width:360px;margin-inline:auto" data-px="-0.07">
         <div class="frame">
-          <div class="frame-bar"><i></i><i></i><i></i><span>Assistente de vendas</span></div>
-          <img src="assets/app/assistente.webp" alt="Assistente respondendo quais são as agendas mais quentes, citando as reuniões reais que aparecem na lista atrás" loading="lazy" width="1200" height="882">
+          <img src="assets/app/assistente.webp" alt="Assistente listando as três agendas mais quentes, com nome do lead, data, vendedor e score de cada uma" loading="lazy" width="760" height="1120">
         </div>
       </div>
     </div>
   </div>
 </section>
-
-<div class="divider"></div>
 
 <!-- ── Antes / depois ───────────────────────────────────────────────────── -->
 <section class="versus">
@@ -719,7 +791,7 @@
 </section>
 
 <!-- ── Capacidades ──────────────────────────────────────────────────────── -->
-<section class="caps hs" id="recursos" data-hs="free">
+<section class="caps hs paper" id="recursos" data-hs="free">
   <div class="hs-pin">
     <div class="wrap">
       <div class="hs-head">
@@ -907,7 +979,12 @@
   // ── Parallax por camada (data-px = fator) ──
   var pxEls = [].slice.call(document.querySelectorAll("[data-px]"));
   function parallax() {
-    if (REDUCE) return;
+    // No mobile os elementos flutuantes viram estáticos no CSS; manter o
+    // deslocamento aqui só desalinharia o layout.
+    if (REDUCE || window.innerWidth <= 900) {
+      for (var j = 0; j < pxEls.length; j++) pxEls[j].style.transform = "";
+      return;
+    }
     var vh = window.innerHeight;
     for (var i = 0; i < pxEls.length; i++) {
       var el = pxEls[i], r = el.getBoundingClientRect();
