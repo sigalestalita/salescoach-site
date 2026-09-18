@@ -209,123 +209,50 @@
   @media (max-width: 900px) { .caps.hs .hs-track { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; } .caps.hs .hs-slide { width: auto; } }
   @media (max-width: 560px) { .caps.hs .hs-track { grid-template-columns: 1fr; } }
 
-  /* ── Produto: cenas ── */
+
+  /* ── Marcador de seção: dá ritmo e quebra visual entre os blocos ── */
+  .tag { display: flex; align-items: center; gap: 14px; margin-bottom: 26px; }
+  .tag b { font-size: 12px; font-weight: 700; letter-spacing: .18em; color: var(--glow-2); font-variant-numeric: tabular-nums; }
+  .tag span { font-size: 12px; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; color: var(--ink-soft); }
+  .tag i { flex: 1; height: 1px; background: linear-gradient(90deg, var(--line-strong), transparent); }
+
+  /* Faixa divisória entre seções, para o olho saber que mudou de assunto. */
+  .divider { position: relative; height: 1px; background: linear-gradient(90deg, transparent, var(--line-strong), transparent); margin: 0 auto; width: min(1200px, 100% - 40px); }
+
+  /* Alterna o fundo para separar blocos sem precisar de borda. */
+  .band { background: linear-gradient(180deg, var(--navy-0), rgba(10,26,48,.55) 40%, var(--navy-0)); }
+
+  /* ── Captura de tela real, em moldura ── */
+  .frame { position: relative; border-radius: 16px; overflow: hidden; border: 1px solid rgba(143,193,255,.22); background: #0B1628; box-shadow: 0 40px 90px -36px rgba(0,0,0,.9), 0 0 0 1px rgba(255,255,255,.03) inset; }
+  .frame img { display: block; width: 100%; height: auto; }
+  .frame::after { content: ""; position: absolute; inset: 0; pointer-events: none; border-radius: 16px; box-shadow: inset 0 1px 0 rgba(255,255,255,.14); }
+  .frame-bar { display: flex; align-items: center; gap: 6px; padding: 10px 14px; background: rgba(255,255,255,.04); border-bottom: 1px solid rgba(143,193,255,.14); }
+  .frame-bar i { width: 9px; height: 9px; border-radius: 50%; background: rgba(255,255,255,.18); }
+  .frame-bar span { margin-left: 8px; font-size: 11.5px; color: var(--ink-faint); }
+  .shot-glow { position: relative; }
+  .shot-glow::before { content: ""; position: absolute; inset: -40px -20px; background: radial-gradient(closest-side, rgba(79,139,240,.28), transparent 70%); filter: blur(30px); z-index: -1; }
+
+  /* Bloco vertical com texto de um lado e print do outro. */
+  .split { display: grid; grid-template-columns: .85fr 1.15fr; gap: 56px; align-items: center; }
+  .split.flip > .txt { order: 2; }
+  .split h3 { font-size: clamp(26px, 3vw, 40px); font-weight: 700; letter-spacing: -.02em; }
+  .split p.lead { margin-top: 16px; }
+  .split ul { margin: 24px 0 0; padding: 0; list-style: none; display: grid; gap: 11px; }
+  .split li { position: relative; padding-left: 24px; font-size: 15.5px; color: var(--ink); }
+  .split li::before { content: ""; position: absolute; left: 0; top: 9px; width: 8px; height: 8px; border-radius: 50%; background: var(--glow); box-shadow: 0 0 10px var(--glow); }
+  .split .note { margin-top: 20px; font-size: 13.5px; color: var(--ink-faint); }
+  @media (max-width: 900px) { .split, .split.flip { grid-template-columns: 1fr; gap: 32px; } .split.flip > .txt { order: 0; } }
+
+  .duo { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: start; margin-top: 46px; }
+  @media (max-width: 900px) { .duo { grid-template-columns: 1fr; } }
+  .cap-label { margin-top: 12px; font-size: 13px; color: var(--ink-faint); }
+
+  /* ── Produto: brilhos de fundo ── */
   .product { overflow: visible; }
   .product .bg-glow { position: absolute; width: 900px; height: 900px; border-radius: 50%; background: radial-gradient(closest-side, rgba(21,73,141,.5), transparent 70%); filter: blur(60px); pointer-events: none; }
-  .show { display: grid; grid-template-columns: 1fr 1.15fr; gap: 64px; align-items: center; margin-top: 80px; }
-  .show + .show { margin-top: 150px; }
-  .show.flip { grid-template-columns: 1.15fr 1fr; }
-  .show.flip .txt { order: 2; }
-  .show h3 { font-size: clamp(26px, 3vw, 40px); font-weight: 700; }
-  .show p { font-size: 17px; color: var(--ink-soft); margin-top: 14px; }
-  .show ul { margin: 22px 0 0; padding: 0; list-style: none; display: grid; gap: 10px; }
-  .show li { position: relative; padding-left: 22px; font-size: 15px; color: var(--ink); }
-  .show li::before { content: ""; position: absolute; left: 0; top: 10px; width: 8px; height: 8px; border-radius: 50%; background: var(--glow); box-shadow: 0 0 10px var(--glow); }
   @media (max-width: 900px) { .show, .show.flip { grid-template-columns: 1fr; gap: 32px; } .show.flip .txt { order: 0; } .show + .show { margin-top: 90px; } }
-
-  /* Cena: painel de vidro escuro com brilho na borda */
-  .scene { position: relative; transform-style: preserve-3d; will-change: transform; margin-bottom: 64px; }
-  .panel { position: relative; border-radius: 18px; background: linear-gradient(180deg, rgba(14,43,76,.85), rgba(7,26,52,.92)); border: 1px solid rgba(143,193,255,.22); box-shadow: 0 40px 90px -30px rgba(0,0,0,.8), inset 0 1px 0 rgba(255,255,255,.08); backdrop-filter: blur(10px); overflow: hidden; }
-  .panel::before { content: ""; position: absolute; inset: 0; background: radial-gradient(60% 40% at 20% 0%, rgba(79,139,240,.22), transparent 60%); pointer-events: none; }
-  .scene .glow { position: absolute; inset: -60px; border-radius: 60px; background: radial-gradient(closest-side, rgba(79,139,240,.32), transparent 70%); filter: blur(34px); z-index: -1; }
-  .phead { display: flex; align-items: center; justify-content: space-between; padding: 14px 18px; border-bottom: 1px solid rgba(143,193,255,.12); font-size: 12.5px; color: var(--ink-soft); }
-  .phead b { color: #fff; font-weight: 600; }
-  .phead .st { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--ok); }
-  .phead .st i { width: 6px; height: 6px; border-radius: 50%; background: var(--ok); box-shadow: 0 0 10px var(--ok); }
-  .pbody { padding: 18px; display: grid; gap: 16px; }
-
-  /* Cena 1: análise */
-  .an-top { display: grid; grid-template-columns: 150px 1fr; gap: 18px; align-items: center; }
-  .ring { position: relative; width: 150px; height: 150px; }
-  .ring svg { width: 100%; height: 100%; transform: rotate(-90deg); }
-  .ring .bg { stroke: rgba(143,193,255,.14); }
-  .ring .fg { stroke: url(#rg); stroke-linecap: round; stroke-dasharray: 402; stroke-dashoffset: 402; transition: stroke-dashoffset 1.6s cubic-bezier(.22,1,.36,1) .2s; filter: drop-shadow(0 0 8px rgba(79,139,240,.8)); }
-  .in .ring .fg { stroke-dashoffset: calc(402 - 402 * .78); }
-  .ring .val { position: absolute; inset: 0; display: grid; place-items: center; text-align: center; }
-  .ring .val b { font-size: 40px; font-weight: 800; letter-spacing: -.04em; color: #fff; line-height: 1; }
-  .ring .val small { font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-faint); font-weight: 600; }
-  .an-meta { display: grid; gap: 10px; }
-  .temp { display: inline-flex; align-items: center; gap: 10px; padding: 8px 12px; border-radius: 10px; background: linear-gradient(90deg, rgba(240,107,94,.18), rgba(240,162,74,.12)); border: 1px solid rgba(240,107,94,.35); width: max-content; }
-  .temp b { color: #FFB3A8; font-weight: 700; }
-  .temp span { font-size: 12px; color: var(--ink-soft); }
-  .temp .flame { width: 10px; height: 10px; border-radius: 50% 50% 50% 0; background: linear-gradient(180deg, #FFD27A, #F06B5E); transform: rotate(-45deg); box-shadow: 0 0 12px rgba(240,107,94,.8); animation: flick 1.2s ease-in-out infinite alternate; }
-  @keyframes flick { to { transform: rotate(-45deg) scale(1.15); } }
-  .crit { display: grid; gap: 8px; }
-  .crit .row { display: grid; grid-template-columns: 86px 1fr 46px; align-items: center; gap: 10px; font-size: 12.5px; color: var(--ink-soft); }
-  .crit .row b { color: #fff; font-weight: 600; text-align: right; font-variant-numeric: tabular-nums; }
-  .crit .track { height: 7px; border-radius: 999px; background: rgba(143,193,255,.12); overflow: hidden; }
-  .crit .fill { height: 100%; width: 0; border-radius: 999px; background: linear-gradient(90deg, #15498D, #4F8BF0); box-shadow: 0 0 12px rgba(79,139,240,.6); transition: width 1.4s cubic-bezier(.22,1,.36,1); }
-  .in .crit .fill { width: var(--w); }
-  .crit .row:nth-child(2) .fill { transition-delay: .1s; } .crit .row:nth-child(3) .fill { transition-delay: .2s; } .crit .row:nth-child(4) .fill { transition-delay: .3s; }
-  .hlrow { display: flex; gap: 8px; flex-wrap: wrap; }
-  .hl-chip { font-size: 11.5px; padding: 6px 10px; border-radius: 8px; border: 1px solid var(--line-strong); background: rgba(255,255,255,.03); color: var(--ink); }
-  .hl-chip.buy { border-color: rgba(79,203,138,.4); color: #BFF0D4; }
-  .hl-chip.obj { border-color: rgba(240,162,74,.4); color: #FFDDB0; }
-  .next { border-top: 1px solid rgba(143,193,255,.12); padding-top: 12px; font-size: 13px; color: var(--ink-soft); }
-  .next b { color: #fff; font-weight: 600; }
-  .float { position: absolute; padding: 12px 14px; border-radius: 12px; background: rgba(7,26,52,.9); border: 1px solid rgba(143,193,255,.3); box-shadow: 0 20px 50px -20px rgba(0,0,0,.9), 0 0 30px -10px rgba(79,139,240,.5); font-size: 12.5px; backdrop-filter: blur(10px); max-width: 260px; opacity: 0; transform: translateY(12px); transition: opacity .7s ease .6s, transform .7s cubic-bezier(.22,1,.36,1) .6s; }
-  .in .float { opacity: 1; transform: none; }
-  .float small { display: block; font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--glow-2); font-weight: 700; margin-bottom: 4px; }
-  .float b { color: #fff; font-weight: 600; }
-  .f1 { left: -28px; bottom: -88px; }
-  .f2 { right: -22px; bottom: -84px; }
   @media (max-width: 900px) { .float { position: static; margin-top: 12px; max-width: none; } }
-
-  /* Cena 2: chamada de vídeo com o overlay */
-  .call { position: relative; border-radius: 18px; overflow: hidden; background: #0A1424; border: 1px solid rgba(143,193,255,.18); box-shadow: 0 40px 90px -30px rgba(0,0,0,.85); aspect-ratio: 16/10; }
-  .call .tiles { position: absolute; inset: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 6px; padding: 6px 6px 54px; }
-  .call .tile { position: relative; border-radius: 10px; overflow: hidden; background: radial-gradient(60% 60% at 50% 40%, rgba(21,73,141,.9), #0E2B4C 70%); display: grid; place-items: center; }
-  .call .tile.b { background: radial-gradient(60% 60% at 50% 40%, rgba(70,60,120,.9), #1A1F3A 70%); }
-  .call .tile .av { width: 26%; aspect-ratio: 1; border-radius: 50%; background: rgba(255,255,255,.12); border: 2px solid rgba(255,255,255,.25); display: grid; place-items: center; font-weight: 700; font-size: 26px; color: #fff; }
-  .call .tile .nm { position: absolute; left: 10px; bottom: 8px; font-size: 11px; padding: 3px 8px; border-radius: 6px; background: rgba(0,0,0,.45); color: #fff; }
-  .call .tile .spk { position: absolute; right: 10px; top: 10px; display: flex; gap: 2px; align-items: flex-end; height: 14px; }
-  .call .tile .spk i { width: 3px; background: var(--ok); border-radius: 2px; animation: eq .9s ease-in-out infinite alternate; }
-  .call .tile .spk i:nth-child(2) { animation-delay: .2s; } .call .tile .spk i:nth-child(3) { animation-delay: .4s; }
-  @keyframes eq { from { height: 4px; } to { height: 14px; } }
-  .call .bar { position: absolute; left: 0; right: 0; bottom: 0; height: 48px; background: rgba(6,12,24,.9); border-top: 1px solid rgba(255,255,255,.06); display: flex; align-items: center; justify-content: center; gap: 10px; }
-  .call .bar i { width: 34px; height: 34px; border-radius: 50%; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.1); }
-  .call .bar i.red { background: #D9433A; border-color: #D9433A; width: 54px; border-radius: 18px; }
-  .overlay { position: absolute; right: 12px; top: 12px; width: 46%; max-width: 300px; background: rgba(7,26,52,.94); border: 1px solid rgba(143,193,255,.3); border-radius: 12px; box-shadow: 0 20px 50px -16px rgba(0,0,0,.9), 0 0 40px -12px rgba(79,139,240,.6); backdrop-filter: blur(12px); font-size: 12px; overflow: hidden; }
-  .overlay .oh { display: flex; align-items: center; justify-content: space-between; padding: 9px 11px; border-bottom: 1px solid rgba(255,255,255,.08); }
-  .overlay .oh .name { display: flex; align-items: center; gap: 6px; font-weight: 600; font-size: 11.5px; color: #fff; }
-  .overlay .oh .name img { width: 14px; height: 14px; }
-  .live-flag { display: inline-flex; align-items: center; gap: 5px; background: var(--primary); color: #fff; font-size: 9.5px; font-weight: 700; letter-spacing: .08em; padding: 3px 7px; border-radius: 4px; }
-  .live-flag i { width: 5px; height: 5px; border-radius: 50%; background: #fff; animation: blink 1.4s infinite; }
-  @keyframes blink { 50% { opacity: .25; } }
-  .overlay .tr { padding: 9px 11px; color: #A9B7CC; border-bottom: 1px solid rgba(255,255,255,.08); font-size: 11px; line-height: 1.45; }
-  .overlay .tr b { color: #fff; font-weight: 500; }
-  .typing::after { content: "▍"; color: var(--glow-2); animation: blink 1s infinite; }
-  .overlay .tips { padding: 9px 11px; display: grid; gap: 7px; }
-  .tip { background: #0E2B4C; border-left: 3px solid var(--primary); border-radius: 6px; padding: 8px 10px; transform: translateY(8px); opacity: 0; transition: transform .6s cubic-bezier(.22,1,.36,1), opacity .6s; }
-  .in .tip { transform: none; opacity: 1; }
-  .in .tip:nth-child(2) { transition-delay: .6s; }
-  .tip.alta { border-left-color: #E37567; box-shadow: 0 0 0 1px rgba(227,117,103,.15), 0 0 30px -10px rgba(227,117,103,.5); }
-  .tip .meta { display: flex; justify-content: space-between; font-size: 9.5px; text-transform: uppercase; letter-spacing: .06em; color: #7FB3FF; font-weight: 700; margin-bottom: 5px; }
-  .tip .say { font-size: 9px; letter-spacing: .08em; text-transform: uppercase; color: #7FB3FF; font-weight: 700; margin-bottom: 2px; }
-  .tip .phrase { font-size: 12px; font-weight: 600; color: #fff; line-height: 1.4; }
-  .tip .why { font-size: 10.5px; color: #A9B7CC; margin-top: 4px; }
   @media (max-width: 600px) { .overlay { width: 62%; } .call .tile .av { font-size: 18px; } }
-
-  /* Cena 3: gestor */
-  .kp { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
-  .kp div { border: 1px solid rgba(143,193,255,.14); border-radius: 10px; padding: 12px; background: rgba(255,255,255,.02); }
-  .kp small { display: block; font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-faint); font-weight: 600; }
-  .kp b { display: block; font-size: 24px; font-weight: 800; color: #fff; margin-top: 4px; letter-spacing: -.03em; }
-  .kp b em { font-style: normal; font-size: 12px; color: var(--ok); margin-left: 6px; font-weight: 600; }
-  .rk { display: grid; gap: 8px; }
-  .rk .row { display: grid; grid-template-columns: 18px 1fr 120px 36px; gap: 10px; align-items: center; font-size: 12.5px; color: var(--ink); }
-  .rk .row span:first-child { color: var(--ink-faint); font-weight: 600; }
-  .rk .track { height: 7px; border-radius: 999px; background: rgba(143,193,255,.12); overflow: hidden; }
-  .rk .fill { height: 100%; width: 0; background: linear-gradient(90deg, #15498D, #4F8BF0); box-shadow: 0 0 12px rgba(79,139,240,.6); border-radius: 999px; transition: width 1.4s cubic-bezier(.22,1,.36,1); }
-  .in .rk .fill { width: var(--w); }
-  .rk b { text-align: right; font-variant-numeric: tabular-nums; }
-  .chart svg { width: 100%; height: 86px; display: block; }
-  .chart .area { fill: url(#ag); }
-  .chart .ln { fill: none; stroke: #4F8BF0; stroke-width: 2.5; stroke-linejoin: round; stroke-dasharray: 700; stroke-dashoffset: 700; transition: stroke-dashoffset 2s ease .3s; filter: drop-shadow(0 0 6px rgba(79,139,240,.8)); }
-  .in .chart .ln { stroke-dashoffset: 0; }
-  .gaps { display: grid; gap: 6px; font-size: 12px; color: var(--ink-soft); }
-  .gaps div { display: grid; grid-template-columns: 1fr 70px; gap: 10px; align-items: center; }
-  .gaps i { height: 5px; border-radius: 999px; background: linear-gradient(90deg, #F0A24A, #F06B5E); display: block; }
 
   /* ── Antes / depois ── */
   .versus { background: linear-gradient(180deg, var(--navy-0), var(--navy)); }
@@ -480,7 +407,8 @@
     <a class="brand" href="#top"><img src="assets/mark-white.png" alt=""><span>Sales Coach</span></a>
     <nav class="nav-links" aria-label="Seções">
       <a href="#produto">Produto</a>
-      <a href="#como-funciona">Como funciona</a>
+      <a href="#treino">Treino</a>
+      <a href="#assistente">Assistente</a>
       <a href="#recursos">Recursos</a>
       <a href="#planos">Planos</a>
       <a href="#faq">Perguntas</a>
@@ -578,74 +506,82 @@
   </div>
 </section>
 
-<!-- ── Produto ──────────────────────────────────────────────────────────── -->
-<section class="product hs" id="produto" data-hs="steps">
-  <div class="hs-pin">
-    <div class="bg-glow" style="left:-300px;top:10%" data-px="-0.2" aria-hidden="true"></div>
-    <div class="bg-glow" style="right:-350px;top:55%" data-px="0.15" aria-hidden="true"></div>
-    <div class="wrap">
-      <div class="hs-head">
-        <div>
-          <p class="eyebrow">O produto</p>
-          <h2 class="h2">Não é transcrição. É a sua <span class="hl">metodologia</span> aplicada em cada conversa.</h2>
-        </div>
-        <div class="hs-meta"><div class="hs-count"><b>01</b><span>/ 03</span></div><div class="hs-bar"><i></i></div></div>
-      </div>
-      <div class="hs-track">
-      <div class="hs-slide">
-    <!-- Cena 1: análise -->
-    <div class="show">
-      <div class="txt reveal">
+<!-- ── Produto (capturas reais do sistema) ─────────────────────────────── -->
+<section class="product" id="produto">
+  <div class="bg-glow" style="left:-300px;top:8%" data-px="-0.18" aria-hidden="true"></div>
+  <div class="wrap">
+    <div class="tag reveal"><b>01</b><span>O produto</span><i></i></div>
+    <div class="reveal">
+      <h2 class="h2">Não é transcrição.<br>É a sua <span class="hl">metodologia</span> aplicada em cada conversa.</h2>
+      <p class="lead" style="margin-top:18px">As telas abaixo são do sistema rodando — não são ilustração.</p>
+    </div>
+
+    <div class="split reveal" style="margin-top:56px">
+      <div class="txt">
         <h3>Cada reunião sai com nota, temperatura e o que faltou perguntar</h3>
-        <p>Minutos depois da conversa, o vendedor e o gestor veem a mesma coisa: score, temperatura pela metodologia da empresa, cada critério com justificativa, objeções, sinais de compra e o próximo passo.</p>
+        <p class="lead">Minutos depois da conversa, vendedor e gestor veem a mesma coisa: score, temperatura pela metodologia da empresa e cada critério com a justificativa tirada do que o lead disse.</p>
         <ul>
-          <li>Transcrição com falas separadas e talk ratio vendedor × lead</li>
           <li>BANT, MEDDIC e SPIN prontos — ou os seus critérios, com pesos</li>
-          <li>Aderência ao portfólio: o que foi apresentado e a oportunidade perdida</li>
-          <li>Resumo executivo: participantes, dores, proposta e valor citado</li>
+          <li>Cada nota vem com a frase que a justifica, não com um número solto</li>
+          <li>Talk ratio: quanto o vendedor falou e quanto o lead falou</li>
         </ul>
       </div>
-      <div class="scene reveal tilt">
-        <div class="glow" aria-hidden="true"></div>
-        <div class="panel">
-          <div class="phead"><span><b>Discovery · Cliente A</b> · 47 min</span><span class="st"><i></i>Analisada</span></div>
-          <div class="pbody">
-            <div class="an-top">
-              <div class="ring">
-                <svg viewBox="0 0 150 150" aria-hidden="true">
-                  <defs><linearGradient id="rg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#4F8BF0"/><stop offset="1" stop-color="#8FC1FF"/></linearGradient></defs>
-                  <circle class="bg" cx="75" cy="75" r="64" fill="none" stroke-width="10"/>
-                  <circle class="fg" cx="75" cy="75" r="64" fill="none" stroke-width="10"/>
-                </svg>
-                <div class="val"><div><b data-count="78">0</b><small>score</small></div></div>
-              </div>
-              <div class="an-meta">
-                <div class="temp"><span class="flame"></span><b>Quente</b><span>3 de 4 critérios atendidos</span></div>
-                <div class="crit">
-                  <div class="row"><span>Budget</span><div class="track"><div class="fill" style="--w:76%"></div></div><b>19/25</b></div>
-                  <div class="row"><span>Authority</span><div class="track"><div class="fill" style="--w:92%"></div></div><b>23/25</b></div>
-                  <div class="row"><span>Need</span><div class="track"><div class="fill" style="--w:88%"></div></div><b>22/25</b></div>
-                  <div class="row"><span>Timeline</span><div class="track"><div class="fill" style="--w:40%"></div></div><b>10/25</b></div>
-                </div>
-              </div>
-            </div>
-            <div class="hlrow">
-              <span class="hl-chip buy">Sinal de compra · "manda a proposta ainda essa semana"</span>
-              <span class="hl-chip obj">Objeção · "o time não usou a última ferramenta"</span>
-            </div>
-            <div class="next"><b>Próximo passo:</b> confirmar prazo de decisão com o diretor e enviar proposta com onboarding assistido.</div>
-          </div>
+      <div class="shot-glow" data-px="0.05">
+        <div class="frame">
+          <div class="frame-bar"><i></i><i></i><i></i><span>Análise da reunião</span></div>
+          <img src="assets/app/analise.webp" alt="Tela de análise de uma reunião: score 91, temperatura muito quente e os critérios BANT, MEDDIC e SPIN com justificativa" loading="lazy" width="1600" height="1088">
         </div>
-        <div class="float f1"><small>Oportunidade não explorada</small><b>Onboarding assistido</b> — o lead citou medo de adoção e o item está no portfólio.</div>
       </div>
     </div>
+
+    <div class="split flip reveal" style="margin-top:110px">
+      <div class="txt">
+        <h3>O que foi bem, o que faltou e o próximo passo</h3>
+        <p class="lead">A análise não para na nota. Ela aponta o que o vendedor fez certo, o que deixou passar e o que fazer na sequência — e confere se o discurso bateu com o portfólio da empresa.</p>
+        <ul>
+          <li>Oportunidade perdida: o item da base que resolvia a dor e não foi citado</li>
+          <li>Sugestões de cross-sell a partir do que o lead falou</li>
+          <li>Aderência ao portfólio, com preço e prazo conferidos contra a tabela</li>
+        </ul>
       </div>
-      <div class="hs-slide">
-    <!-- Cena 2: coach ao vivo dentro da reunião -->
-    <div class="show flip">
-      <div class="txt reveal">
-        <h3>O coach está na reunião. Na tela. Na hora.</h3>
-        <p>A extensão acompanha a conversa no Meet ou no Teams e mostra ao vendedor a frase exata para dizer nos próximos segundos — pela metodologia da empresa, com o portfólio certo, sem inventar preço ou funcionalidade.</p>
+      <div class="shot-glow" data-px="-0.05">
+        <div class="frame">
+          <div class="frame-bar"><i></i><i></i><i></i><span>Insights e aderência à base</span></div>
+          <img src="assets/app/insights.webp" alt="Insights da reunião, próximos passos sugeridos e score de aderência à base de conhecimento" loading="lazy" width="1600" height="738">
+        </div>
+      </div>
+    </div>
+
+    <div class="split reveal" style="margin-top:110px">
+      <div class="txt">
+        <h3>O gestor vê o time inteiro sem ouvir uma gravação</h3>
+        <p class="lead">Score médio, evolução mês a mês por executivo, distribuição de temperatura das agendas e em quais critérios o time mais falha. Em vinte minutos, o que levaria uma semana de escuta.</p>
+        <ul>
+          <li>Ranking por vendedor e comparação entre períodos</li>
+          <li>Onde o discurso perde pontos, em todo mundo ao mesmo tempo</li>
+          <li>Análise compartilhável por link, com prazo e revogação</li>
+        </ul>
+      </div>
+      <div class="shot-glow" data-px="0.05">
+        <div class="frame">
+          <div class="frame-bar"><i></i><i></i><i></i><span>Visão do gestor</span></div>
+          <img src="assets/app/dashboard.webp" alt="Painel do gestor com total de agendas, score médio, taxa de reuniões quentes e evolução por executivo" loading="lazy" width="1600" height="1000">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ── Coach ao vivo ────────────────────────────────────────────────────── -->
+<section class="band" id="ao-vivo">
+  <div class="wrap">
+    <div class="tag reveal"><b>02</b><span>Durante a reunião</span><i></i></div>
+    <div class="split reveal">
+      <div class="txt">
+        <h3>O coach está na reunião.<br>Na tela. Na hora.</h3>
+        <p class="lead">A extensão acompanha a conversa no Meet ou no Teams e mostra ao vendedor a frase exata para dizer nos próximos segundos — pela metodologia da empresa, com o portfólio certo, sem inventar preço ou funcionalidade.</p>
         <ul>
           <li>Objeção ou sinal de compra que acabou de surgir vem primeiro</li>
           <li>Critério de qualificação ainda não coberto vira a próxima pergunta</li>
@@ -653,94 +589,81 @@
           <li>Painel discreto, sem trocar de tela, sem o lead perceber</li>
         </ul>
       </div>
-      <div class="scene reveal tilt">
-        <div class="glow" aria-hidden="true"></div>
-        <div class="call">
-          <div class="tiles">
-            <div class="tile"><div class="av">MB</div><span class="nm">Mariana · você</span></div>
-            <div class="tile b"><div class="av">RC</div><span class="nm">Ricardo · Cliente A</span><span class="spk"><i></i><i></i><i></i></span></div>
-          </div>
-          <div class="bar" aria-hidden="true"><i></i><i></i><i class="red"></i><i></i><i></i></div>
-          <div class="overlay">
-            <div class="oh"><span class="name"><img src="assets/mark-white.png" alt="">Sales Coach</span><span class="live-flag"><i></i>LIVE</span></div>
-            <div class="tr"><b>Ricardo:</b> …a gente já testou uma ferramenta assim e o time não usou. Tenho medo de pagar de novo por algo que fica parado<span class="typing"></span></div>
-            <div class="tips">
-              <div class="tip alta">
-                <div class="meta"><span>objeção</span><span>alta</span></div>
-                <div class="say">Fale agora</div>
-                <div class="phrase">"O que fez o time parar: era complexo ou não mostrava resultado? Pergunto porque aqui a orientação aparece dentro da própria reunião."</div>
-                <div class="why">Objeção de adoção — devolva com pergunta e conecte ao coach ao vivo.</div>
-              </div>
-              <div class="tip">
-                <div class="meta"><span>budget</span><span>media</span></div>
-                <div class="say">Fale agora</div>
-                <div class="phrase">"Quanto vocês investem hoje em treinamento do comercial por ano?"</div>
-                <div class="why">Budget ainda não coberto.</div>
-              </div>
-            </div>
-          </div>
+      <div class="shot-glow" style="max-width:420px;margin-inline:auto" data-px="-0.06">
+        <div class="frame">
+          <img src="assets/app/extensao.webp" alt="Painel da extensão durante a reunião, com a dica FALE AGORA e a transcrição ao vivo" loading="lazy" width="760" height="1302">
         </div>
       </div>
     </div>
-      </div>
-      <div class="hs-slide">
-    <!-- Cena 3: gestor -->
-    <div class="show">
-      <div class="txt reveal">
-        <h3>O gestor vê o time inteiro sem ouvir uma gravação</h3>
-        <p>Ranking por score, evolução mês a mês, distribuição de temperatura e os critérios em que o time mais falha. Em vinte minutos, o que levaria uma semana de escuta.</p>
-        <ul>
-          <li>Score médio por vendedor, por time e por período</li>
-          <li>Gaps por critério: onde o discurso perde pontos, em todo mundo</li>
-          <li>Taxa de agendas quentes e o que separa os melhores dos demais</li>
-          <li>Análise compartilhável por link com prazo — para diretoria ou cliente</li>
-        </ul>
-      </div>
-      <div class="scene reveal tilt">
-        <div class="glow" aria-hidden="true"></div>
-        <div class="panel">
-          <div class="phead"><span><b>Visão geral</b> · Setembro</span><span style="color:var(--ink-faint)">8 executivos</span></div>
-          <div class="pbody">
-            <div class="kp">
-              <div><small>Reuniões</small><b>178</b></div>
-              <div><small>Score médio</small><b>71<em>+6</em></b></div>
-              <div><small>Agendas quentes</small><b>38%<em>+9</em></b></div>
-            </div>
-            <div class="rk">
-              <div class="row"><span>1</span><span>Mariana B.</span><div class="track"><div class="fill" style="--w:86%"></div></div><b>86</b></div>
-              <div class="row"><span>2</span><span>Fabricio F.</span><div class="track"><div class="fill" style="--w:79%"></div></div><b>79</b></div>
-              <div class="row"><span>3</span><span>Taís O.</span><div class="track"><div class="fill" style="--w:74%"></div></div><b>74</b></div>
-              <div class="row"><span>4</span><span>Lisiane B.</span><div class="track"><div class="fill" style="--w:61%"></div></div><b>61</b></div>
-            </div>
-            <div class="chart">
-              <svg viewBox="0 0 320 86" preserveAspectRatio="none" aria-hidden="true">
-                <defs><linearGradient id="ag" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4F8BF0" stop-opacity=".35"/><stop offset="1" stop-color="#4F8BF0" stop-opacity="0"/></linearGradient></defs>
-                <path class="area" d="M0,64 L46,58 L92,60 L138,48 L184,44 L230,34 L276,28 L320,18 L320,86 L0,86 Z"/>
-                <path class="ln" d="M0,64 L46,58 L92,60 L138,48 L184,44 L230,34 L276,28 L320,18"/>
-              </svg>
-            </div>
-            <div class="gaps">
-              <div><span>Timeline não perguntado</span><i style="width:82%"></i></div>
-              <div><span>Proposta sem valor citado</span><i style="width:58%"></i></div>
-              <div><span>Cross-sell não explorado</span><i style="width:41%"></i></div>
-            </div>
-          </div>
-        </div>
-        <div class="float f2"><small>Gap do time</small><b>Timeline</b> não é perguntado em 82% das reuniões. Sugestão de script enviada aos executivos.</div>
-      </div>
-    </div>
-      </div>
-      </div>
-    </div>
-    <div class="hs-hint"><i></i>Continue rolando</div>
   </div>
 </section>
+
+<div class="divider"></div>
+
+<!-- ── Modo de treino ───────────────────────────────────────────────────── -->
+<section id="treino">
+  <div class="bg-glow" style="right:-320px;top:20%" data-px="0.15" aria-hidden="true"></div>
+  <div class="wrap">
+    <div class="tag reveal"><b>03</b><span>Antes da reunião</span><i></i></div>
+    <div class="reveal">
+      <h2 class="h2">Treine com um lead simulado<br>antes de queimar o <span class="hl">de verdade</span>.</h2>
+      <p class="lead" style="margin-top:18px">A IA assume o papel do cliente, com uma dor do seu catálogo e as objeções que realmente apareceram nas suas reuniões. Por texto ou por voz. No fim, a conversa recebe a mesma nota e o mesmo feedback de uma reunião real.</p>
+    </div>
+    <div class="duo">
+      <div class="reveal">
+        <div class="frame">
+          <div class="frame-bar"><i></i><i></i><i></i><span>Treino em andamento</span></div>
+          <img src="assets/app/treino-conversa.webp" alt="Conversa de treino: o lead simulado levanta a objeção de que o time não usou a ferramenta anterior" loading="lazy" width="1200" height="743">
+        </div>
+        <p class="cap-label">O lead simulado não facilita — ele levanta as objeções que o seu time ouve de verdade.</p>
+      </div>
+      <div class="reveal">
+        <div class="frame">
+          <div class="frame-bar"><i></i><i></i><i></i><span>Avaliação do treino</span></div>
+          <img src="assets/app/treino-nota.webp" alt="Avaliação do treino com score, temperatura, critérios da metodologia e o que faltou" loading="lazy" width="1200" height="934">
+        </div>
+        <p class="cap-label">Mesma metodologia da reunião real: critério a critério, com o que faltou.</p>
+      </div>
+    </div>
+    <p class="split note reveal" style="margin-top:28px">Quem entrou ontem pratica a conversa difícil dez vezes antes de fazer a primeira — sem gastar um lead nisso.</p>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ── Assistente ───────────────────────────────────────────────────────── -->
+<section class="band" id="assistente">
+  <div class="wrap">
+    <div class="tag reveal"><b>04</b><span>Depois da reunião</span><i></i></div>
+    <div class="split flip reveal" style="grid-template-columns:1.05fr .95fr">
+      <div class="txt">
+        <h3>Pergunte. Ele já leu<br>todas as reuniões.</h3>
+        <p class="lead">Um assistente em qualquer tela do sistema, que consulta as agendas de verdade antes de responder — não um resumo genérico. Pergunte em português e ele busca, cruza e responde.</p>
+        <ul>
+          <li>"Quais as 3 agendas mais quentes agora?"</li>
+          <li>"Qual o score médio do time este mês?"</li>
+          <li>"Quais objeções mais apareceram nas reuniões?"</li>
+          <li>"Me resume a última reunião da Distribuidora Aliança"</li>
+        </ul>
+        <p class="note">Respeita o papel de quem pergunta: vendedor vê o que é dele, gestor e admin veem o time.</p>
+      </div>
+      <div class="shot-glow" data-px="0.05">
+        <div class="frame">
+          <div class="frame-bar"><i></i><i></i><i></i><span>Assistente de vendas</span></div>
+          <img src="assets/app/assistente.webp" alt="Assistente respondendo quais são as agendas mais quentes, citando as reuniões reais que aparecem na lista atrás" loading="lazy" width="1200" height="882">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
 
 <!-- ── Antes / depois ───────────────────────────────────────────────────── -->
 <section class="versus">
   <div class="wrap">
+    <div class="tag reveal"><b>05</b><span>Na prática</span><i></i></div>
     <div class="reveal">
-      <p class="eyebrow">Na prática</p>
       <h2 class="h2">O que muda quando toda reunião vira dado.</h2>
     </div>
     <div class="vs-grid">
@@ -778,7 +701,7 @@
       <div class="node" style="left:74%;top:90%"><img src="assets/logos/rdstation.png" alt="">RD Station</div>
     </div>
     <div class="reveal">
-      <p class="eyebrow">Ecossistema</p>
+      <div class="tag"><b>06</b><span>Ecossistema</span><i></i></div>
       <h2 class="h2">Entra na reunião. Sai no CRM. Sem ninguém digitar.</h2>
       <p class="lead" style="margin-top:18px">O Sales Coach se conecta ao que o time já usa. A reunião acontece onde sempre aconteceu, e o resultado dela vai parar onde sempre deveria estar.</p>
       <ul class="eco-list">
@@ -801,7 +724,7 @@
     <div class="wrap">
       <div class="hs-head">
         <div>
-          <p class="eyebrow">Recursos</p>
+          <div class="tag"><b>07</b><span>Recursos</span><i></i></div>
           <h2 class="h2">Tudo que um time comercial precisa para aprender com as próprias conversas.</h2>
           <p class="lead">Sem trocar de ferramenta no meio da reunião. Sem depender do gestor ouvir gravação.</p>
         </div>
