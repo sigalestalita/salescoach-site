@@ -158,7 +158,9 @@
   .panel-shot { display: flex; justify-content: center; align-items: center; border-radius: 12px; overflow: hidden; border: 1px solid rgba(146,176,236,.16); background: #0B1220; box-shadow: 0 30px 60px -30px rgba(0,0,0,.9); }
   /* Teto de altura: a captura se ajusta pela altura da tela, não pela largura
      da coluna — senão uma imagem em pé transborda o trilho inteiro. */
-  .panel-shot img { max-height: 46vh; width: auto; max-width: 100%; }
+  /* object-fit garante a proporção mesmo quando max-width e max-height
+     limitam ao mesmo tempo — sem ele a imagem achata. */
+  .panel-shot img { max-height: 46vh; width: auto; max-width: 100%; object-fit: contain; }
   .panel-shot.tall { max-width: 300px; margin-inline: auto; }
   /* Captura larga ocupa o painel inteiro; captura em pé fica ao lado do texto. */
   .panel.tall-shot { grid-template-columns: 1fr 1.2fr; }
@@ -180,7 +182,10 @@
     .rail { height: auto !important; padding-block: 78px; }
     .rail-pin { position: static; height: auto; display: block; overflow: visible; padding-top: 0; }
     .track { flex-direction: column; transform: none !important; }
-    .panel { width: auto; grid-template-columns: 1fr; }
+    .panel { width: auto; grid-template-columns: 1fr; max-height: none; }
+    /* O teto de altura existe só para o painel caber na tela quando a seção
+       fica presa; empilhado, ele só deformaria a caixa da imagem. */
+    .panel-shot img, .panel.wide-shot .panel-shot img { max-height: none; }
     .rail-meta, .rail-hint { display: none; }
   }
 
