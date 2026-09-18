@@ -1,0 +1,13 @@
+import { chromium } from 'playwright';
+import path from 'path';
+const b = await chromium.launch();
+const p = await b.newPage({ viewport: { width: 390, height: 844 } });
+await p.goto('file://' + path.resolve('index.html'), { waitUntil: 'domcontentloaded' });
+const antes = await p.evaluate(() => Math.round(document.querySelector('#produto').offsetHeight));
+await p.evaluate(async () => { await Promise.all([...document.querySelectorAll('img')].map(i => i.complete ? null : i.decode().catch(() => {}))); });
+await p.waitForTimeout(1200);
+const depois = await p.evaluate(() => Math.round(document.querySelector('#produto').offsetHeight));
+const semDim = await p.evaluate(() => [...document.querySelectorAll('img')].filter(i => !i.getAttribute('width') || !i.getAttribute('height')).map(i => i.src.split('/').pop()));
+console.log('altura antes das imagens:', antes, '| depois:', depois, '| deslocamento:', depois - antes);
+console.log('imagens sem width/height declarados:', semDim.length ? semDim : 'nenhuma');
+await b.close();

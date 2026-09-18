@@ -210,102 +210,79 @@
   @media (max-width: 560px) { .caps.hs .hs-track { grid-template-columns: 1fr; } }
 
 
-  /* ── Marcador de seção: dá ritmo e quebra visual entre os blocos ── */
-  .tag { display: flex; align-items: center; gap: 14px; margin-bottom: 26px; }
-  .tag b { font-size: 12px; font-weight: 700; letter-spacing: .18em; color: var(--glow-2); font-variant-numeric: tabular-nums; }
-  .tag span { font-size: 12px; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; color: var(--ink-soft); }
-  .tag i { flex: 1; height: 1px; background: linear-gradient(90deg, var(--line-strong), transparent); }
+  /* ═══════════════════════════════════════════════════════════════════════
+     SISTEMA DE SEÇÕES
+     Uma única largura de contenção e um único ritmo vertical para tudo. Antes
+     cada bloco inventava a própria medida — imagem de 1680px ao lado de outra
+     de 560px — e a página perdia o prumo.
+     ═══════════════════════════════════════════════════════════════════════ */
+  :root { --shell: 1120px; --rhythm: 132px; }
+  .shell { width: min(var(--shell), 100% - 48px); margin-inline: auto; }
+  .sec { position: relative; padding-block: var(--rhythm); }
+  @media (max-width: 860px) { :root { --rhythm: 82px; } .shell { width: min(var(--shell), 100% - 32px); } }
 
-  /* Faixa divisória entre seções, para o olho saber que mudou de assunto. */
-  .divider { position: relative; height: 1px; background: linear-gradient(90deg, transparent, var(--line-strong), transparent); margin: 0 auto; width: min(1200px, 100% - 40px); }
+  /* Seção clara. Sem degradê de transição: a troca de cor é a transição, com
+     uma linha de costura fina para o corte não parecer acidental. */
+  .light { background: #F6F8FC; color: #16233A; }
+  .light + .sec:not(.light), .sec:not(.light) + .light { border-top: 1px solid rgba(143,193,255,.14); }
+  .light .h2, .light h3 { color: #071A34; }
+  .light .lead, .light p { color: #51617A; }
+  .light .hl { color: #15498D; }
+  .light .eyebrow { color: #15498D; }
+  .light li { color: #263449; }
 
-  /* Alterna o fundo para separar blocos sem precisar de borda. */
-  .band { background: linear-gradient(180deg, var(--navy-0), rgba(10,26,48,.55) 40%, var(--navy-0)); }
+  /* Cabeçalho de seção: bloco estreito, respiro generoso, sempre igual. */
+  .sec-head { max-width: 680px; }
+  .sec-head.center { max-width: 760px; margin-inline: auto; text-align: center; }
+  .eyebrow { display: inline-flex; align-items: center; gap: 9px; font-size: 11.5px; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: var(--glow-2); margin-bottom: 20px; }
+  .eyebrow::before { content: ""; width: 22px; height: 1px; background: currentColor; opacity: .5; }
+  .sec-head .h2 { font-size: clamp(30px, 3.6vw, 50px); line-height: 1.08; letter-spacing: -.025em; }
+  .sec-head .lead { margin-top: 20px; font-size: 17.5px; line-height: 1.6; }
 
-  /* ── Captura de tela real, em moldura ── */
-  .frame { position: relative; border-radius: 16px; overflow: hidden; border: 1px solid rgba(143,193,255,.22); background: #0B1628; box-shadow: 0 40px 90px -36px rgba(0,0,0,.9), 0 0 0 1px rgba(255,255,255,.03) inset; }
-  .frame img { display: block; width: 100%; height: auto; }
-  .frame::after { content: ""; position: absolute; inset: 0; pointer-events: none; border-radius: 16px; box-shadow: inset 0 1px 0 rgba(255,255,255,.14); }
-  .frame-bar { display: flex; align-items: center; gap: 6px; padding: 10px 14px; background: rgba(255,255,255,.04); border-bottom: 1px solid rgba(143,193,255,.14); }
-  .frame-bar i { width: 9px; height: 9px; border-radius: 50%; background: rgba(255,255,255,.18); }
-  .frame-bar span { margin-left: 8px; font-size: 11.5px; color: var(--ink-faint); }
-  .shot-glow { position: relative; }
-  .shot-glow::before { content: ""; position: absolute; inset: -40px -20px; background: radial-gradient(closest-side, rgba(79,139,240,.28), transparent 70%); filter: blur(30px); z-index: -1; }
+  /* Figura: a captura nunca encosta na borda da página nem preenche tudo. */
+  .fig { margin: 0; }
+  .fig-lg { max-width: 1000px; margin-inline: auto; }
+  .fig-md { max-width: 620px; }
+  .shot { position: relative; border-radius: 14px; overflow: hidden; background: #fff; border: 1px solid rgba(7,26,52,.10); box-shadow: 0 30px 60px -32px rgba(7,26,52,.42), 0 1px 3px rgba(7,26,52,.05); }
+  .sec:not(.light) .shot { border-color: rgba(143,193,255,.18); background: #0B1628; box-shadow: 0 40px 80px -36px rgba(0,0,0,.85); }
+  .shot img { display: block; width: 100%; height: auto; }
+  .shot-top { display: flex; align-items: center; gap: 6px; padding: 9px 13px; background: #F9FBFE; border-bottom: 1px solid rgba(7,26,52,.07); }
+  .sec:not(.light) .shot-top { background: rgba(255,255,255,.04); border-bottom-color: rgba(143,193,255,.12); }
+  .shot-top i { width: 8px; height: 8px; border-radius: 50%; background: rgba(7,26,52,.13); }
+  .sec:not(.light) .shot-top i { background: rgba(255,255,255,.16); }
+  .shot-top span { margin-left: 6px; font-size: 11px; letter-spacing: .01em; color: #93A2B8; }
+  figcaption { margin-top: 16px; font-size: 13.5px; line-height: 1.55; color: #7C8AA0; }
+  .sec:not(.light) figcaption { color: var(--ink-faint); }
+  .fig-lg figcaption { max-width: 640px; margin-inline: auto; text-align: center; }
 
-  /* Bloco vertical com texto de um lado e print do outro. */
-  .split { display: grid; grid-template-columns: .85fr 1.15fr; gap: 56px; align-items: center; }
-  .split.flip > .txt { order: 2; }
-  .split h3 { font-size: clamp(26px, 3vw, 40px); font-weight: 700; letter-spacing: -.02em; }
-  .split p.lead { margin-top: 16px; }
-  .split ul { margin: 24px 0 0; padding: 0; list-style: none; display: grid; gap: 11px; }
-  .split li { position: relative; padding-left: 24px; font-size: 15.5px; color: var(--ink); }
-  .split li::before { content: ""; position: absolute; left: 0; top: 9px; width: 8px; height: 8px; border-radius: 50%; background: var(--glow); box-shadow: 0 0 10px var(--glow); }
-  .split .note { margin-top: 20px; font-size: 13.5px; color: var(--ink-faint); }
-  @media (max-width: 900px) { .split, .split.flip { grid-template-columns: 1fr; gap: 32px; } .split.flip > .txt { order: 0; } }
+  /* Duas colunas: proporção fixa, alinhamento e distância sempre iguais. */
+  .duo2 { display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: center; }
+  .duo2.wide-right { grid-template-columns: .85fr 1.15fr; }
+  .duo2.wide-left { grid-template-columns: 1.15fr .85fr; }
+  .duo2.flip > :first-child { order: 2; }
+  .duo2 h3 { font-size: clamp(23px, 2.4vw, 32px); font-weight: 700; letter-spacing: -.02em; line-height: 1.18; }
+  .duo2 h3 + p { margin-top: 16px; }
+  .duo2 p { font-size: 16.5px; line-height: 1.65; }
+  @media (max-width: 860px) { .duo2, .duo2.wide-right, .duo2.wide-left { grid-template-columns: 1fr; gap: 34px; } .duo2.flip > :first-child { order: 0; } }
 
-  .duo { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: start; margin-top: 46px; }
-  @media (max-width: 900px) { .duo { grid-template-columns: 1fr; } }
-  .cap-label { margin-top: 12px; font-size: 13px; color: var(--ink-faint); }
+  /* Lista de pontos, um só estilo no site inteiro. */
+  .ticks { margin: 26px 0 0; padding: 0; list-style: none; display: grid; gap: 13px; }
+  .ticks li { position: relative; padding-left: 26px; font-size: 15.5px; line-height: 1.5; }
+  .ticks li::before { content: ""; position: absolute; left: 0; top: 8px; width: 7px; height: 7px; border-radius: 50%; background: var(--glow); box-shadow: 0 0 9px var(--glow); }
+  .light .ticks li::before { background: #15498D; box-shadow: none; }
 
+  /* Trio de atributos abaixo da figura principal: texto puro, sem mais imagem. */
+  .trio { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; margin-top: 72px; padding-top: 44px; border-top: 1px solid rgba(7,26,52,.09); }
+  .sec:not(.light) .trio { border-top-color: var(--line); }
+  .trio h4 { font-size: 16px; font-weight: 650; letter-spacing: -.01em; }
+  .trio p { margin-top: 9px; font-size: 14.5px; line-height: 1.6; }
+  .trio .n { font-size: 11.5px; font-weight: 700; letter-spacing: .16em; color: var(--glow-2); margin-bottom: 12px; }
+  .light .trio .n { color: #15498D; }
+  @media (max-width: 860px) { .trio { grid-template-columns: 1fr; gap: 28px; margin-top: 48px; } }
 
-  /* ── Seções claras: quebram a sequência de blocos escuros e fazem as
-        capturas do sistema (que são claras) parecerem parte da página ── */
-  .paper { background: #EFF3FA; color: #16233A; position: relative; }
-  .paper::before, .paper::after { content: ""; position: absolute; left: 0; right: 0; height: 120px; pointer-events: none; }
-  .paper::before { top: -120px; background: linear-gradient(180deg, var(--navy-0), #EFF3FA); }
-  .paper::after { bottom: -120px; background: linear-gradient(180deg, #EFF3FA, var(--navy-0)); }
-  .paper .h2, .paper h3 { color: #071A34; }
-  .paper .lead, .paper p { color: #4B5A73; }
-  .paper .hl { color: #15498D; -webkit-text-fill-color: currentColor; background: none; }
-  .paper .tag b { color: #15498D; }
-  .paper .tag span { color: #56657F; }
-  .paper .tag i { background: linear-gradient(90deg, #C3D1E6, transparent); }
-  .paper li { color: #1F2D44; }
-  .paper .split li::before { background: #15498D; box-shadow: none; }
-  .paper .note { color: #6B7A93; }
-  .paper .cap-label { color: #6B7A93; }
-  .paper.caps { background: #EFF3FA; }
-  .paper .cap { border-color: rgba(7,26,52,.10); background: #fff; }
-  .paper .hs-slide.active .cap { border-color: rgba(21,73,141,.35); background: linear-gradient(180deg, rgba(21,73,141,.07), #fff); box-shadow: 0 26px 50px -34px rgba(7,26,52,.5); }
-  .paper .cap .idx { color: #15498D; }
-  .paper .cap h3 { color: #071A34; }
-  .paper .cap p { color: #4B5A73; }
-  .paper .hs-count b { color: #071A34; }
-  .paper .hs-count { color: #7A8AA3; }
-  .paper .hs-bar { background: rgba(7,26,52,.12); }
-  .paper .hs-hint { color: #7A8AA3; }
-  .paper .hs-hint i { background: #15498D; }
-  .paper .hs-hint i::after { border-color: #15498D; }
-  .paper .hs-hint i::before { background: #15498D; box-shadow: none; }
-  .paper .frame { border-color: rgba(7,26,52,.10); background: #fff; box-shadow: 0 50px 90px -46px rgba(7,26,52,.55), 0 2px 6px rgba(7,26,52,.06); }
-  .paper .frame::after { box-shadow: none; }
-  .paper .frame-bar { background: #F7F9FD; border-bottom-color: rgba(7,26,52,.08); }
-  .paper .frame-bar i { background: rgba(7,26,52,.14); }
-  .paper .frame-bar span { color: #8494AC; }
-  .paper .shot-glow::before { background: radial-gradient(closest-side, rgba(21,73,141,.16), transparent 70%); }
-
-  /* Faixa larga: a imagem sai da coluna e ocupa quase a tela, tirando o
-     site da monotonia de blocos empilhados do mesmo tamanho. */
-  .bleed { width: min(1460px, 100% - 40px); margin-inline: auto; }
-  .bleed-wide { width: min(1680px, 100% - 32px); margin-inline: auto; }
-
-  /* Selo flutuante sobre a captura, com parallax próprio. */
-  .pin { position: absolute; z-index: 3; display: flex; align-items: center; gap: 10px; padding: 12px 16px; border-radius: 14px; background: rgba(7,26,52,.92); color: #fff; border: 1px solid rgba(143,193,255,.28); box-shadow: 0 24px 50px -22px rgba(0,0,0,.8); font-size: 13px; max-width: 280px; backdrop-filter: blur(8px); }
-  .pin b { color: var(--glow-2); font-weight: 700; }
-  .pin small { display: block; font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--glow-2); font-weight: 700; margin-bottom: 3px; }
-  @media (max-width: 900px) { .pin { position: static; max-width: none; margin-top: 14px; } }
-
-  /* Texto alinhado verticalmente com a imagem grande ao lado. */
-  .stage-row { display: grid; grid-template-columns: .78fr 1.22fr; gap: 64px; align-items: center; }
-  .stage-row.flip .txt { order: 2; }
-  .stage-row h3 { font-size: clamp(26px, 3vw, 40px); font-weight: 700; letter-spacing: -.02em; }
-  .stage-row ul { margin: 24px 0 0; padding: 0; list-style: none; display: grid; gap: 11px; }
-  .stage-row li { position: relative; padding-left: 24px; font-size: 15.5px; color: var(--ink); }
-  .stage-row li::before { content: ""; position: absolute; left: 0; top: 9px; width: 8px; height: 8px; border-radius: 50%; background: var(--glow); box-shadow: 0 0 10px var(--glow); }
-  .stage-row .note { margin-top: 20px; font-size: 13.5px; color: var(--ink-faint); }
-  .paper .stage-row li::before { background: #15498D; box-shadow: none; }
-  .paper .stage-row li { color: #1F2D44; }
-  @media (max-width: 1000px) { .stage-row, .stage-row.flip { grid-template-columns: 1fr; gap: 34px; } .stage-row.flip .txt { order: 0; } }
+  /* Espaço entre blocos dentro da mesma seção — sempre o mesmo valor. */
+  .stack > * + * { margin-top: 104px; }
+  @media (max-width: 860px) { .stack > * + * { margin-top: 58px; } }
 
   /* ── Produto: brilhos de fundo ── */
   .product { overflow: visible; }
@@ -566,167 +543,147 @@
   </div>
 </section>
 
-<!-- ── Produto: claro, imagens largas, parallax em camadas ───────────────── -->
-<section class="product paper" id="produto">
-  <div class="wrap">
-    <div class="tag reveal"><b>01</b><span>O produto</span><i></i></div>
-    <div class="reveal" data-px="0.03">
-      <h2 class="h2">Não é transcrição.<br>É a sua <span class="hl">metodologia</span> aplicada em cada conversa.</h2>
-      <p class="lead" style="margin-top:18px;max-width:54ch">As telas abaixo são do sistema rodando, com dados de uma operação de demonstração — não são ilustração.</p>
-    </div>
-  </div>
+<!-- ── 01 · Produto ───────────────────────────────────────────────────────── -->
+<section class="sec light" id="produto">
+  <div class="shell stack">
 
-  <!-- faixa larga: a análise ocupa quase toda a tela -->
-  <div class="bleed-wide reveal" style="margin-top:56px;position:relative">
-    <div class="shot-glow" data-px="0.06">
-      <div class="frame">
-        <div class="frame-bar"><i></i><i></i><i></i><span>Análise da reunião · Demo · Atacado Norte</span></div>
-        <img src="assets/app/analise.webp" alt="Score 91, temperatura muito quente e os critérios BANT, MEDDIC e SPIN, cada um com a justificativa" loading="lazy" width="1800" height="893">
-      </div>
+    <div class="sec-head reveal">
+      <p class="eyebrow">O produto</p>
+      <h2 class="h2">Não é transcrição. É a sua <span class="hl">metodologia</span> aplicada em cada conversa.</h2>
+      <p class="lead">Minutos depois da reunião, vendedor e gestor veem a mesma coisa — e ninguém precisa reabrir a gravação para discordar.</p>
     </div>
-    <div class="pin" style="left:-28px;bottom:9%" data-px="-0.14"><div><small>Cada nota tem evidência</small>Não é um número solto: é a <b>frase do lead</b> que justifica o critério.</div></div>
-  </div>
 
-  <div class="wrap" style="margin-top:92px">
-    <div class="stage-row reveal">
-      <div class="txt" data-px="0.05">
-        <h3>Nota, temperatura e o que faltou perguntar</h3>
-        <p class="lead">Minutos depois da conversa, vendedor e gestor veem a mesma coisa — e ninguém precisa reabrir a gravação para discordar.</p>
-        <ul>
-          <li>BANT, MEDDIC e SPIN prontos, ou os seus critérios com pesos</li>
-          <li>Talk ratio: quanto o vendedor falou e quanto o lead falou</li>
-          <li>Objeções e sinais de compra recortados da própria fala</li>
-        </ul>
+    <figure class="fig fig-lg reveal">
+      <div class="shot" data-px="0.03">
+        <div class="shot-top"><i></i><i></i><i></i><span>Análise da reunião · Demo · Atacado Norte</span></div>
+        <img src="assets/app/analise.webp" alt="Score 91, temperatura muito quente e os critérios BANT, MEDDIC e SPIN, cada um com a justificativa tirada da conversa" loading="lazy" width="1800" height="893">
       </div>
-      <div class="shot-glow" data-px="-0.05">
-        <div class="frame">
-          <div class="frame-bar"><i></i><i></i><i></i><span>Agendas</span></div>
-          <img src="assets/app/agendas.webp" alt="Lista de agendas com score, temperatura e status de cada reunião" loading="lazy" width="1600" height="751">
+      <figcaption>Tela real do sistema, com dados de uma operação de demonstração.</figcaption>
+
+      <div class="trio">
+        <div class="reveal"><div class="n">01</div><h4>Cada nota tem evidência</h4><p>O critério não vem como número solto: vem com a frase do lead que o justifica.</p></div>
+        <div class="reveal"><div class="n">02</div><h4>A sua metodologia</h4><p>BANT, MEDDIC e SPIN prontos — ou os seus critérios, com pesos e faixas próprias.</p></div>
+        <div class="reveal"><div class="n">03</div><h4>Proporção de fala</h4><p>Quanto o vendedor falou, quanto o lead falou e o que isso diz sobre a conversa.</p></div>
+      </div>
+    </figure>
+
+    <div class="reveal">
+      <div class="sec-head center" style="margin-bottom:44px">
+        <h3 style="font-size:clamp(24px,2.6vw,34px)">O que faltou, e o que fazer na sequência</h3>
+        <p class="lead" style="margin-top:14px;font-size:16.5px">A análise aponta o que o vendedor deixou passar, sugere o próximo passo e confere se o discurso bateu com o portfólio da empresa.</p>
+      </div>
+      <figure class="fig fig-lg">
+        <div class="shot" data-px="0.02">
+          <div class="shot-top"><i></i><i></i><i></i><span>Insights e próximos passos</span></div>
+          <img src="assets/app/insights.webp" alt="O que foi bem, o que faltou e os próximos passos sugeridos pela análise" loading="lazy" width="1600" height="323">
         </div>
-      </div>
+        <figcaption>Inclui a oportunidade que ficou na mesa: o item do portfólio que resolvia a dor e não foi citado.</figcaption>
+      </figure>
     </div>
-  </div>
 
-  <div class="bleed reveal" style="margin-top:92px;position:relative">
-    <div class="shot-glow" data-px="0.04">
-      <div class="frame">
-        <div class="frame-bar"><i></i><i></i><i></i><span>Insights e próximos passos</span></div>
-        <img src="assets/app/insights.webp" alt="O que foi bem, o que faltou e os próximos passos sugeridos pela análise" loading="lazy" width="1600" height="323">
-      </div>
-    </div>
-    <div class="pin" style="right:-14px;bottom:-26px" data-px="0.14"><div><small>Oportunidade perdida</small>O item do portfólio que <b>resolvia a dor</b> e ninguém citou.</div></div>
-  </div>
-
-  <div class="wrap" style="margin-top:100px">
-    <div class="stage-row flip reveal">
-      <div class="txt" data-px="0.05">
-        <h3>O gestor vê o time inteiro<br>sem ouvir uma gravação</h3>
-        <p class="lead">Score médio, evolução mês a mês por executivo, distribuição de temperatura e em quais critérios o time mais falha. Em vinte minutos, o que levaria uma semana de escuta.</p>
-        <ul>
+    <div class="duo2 wide-left flip reveal">
+      <figure class="fig" data-px="-0.03">
+        <div class="shot">
+          <div class="shot-top"><i></i><i></i><i></i><span>Visão do gestor</span></div>
+          <img src="assets/app/dashboard.webp" alt="Indicadores do time e evolução de scores por executivo no painel do gestor" loading="lazy" width="1200" height="376">
+        </div>
+      </figure>
+      <div data-px="0.04">
+        <h3>O time inteiro, sem ouvir uma gravação</h3>
+        <p>Score médio, evolução mês a mês por executivo e em quais critérios o time mais falha. Em vinte minutos, o que levaria uma semana de escuta.</p>
+        <ul class="ticks">
           <li>Ranking por vendedor e comparação entre períodos</li>
           <li>Onde o discurso perde pontos, em todo mundo ao mesmo tempo</li>
           <li>Análise compartilhável por link, com prazo e revogação</li>
         </ul>
       </div>
-      <div class="shot-glow" data-px="-0.06">
-        <div class="frame">
-          <div class="frame-bar"><i></i><i></i><i></i><span>Visão do gestor</span></div>
-          <img src="assets/app/dashboard.webp" alt="Painel do gestor com indicadores, evolução de scores por executivo e distribuição de temperatura" loading="lazy" width="1800" height="941">
-        </div>
-      </div>
     </div>
+
   </div>
 </section>
 
-<!-- ── Coach ao vivo (escuro, contraste depois do claro) ─────────────────── -->
-<section id="ao-vivo">
-  <div class="bg-glow" style="left:-260px;top:18%" data-px="-0.16" aria-hidden="true"></div>
-  <div class="wrap">
-    <div class="tag reveal"><b>02</b><span>Durante a reunião</span><i></i></div>
-    <div class="stage-row reveal">
-      <div class="txt" data-px="0.04">
-        <h3>O coach está na reunião.<br>Na tela. Na hora.</h3>
-        <p class="lead">A extensão acompanha a conversa no Meet ou no Teams e mostra a frase exata para dizer nos próximos segundos — pela metodologia da empresa, com o portfólio certo, sem inventar preço nem funcionalidade.</p>
-        <ul>
-          <li>Objeção ou sinal de compra que acabou de surgir vem primeiro</li>
+<!-- ── 02 · Durante a reunião ─────────────────────────────────────────────── -->
+<section class="sec" id="ao-vivo">
+  <div class="bg-glow" style="left:-280px;top:22%" data-px="-0.14" aria-hidden="true"></div>
+  <div class="shell">
+    <div class="duo2 wide-left reveal">
+      <div data-px="0.04">
+        <p class="eyebrow">Durante a reunião</p>
+        <h3 style="font-size:clamp(28px,3.2vw,42px)">O coach está na reunião.<br>Na tela. Na hora.</h3>
+        <p style="margin-top:18px">A extensão acompanha a conversa no Meet ou no Teams e mostra a frase exata para dizer nos próximos segundos — pela metodologia da empresa, com o portfólio certo, sem inventar preço nem funcionalidade.</p>
+        <ul class="ticks">
+          <li>A objeção que acabou de surgir vem primeiro</li>
           <li>Critério ainda não coberto vira a próxima pergunta</li>
           <li>Produto e dado citados pelo nome que está na base</li>
           <li>Painel discreto, sem trocar de tela, sem o lead perceber</li>
         </ul>
       </div>
-      <div class="shot-glow" style="max-width:380px;margin-inline:auto;position:relative" data-px="-0.08">
-        <div class="frame">
-          <img src="assets/app/extensao.webp" alt="Painel da extensão durante a reunião, com a dica FALE AGORA e a transcrição ao vivo" loading="lazy" width="760" height="1302">
-        </div>
-        <div class="pin" style="left:-150px;bottom:14%" data-px="0.16"><div><small>Fale agora</small>Resposta pronta para a objeção que <b>acabou de aparecer</b>.</div></div>
-      </div>
+      <figure class="fig" style="max-width:330px;margin-inline:auto" data-px="-0.05">
+        <div class="shot"><img src="assets/app/extensao.webp" alt="Painel da extensão durante a reunião, com a orientação Fale agora e a transcrição ao vivo" loading="lazy" width="760" height="1302"></div>
+        <figcaption style="text-align:center">O painel como o vendedor vê, por cima da chamada.</figcaption>
+      </figure>
     </div>
   </div>
 </section>
 
-<!-- ── Modo de treino (claro) ────────────────────────────────────────────── -->
-<section class="paper" id="treino">
-  <div class="wrap">
-    <div class="tag reveal"><b>03</b><span>Antes da reunião</span><i></i></div>
-    <div class="reveal" data-px="0.03">
-      <h2 class="h2">Treine com um lead simulado<br>antes de queimar o <span class="hl">de verdade</span>.</h2>
-      <p class="lead" style="margin-top:18px;max-width:58ch">A IA assume o papel do cliente, com uma dor do seu catálogo e as objeções que realmente apareceram nas suas reuniões. Por texto ou por voz.</p>
-    </div>
-  </div>
+<!-- ── 03 · Antes da reunião ──────────────────────────────────────────────── -->
+<section class="sec light" id="treino">
+  <div class="shell stack">
 
-  <div class="bleed reveal" style="margin-top:52px;position:relative">
-    <div class="shot-glow" data-px="0.05">
-      <div class="frame">
-        <div class="frame-bar"><i></i><i></i><i></i><span>Treino em andamento</span></div>
+    <div class="sec-head center reveal">
+      <p class="eyebrow" style="justify-content:center">Antes da reunião</p>
+      <h2 class="h2">Treine com um lead simulado antes de queimar o <span class="hl">de verdade</span>.</h2>
+      <p class="lead">A IA assume o papel do cliente, com uma dor do seu catálogo e as objeções que realmente apareceram nas suas reuniões. Por texto ou por voz.</p>
+    </div>
+
+    <figure class="fig fig-lg reveal" style="max-width:900px">
+      <div class="shot" data-px="0.03">
+        <div class="shot-top"><i></i><i></i><i></i><span>Treino em andamento</span></div>
         <img src="assets/app/treino-conversa.webp" alt="Conversa de treino em que o lead simulado diz que já testou uma ferramenta parecida e a equipe não se adaptou" loading="lazy" width="1500" height="593">
       </div>
-    </div>
-    <div class="pin" style="left:-16px;bottom:-24px" data-px="-0.14"><div><small>Não facilita</small>Ele levanta as objeções que o <b>seu time ouve de verdade</b>.</div></div>
-  </div>
+      <figcaption>O lead simulado não facilita: ele levanta as objeções que o seu time ouve de verdade.</figcaption>
+    </figure>
 
-  <div class="wrap" style="margin-top:92px">
-    <div class="stage-row flip reveal">
-      <div class="txt" data-px="0.05">
-        <h3>No fim, a mesma nota<br>de uma reunião real</h3>
-        <p class="lead">A conversa de treino passa pelo mesmo motor de análise das reuniões de verdade: score, temperatura, critério a critério e o que faltou — com a linguagem que o time já conhece do painel.</p>
-        <ul>
+    <div class="duo2 wide-right reveal">
+      <div data-px="0.04">
+        <h3>No fim, a mesma nota de uma reunião real</h3>
+        <p>A conversa de treino passa pelo mesmo motor de análise das reuniões de verdade: score, temperatura e critério a critério, na linguagem que o time já conhece do painel.</p>
+        <ul class="ticks">
           <li>Quem entrou ontem pratica a conversa difícil dez vezes antes da primeira</li>
           <li>Sem gastar um lead real no treinamento</li>
           <li>O gestor acompanha a evolução dos treinos junto com a das reuniões</li>
         </ul>
       </div>
-      <div class="shot-glow" data-px="-0.05">
-        <div class="frame">
-          <div class="frame-bar"><i></i><i></i><i></i><span>Avaliação do treino</span></div>
+      <figure class="fig" data-px="-0.03">
+        <div class="shot">
+          <div class="shot-top"><i></i><i></i><i></i><span>Avaliação do treino</span></div>
           <img src="assets/app/treino-nota.webp" alt="Avaliação do treino com score, temperatura e número de falas trocadas" loading="lazy" width="1500" height="501">
         </div>
-      </div>
+      </figure>
     </div>
+
   </div>
 </section>
 
-<!-- ── Assistente (escuro: o painel é escuro e conversa com o fundo) ─────── -->
-<section id="assistente">
-  <div class="bg-glow" style="right:-300px;top:10%" data-px="0.16" aria-hidden="true"></div>
-  <div class="wrap">
-    <div class="tag reveal"><b>04</b><span>Depois da reunião</span><i></i></div>
-    <div class="stage-row reveal" style="grid-template-columns:1fr .62fr">
-      <div class="txt" data-px="0.04">
-        <h2 class="h2">Pergunte.<br>Ele já leu <span class="hl">todas as reuniões</span>.</h2>
-        <p class="lead" style="margin-top:18px">Um assistente em qualquer tela, que consulta as agendas de verdade antes de responder — não um resumo genérico. Pergunte em português; ele busca, cruza e responde citando as reuniões pelo nome.</p>
-        <ul>
+<!-- ── 04 · Depois da reunião ─────────────────────────────────────────────── -->
+<section class="sec" id="assistente">
+  <div class="bg-glow" style="right:-300px;top:14%" data-px="0.14" aria-hidden="true"></div>
+  <div class="shell">
+    <div class="duo2 wide-left reveal">
+      <div data-px="0.04">
+        <p class="eyebrow">Depois da reunião</p>
+        <h3 style="font-size:clamp(28px,3.2vw,42px)">Pergunte.<br>Ele já leu <span class="hl">todas as reuniões</span>.</h3>
+        <p style="margin-top:18px">Um assistente em qualquer tela, que consulta as agendas de verdade antes de responder. Pergunte em português; ele busca, cruza e responde citando as reuniões pelo nome.</p>
+        <ul class="ticks">
           <li>"Quais as 3 agendas mais quentes agora?"</li>
           <li>"Qual o score médio do time este mês?"</li>
           <li>"Quais objeções mais apareceram nas reuniões?"</li>
-          <li>"Me resume a última reunião da Distribuidora Aliança"</li>
         </ul>
-        <p class="note">Respeita o papel de quem pergunta: vendedor vê o que é dele, gestor e admin veem o time.</p>
+        <p style="margin-top:22px;font-size:13.5px;color:var(--ink-faint)">Respeita o papel de quem pergunta: vendedor vê o que é dele, gestor e admin veem o time.</p>
       </div>
-      <div class="shot-glow" style="max-width:360px;margin-inline:auto" data-px="-0.07">
-        <div class="frame">
-          <img src="assets/app/assistente.webp" alt="Assistente listando as três agendas mais quentes, com nome do lead, data, vendedor e score de cada uma" loading="lazy" width="760" height="1120">
-        </div>
-      </div>
+      <figure class="fig" style="max-width:340px;margin-inline:auto" data-px="-0.05">
+        <div class="shot"><img src="assets/app/assistente.webp" alt="Assistente listando as três agendas mais quentes, com lead, data, vendedor e score de cada uma" loading="lazy" width="760" height="1120"></div>
+      </figure>
     </div>
   </div>
 </section>
@@ -734,7 +691,7 @@
 <!-- ── Antes / depois ───────────────────────────────────────────────────── -->
 <section class="versus">
   <div class="wrap">
-    <div class="tag reveal"><b>05</b><span>Na prática</span><i></i></div>
+    <p class="eyebrow">Na prática</p>
     <div class="reveal">
       <h2 class="h2">O que muda quando toda reunião vira dado.</h2>
     </div>
@@ -773,7 +730,7 @@
       <div class="node" style="left:74%;top:90%"><img src="assets/logos/rdstation.png" alt="">RD Station</div>
     </div>
     <div class="reveal">
-      <div class="tag"><b>06</b><span>Ecossistema</span><i></i></div>
+      <p class="eyebrow">Ecossistema</p>
       <h2 class="h2">Entra na reunião. Sai no CRM. Sem ninguém digitar.</h2>
       <p class="lead" style="margin-top:18px">O Sales Coach se conecta ao que o time já usa. A reunião acontece onde sempre aconteceu, e o resultado dela vai parar onde sempre deveria estar.</p>
       <ul class="eco-list">
@@ -791,12 +748,12 @@
 </section>
 
 <!-- ── Capacidades ──────────────────────────────────────────────────────── -->
-<section class="caps hs paper" id="recursos" data-hs="free">
+<section class="caps hs" id="recursos" data-hs="free">
   <div class="hs-pin">
     <div class="wrap">
       <div class="hs-head">
         <div>
-          <div class="tag"><b>07</b><span>Recursos</span><i></i></div>
+          <p class="eyebrow">Recursos</p>
           <h2 class="h2">Tudo que um time comercial precisa para aprender com as próprias conversas.</h2>
           <p class="lead">Sem trocar de ferramenta no meio da reunião. Sem depender do gestor ouvir gravação.</p>
         </div>
