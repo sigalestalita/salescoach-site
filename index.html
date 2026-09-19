@@ -336,17 +336,42 @@
   .claim p { margin-top: 11px; font-size: 14.5px; color: var(--dim); max-width: 62ch; }
   @media (max-width: 700px) { .claim { grid-template-columns: 1fr; gap: 10px; padding: 28px 22px; } }
 
-  /* ── Números ── */
-  /* Faixa de números: valor grande alinhado à esquerda, legenda ao lado.
-     O seletor da legenda precisa ser filho direto — o contador também é um
-     span e era capturado pela mesma regra, virando texto miúdo em bloco. */
-  .nums { display: grid; gap: 0; }
-  .num { display: grid; grid-template-columns: minmax(170px, .22fr) 1fr; gap: 44px; align-items: baseline; padding: 30px 0; border-top: 1px solid var(--line); }
-  .num:last-child { border-bottom: 1px solid var(--line); }
-  .num b { font-size: clamp(54px, 7.5vw, 96px); font-weight: 300; line-height: .95; letter-spacing: -.05em; font-variant-numeric: tabular-nums; display: flex; align-items: baseline; gap: 4px; }
-  .num b small { font-size: .32em; font-weight: 400; color: var(--blue-2); letter-spacing: -.02em; }
-  .num > span { font-size: 17px; color: var(--dim); max-width: 46ch; }
-  @media (max-width: 760px) { .num { grid-template-columns: 1fr; gap: 10px; padding: 24px 0; } .num > span { font-size: 15.5px; } }
+  /* ── Números: faixa escura em quatro colunas ───────────────────────────
+     Era uma pilha vertical sobre fundo claro. Virou uma faixa escura com os
+     quatro valores lado a lado: cada um entra deslizando da direita, o
+     contador sobe, um fio se desenha por baixo e, com a rolagem, as colunas
+     derivam na horizontal em ritmos diferentes. */
+  .nums-band { position: relative; padding-block: 96px; background: var(--ink-1); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); overflow: hidden; }
+  .nums-band::before { content: ""; position: absolute; left: 50%; top: -40%; width: 1100px; height: 420px; translate: -50% 0; pointer-events: none;
+    background: radial-gradient(closest-side, rgba(79,139,240,.3), transparent); filter: blur(70px); }
+  .nums { position: relative; display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; }
+  .num { position: relative; padding: 4px 30px; }
+  .num + .num { border-left: 1px solid var(--line); }
+  .num:first-child { padding-left: 0; }
+  .num:last-child { padding-right: 0; }
+  .num b { display: flex; align-items: baseline; gap: 3px; font-size: clamp(44px, 5.4vw, 80px); font-weight: 200; line-height: .92; letter-spacing: -.055em; color: #fff; font-variant-numeric: tabular-nums; }
+  .num b small { font-size: .3em; font-weight: 400; letter-spacing: -.01em; color: var(--blue-2); }
+  .num > span { display: block; margin-top: 18px; font-size: 13.5px; line-height: 1.55; color: var(--dim); }
+  /* Fio que se desenha por baixo do número. */
+  .num .fio { display: block; margin-top: 16px; height: 2px; border-radius: 999px; background: rgba(146,176,236,.14); overflow: hidden; }
+  .num .fio::after { content: ""; display: block; height: 100%; width: 0; border-radius: 999px; background: linear-gradient(90deg, var(--blue), var(--violet)); transition: width 1.1s cubic-bezier(.22,1,.36,1); }
+  .nums.in .num .fio::after { width: 100%; }
+  .nums.in .num:nth-child(2) .fio::after { transition-delay: .12s; }
+  .nums.in .num:nth-child(3) .fio::after { transition-delay: .24s; }
+  .nums.in .num:nth-child(4) .fio::after { transition-delay: .36s; }
+  /* A entrada é lateral, não vertical como no resto da página. */
+  .nums.rv-stagger > * { transform: translateX(42px); }
+  .nums.rv-stagger.in > * { transform: none; }
+  @media (max-width: 900px) {
+    .nums { grid-template-columns: repeat(2, 1fr); gap: 34px 0; }
+    .num:nth-child(odd) { padding-left: 0; border-left: 0; }
+    .num:nth-child(even) { padding-right: 0; }
+  }
+  @media (max-width: 520px) {
+    .nums { grid-template-columns: 1fr; gap: 30px; }
+    .num, .num:nth-child(even) { padding: 0; border-left: 0; }
+  }
+  @media (prefers-reduced-motion: reduce) { .num .fio::after { width: 100% !important; transition: none; } }
 
   /* ── Planos ── */
   .plans { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 54px; align-items: start; }
@@ -1108,14 +1133,31 @@
   </div>
 </section>
 
-<!-- ── Números ──────────────────────────────────────────────────────────────── -->
-<section class="light" style="padding-top:0">
+<!-- ── Números: faixa escura, na horizontal ─────────────────────────────────── -->
+<section class="nums-band">
+  <div class="mesh" aria-hidden="true"></div>
   <div class="shell">
-    <div class="nums rv rv-stagger" data-par="0.02">
-      <div class="num"><b><span data-count="8">0</span><small>s</small></b><span>até a primeira orientação ao vivo depois de uma fala</span></div>
-      <div class="num"><b><span data-count="100">0</span><small>%</small></b><span>da conversa analisada — não uma amostra</span></div>
-      <div class="num"><b><span data-count="3">0</span><small>+</small></b><span>metodologias prontas, ou a sua, com pesos</span></div>
-      <div class="num"><b><span data-count="7">0</span><small>dias</small></b><span>de free trial sem cartão, com o seu portfólio já dentro</span></div>
+    <div class="nums rv rv-stagger">
+        <div class="num" data-parx="0.055">
+          <b><span data-count="8">0</span><small>s</small></b>
+          <i class="fio" aria-hidden="true"></i>
+          <span>até a primeira orientação ao vivo depois de uma fala</span>
+        </div>
+        <div class="num" data-parx="-0.035">
+          <b><span data-count="100">0</span><small>%</small></b>
+          <i class="fio" aria-hidden="true"></i>
+          <span>da conversa analisada — não uma amostra</span>
+        </div>
+        <div class="num" data-parx="0.04">
+          <b><span data-count="3">0</span><small>+</small></b>
+          <i class="fio" aria-hidden="true"></i>
+          <span>metodologias prontas, ou a sua, com pesos</span>
+        </div>
+        <div class="num" data-parx="-0.055">
+          <b><span data-count="7">0</span><small>dias</small></b>
+          <i class="fio" aria-hidden="true"></i>
+          <span>de free trial sem cartão, com o seu portfólio já dentro</span>
+        </div>
     </div>
   </div>
 </section>
@@ -1316,6 +1358,7 @@
 
   // ── Parallax por elemento e barra de progresso ──
   var parEls = [].slice.call(document.querySelectorAll("[data-par]"));
+  var parX = [].slice.call(document.querySelectorAll("[data-parx]"));
   var prog = document.getElementById("prog");
   function movimento() {
     var vh = innerHeight;
@@ -1326,8 +1369,16 @@
         var centro = r.top + r.height / 2 - vh / 2;
         el.style.translate = "0 " + (-centro * parseFloat(el.dataset.par)).toFixed(1) + "px";
       }
+      // data-parx faz o mesmo, mas deslocando na horizontal.
+      for (var k = 0; k < parX.length; k++) {
+        var ex = parX[k], rx = ex.getBoundingClientRect();
+        if (rx.bottom < -240 || rx.top > vh + 240) continue;
+        var cx = rx.top + rx.height / 2 - vh / 2;
+        ex.style.translate = (-cx * parseFloat(ex.dataset.parx)).toFixed(1) + "px 0";
+      }
     } else {
       for (var j = 0; j < parEls.length; j++) parEls[j].style.translate = "";
+      for (var m = 0; m < parX.length; m++) parX[m].style.translate = "";
     }
     var total = document.body.scrollHeight - vh;
     prog.style.width = total > 0 ? ((scrollY / total) * 100).toFixed(2) + "%" : "0";
