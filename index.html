@@ -548,6 +548,14 @@
   .os-screen figure { position: relative; margin: 0; border-radius: 16px; overflow: hidden; border: 1px solid rgba(146,176,236,.22); background: #0B1220; box-shadow: 0 54px 120px -48px rgba(0,0,0,.95); }
   .os-screen img { max-height: var(--sh); width: auto; max-width: 100%; object-fit: contain; }
   .os-screen figure::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(115deg, transparent 40%, rgba(143,193,255,.15) 50%, transparent 60%); background-size: 260% 100%; animation: varre 7.5s ease-in-out infinite; }
+  /* Captura secundária sobreposta: mostra o que sai da primeira. Usada no
+     treino, onde a sessão por voz termina numa avaliação. */
+  .os-wrap .extra { position: absolute; right: -30px; bottom: -34px; z-index: 3; width: 62%; border-radius: 13px; overflow: hidden;
+    border: 1px solid rgba(146,176,236,.3); background: #0B1220; box-shadow: 0 36px 72px -26px rgba(0,0,0,.98); }
+  .os-wrap .extra img { display: block; width: 100%; }
+  /* Com a captura extra no canto, a etiqueta sai do centro para não colidir. */
+  .os-screen.dupla .os-chip { left: 0; translate: 0 0; }
+  @media (max-width: 1200px) { .os-wrap .extra { width: 66%; right: -14px; } }
   .os-chip { position: absolute; left: 50%; bottom: -14px; translate: -50% 0; z-index: 3; padding: 6px 14px; border-radius: 999px; font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--blue-2); border: 1px solid rgba(79,139,240,.35); background: rgba(9,13,24,.92); backdrop-filter: blur(8px); white-space: nowrap; }
   @media (max-width: 980px) {
     .os-grid { grid-template-columns: 1fr; gap: 0; margin-top: 10px; }
@@ -856,12 +864,13 @@
         <li class="os-step on">
           <div class="k"><b>01</b>Antes da reunião</div>
           <h3 class="h3">Erre no simulado, não no lead de verdade</h3>
-          <p>A IA faz o papel do cliente com as objeções que já apareceram nas suas reuniões. Por texto ou por voz.</p>
+          <p>A IA faz o papel do cliente com as objeções que já apareceram nas suas reuniões. <b>Fale pelo microfone</b> e ouça a resposta, ou digite. No fim, a conversa recebe nota pelos mesmos critérios de uma reunião de verdade.</p>
           <div class="who">
-            <div><span>Executivo</span><p>Erre dez vezes antes da primeira de verdade.</p></div>
+            <div><span>Executivo</span><p>Erre dez vezes falando, antes da primeira de verdade.</p></div>
             <div><span>Gestor</span><p>Rampagem curta: o novato já viu as objeções do seu mercado.</p></div>
           </div>
-          <div class="os-shot"><img src="assets/app/treino-conversa.webp" alt="Conversa de treino com o lead simulado levantando uma objeção" loading="lazy" width="1500" height="593"></div>
+          <div class="os-shot"><img src="assets/app/treino-voz.webp" alt="Sessão de treino por chamada de voz com o lead simulado" loading="lazy" width="1500" height="830"></div>
+          <div class="os-shot"><img src="assets/app/treino-nota-cards.webp" alt="Resultado do treino: score 55, temperatura morno e 8 falas trocadas" loading="lazy" width="1480" height="197"></div>
         </li>
         <li class="os-step">
           <div class="k"><b>02</b>Durante a reunião</div>
@@ -896,10 +905,11 @@
       </ol>
       <div class="os-stage">
         <div class="os-glow" aria-hidden="true"></div>
-        <div class="os-screen on">
+        <div class="os-screen on dupla">
           <div class="os-wrap">
-            <figure><img src="assets/app/treino-conversa.webp" alt="Conversa de treino com o lead simulado levantando uma objeção"  width="1500" height="593"></figure>
-            <span class="os-chip">Modo de treino</span>
+            <figure><img src="assets/app/treino-voz.webp" alt="Sessão de treino por chamada de voz: o lead simulado responde e o botão de microfone aguarda a próxima fala" width="1500" height="830"></figure>
+            <div class="extra"><img src="assets/app/treino-nota-cards.webp" alt="Resultado do treino: score 55, temperatura morno e 8 falas trocadas" loading="lazy" width="1480" height="197"></div>
+            <span class="os-chip">Treino por voz · com nota no fim</span>
           </div>
         </div>
         <div class="os-screen">
@@ -1275,6 +1285,7 @@
       <details><summary>O vendedor precisa fazer algo durante a reunião?</summary><p>Só clicar em gravar. A transcrição e as orientações aparecem num painel discreto; ao final, a gravação sobe sozinha e a análise fica pronta em minutos.</p></details>
       <details><summary>Onde ficam as gravações e quem tem acesso?</summary><p>Cada empresa tem seus dados isolados. Vendedor vê as próprias reuniões; gestor e admin veem as do time. Links externos só existem quando você ativa, com prazo e revogação.</p></details>
       <details><summary>O que a base de conhecimento aceita?</summary><p>PDF, documentos, planilhas, links e texto. O conteúdo alimenta a análise, o coach ao vivo, o modo de treino e o assistente — e as próprias reuniões analisadas vão engrossando essa base com o tempo.</p></details>
+      <details><summary>Dá para treinar falando, e não só digitando?<span></span></summary><p>Dá. No modo chamada você toca no microfone, fala como falaria na reunião e ouve a resposta do lead simulado — a sua fala é transcrita e entra na conversa. Se o ambiente não ajudar, o teclado continua ali como alternativa na mesma sessão. Nos dois casos a sessão termina com nota, critérios da metodologia, o que foi bem, o que faltou e o que fazer na próxima.</p></details>
       <details><summary>Como funciona a integração com o CRM?</summary><p>Ao fim de cada reunião analisada, resumo, próximos passos, temperatura e critérios vão para a oportunidade. Salesforce, HubSpot, Pipedrive e RD Station têm conexão direta; outros entram pela API.</p></details>
       <details><summary>O que acontece quando o time cresce de faixa?<span></span></summary><p>A cobrança é por usuário ativo. Ao passar de 10 pessoas, o time entra na faixa do Profissional e o preço por usuário passa a ser o dela — nada de plano travado nem de licença paga para quem não usa. Acima de 50, o preço por pessoa é negociado por volume.</p></details>
     </div>
