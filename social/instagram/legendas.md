@@ -304,3 +304,270 @@ Ordem sugerida para o primeiro mês, alternando as séries:
 > salescoach.app.br
 >
 > #vendas #objecoes #tecnicasdevendas #treinamentodevendas #roleplay #IA
+
+---
+
+# Séries de dados e fechamento (21–40)
+
+Metade com fundo claro, metade escuro. Os posts **21–33** carregam dado de
+mercado com a fonte escrita na própria arte — o número nunca sai sem de onde
+veio. Os demais são argumento de produto.
+
+> **Antes de publicar:** confira se a edição citada ainda é a mais recente.
+> Dado com ano na arte envelhece; atualize o número e o ano juntos.
+
+**Fontes usadas**
+- Salesforce · *State of Sales*, 7ª edição (2026) · 4.000+ profissionais de vendas
+- Gong Labs · 326 mil chamadas de vendas analisadas
+- Gartner · pesquisa com compradores B2B, 2026
+- Meetime · *Inside Sales Benchmark Brasil* 2022 · 1.371 empresas respondentes
+
+---
+
+## 21 · `21-sessenta-por-cento.png` — escuro
+
+> 60% do tempo do seu vendedor não é vender.
+>
+> É CRM, é resumo escrito de memória, é procurar o que ficou combinado na
+> reunião de terça. A venda em si fica com os outros 40%.
+>
+> O Sales Coach devolve esse pedaço do dia: a reunião vira registro sozinha —
+> resumo, próximos passos, temperatura e critérios direto na oportunidade.
+>
+> Fonte: Salesforce, State of Sales (7ª ed., 2026), com 4.000+ profissionais.
+>
+> #vendas #produtividade #gestaodevendas #crm #vendasb2b #IA
+
+## 22 · `22-cinco-pontos.png` — claro
+
+> Ganhar e perder cabe em cinco pontos de conversa.
+>
+> Negócio ganho: o vendedor falou 57% do tempo.
+> Negócio perdido: 62%.
+>
+> Cinco pontos percentuais. É essa a distância entre conduzir e atropelar —
+> e ninguém percebe isso no meio da chamada.
+>
+> O Sales Coach mede a proporção em toda reunião e mostra em que momento o
+> lead parou de falar.
+>
+> Fonte: Gong Labs, a partir de 326 mil chamadas de vendas.
+>
+> #vendas #tecnicasdevendas #salesenablement #objecoes #IA
+
+## 23 · `23-sessenta-e-sete.png` — azul da marca
+
+> 67% dos compradores B2B preferem comprar sem falar com vendedor.
+>
+> Ou seja: quando um deles aceita marcar uma reunião com o seu time, essa hora
+> vale o dobro. E hoje ela termina virando uma linha no CRM, escrita três horas
+> depois.
+>
+> Fonte: Gartner, pesquisa com compradores B2B, 2026.
+>
+> #vendasb2b #compradorb2b #gestaodevendas #crm #IA
+
+## 24 · `24-quarenta-e-tres.png` — claro
+
+> Só 43% dos vendedores brasileiros bateram a meta.
+>
+> Os outros 57% também tiveram reunião o ano inteiro. Ninguém ouviu nenhuma
+> delas.
+>
+> Não é falta de esforço: é falta de evidência. Sem saber o que aconteceu
+> dentro da conversa, o um a um vira opinião e o forecast vira aposta.
+>
+> Fonte: Meetime, Inside Sales Benchmark Brasil 2022, com 1.371 empresas.
+>
+> #vendas #vendasb2b #gestaodevendas #metas #brasil #IA
+
+## 25 · `25-turnover.png` — escuro
+
+> 53% de turnover no comercial brasileiro.
+>
+> Metade do time sai por ano — e leva junto tudo o que aprendeu sobre as
+> objeções do seu mercado.
+>
+> O que está na base da empresa fica: as objeções que mais aparecem, as
+> respostas que funcionaram, o playbook. E treina quem chega.
+>
+> Fonte: Meetime, Inside Sales Benchmark Brasil 2022.
+>
+> #vendas #turnover #rampup #treinamentodevendas #gestaodevendas
+
+## 26 · `26-sem-coaching.png` — claro
+
+> 20% das operações não fazem coaching nenhum.
+>
+> E quem faz, faz sobre o que lembra da conversa — não sobre o que foi dito
+> nela.
+>
+> Não é desleixo, é agenda: ninguém tem oito horas por semana para ouvir
+> gravação.
+>
+> Fonte: Meetime, Inside Sales Benchmark Brasil 2022.
+>
+> #vendas #coachdevendas #gestaodevendas #salesenablement #brasil
+
+## 27 · `27-setenta-e-cinco.png` — escuro
+
+> 75% dos vendedores dizem ter mais chance de bater meta quando têm um coach.
+>
+> O problema nunca foi querer coaching. Foi escalar: um gestor com oito
+> vendedores não assiste a 40 reuniões por semana.
+>
+> O coach ao vivo entra em todas elas, sem o gestor estar em nenhuma.
+>
+> Fonte: Salesforce, State of Sales (7ª ed., 2026).
+>
+> #vendas #coachdevendas #gestaodevendas #salesenablement #IA
+
+## 28 · `28-ciclo-mais-longo.png` — escuro
+
+> 57% dizem que o ciclo de vendas está mais longo.
+>
+> Ciclo mais longo é mais reunião por negócio. E cada reunião a mais é mais
+> uma que ninguém revisa — até o negócio esfriar sem ninguém saber onde.
+>
+> Fonte: Salesforce, State of Sales (7ª ed., 2026).
+>
+> #vendasb2b #pipeline #forecast #gestaodevendas #IA
+
+## 29 · `29-oito-ferramentas.png` — claro
+
+> 8 ferramentas para fechar um negócio.
+>
+> 42% dos vendedores se sentem sobrecarregados por ferramenta demais. E quem
+> está sobrecarregado tem 45% menos chance de bater a meta.
+>
+> Por isso o Sales Coach não pede mais uma aba: roda dentro do Meet, do Teams
+> e do CRM que o time já usa.
+>
+> Fonte: Salesforce, State of Sales (7ª ed., 2026).
+>
+> #vendas #produtividade #ferramentasdevendas #crm #IA
+
+## 30 · `30-abordagem-irrelevante.png` — escuro
+
+> 73% dos compradores B2B evitam ativamente abordagem irrelevante.
+>
+> Relevante é falar do problema que ele citou. Que está na gravação da reunião
+> anterior — e não na memória de ninguém.
+>
+> Fonte: Salesforce, State of Sales (7ª ed., 2026).
+>
+> #vendasb2b #prospeccao #followup #crm #IA
+
+## 31 · `31-dados-nao-estruturados.png` — escuro
+
+> 70% dos líderes de dados dizem que os insights valiosos estão presos em dados
+> não estruturados.
+>
+> Uma hora de conversa gravada é exatamente isso: o dado mais rico da operação,
+> em formato que nenhum relatório lê.
+>
+> O Sales Coach transforma em nota, critério e próximo passo — estruturado, e
+> aberto por API.
+>
+> Fonte: Salesforce, State of Sales (7ª ed., 2026).
+>
+> #dados #IA #vendasb2b #salesops #crm
+
+## 32 · `32-sem-forecast.png` — claro
+
+> 40% não fazem nem reunião de forecast.
+>
+> E quem faz, começa pela planilha preenchida de memória na sexta à tarde.
+>
+> Dá para começar pela evidência: nota, critérios atendidos e temperatura de
+> cada agenda, prontos antes de a reunião acabar.
+>
+> Fonte: Meetime, Inside Sales Benchmark Brasil 2022.
+>
+> #forecast #pipeline #gestaodevendas #salesops #brasil
+
+## 33 · `33-93-e-70.png` — escuro
+
+> A diferença entre o melhor e a média está escrita.
+>
+> Melhor reunião do mês: 93. Média do time: 70.
+>
+> Os 23 pontos não são talento — são critérios: quais foram atendidos, com a
+> frase do lead que prova cada um. É isso que transforma o um a um em
+> treinamento, em vez de conversa motivacional.
+>
+> (Números de exemplo da tela do Sales Coach.)
+>
+> #gestaodevendas #coachdevendas #salesenablement #vendasb2b
+
+## 34 · `34-crm-nao-sabe.png` — escuro
+
+> O CRM não mente. Ele só não sabe.
+>
+> Ele registra o que o vendedor digitou. Não o que o cliente disse — nem o que
+> ele não disse quando a conversa chegou no preço.
+>
+> #crm #vendasb2b #gestaodevendas #dados #IA
+
+## 35 · `35-metodologia-e-regua.png` — claro
+
+> Metodologia não é slide. É régua.
+>
+> BANT, MEDDIC e SPIN vêm prontas. A quarta é a sua: critérios, pesos e faixas
+> de temperatura definidos por você — e a análise e o coach ao vivo passam a
+> seguir isso.
+>
+> Metodologia que não pontua reunião é pôster de parede.
+>
+> #bant #meddic #spinselling #metodologiadevendas #vendasb2b
+
+## 36 · `36-fala-demais.png` — escuro
+
+> Quem fala demais não ouve a objeção.
+>
+> O Sales Coach mede quem falou mais em cada reunião e mostra em que minuto o
+> lead parou de falar — que costuma ser o minuto em que a venda começou a se
+> perder.
+>
+> #vendas #tecnicasdevendas #escutaativa #objecoes #IA
+
+## 37 · `37-nao-sabe-por-que.png` — escuro
+
+> Todo gestor tem um vendedor que vai bem — e não sabe por quê.
+>
+> Enquanto o motivo não tem nome, ele não vira treinamento. Vira sorte. E sorte
+> não se distribui para o time.
+>
+> #gestaodevendas #coachdevendas #playbookdevendas #salesenablement
+
+## 38 · `38-dados-sao-seus.png` — claro
+
+> A conversa é sua. A gravação também.
+>
+> · Dados isolados por empresa
+> · Vendedor vê as reuniões dele; gestor e admin veem as do time
+> · Link externo só quando você ativa, com prazo e revogação
+> · SSO e revisão de segurança no Enterprise
+>
+> #seguranca #lgpd #vendasb2b #ti #saas
+
+## 39 · `39-entra-e-sai.png` — azul da marca
+
+> Entra na reunião. Sai no CRM.
+>
+> Entra: Google Meet, Microsoft Teams, Zoom, Google Calendar.
+> Sai: HubSpot, Salesforce, Pipedrive, RD Station.
+>
+> Resumo, próximos passos, temperatura e critérios da metodologia vão para a
+> oportunidade. Sem ninguém digitar.
+>
+> #crm #integracao #hubspot #salesforce #pipedrive #rdstation #vendasb2b
+
+## 40 · `40-proxima-reuniao.png` — escuro
+
+> Comece pela próxima reunião que o time tiver.
+>
+> Não é mudar o processo. É deixar o processo virar dado — a partir da conversa
+> de amanhã de manhã.
+>
+> #vendas #vendasb2b #gestaodevendas #IA #salesenablement

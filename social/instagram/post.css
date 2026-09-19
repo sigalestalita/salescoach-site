@@ -223,3 +223,49 @@ h1, h2, h3 { font-weight: 400; letter-spacing: -.035em; line-height: 1.07; }
 /* Duas colunas: o print estreito de um lado, o texto do outro. */
 .split { display: grid; grid-template-columns: var(--split, 1fr 1fr); gap: 46px; align-items: center; }
 .split .shot { margin: 0; }
+
+/* ═══════════════════════════════════════════════════════════════════════
+   DADOS (posts 21–40)
+   Um número solto não é gráfico: é um número grande, e é assim que ele
+   entra. Barra só quando há comparação de verdade — e com o valor escrito
+   em cada uma, para a identidade nunca depender só da cor.
+
+   As duas cores de série foram validadas contra as seis checagens de
+   daltonismo e contraste (scripts/validate_palette.js), por superfície:
+   claro  #2F74D8 / #D2751F · escuro #4F8BF0 / #C87A2A
+   ═══════════════════════════════════════════════════════════════════════ */
+.post { --serie-1: #4F8BF0; --serie-2: #C87A2A; }
+.post.bg-light { --serie-1: #2F74D8; --serie-2: #D2751F; }
+.post.bg-brand { --serie-1: #BFE0FF; --serie-2: #F2B87A; }
+
+/* Número-manchete. */
+.stat { display: flex; align-items: baseline; gap: 14px; line-height: 1; }
+.stat .n { font-size: 230px; font-weight: 300; letter-spacing: -.055em; }
+.stat .un { font-size: 92px; font-weight: 300; letter-spacing: -.04em; color: var(--dim); }
+.stat.md .n { font-size: 150px; }
+.stat.md .un { font-size: 64px; }
+
+/* A fonte anda junto com o número. Dado sem origem não sai daqui. */
+.fonte { margin-top: 26px; font-size: 20px; line-height: 1.45; color: var(--dim-2); }
+.fonte b { font-weight: 500; color: var(--dim); }
+
+/* Comparação de dois valores. Cada barra leva o próprio rótulo e o próprio
+   número, então a cor é reforço e não a única pista. */
+.barras { display: flex; flex-direction: column; gap: 26px; }
+.barra .topo { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; margin-bottom: 10px; }
+.barra .rot { font-size: 25px; color: var(--dim); }
+.barra .rot b { font-weight: 500; color: var(--txt); }
+.barra .val { font-size: 40px; font-weight: 400; letter-spacing: -.03em; }
+.barra .trilho { height: 26px; border-radius: 13px; background: rgba(146,176,236,.13); overflow: hidden; }
+.post.bg-light .barra .trilho { background: rgba(21,73,141,.1); }
+.barra .preenche { display: block; height: 100%; border-radius: 13px; background: var(--serie-1); }
+.barra.b2 .preenche { background: var(--serie-2); }
+
+/* Régua de proporção: uma linha, duas fatias, cada uma escrita. O vão de
+   2px entre elas impede que as fatias se colem numa mancha só. */
+.regua { display: flex; gap: 3px; height: 34px; border-radius: 17px; overflow: hidden; }
+.regua i { display: block; }
+.regua .a { background: var(--serie-1); border-radius: 17px 3px 3px 17px; }
+.regua .b { background: var(--serie-2); border-radius: 3px 17px 17px 3px; }
+.regua-leg { display: flex; justify-content: space-between; margin-top: 12px; font-size: 22px; color: var(--dim); }
+.regua-leg b { font-weight: 500; color: var(--txt); }

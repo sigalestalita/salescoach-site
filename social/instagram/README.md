@@ -1,6 +1,6 @@
 # Posts 4:5 para Instagram
 
-Vinte posts no formato 4:5 (1080 × 1350), escritos a partir do conteúdo, da
+Quarenta posts no formato 4:5 (1080 × 1350), escritos a partir do conteúdo, da
 identidade visual e do foco de negócio do `index.html` deste repositório.
 Nenhum deles traz botão de CTA nem oferta de teste — a chamada é o endereço
 no alto da arte.
@@ -39,6 +39,59 @@ no alto da arte.
 | 18 | `18-o-que-faltou.html` | `insights.webp` — o que foi bem, o que faltou | halo · centrado |
 | 19 | `19-todas-as-agendas.html` | `agendas.webp` — agendas com nota | noite · print no pé |
 | 20 | `20-ja-testamos.html` | `treino-conversa.webp` — objeção de adoção | malha · à direita |
+
+**Dados (21–33)** — número-manchete com a fonte na própria arte:
+
+| # | Arquivo | Dado | Fundo |
+|---|---|---|---|
+| 21 | `21-sessenta-por-cento.html` | 60% do tempo do vendedor não é vender | noite |
+| 22 | `22-cinco-pontos.html` | 57% × 62% de fala — ganho × perdido | claro |
+| 23 | `23-sessenta-e-sete.html` | 67% preferem comprar sem vendedor | marca |
+| 24 | `24-quarenta-e-tres.html` | 43% dos vendedores bateram meta | claro |
+| 25 | `25-turnover.html` | 53% de turnover no comercial | azul profundo |
+| 26 | `26-sem-coaching.html` | 20% não fazem coaching | claro · à direita |
+| 27 | `27-setenta-e-cinco.html` | 75% batem mais meta com coach | halo · centrado |
+| 28 | `28-ciclo-mais-longo.html` | 57% dizem que o ciclo está mais longo | malha |
+| 29 | `29-oito-ferramentas.html` | 8 ferramentas · 42% e 45% | claro |
+| 30 | `30-abordagem-irrelevante.html` | 73% evitam abordagem irrelevante | azul profundo · à direita |
+| 31 | `31-dados-nao-estruturados.html` | 70% dos insights presos em dado não estruturado | noite |
+| 32 | `32-sem-forecast.html` | 40% não fazem forecast | claro · centrado |
+| 33 | `33-93-e-70.html` | 93 × 70 — exemplo de tela, não dado de mercado | azul profundo |
+
+**Argumento (34–40)** — sem dado externo:
+
+| # | Arquivo | Tema | Fundo |
+|---|---|---|---|
+| 34 | `34-crm-nao-sabe.html` | "O CRM não mente. Ele só não sabe." | malha |
+| 35 | `35-metodologia-e-regua.html` | BANT, MEDDIC, SPIN — e a sua | claro |
+| 36 | `36-fala-demais.html` | Talk ratio: quem fala demais não ouve | halo · centrado |
+| 37 | `37-nao-sabe-por-que.html` | O vendedor que vai bem sem motivo conhecido | noite |
+| 38 | `38-dados-sao-seus.html` | Isolamento, papéis, links com validade, SSO | claro |
+| 39 | `39-entra-e-sai.html` | Ecossistema, com os logos de `assets/logos/` | marca |
+| 40 | `40-proxima-reuniao.html` | Fechamento | azul profundo · centrado |
+
+## Dados de mercado
+
+Todo número de terceiro sai com a fonte escrita na arte, na classe `.fonte`,
+e repetida na legenda. As quatro fontes usadas:
+
+| Fonte | Base |
+|---|---|
+| Salesforce · *State of Sales*, 7ª ed. (2026) | 4.000+ profissionais de vendas |
+| Gong Labs | 326 mil chamadas de vendas analisadas |
+| Gartner (2026) | pesquisa com compradores B2B |
+| Meetime · *Inside Sales Benchmark Brasil* 2022 | 1.371 empresas respondentes |
+
+Dado com ano na arte envelhece: antes de reaproveitar um post, confira se a
+edição citada ainda é a mais recente e atualize número e ano juntos. O post 33
+usa números de exemplo da tela do produto e diz isso na própria arte, para não
+passar por pesquisa.
+
+Um número solto não é gráfico — é um número grande (`.stat`). Barra só quando
+há comparação de verdade (`.barras`, `.regua`), sempre com o valor escrito em
+cada uma, para a identidade nunca depender só da cor. As duas cores de série
+passaram pelas checagens de daltonismo e contraste por superfície:
+claro `#2F74D8`/`#D2751F`, escuro `#4F8BF0`/`#C87A2A`.
 
 ## Fundos e composições
 
