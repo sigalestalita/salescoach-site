@@ -2,11 +2,11 @@
 <html lang="pt-BR">
 <head>
 <meta charset="utf-8">
-<title>Sales Coach · 05 · Planos e free trial</title>
+<title>Sales Coach · 05 · Planos</title>
 <link rel="stylesheet" href="post.css">
 <style>
-  /* Post de preço: as duas faixas lado a lado, como na seção Planos, e o
-     free trial embaixo — que é o que a legenda vai pedir para clicar. */
+  /* Post de preço: as duas faixas lado a lado, como na seção Planos, e a
+     terceira — Enterprise, sem preço de tabela — numa tira embaixo. */
   .head { margin-top: 10px; }
   .head .h2 { margin-top: 14px; }
   .head .sub { margin-top: 16px; max-width: 920px; }
@@ -25,13 +25,10 @@
   .plan li::before { content: ""; position: absolute; left: 4px; top: 10px; width: 9px; height: 9px; border-radius: 50%; background: var(--blue); }
   .plan .best { position: absolute; top: -14px; right: 24px; padding: 7px 18px; border-radius: 999px; font-size: 18px; font-weight: 500; color: #0A0D16; background: linear-gradient(100deg, var(--blue-2), var(--violet)); }
 
-  .trial { margin-top: 18px; display: flex; align-items: center; gap: 26px; padding: 22px 30px; }
-  .trial .big { flex: 0 0 auto; font-size: 54px; font-weight: 300; letter-spacing: -.04em; line-height: 1; }
-  .trial .big small { font-size: 24px; color: var(--dim-2); letter-spacing: 0; }
-  .trial .t b { display: block; font-size: 27px; font-weight: 500; letter-spacing: -.02em; margin-bottom: 5px; }
-  .trial .t span { font-size: 22px; line-height: 1.4; color: var(--dim); }
-
-  .ent { margin-top: 14px; font-size: 21px; color: var(--dim-2); }
+  .ent { margin-top: 18px; display: flex; align-items: center; gap: 26px; padding: 24px 30px; }
+  .ent .r { flex: 0 0 auto; font-size: 20px; letter-spacing: .12em; text-transform: uppercase; color: var(--dim-2); font-weight: 500; }
+  .ent .t b { display: block; font-size: 27px; font-weight: 500; letter-spacing: -.02em; margin-bottom: 5px; }
+  .ent .t span { font-size: 22px; line-height: 1.4; color: var(--dim); }
 </style>
 </head>
 <body>
@@ -44,6 +41,8 @@
     <span>Sales Coach</span>
     <em class="site" style="font-style:normal">salescoach.app.br</em>
   </header>
+
+  <div class="grow top"></div>
 
   <div class="head">
     <div class="kicker">Planos</div>
@@ -82,18 +81,12 @@
     </div>
   </div>
 
-  <div class="card lit trial">
-    <div class="big">7<small> dias</small></div>
-    <div class="t"><b>Free trial, sem cartão</b><span>Até 3 usuários, 20 reuniões e coach ao vivo liberado — com a sua base e a sua metodologia já dentro.</span></div>
+  <div class="card lit ent">
+    <div class="r">Acima de<br>50 usuários</div>
+    <div class="t"><b>Enterprise</b><span>Preço por pessoa negociado por volume, integrações dedicadas e acesso à API, SSO, revisão de segurança e SLA.</span></div>
   </div>
-
-  <p class="ent">Acima de 50 usuários: Enterprise, com preço por volume, API, SSO e SLA.</p>
 
   <div class="grow" style="min-height:18px"></div>
-  <div class="cta">
-    <span class="btn btn-solid">Quero testar</span>
-    <span class="note">Comece pela próxima reunião<br>que o seu time tiver.</span>
-  </div>
 </div>
 <script src="stars.js"></script>
 </body>

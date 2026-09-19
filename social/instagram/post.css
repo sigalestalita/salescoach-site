@@ -79,13 +79,6 @@ h1, h2, h3 { font-weight: 400; letter-spacing: -.035em; line-height: 1.07; }
 .card-top { display: flex; align-items: center; justify-content: space-between; gap: 18px; }
 .tag { font-size: 20px; letter-spacing: .12em; text-transform: uppercase; color: var(--dim-2); font-weight: 500; }
 
-/* ── Botão / chamada final ── */
-.cta { display: flex; align-items: center; gap: 20px; flex: 0 0 auto; }
-.btn { display: inline-flex; align-items: center; justify-content: center; height: 78px; padding: 0 40px; border-radius: 999px; font-size: 26px; font-weight: 500; white-space: nowrap; }
-.btn-solid { background: #fff; color: #0A0D16; box-shadow: 0 26px 60px -28px rgba(255,255,255,.55); }
-.btn-ghost { border: 1px solid var(--line-2); color: #fff; background: rgba(146,176,236,.05); }
-.cta .note { font-size: 22px; line-height: 1.4; color: var(--dim-2); }
-
 /* Sem flex-shrink os blocos encolhem em silêncio quando o conteúdo passa
    do quadro — e o corte só aparece no PNG. Melhor deixar estourar, que o
    render.mjs avisa. */
@@ -99,8 +92,32 @@ h1, h2, h3 { font-weight: 400; letter-spacing: -.035em; line-height: 1.07; }
    Série "manchete" (posts 06–10): uma frase ocupa o quadro e o apoio cabe
    em duas linhas. O miolo fica centrado entre a marca e o botão — daí os
    dois .grow, com o de cima um pouco maior para o bloco não parecer caído.
+   Os posts não levam botão: o endereço no alto da marca é a única chamada.
    ═══════════════════════════════════════════════════════════════════════ */
 .h0 { font-size: 126px; font-weight: 400; letter-spacing: -.045em; line-height: 1; }
 .grow.top { flex-grow: 1.25; }
 .after { margin-top: 44px; font-size: 40px; line-height: 1.32; letter-spacing: -.02em; color: var(--dim); }
 .after b { font-weight: 500; color: #fff; }
+
+/* ═══════════════════════════════════════════════════════════════════════
+   Série "tela" (posts 11–20): o print do sistema é o assunto do post.
+   Quase todas as telas do produto são claras, então elas entram dentro de
+   uma moldura com barra de janela — assim a mancha branca lê como um
+   screenshot e não como um bloco solto no meio do quadro escuro.
+   ═══════════════════════════════════════════════════════════════════════ */
+.shot { border-radius: 24px; overflow: hidden; border: 1px solid var(--line-2); background: var(--ink-1); box-shadow: 0 70px 130px -70px rgba(79,139,240,.95); }
+.shot .chrome { display: flex; align-items: center; gap: 9px; padding: 15px 20px; background: rgba(146,176,236,.07); border-bottom: 1px solid var(--line); }
+.shot .chrome i { width: 11px; height: 11px; border-radius: 50%; background: rgba(146,176,236,.28); }
+.shot .chrome span { margin-left: 12px; font-size: 19px; color: var(--dim-2); }
+.shot img { width: 100%; }
+
+/* A janela mostra só a fatia que interessa do print: a altura é fixa e a
+   imagem desliza dentro dela com margens negativas. O max-width do reset
+   precisa sair, senão o print volta a caber inteiro no quadro e o zoom
+   do recorte não acontece. */
+.shot .win { overflow: hidden; }
+.shot .win img { display: block; max-width: none; }
+
+/* Painel da extensão: já é escuro e flutuante, não precisa de moldura. */
+.shot.bare { border: 0; border-radius: 28px; background: none; box-shadow: 0 60px 120px -60px rgba(79,139,240,.9); }
+.shot.bare img { border-radius: 28px; }

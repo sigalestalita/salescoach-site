@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Sales Coach · 14 · Ligue para um cliente que não existe</title>
+<link rel="stylesheet" href="post.css">
+<style>
+  /* Modo de treino por voz: o recorte pega o botão de microfone, que é o
+     que mostra que dá para treinar falando, não digitando. */
+  .head { margin-top: 22px; }
+  .head .h2 { margin-top: 14px; }
+  .head .after { margin-top: 18px; font-size: 29px; }
+  .grow.top { flex-grow: 4; }
+  .shot { margin-top: 34px; }
+  /* Recorte de treino-voz.webp: mostra as últimas falas e o botão de microfone no lugar do print inteiro, que
+     encolhido para 924px ficaria ilegível no feed. */
+  .win { height: 463px; }
+  .win img { width: 935px; margin: -47px 0 0 -6px; }
+</style>
+</head>
+<body>
+<div class="post">
+  <div class="aurora"><i class="a1"></i><i class="a2"></i><i class="a3"></i></div>
+  <canvas class="stars"></canvas>
+
+  <header class="brand">
+    <img src="../../assets/mark-white.png" alt="Sales Coach">
+    <span>Sales Coach</span>
+    <em class="site" style="font-style:normal">salescoach.app.br</em>
+  </header>
+
+  <div class="grow top"></div>
+
+  <div class="head">
+    <div class="kicker">Antes da reunião</div>
+    <h2 class="h2">Ligue para um cliente<br><span class="grad">que não existe.</span></h2>
+    <p class="after">A IA faz o papel do lead e responde por voz.<br>Você fala como falaria <b>na reunião de verdade</b>.</p>
+  </div>
+
+  <div class="shot">
+    <div class="chrome"><i></i><i></i><i></i><span>Modo de treino · chamada de voz</span></div>
+    <div class="win"><img src="../../assets/app/treino-voz.webp" alt="Sessão de treino por chamada de voz: o lead simulado responde e o botão de microfone aguarda a próxima fala"></div>
+  </div>
+
+  <div class="grow" style="min-height:24px"></div>
+</div>
+<script src="stars.js"></script>
+</body>
+</html>

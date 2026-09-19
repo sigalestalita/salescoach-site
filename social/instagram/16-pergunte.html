@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Sales Coach · 16 · Pergunte sobre a agenda</title>
+<link rel="stylesheet" href="post.css">
+<style>
+  /* Assistente: a resposta cita as reuniões pelo nome, com data, vendedor
+     e score. É o que separa de um chat genérico. */
+  .head { margin-top: 18px; }
+  .head .h2 { margin-top: 14px; }
+  .head .after { margin-top: 18px; font-size: 28px; }
+  .grow.top { flex-grow: 4; }
+  .shot { margin-top: 30px; }
+  /* O print do assistente é estreito (760px). Esticado para os 924px do
+     quadro o texto fica gigante, então a moldura mantém a largura de tela
+     de celular e centraliza; o recorte só tira a caixa de digitar. */
+  .shot { width: 560px; margin-inline: auto; }
+  .win { height: 574px; }
+  .win img { width: 560px; margin: 0; }
+</style>
+</head>
+<body>
+<div class="post">
+  <div class="aurora"><i class="a1"></i><i class="a2"></i><i class="a3"></i></div>
+  <canvas class="stars"></canvas>
+
+  <header class="brand">
+    <img src="../../assets/mark-white.png" alt="Sales Coach">
+    <span>Sales Coach</span>
+    <em class="site" style="font-style:normal">salescoach.app.br</em>
+  </header>
+
+  <div class="grow top"></div>
+
+  <div class="head">
+    <div class="kicker">A qualquer momento</div>
+    <h2 class="h2">Pergunte.<br><span class="grad">Ele responde com as<br>reuniões de verdade.</span></h2>
+    <p class="after">Com nome do lead, data, vendedor e nota de cada uma.</p>
+  </div>
+
+  <div class="shot">
+    <div class="chrome"><i></i><i></i><i></i><span>Assistente de vendas</span></div>
+    <div class="win"><img src="../../assets/app/assistente.webp" alt="Assistente listando as três agendas mais quentes, com lead, data, vendedor e score de cada uma"></div>
+  </div>
+
+  <div class="grow" style="min-height:24px"></div>
+</div>
+<script src="stars.js"></script>
+</body>
+</html>
