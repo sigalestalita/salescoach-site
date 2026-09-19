@@ -7,6 +7,7 @@ Cinco séries, mesmo kit visual:
 - **11–20 · tela** — o print do sistema é o assunto.
 - **21–33 · dados** — número-manchete com a fonte na própria arte.
 - **34–40 · argumento** — produto, sem dado externo.
+- **41 · conversa** — mockup desenhado do assistente.
 
 Nenhum post traz botão nem oferta de teste: a chamada é o endereço no alto
 da arte. As legendas terminam em `salescoach.app.br`.
@@ -580,3 +581,29 @@ Não é mudar o processo. É deixar o processo virar dado — a partir da conver
 de amanhã de manhã.
 
 #vendas #vendasb2b #gestaodevendas #IA #salesenablement
+
+## Série conversa
+
+### 41 · `41-melhor-e-pior.png` — claro
+
+Quem está indo bem. E quem está travando.
+
+Pergunte ao assistente como perguntaria a um colega: "quem foi melhor e quem
+foi pior no mês — e por quê?".
+
+Ele não devolve um ranking. Devolve o critério:
+
+Mariana Barbosa, 86. Sobe em Implicação — quantifica o custo da dor antes de
+falar de preço. Em 9 de 11 reuniões o lead disse um número.
+
+Rafael Nunes, 61. Cai em Authority — não confirma quem assina. Ficou em aberto
+em 7 das 9 reuniões dele, inclusive nas duas que foram para proposta.
+
+A diferença entre os dois não é perfil. É uma pergunta que um faz e o outro
+não. E isso dá para treinar.
+
+(Conversa ilustrativa, com os nomes e números de exemplo do produto.)
+
+salescoach.app.br
+
+#vendas #gestaodevendas #coachdevendas #salesenablement #meddic #IA #vendasb2b

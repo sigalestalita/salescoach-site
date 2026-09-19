@@ -1,6 +1,6 @@
 # Posts 4:5 para Instagram
 
-Quarenta posts no formato 4:5 (1080 × 1350), escritos a partir do conteúdo, da
+Quarenta e um posts no formato 4:5 (1080 × 1350), escritos a partir do conteúdo, da
 identidade visual e do foco de negócio do `index.html` deste repositório.
 Nenhum deles traz botão de CTA nem oferta de teste — a chamada é o endereço
 no alto da arte.
@@ -69,6 +69,18 @@ no alto da arte.
 | 38 | `38-dados-sao-seus.html` | Isolamento, papéis, links com validade, SSO | claro |
 | 39 | `39-entra-e-sai.html` | Ecossistema, com os logos de `assets/logos/` | marca |
 | 40 | `40-proxima-reuniao.html` | Fechamento | azul profundo · centrado |
+
+**Conversa (41)** — mockup desenhado, não print:
+
+| # | Arquivo | Tema | Fundo |
+|---|---|---|---|
+| 41 | `41-melhor-e-pior.html` | Assistente comparando o melhor e o pior vendedor | claro |
+
+O 41 não usa `assets/app/assistente.webp`: a tela real mostra outra conversa
+(as agendas mais quentes). A janela é desenhada em HTML seguindo a UI do
+assistente — barra azul-marinho, balão claro para a resposta, balão escuro
+para a pergunta. Os nomes e os números são os mesmos dados de exemplo que o
+produto usa no site, e a legenda diz que a conversa é ilustrativa.
 
 ## Dados de mercado
 
