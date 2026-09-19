@@ -73,6 +73,11 @@
   .nav { position: fixed; inset: 0 0 auto; z-index: 80; height: var(--nav-h); display: flex; align-items: center; transition: background .3s, border-color .3s; border-bottom: 1px solid transparent; }
   .nav.on { background: rgba(6,7,12,.76); backdrop-filter: saturate(150%) blur(16px); border-bottom-color: var(--line); }
   .nav-in { display: flex; align-items: center; justify-content: space-between; gap: 22px; }
+  .nav-cta { display: flex; align-items: center; gap: 6px; flex: 0 0 auto; }
+  .entrar { display: inline-flex; align-items: center; gap: 7px; height: 42px; padding: 0 14px; border-radius: 999px; font-size: 13.5px; color: var(--dim); white-space: nowrap; transition: color .2s, background .2s; }
+  .entrar:hover { color: #fff; background: rgba(146,176,236,.09); }
+  .entrar svg { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+  @media (max-width: 420px) { .entrar { padding: 0 9px; } .entrar svg { display: none; } }
   .brand { display: flex; align-items: center; gap: 10px; font-size: 16px; font-weight: 500; letter-spacing: -.02em; }
   .brand img { height: 26px; width: auto; }
   .nav-links { display: flex; gap: 4px; padding: 5px; border-radius: 999px; border: 1px solid var(--line); background: rgba(146,176,236,.035); }
@@ -782,7 +787,11 @@
       <a href="#planos">Planos</a>
       <a href="#faq">Perguntas</a>
     </nav>
-    <a class="btn btn-ghost btn-sm" href="#contato">Free trial</a>
+    <div class="nav-cta">
+      <!-- Endereço do sistema: trocar aqui quando o CNAME app.salescoach.app.br subir. -->
+      <a class="entrar" href="https://salescoach.grougp.com.br"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M15 12H3"/></svg>Entrar</a>
+      <a class="btn btn-ghost btn-sm" href="#contato">Free trial</a>
+    </div>
   </div>
 </header>
 
@@ -1291,7 +1300,7 @@
 <footer>
   <div class="shell foot">
     <a class="brand" href="#top"><img src="assets/mark-white.png" alt=""><span>Sales Coach</span></a>
-    <nav><a href="#produto">Produto</a><a href="#planos">Planos</a><a href="#faq">Perguntas</a><a href="#contato">Contato</a></nav>
+    <nav><a href="#produto">Produto</a><a href="#planos">Planos</a><a href="#faq">Perguntas</a><a href="#contato">Contato</a><a href="https://salescoach.grougp.com.br">Entrar</a></nav>
     <span>© <span id="ano"></span> Sales Coach</span>
   </div>
 </footer>
