@@ -262,6 +262,57 @@
   .logo-grid .chip { padding: 9px 15px; font-size: 13px; }
   @media (max-width: 900px) { .eco-panel, .eco-panel.wide { grid-template-columns: 1fr; width: auto; } .eco-panel .orbit { max-width: 300px; margin-inline: auto; } }
 
+  /* Painel de funcionalidade dentro do trilho */
+  .feat-panel { width: min(1000px, 88vw); grid-template-columns: 1fr 1fr; }
+  .feat-panel.tall-shot { grid-template-columns: 1.25fr .75fr; }
+  .feat-panel .n { color: var(--blue-2); }
+  .feat-panel .who { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 20px; }
+  .feat-panel .who > div { padding: 13px 15px; border-radius: 12px; border: 1px solid var(--line); background: rgba(146,176,236,.04); }
+  .feat-panel .who span { display: flex; align-items: center; gap: 6px; font-size: 10px; font-weight: 500; letter-spacing: .14em; text-transform: uppercase; color: var(--blue-2); }
+  .feat-panel .who span::before { content: ""; width: 4px; height: 4px; border-radius: 50%; background: currentColor; }
+  .feat-panel .who p { margin-top: 7px; font-size: 12.5px; line-height: 1.5; color: var(--dim); }
+  @media (max-width: 900px) { .feat-panel, .feat-panel.tall-shot { grid-template-columns: 1fr; } .feat-panel .who { grid-template-columns: 1fr; } }
+
+  /* ── Seções de fundo claro ── */
+  .light { background: #F5F7FB; color: #16233A; }
+  .light .h2, .light h3 { color: #071A34; }
+  .light p, .light .lead { color: #4E5D75; }
+  .light .eyebrow { color: #15498D; }
+  .light .hl { color: #15498D; -webkit-text-fill-color: currentColor; background: none; }
+  .light .ticks li { color: #22314A; }
+  .light .ticks li::before { background: #15498D; box-shadow: none; }
+  .light .fr { border-color: rgba(7,26,52,.1); background: #fff; box-shadow: 0 40px 80px -44px rgba(7,26,52,.5), 0 1px 3px rgba(7,26,52,.05); }
+  .light .claims { background: rgba(7,26,52,.1); border-color: rgba(7,26,52,.1); }
+  .light .claim { background: #F5F7FB; }
+  .light .claim:hover { background: #EDF1F8; }
+  .light .claim .k { color: #15498D; }
+  .light .num { border-color: rgba(7,26,52,.12); }
+  .light .num b small { color: #15498D; }
+  .light .num > span { color: #4E5D75; }
+  .light .plan { border-color: rgba(7,26,52,.12); background: #fff; }
+  .light .plan.hot { border-color: rgba(21,73,141,.34); background: linear-gradient(170deg, rgba(21,73,141,.07), #fff); box-shadow: 0 40px 80px -50px rgba(21,73,141,.5); }
+  .light .plan .tag, .light .plan .price b small, .light .plan sup { color: #15498D; }
+  .light .plan .for, .light .plan .obs { color: #6B7A93; }
+  .light .plan li { color: #22314A; }
+  .light .plan li::before { border-color: #15498D; }
+  .light .btn-ghost { border-color: rgba(7,26,52,.18); color: #0B1A31; background: #fff; }
+  .light .btn-ghost:hover { border-color: rgba(21,73,141,.5); background: #EDF1F8; }
+  .light .btn-solid { background: #0B1A31; color: #fff; box-shadow: 0 14px 40px -18px rgba(11,26,49,.6); }
+  .light .toggle { color: #6B7A93; }
+  .light .toggle span.on { color: #071A34; }
+  .light .switch { border-color: rgba(7,26,52,.2); background: rgba(7,26,52,.06); }
+  .light .switch i { background: #15498D; }
+  .light .switch[aria-checked="true"] { background: rgba(21,73,141,.22); border-color: rgba(21,73,141,.45); }
+  .light .trial { border-color: rgba(21,73,141,.28); background: linear-gradient(100deg, rgba(21,73,141,.1), rgba(123,108,246,.06)); }
+  .light .trial span { color: #4E5D75; }
+  .light .ticks li, .light figcaption { color: #4E5D75; }
+  /* A regra global deixa todo <b> branco; no fundo claro isso apagava preços,
+     números e destaques. */
+  .light b, .light strong { color: #071A34; }
+  .light .num b small { color: #15498D; }
+  .light .toggle .save { color: #15498D; border-color: rgba(21,73,141,.28); background: rgba(21,73,141,.08); }
+  .light .rail-count b { color: #071A34; }
+
   /* ── Manifesto ── */
   .claims { display: grid; gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 20px; overflow: hidden; margin-top: 54px; }
   .claim { background: var(--ink-0); padding: 38px 34px; display: grid; grid-template-columns: 54px 1fr; gap: 22px; transition: background .3s; }
@@ -447,143 +498,95 @@
 </div>
 
 <!-- ── Funcionalidades: trilho horizontal ───────────────────────────────────── -->
+<!-- ── Funcionalidades: trilho horizontal, uma por painel ──────────────────── -->
 <section class="rail" id="produto" data-rail>
   <div class="rail-pin">
     <div class="shell">
       <div class="rail-head">
         <div class="head">
           <p class="eyebrow">O produto</p>
-          <h2 class="h2">Cinco coisas que ele faz<br>e ninguém mais faz junto.</h2>
+          <h2 class="h2">Quatro momentos.<br>Uma régua só.</h2>
         </div>
         <div class="rail-meta">
           <div class="rail-hint"><i></i>Continue rolando</div>
-          <div class="rail-count"><b>01</b> / 05</div>
+          <div class="rail-count"><b>01</b> / 04</div>
           <div class="rail-bar"><i></i></div>
         </div>
       </div>
       <div class="track" data-track>
 
-        <article class="panel wide-shot">
+        <article class="panel feat-panel">
           <div class="panel-txt">
-            <div class="n">01</div>
-            <h3 class="h3">Analisa pela sua metodologia</h3>
-            <p>Score, temperatura e cada critério com a frase do lead que justifica a nota. Não é transcrição: é a sua régua aplicada em cada conversa.</p>
-            <ul><li>BANT, MEDDIC e SPIN prontos, ou os seus critérios</li><li>Talk ratio entre vendedor e lead</li><li>Objeções e sinais de compra recortados</li></ul>
+            <div class="n">01 · Depois da reunião</div>
+            <h3 class="h3">A conversa vira nota, e a nota vira conversa com o time</h3>
+            <p>Cada reunião sai pontuada pelos critérios que a sua empresa definiu, com a frase do lead que justifica cada nota. O mesmo relatório serve para quem fez a reunião e para quem cobra o resultado dela.</p>
+            <div class="who">
+              <div><span>Executivo</span><p>Em minutos você tem a nota, o que funcionou e a pergunta que faltou — sem depender do gestor ouvir a gravação.</p></div>
+              <div><span>Gestor</span><p>Toda agenda medida pelos mesmos critérios, com evidência. O um a um deixa de ser sobre opinião.</p></div>
+            </div>
           </div>
-          <div class="panel-shot"><img src="assets/app/analise.webp" alt="Análise da reunião com score 91 e critérios detalhados" loading="lazy" width="1800" height="893"></div>
+          <div class="panel-shot"><img src="assets/app/analise.webp" alt="Análise da reunião com score 91 e os critérios BANT, MEDDIC e SPIN justificados" loading="lazy" width="1800" height="893"></div>
         </article>
 
-        <article class="panel tall-shot">
+        <article class="panel feat-panel tall-shot">
           <div class="panel-txt">
-            <div class="n">02</div>
-            <h3 class="h3">Orienta durante a chamada</h3>
-            <p>A extensão acompanha a reunião no Meet ou no Teams e mostra a frase exata para dizer nos próximos segundos — com o portfólio certo, sem inventar preço.</p>
-            <ul><li>A objeção que acabou de surgir vem primeiro</li><li>Critério não coberto vira a próxima pergunta</li><li>Painel discreto, sem o lead perceber</li></ul>
+            <div class="n">02 · Durante a reunião</div>
+            <h3 class="h3">A ajuda chega enquanto a objeção ainda está no ar</h3>
+            <p>A extensão acompanha a chamada no Meet ou no Teams e mostra a frase para dizer nos próximos segundos — tirada da sua base, com o produto e o número certos.</p>
+            <div class="who">
+              <div><span>Executivo</span><p>A resposta certa aparece na hora, não depois, no caminho de casa.</p></div>
+              <div><span>Gestor</span><p>Treinamento acontecendo em toda reunião, sem você estar em nenhuma delas.</p></div>
+            </div>
           </div>
-          <div class="panel-shot tall"><img src="assets/app/extensao.webp" alt="Painel da extensão com a orientação Fale agora durante a reunião" loading="lazy" width="760" height="1302"></div>
+          <div class="panel-shot tall"><img src="assets/app/extensao.webp" alt="Painel da extensão durante a reunião com a orientação Fale agora" loading="lazy" width="760" height="1302"></div>
         </article>
 
-        <article class="panel wide-shot">
+        <article class="panel feat-panel">
           <div class="panel-txt">
-            <div class="n">03</div>
-            <h3 class="h3">Treina antes da reunião real</h3>
-            <p>A IA assume o papel do cliente, com uma dor do seu catálogo e as objeções que já apareceram nas suas reuniões. Por texto ou por voz.</p>
-            <ul><li>O lead simulado não facilita</li><li>Ao encerrar, recebe a mesma nota de uma reunião real</li><li>Quem entrou ontem pratica sem gastar um lead</li></ul>
+            <div class="n">03 · Antes da reunião</div>
+            <h3 class="h3">Erre no simulado, não no lead de verdade</h3>
+            <p>A IA assume o papel do cliente, com uma dor do seu catálogo e as objeções que já apareceram nas suas reuniões. Por texto ou por voz. Ao encerrar, a conversa recebe a mesma nota de uma reunião real.</p>
+            <div class="who">
+              <div><span>Executivo</span><p>Pratique a conversa difícil quantas vezes quiser antes da primeira de verdade.</p></div>
+              <div><span>Gestor</span><p>Rampagem mais curta: quem entrou essa semana já enfrentou as objeções do seu mercado.</p></div>
+            </div>
           </div>
-          <div class="panel-shot"><img src="assets/app/treino-conversa.webp" alt="Conversa de treino com o lead simulado" loading="lazy" width="1500" height="593"></div>
+          <div class="panel-shot"><img src="assets/app/treino-conversa.webp" alt="Conversa de treino com o lead simulado levantando uma objeção" loading="lazy" width="1500" height="593"></div>
         </article>
 
-        <article class="panel tall-shot">
+        <article class="panel feat-panel tall-shot">
           <div class="panel-txt">
-            <div class="n">04</div>
-            <h3 class="h3">Responde sobre a sua agenda</h3>
-            <p>Um assistente em qualquer tela, que consulta as reuniões de verdade antes de responder e cita cada uma pelo nome.</p>
-            <ul><li>"Quais as 3 agendas mais quentes agora?"</li><li>"Qual o score médio do time este mês?"</li><li>Vendedor vê o que é dele; gestor vê o time</li></ul>
+            <div class="n">04 · A qualquer momento</div>
+            <h3 class="h3">Pergunte sobre a agenda como quem pergunta a um colega</h3>
+            <p>Um assistente em qualquer tela, que consulta as reuniões de verdade antes de responder e cita cada uma pelo nome. Vendedor vê o que é dele; gestor e admin veem o time.</p>
+            <div class="who">
+              <div><span>Executivo</span><p>"O que ficou combinado na última reunião com esse cliente?" — sem reabrir gravação.</p></div>
+              <div><span>Gestor</span><p>"Quais objeções mais apareceram este mês?" A resposta em uma frase, não numa tarde de planilha.</p></div>
+            </div>
           </div>
           <div class="panel-shot tall"><img src="assets/app/assistente.webp" alt="Assistente listando as agendas mais quentes" loading="lazy" width="760" height="1120"></div>
         </article>
 
-        <article class="panel wide-shot">
-          <div class="panel-txt">
-            <div class="n">05</div>
-            <h3 class="h3">Mostra o time ao gestor</h3>
-            <p>Score médio, evolução mês a mês por executivo e em quais critérios o time mais falha. Em vinte minutos, o que levaria uma semana de escuta.</p>
-            <ul><li>Ranking por vendedor e comparação entre períodos</li><li>Onde o discurso perde pontos, em todo mundo</li><li>Análise compartilhável por link, com prazo</li></ul>
-          </div>
-          <div class="panel-shot"><img src="assets/app/dashboard.webp" alt="Painel do gestor com indicadores e evolução por executivo" loading="lazy" width="1200" height="376"></div>
-        </article>
-
       </div>
     </div>
-      </div>
+  </div>
 </section>
 
-<!-- ── Funcionalidades em detalhe ──────────────────────────────────────────── -->
-<section class="feat">
+<!-- ── Visão do gestor ──────────────────────────────────────────────────────── -->
+<section class="light">
   <div class="shell feat-grid">
     <div>
-      <p class="eyebrow">Depois da reunião</p>
-      <h2 class="h2">A conversa vira nota, e a nota vira conversa com o time.</h2>
-      <p class="lead">Cada reunião sai pontuada pelos critérios que a sua empresa definiu, com a frase do lead que justifica cada nota. O mesmo relatório serve para quem fez a reunião e para quem precisa cobrar o resultado dela.</p>
-      <div class="who rv-stagger">
-        <div><span>Para o executivo</span><p>Você sai da reunião sem saber se foi bem. Em minutos tem a nota, o que funcionou e a pergunta que faltou — sem depender do gestor ter tempo de ouvir a gravação.</p></div>
-        <div><span>Para o gestor</span><p>Você para de avaliar por percepção. Toda agenda do time vem medida pelos mesmos critérios, com evidência, e o um a um deixa de ser sobre opinião.</p></div>
-      </div>
+      <p class="eyebrow">Para quem lidera</p>
+      <h2 class="h2">O time inteiro, sem ouvir uma gravação.</h2>
+      <p class="lead">Score médio, evolução mês a mês por executivo e em quais critérios o time mais falha. Em vinte minutos, o que levaria uma semana de escuta.</p>
+      <ul class="ticks">
+        <li>Ranking por vendedor e comparação entre períodos</li>
+        <li>Onde o discurso perde pontos, em todo mundo ao mesmo tempo</li>
+        <li>Análise compartilhável por link, com prazo e revogação</li>
+      </ul>
     </div>
     <figure data-par="0.05">
       <div class="fr"><img src="assets/app/dashboard.webp" alt="Painel do gestor com indicadores do time e evolução de score por executivo" loading="lazy" width="1200" height="376"></div>
-      <figcaption>Do lado do gestor: score médio, evolução por executivo e em quais critérios o time mais falha.</figcaption>
-    </figure>
-  </div>
-</section>
-
-<section class="feat flip">
-  <div class="shell feat-grid">
-    <div>
-      <p class="eyebrow">Durante a reunião</p>
-      <h2 class="h2">A ajuda chega enquanto a objeção ainda está no ar.</h2>
-      <p class="lead">A extensão acompanha a chamada no Meet ou no Teams e mostra a frase para dizer nos próximos segundos — tirada da sua base de conhecimento, com o produto e o número certos.</p>
-      <div class="who rv-stagger">
-        <div><span>Para o executivo</span><p>A resposta certa aparece na hora, não depois, no caminho de casa. E o critério que você esqueceu de perguntar vira a próxima pergunta, na tela.</p></div>
-        <div><span>Para o gestor</span><p>É treinamento acontecendo em toda reunião do time, sem você precisar estar em nenhuma delas — e sem esperar o ciclo de feedback da semana seguinte.</p></div>
-      </div>
-    </div>
-    <figure data-par="0.06">
-      <div class="fr narrow"><img src="assets/app/extensao.webp" alt="Painel da extensão durante a reunião com a orientação Fale agora" loading="lazy" width="760" height="1302"></div>
-    </figure>
-  </div>
-</section>
-
-<section class="feat">
-  <div class="shell feat-grid">
-    <div>
-      <p class="eyebrow">Antes da reunião</p>
-      <h2 class="h2">Erre no simulado, não no lead de verdade.</h2>
-      <p class="lead">A IA assume o papel do cliente, com uma dor do seu catálogo e as objeções que já apareceram nas suas reuniões. Por texto ou por voz. Ao encerrar, a conversa recebe a mesma nota de uma reunião real.</p>
-      <div class="who rv-stagger">
-        <div><span>Para o executivo</span><p>Pratique a conversa difícil quantas vezes quiser antes da primeira de verdade — inclusive a objeção que te travou na semana passada.</p></div>
-        <div><span>Para o gestor</span><p>Rampagem mais curta: quem entrou essa semana chega na primeira reunião já tendo enfrentado as objeções do seu mercado, não as de um roteiro genérico.</p></div>
-      </div>
-    </div>
-    <figure data-par="0.05">
-      <div class="fr"><img src="assets/app/treino-conversa.webp" alt="Conversa de treino com o lead simulado levantando uma objeção de adoção" loading="lazy" width="1500" height="593"></div>
-    </figure>
-  </div>
-</section>
-
-<section class="feat flip">
-  <div class="shell feat-grid">
-    <div>
-      <p class="eyebrow">A qualquer momento</p>
-      <h2 class="h2">Pergunte sobre a agenda como quem pergunta a um colega.</h2>
-      <p class="lead">Um assistente em qualquer tela do sistema, que consulta as reuniões de verdade antes de responder e cita cada uma pelo nome. Vendedor vê o que é dele; gestor e admin veem o time.</p>
-      <div class="who rv-stagger">
-        <div><span>Para o executivo</span><p>"O que ficou combinado na última reunião com esse cliente?" — sem reabrir gravação nem procurar anotação.</p></div>
-        <div><span>Para o gestor</span><p>"Quais objeções mais apareceram este mês?" A resposta que levaria uma tarde montando planilha, em uma frase.</p></div>
-      </div>
-    </div>
-    <figure data-par="0.06">
-      <div class="fr narrow"><img src="assets/app/assistente.webp" alt="Assistente respondendo quais são as agendas mais quentes, citando cada reunião" loading="lazy" width="760" height="1120"></div>
     </figure>
   </div>
 </section>
@@ -661,7 +664,7 @@
 </section>
 
 <!-- ── Por que existe ───────────────────────────────────────────────────────── -->
-<section id="porque">
+<section class="light" id="porque">
   <div class="shell">
     <div class="head rv">
       <p class="eyebrow">Por que existe</p>
@@ -676,7 +679,7 @@
 </section>
 
 <!-- ── Números ──────────────────────────────────────────────────────────────── -->
-<section style="padding-top:0">
+<section class="light" style="padding-top:0">
   <div class="shell">
     <div class="nums rv rv-stagger">
       <div class="num"><b><span data-count="8">0</span><small>s</small></b><span>até a primeira orientação ao vivo depois de uma fala</span></div>
@@ -688,7 +691,7 @@
 </section>
 
 <!-- ── Planos ───────────────────────────────────────────────────────────────── -->
-<section id="planos">
+<section class="light" id="planos">
   <div class="shell">
     <div class="head center rv">
       <p class="eyebrow">Planos</p>
