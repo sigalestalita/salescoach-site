@@ -97,16 +97,19 @@
   .hero .note { margin-top: 16px; font-size: 12.5px; color: var(--dim-2); }
 
   /* Grafismo de nós nas laterais, como na referência. */
-  .nodes { position: absolute; inset: calc(var(--nav-h) + 30px) 0 auto; height: 520px; z-index: -1; pointer-events: none; }
+  /* As tags acompanham o mockup, não o título. */
+  .nodes { position: absolute; inset: 0; z-index: 2; pointer-events: none; }
   /* O fio sai do próprio ícone, em vez de um traçado solto que não encosta
      em nada — era isso que fazia os rótulos parecerem soltos no ar. */
-  .node .wire { flex: 1 1 auto; height: 1px; min-width: 54px; background: repeating-linear-gradient(90deg, rgba(146,176,236,.4) 0 5px, transparent 5px 12px); }
-  .node { position: absolute; display: flex; align-items: center; gap: 10px; width: 300px; font-size: 12.5px; color: var(--dim); white-space: nowrap; }
-  .node .ic { width: 38px; height: 38px; border-radius: 12px; display: grid; place-items: center; border: 1px solid var(--line-2); background: rgba(10,13,22,.8); backdrop-filter: blur(8px); }
+  .node .wire { flex: 0 0 auto; width: 16px; height: 1px; background: repeating-linear-gradient(90deg, rgba(146,176,236,.4) 0 5px, transparent 5px 12px); }
+  /* Precisa caber na margem ao lado do mockup (≈180px), então o rótulo
+     quebra em duas linhas em vez de ser cortado pela borda da tela. */
+  .node { position: absolute; display: flex; align-items: center; gap: 9px; width: 164px; font-size: 11.5px; line-height: 1.35; color: var(--dim); }
+  .node .ic { flex: 0 0 auto; width: 34px; height: 34px; border-radius: 11px; display: grid; place-items: center; border: 1px solid var(--line-2); background: rgba(10,13,22,.8); backdrop-filter: blur(8px); }
   .node .ic svg { position: static; width: 17px; height: 17px; stroke: var(--blue-2); fill: none; stroke-width: 1.7; }
   .node.right { flex-direction: row-reverse; }
-  .n1 { left: 2%; top: 150px; } .n2 { left: 4%; top: 322px; } .n3 { right: 2%; top: 124px; } .n4 { right: 4%; top: 322px; }
-  @media (max-width: 1240px) { .nodes { display: none; } }
+  .n1 { left: 10px; top: 10%; } .n2 { left: 10px; top: 40%; } .n3 { right: 10px; top: 10%; } .n4 { right: 10px; top: 40%; }
+  @media (max-width: 1420px) { .nodes { display: none; } }
 
   /* Mockup do produto na primeira dobra. */
   /* Sem rotação 3D: a projeção deformava a captura e o texto dentro dela. */
@@ -208,6 +211,49 @@
   .feat figcaption { margin-top: 14px; font-size: 13px; color: var(--dim-2); }
   @media (max-width: 900px) { .feat-grid, .feat.flip .feat-grid { grid-template-columns: 1fr; gap: 34px; } .feat.flip .feat-grid > :first-child { order: 0; } .who { grid-template-columns: 1fr; } }
 
+  /* ── Ecossistema: órbita ──
+     Cada logo fica na ponta de um "braço" girado, em vez de translate() com
+     porcentagem — que resolve sobre o próprio elemento e empilhava tudo no
+     centro. Quem se move é o fio tracejado correndo para o miolo. */
+  .orbit { position: relative; width: min(620px, 90vw); aspect-ratio: 1; margin: 56px auto 0; }
+  .orbit .ring { position: absolute; border-radius: 50%; border: 1px dashed rgba(146,176,236,.16); }
+  .orbit .ring.r1 { inset: 0; }
+  .orbit .ring.r2 { inset: 21%; border-style: solid; border-color: rgba(146,176,236,.1); }
+  .orbit .pulse { position: absolute; inset: 40%; border-radius: 50%; border: 1px solid rgba(79,139,240,.45); animation: pulso 3.6s ease-out infinite; }
+  .orbit .pulse.d2 { animation-delay: 1.8s; }
+  @keyframes pulso { from { transform: scale(1); opacity: .65; } to { transform: scale(2.4); opacity: 0; } }
+
+  .arm { position: absolute; inset: 0; rotate: var(--a); }
+  .arm.inner { inset: 21%; }
+  /* Fio do satélite até o centro, com as marcas correndo para dentro. */
+  .arm::before { content: ""; position: absolute; left: 50%; top: 4%; bottom: 50%; width: 1px; translate: -50% 0;
+    background: repeating-linear-gradient(180deg, rgba(146,176,236,.5) 0 5px, transparent 5px 13px);
+    animation: flui 1.5s linear infinite; }
+  @keyframes flui { to { background-position: 0 13px; } }
+
+  .sat { position: absolute; left: 50%; top: 0; translate: -50% -50%; rotate: calc(var(--a) * -1);
+    width: 56px; height: 56px; border-radius: 16px; display: grid; place-items: center;
+    border: 1px solid var(--line-2); background: rgba(10,13,22,.94); backdrop-filter: blur(8px);
+    box-shadow: 0 14px 34px -16px rgba(0,0,0,.9); }
+  .sat img { width: 24px; height: 24px; object-fit: contain; animation: bob 5.5s ease-in-out infinite; }
+  @keyframes bob { 50% { translate: 0 -3px; } }
+  .orbit .core { position: absolute; left: 50%; top: 50%; width: 20%; aspect-ratio: 1; translate: -50% -50%; border-radius: 50%; display: grid; place-items: center; background: radial-gradient(circle at 38% 32%, #1E5BB0, #070910 72%); border: 1px solid rgba(146,176,236,.42); box-shadow: 0 0 70px rgba(79,139,240,.5), inset 0 1px 0 rgba(255,255,255,.18); z-index: 2; }
+  .orbit .core img { width: 46%; }
+  .orbit-cap { margin-top: 26px; text-align: center; font-size: 13px; color: var(--dim-2); }
+  @media (max-width: 620px) { .sat { width: 44px; height: 44px; border-radius: 13px; } .sat img { width: 19px; height: 19px; } }
+
+  /* Faixa rolante de ferramentas */
+  .flow { margin-top: 58px; overflow: hidden; -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent); mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent); }
+  .flow-track { display: flex; gap: 12px; width: max-content; animation: corre 46s linear infinite; }
+  .flow:hover .flow-track { animation-play-state: paused; }
+  @keyframes corre { to { transform: translateX(-50%); } }
+  .chip { display: inline-flex; align-items: center; gap: 9px; padding: 11px 17px; border-radius: 999px; border: 1px solid var(--line); background: rgba(146,176,236,.04); font-size: 13.5px; color: var(--dim); white-space: nowrap; }
+  .chip img { width: 18px; height: 18px; object-fit: contain; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .orbit .spin, .sat i, .flow-track, .orbit .pulse { animation: none !important; }
+  }
+
   /* ── Manifesto ── */
   .claims { display: grid; gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 20px; overflow: hidden; margin-top: 54px; }
   .claim { background: var(--ink-0); padding: 38px 34px; display: grid; grid-template-columns: 54px 1fr; gap: 22px; transition: background .3s; }
@@ -295,12 +341,6 @@
   <div class="aurora" aria-hidden="true"><i class="a1"></i><i class="a2"></i><i class="a3"></i></div>
   <canvas id="stars" aria-hidden="true"></canvas>
 
-  <div class="nodes" aria-hidden="true">
-    <div class="node n1"><span class="ic"><svg viewBox="0 0 24 24"><path d="M3 12h4l3 8 4-16 3 8h4"/></svg></span>Nota por metodologia<i class="wire"></i></div>
-    <div class="node n2"><span class="ic"><svg viewBox="0 0 24 24"><path d="M12 3v10m0 0a3 3 0 0 0 3-3V6a3 3 0 0 0-6 0v4a3 3 0 0 0 3 3zM5 11a7 7 0 0 0 14 0M12 18v3"/></svg></span>Coach ao vivo<i class="wire"></i></div>
-    <div class="node n3 right"><span class="ic"><svg viewBox="0 0 24 24"><path d="M4 5h16v12H4zM9 21h6M12 17v4"/></svg></span>Treino simulado<i class="wire"></i></div>
-    <div class="node n4 right"><span class="ic"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span>Assistente da agenda<i class="wire"></i></div>
-  </div>
 
   <div class="shell">
     <span class="pill rv in"><span class="dot"></span>Coach de vendas com IA · <b>em português</b></span>
@@ -314,6 +354,12 @@
   </div>
 
   <div class="stage rv in">
+  <div class="nodes" aria-hidden="true">
+    <div class="node n1"><span class="ic"><svg viewBox="0 0 24 24"><path d="M3 12h4l3 8 4-16 3 8h4"/></svg></span>Nota por metodologia<i class="wire"></i></div>
+    <div class="node n2"><span class="ic"><svg viewBox="0 0 24 24"><path d="M12 3v10m0 0a3 3 0 0 0 3-3V6a3 3 0 0 0-6 0v4a3 3 0 0 0 3 3zM5 11a7 7 0 0 0 14 0M12 18v3"/></svg></span>Coach ao vivo<i class="wire"></i></div>
+    <div class="node n3 right"><span class="ic"><svg viewBox="0 0 24 24"><path d="M4 5h16v12H4zM9 21h6M12 17v4"/></svg></span>Treino simulado<i class="wire"></i></div>
+    <div class="node n4 right"><span class="ic"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span>Assistente da agenda<i class="wire"></i></div>
+  </div>
     <div>
       <div class="win">
         <div class="win-bar"><i></i><i></i><i></i><span>Análise da reunião · Demo · Atacado Norte</span></div>
@@ -334,7 +380,7 @@
     </div>
     <hr>
     <div class="trust-col right">
-      <span>Entrega no CRM</span>
+      <span>Integra com o CRM</span>
       <img src="assets/logos/hubspot.svg" alt="HubSpot" loading="lazy">
       <img src="assets/logos/salesforce.svg" alt="Salesforce" loading="lazy">
       <img src="assets/logos/pipedrive.png" alt="Pipedrive" loading="lazy">
@@ -482,6 +528,38 @@
     <figure>
       <div class="fr narrow"><img src="assets/app/assistente.webp" alt="Assistente respondendo quais são as agendas mais quentes, citando cada reunião" loading="lazy" width="760" height="1120"></div>
     </figure>
+  </div>
+</section>
+
+<!-- ── Ecossistema ──────────────────────────────────────────────────────────── -->
+<section id="ecossistema">
+  <div class="shell">
+    <div class="head center rv">
+      <p class="eyebrow">Ecossistema</p>
+      <h2 class="h2">Entra na reunião.<br>Sai no CRM. Sem ninguém digitar.</h2>
+      <p>O Sales Coach se conecta ao que o time já usa: a reunião acontece onde sempre aconteceu, e o resultado dela vai parar onde sempre deveria estar.</p>
+    </div>
+
+    <div class="orbit rv" aria-hidden="true">
+      <div class="ring r1"></div><div class="ring r2"></div>
+      <div class="pulse"></div><div class="pulse d2"></div>
+      <div class="arm" style="--a:0deg"><span class="sat"><img src="assets/logos/googlemeet.svg" alt="Google Meet" loading="lazy"></span></div>
+      <div class="arm" style="--a:51deg"><span class="sat"><img src="assets/logos/hubspot.svg" alt="HubSpot" loading="lazy"></span></div>
+      <div class="arm" style="--a:103deg"><span class="sat"><img src="assets/logos/salesforce.svg" alt="Salesforce" loading="lazy"></span></div>
+      <div class="arm" style="--a:154deg"><span class="sat"><img src="assets/logos/pipedrive.png" alt="Pipedrive" loading="lazy"></span></div>
+      <div class="arm" style="--a:206deg"><span class="sat"><img src="assets/logos/rdstation.png" alt="RD Station" loading="lazy"></span></div>
+      <div class="arm" style="--a:257deg"><span class="sat"><img src="assets/logos/microsoftteams.svg" alt="Microsoft Teams" loading="lazy"></span></div>
+      <div class="arm" style="--a:309deg"><span class="sat"><img src="assets/logos/zoom.svg" alt="Zoom" loading="lazy"></span></div>
+      <div class="arm inner" style="--a:35deg"><span class="sat"><img src="assets/logos/slack.svg" alt="Slack" loading="lazy"></span></div>
+      <div class="arm inner" style="--a:155deg"><span class="sat"><img src="assets/logos/googlecalendar.svg" alt="Google Calendar" loading="lazy"></span></div>
+      <div class="arm inner" style="--a:275deg"><span class="sat"><img src="assets/logos/gmail.svg" alt="Gmail" loading="lazy"></span></div>
+      <div class="core"><img src="assets/mark-white.png" alt=""></div>
+    </div>
+    <p class="orbit-cap rv">Resumo, próximos passos, temperatura e critérios da metodologia vão para a oportunidade ao fim da reunião.</p>
+
+    <div class="flow rv" aria-hidden="true">
+      <div class="flow-track"><span class="chip"><img src="assets/logos/salesforce.svg" alt="" loading="lazy">Salesforce</span><span class="chip"><img src="assets/logos/hubspot.svg" alt="" loading="lazy">HubSpot</span><span class="chip"><img src="assets/logos/pipedrive.png" alt="" loading="lazy">Pipedrive</span><span class="chip"><img src="assets/logos/rdstation.png" alt="" loading="lazy">RD Station CRM</span><span class="chip"><img src="assets/logos/agendor.png" alt="" loading="lazy">Agendor</span><span class="chip"><img src="assets/logos/ploomes.png" alt="" loading="lazy">Ploomes</span><span class="chip"><img src="assets/logos/zoho.svg" alt="" loading="lazy">Zoho CRM</span><span class="chip"><img src="assets/logos/bitrix24.png" alt="" loading="lazy">Bitrix24</span><span class="chip"><img src="assets/logos/kommo.png" alt="" loading="lazy">Kommo</span><span class="chip"><img src="assets/logos/monday.png" alt="" loading="lazy">monday CRM</span><span class="chip"><img src="assets/logos/googlemeet.svg" alt="" loading="lazy">Google Meet</span><span class="chip"><img src="assets/logos/microsoftteams.svg" alt="" loading="lazy">Microsoft Teams</span><span class="chip"><img src="assets/logos/zoom.svg" alt="" loading="lazy">Zoom</span><span class="chip"><img src="assets/logos/googlecalendar.svg" alt="" loading="lazy">Google Calendar</span><span class="chip"><img src="assets/logos/slack.svg" alt="" loading="lazy">Slack</span><span class="chip"><img src="assets/logos/whatsapp.svg" alt="" loading="lazy">WhatsApp</span><span class="chip"><img src="assets/logos/salesforce.svg" alt="" loading="lazy">Salesforce</span><span class="chip"><img src="assets/logos/hubspot.svg" alt="" loading="lazy">HubSpot</span><span class="chip"><img src="assets/logos/pipedrive.png" alt="" loading="lazy">Pipedrive</span><span class="chip"><img src="assets/logos/rdstation.png" alt="" loading="lazy">RD Station CRM</span><span class="chip"><img src="assets/logos/agendor.png" alt="" loading="lazy">Agendor</span><span class="chip"><img src="assets/logos/ploomes.png" alt="" loading="lazy">Ploomes</span><span class="chip"><img src="assets/logos/zoho.svg" alt="" loading="lazy">Zoho CRM</span><span class="chip"><img src="assets/logos/bitrix24.png" alt="" loading="lazy">Bitrix24</span><span class="chip"><img src="assets/logos/kommo.png" alt="" loading="lazy">Kommo</span><span class="chip"><img src="assets/logos/monday.png" alt="" loading="lazy">monday CRM</span><span class="chip"><img src="assets/logos/googlemeet.svg" alt="" loading="lazy">Google Meet</span><span class="chip"><img src="assets/logos/microsoftteams.svg" alt="" loading="lazy">Microsoft Teams</span><span class="chip"><img src="assets/logos/zoom.svg" alt="" loading="lazy">Zoom</span><span class="chip"><img src="assets/logos/googlecalendar.svg" alt="" loading="lazy">Google Calendar</span><span class="chip"><img src="assets/logos/slack.svg" alt="" loading="lazy">Slack</span><span class="chip"><img src="assets/logos/whatsapp.svg" alt="" loading="lazy">WhatsApp</span></div>
+    </div>
   </div>
 </section>
 
