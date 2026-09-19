@@ -74,7 +74,7 @@ no alto da arte.
 
 | # | Arquivo | Tema | Fundo |
 |---|---|---|---|
-| 41 | `41-melhor-e-pior.html` | Assistente comparando o melhor e o pior vendedor | claro |
+| 41 | `41-o-que-derrubou.html` | Assistente respondendo o que derrubou os negócios do mês | claro |
 
 O 41 não usa `assets/app/assistente.webp`: a tela real mostra outra conversa
 (as agendas mais quentes). A janela é desenhada em HTML seguindo a UI do

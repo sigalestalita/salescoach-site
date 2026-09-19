@@ -584,26 +584,28 @@ de amanhã de manhã.
 
 ## Série conversa
 
-### 41 · `41-melhor-e-pior.png` — claro
+### 41 · `41-o-que-derrubou.png` — claro
 
-Quem está indo bem. E quem está travando.
+O que derrubou os negócios deste mês?
 
-Pergunte ao assistente como perguntaria a um colega: "quem foi melhor e quem
-foi pior no mês — e por quê?".
+É a pergunta que todo gestor comercial faz na segunda de manhã — e que hoje
+se responde com achismo, ou com uma tarde de planilha.
 
-Ele não devolve um ranking. Devolve o critério:
+O assistente cruza as reuniões analisadas e devolve a causa, com quantas
+vezes cada uma apareceu:
 
-Mariana Barbosa, 86. Sobe em Implicação — quantifica o custo da dor antes de
-falar de preço. Em 9 de 11 reuniões o lead disse um número.
+1. Preço sem ROI — 7 reuniões. Em 5 delas o vendedor ofereceu desconto antes
+de quantificar a dor.
+2. Decisor fora da sala — 5 reuniões. Foram para proposta com Authority em
+aberto: ninguém confirmou quem assina.
+3. Prazo vago — 4 reuniões. "Quanto antes melhor" não virou data em nenhuma.
 
-Rafael Nunes, 61. Cai em Authority — não confirma quem assina. Ficou em aberto
-em 7 das 9 reuniões dele, inclusive nas duas que foram para proposta.
+Repare que não é opinião sobre o time: é contagem, tirada das próprias
+gravações. E as três já viram objeção no modo de treino — o time treina
+exatamente o que está derrubando o mês.
 
-A diferença entre os dois não é perfil. É uma pergunta que um faz e o outro
-não. E isso dá para treinar.
-
-(Conversa ilustrativa, com os nomes e números de exemplo do produto.)
+(Conversa ilustrativa, com os números de exemplo do produto.)
 
 salescoach.app.br
 
-#vendas #gestaodevendas #coachdevendas #salesenablement #meddic #IA #vendasb2b
+#vendas #gestaodevendas #pipeline #forecast #objecoes #coachdevendas #IA #vendasb2b
