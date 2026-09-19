@@ -94,3 +94,13 @@ h1, h2, h3 { font-weight: 400; letter-spacing: -.035em; line-height: 1.07; }
 /* Empurra o que vier depois para o rodapé do quadro. */
 .grow { flex: 1 1 auto; }
 .rule { height: 1px; background: var(--line); flex: 0 0 auto; }
+
+/* ═══════════════════════════════════════════════════════════════════════
+   Série "manchete" (posts 06–10): uma frase ocupa o quadro e o apoio cabe
+   em duas linhas. O miolo fica centrado entre a marca e o botão — daí os
+   dois .grow, com o de cima um pouco maior para o bloco não parecer caído.
+   ═══════════════════════════════════════════════════════════════════════ */
+.h0 { font-size: 126px; font-weight: 400; letter-spacing: -.045em; line-height: 1; }
+.grow.top { flex-grow: 1.25; }
+.after { margin-top: 44px; font-size: 40px; line-height: 1.32; letter-spacing: -.02em; color: var(--dim); }
+.after b { font-weight: 500; color: #fff; }

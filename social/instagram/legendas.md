@@ -111,3 +111,84 @@ Link da bio: `salescoach.app.br` · CTA padrão: free trial de 7 dias, sem cart�
 > Comece pela próxima reunião que o seu time tiver. Link na bio.
 >
 > #vendas #vendasb2b #gestaodevendas #saas #ferramentasdevendas #crm #IA #freetrial #timedevendas
+
+---
+
+# Série "manchete" (06–10)
+
+Mesmo kit visual, outra função: título gigante, apoio em duas linhas e nada
+mais. Servem para parar o dedo — a explicação fica na legenda e no link.
+
+---
+
+## 06 · `06-nunca-ouviu.png`
+
+> Você nunca ouviu 99% das reuniões do seu time.
+>
+> Não é falta de vontade. São 8 pessoas × 5 reuniões por semana × 1 hora cada.
+> Ninguém escuta isso.
+>
+> O Sales Coach escuta. Todas, inteiras, e devolve em que critérios o time
+> falha — com a frase do lead que prova cada nota.
+>
+> 7 dias grátis, sem cartão. Link na bio.
+>
+> #vendas #gestaodevendas #vendasb2b #IA #salesenablement #crm #timedevendas
+
+---
+
+## 07 · `07-reuniao-boa.png`
+
+> “Reunião boa.”
+>
+> É isso que sobra de uma hora com o seu maior lead do mês.
+>
+> A mesma reunião, com o Sales Coach: 87/100, os quatro critérios, a frase do
+> lead que justifica cada um e o próximo passo — pronto antes de o vendedor
+> fechar o notebook.
+>
+> Link na bio. 7 dias grátis.
+>
+> #vendas #crm #bant #meddic #pipeline #forecast #vendasb2b #IA
+
+---
+
+## 08 · `08-cinco-segundos.png`
+
+> 5 segundos.
+>
+> É o tempo entre o cliente dizer “vocês são caros” e a resposta certa aparecer
+> na tela do seu vendedor — dentro do Meet ou do Teams, num painel que só ele vê.
+>
+> Tirada do material da sua empresa. Não de um modelo genérico.
+>
+> #vendas #objecoes #tecnicasdevendas #googlemeet #microsoftteams #IA #vendasb2b
+
+---
+
+## 09 · `09-melhor-vendedor.png`
+
+> O seu melhor vendedor sai. O método dele fica.
+>
+> Toda reunião analisada engrossa a base da empresa: as objeções que mais
+> aparecem, as respostas que funcionaram, o seu playbook.
+>
+> Quem entra novo não começa do zero — treina com as objeções do seu mercado,
+> antes da primeira reunião de verdade.
+>
+> #vendas #rampup #treinamentodevendas #gestaodevendas #playbookdevendas #IA
+
+---
+
+## 10 · `10-dezenove-e-noventa.png`
+
+> R$ 19,90 por vendedor/mês.
+>
+> Um coach em todas as reuniões do time, por menos que um almoço.
+>
+> Cobrança por usuário ativo — nada de licença paga para quem não usa. E os
+> 7 primeiros dias são de graça, sem cartão.
+>
+> Link na bio.
+>
+> #vendas #saas #ferramentasdevendas #gestaodevendas #crm #IA #freetrial
