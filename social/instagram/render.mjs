@@ -1,7 +1,7 @@
 /* Renderiza cada post .html em PNG 1080×1350 (4:5 do Instagram).
    Uso: node render.mjs            → renderiza todos
         node render.mjs 01 03      → só os posts cujo nome começa assim   */
-import { readdirSync, mkdirSync } from 'node:fs';
+import { readdirSync, mkdirSync, writeFileSync, unlinkSync } from 'node:fs';
 import { resolve, dirname } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 
@@ -43,6 +43,28 @@ for (const file of pages) {
   await page.locator('.post').screenshot({ path: out });
   await page.close();
   console.log('✓', out.replace(here + '/', ''));
+}
+
+/* Folha de contato: os posts renderizados numa grade de cinco colunas, que
+   é como o perfil aparece. É aqui que se vê se os fundos e as composições
+   estão variando de verdade ou se viraram vinte vezes a mesma página. */
+{
+  const todos = readdirSync(resolve(here, 'out')).filter((f) => /^\d\d-.*\.png$/.test(f)).sort();
+  const celulas = todos
+    .map((f) => `<figure><img src="${f}"><figcaption>${f.slice(0, 2)}</figcaption></figure>`)
+    .join('');
+  const folha = resolve(here, 'out', '_grade.html');
+  writeFileSync(folha, `<html><body style="margin:0;background:#4a4a4a;display:grid;grid-template-columns:repeat(5,1fr);gap:10px;padding:10px">
+<style>figure{margin:0;position:relative}img{width:100%;display:block}
+figcaption{position:absolute;top:6px;left:8px;color:#fff;font:700 26px sans-serif;text-shadow:0 2px 8px #000}</style>
+${celulas}</body></html>`);
+
+  const page = await ctx.newPage();
+  await page.goto(pathToFileURL(folha).href, { waitUntil: 'networkidle' });
+  await page.screenshot({ path: resolve(here, 'out', '_grade.png'), fullPage: true });
+  await page.close();
+  unlinkSync(folha);
+  console.log('✓ out/_grade.png');
 }
 
 await browser.close();

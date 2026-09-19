@@ -7,19 +7,18 @@
 <style>
   /* Painel da extensão: o recorte vai direto no cartão FALE AGORA, que é a
      única coisa que o vendedor olha no meio da reunião. */
-  .head { margin-top: 20px; }
-  .head .h2 { margin-top: 14px; }
-  .head .after { margin-top: 18px; font-size: 29px; }
-  .grow.top { flex-grow: 4; }
-  .shot { margin-top: 32px; }
-  /* Recorte de extensao.webp: mostra o cartão da objeção no lugar do print inteiro, que
-     encolhido para 924px ficaria ilegível no feed. */
-  .win { height: 578px; }
-  .win img { width: 1163px; margin: -401px 0 0 -165px; }
+  /* O painel da extensão é vertical: em vez de atravessar o quadro, ele
+     fica numa coluna ao lado do texto. */
+  .split { --split: 1fr 392px; }
+  .head .h2 { margin-top: 14px; font-size: 46px; }
+  .head .after { margin-top: 18px; font-size: 26px; }
+  /* Recorte de extensao.webp: só o painel, sem a moldura escura do print. */
+  .win { height: 608px; }
+  .win img { width: 454px; margin: -17px 0 0 -55px; }
 </style>
 </head>
 <body>
-<div class="post">
+<div class="post bg-deep">
   <div class="aurora"><i class="a1"></i><i class="a2"></i><i class="a3"></i></div>
   <canvas class="stars"></canvas>
 
@@ -31,15 +30,16 @@
 
   <div class="grow top"></div>
 
-  <div class="head">
-    <div class="kicker">Durante a reunião</div>
-    <h2 class="h2">A objeção entrou.<br><span class="grad">A resposta já está na tela.</span></h2>
-    <p class="after">O painel da extensão, no Meet e no Teams.<br>Discreto: <b>só o vendedor vê</b>.</p>
-  </div>
+  <div class="split">
+    <div class="head">
+      <div class="kicker">Durante a reunião</div>
+      <h2 class="h2">A objeção entrou.<br><span class="grad">A resposta já<br>está na tela.</span></h2>
+      <p class="after">O painel da extensão, no Meet e no Teams. Discreto: <b>só o vendedor vê</b>.</p>
+    </div>
 
-  <div class="shot">
-    <div class="chrome"><i></i><i></i><i></i><span>Extensão Chrome · Google Meet</span></div>
-    <div class="win"><img src="../../assets/app/extensao.webp" alt="Painel da extensão durante a reunião com a orientação Fale agora e a transcrição ao vivo"></div>
+    <div class="shot bare">
+      <div class="win"><img src="../../assets/app/extensao.webp" alt="Painel da extensão durante a reunião com a orientação Fale agora e a transcrição ao vivo"></div>
+    </div>
   </div>
 
   <div class="grow" style="min-height:24px"></div>

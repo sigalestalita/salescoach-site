@@ -7,11 +7,13 @@
 <style>
   /* Base de conhecimento: o print entra com a barra lateral para mostrar
      que isso é um produto, não um chat. */
-  .head { margin-top: 22px; }
+  .head { margin-top: 0; }
   .head .h2 { margin-top: 14px; }
   .head .after { margin-top: 18px; font-size: 29px; }
-  .grow.top { flex-grow: 4; }
-  .shot { margin-top: 34px; }
+  /* Com o print antes do texto, ele entra pelo alto do quadro e a
+     sobra fica embaixo, sob o título. */
+  .grow.top { flex-grow: .3; }
+  .shot { margin-bottom: 42px; }
   /* Recorte de conhecimento.webp: mostra a base com os documentos da empresa no lugar do print inteiro, que
      encolhido para 924px ficaria ilegível no feed. */
   .win { height: 357px; }
@@ -19,27 +21,27 @@
 </style>
 </head>
 <body>
-<div class="post">
+<div class="post bg-light">
   <div class="aurora"><i class="a1"></i><i class="a2"></i><i class="a3"></i></div>
   <canvas class="stars"></canvas>
 
   <header class="brand">
-    <img src="../../assets/mark-white.png" alt="Sales Coach">
+    <img src="../../assets/mark.png" alt="Sales Coach">
     <span>Sales Coach</span>
     <em class="site" style="font-style:normal">salescoach.app.br</em>
   </header>
 
   <div class="grow top"></div>
 
+  <div class="shot">
+    <div class="chrome"><i></i><i></i><i></i><span>Base de conhecimento</span></div>
+    <div class="win"><img src="../../assets/app/conhecimento.webp" alt="Tela da base de conhecimento com documentos da empresa carregados e o botão Treinar IA"></div>
+  </div>
+
   <div class="head">
     <div class="kicker">A base da sua empresa</div>
     <h2 class="h2">Ele não sabe vender.<br><span class="grad">Até você ensinar.</span></h2>
     <p class="after">Playbook, tabela de preços, portfólio e cases.<br>Um botão reprocessa tudo: <b>Treinar IA</b>.</p>
-  </div>
-
-  <div class="shot">
-    <div class="chrome"><i></i><i></i><i></i><span>Base de conhecimento</span></div>
-    <div class="win"><img src="../../assets/app/conhecimento.webp" alt="Tela da base de conhecimento com documentos da empresa carregados e o botão Treinar IA"></div>
   </div>
 
   <div class="grow" style="min-height:24px"></div>

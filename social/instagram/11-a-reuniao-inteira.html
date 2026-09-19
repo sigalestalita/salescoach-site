@@ -7,11 +7,13 @@
 <style>
   /* Tela de análise: a prova mais forte do produto. O título fica curto
      para o print ficar grande. */
-  .head { margin-top: 22px; }
+  .head { margin-top: 0; }
   .head .h2 { margin-top: 14px; }
   .head .after { margin-top: 18px; font-size: 30px; }
-  .grow.top { flex-grow: 4; }
-  .shot { margin-top: 34px; }
+  /* Com o print antes do texto, ele entra pelo alto do quadro e a
+     sobra fica embaixo, sob o título. */
+  .grow.top { flex-grow: .3; }
+  .shot { margin-bottom: 42px; }
   /* Corta a coluna do SPIN e a sobra de baixo: sem isso o print inteiro
      encolhe para 924px e as justificativas ficam ilegíveis no feed. */
   .win { height: 549px; }
@@ -19,7 +21,7 @@
 </style>
 </head>
 <body>
-<div class="post">
+<div class="post bg-grid">
   <div class="aurora"><i class="a1"></i><i class="a2"></i><i class="a3"></i></div>
   <canvas class="stars"></canvas>
 
@@ -31,15 +33,15 @@
 
   <div class="grow top"></div>
 
+  <div class="shot">
+    <div class="chrome"><i></i><i></i><i></i><span>Análise · Demo · Atacado Norte</span></div>
+    <div class="win"><img src="../../assets/app/analise.webp" alt="Score 91, temperatura muito quente e os critérios BANT e MEDDIC com a justificativa de cada nota"></div>
+  </div>
+
   <div class="head">
     <div class="kicker">Depois da reunião</div>
     <h2 class="h2">Uma hora de conversa,<br><span class="grad">nesta tela.</span></h2>
     <p class="after">BANT, MEDDIC e SPIN — e a frase do lead<br>que justifica <b>cada nota</b>.</p>
-  </div>
-
-  <div class="shot">
-    <div class="chrome"><i></i><i></i><i></i><span>Análise · Demo · Atacado Norte</span></div>
-    <div class="win"><img src="../../assets/app/analise.webp" alt="Score 91, temperatura muito quente e os critérios BANT e MEDDIC com a justificativa de cada nota"></div>
   </div>
 
   <div class="grow" style="min-height:24px"></div>
