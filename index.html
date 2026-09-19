@@ -254,6 +254,14 @@
     .orbit .spin, .sat i, .flow-track, .orbit .pulse { animation: none !important; }
   }
 
+  /* Painéis do ecossistema no trilho */
+  .eco-panel { grid-template-columns: 1fr 1fr; align-items: center; }
+  .eco-panel.wide { grid-template-columns: 1fr; width: min(720px, 82vw); }
+  .eco-panel .orbit { margin: 0; width: 100%; max-width: 380px; justify-self: center; }
+  .logo-grid { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
+  .logo-grid .chip { padding: 9px 15px; font-size: 13px; }
+  @media (max-width: 900px) { .eco-panel, .eco-panel.wide { grid-template-columns: 1fr; width: auto; } .eco-panel .orbit { max-width: 300px; margin-inline: auto; } }
+
   /* ── Manifesto ── */
   .claims { display: grid; gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 20px; overflow: hidden; margin-top: 54px; }
   .claim { background: var(--ink-0); padding: 38px 34px; display: grid; grid-template-columns: 54px 1fr; gap: 22px; transition: background .3s; }
@@ -291,6 +299,22 @@
   .plan .btn { width: 100%; }
   @media (max-width: 900px) { .plans { grid-template-columns: 1fr; } }
 
+  /* Alternância mensal/anual */
+  .toggle { display: inline-flex; align-items: center; gap: 12px; margin-top: 28px; font-size: 13.5px; color: var(--dim-2); }
+  .toggle span.on { color: #fff; }
+  .switch { width: 46px; height: 26px; border-radius: 999px; border: 1px solid var(--line-2); background: rgba(146,176,236,.07); position: relative; cursor: pointer; transition: background .2s, border-color .2s; }
+  .switch i { position: absolute; top: 3px; left: 3px; width: 18px; height: 18px; border-radius: 50%; background: #fff; transition: translate .22s cubic-bezier(.22,1,.36,1); }
+  .switch[aria-checked="true"] { background: rgba(79,139,240,.35); border-color: rgba(79,139,240,.6); }
+  .switch[aria-checked="true"] i { translate: 20px 0; }
+  .toggle .save { padding: 4px 10px; border-radius: 999px; font-size: 11.5px; color: var(--blue-2); border: 1px solid rgba(79,139,240,.32); background: rgba(79,139,240,.1); }
+  .plan .for { margin-top: 10px; font-size: 13.5px; color: var(--dim-2); min-height: 56px; }
+  .plan .price b.consulta { font-size: 28px; }
+  .plan sup { font-size: .4em; vertical-align: super; color: var(--dim); margin-right: 3px; }
+
+  /* Faixa do free trial */
+  .trial { display: flex; align-items: center; justify-content: space-between; gap: 22px; flex-wrap: wrap; margin-top: 26px; padding: 22px 26px; border-radius: 18px; border: 1px solid rgba(79,139,240,.3); background: linear-gradient(100deg, rgba(79,139,240,.14), rgba(123,108,246,.07)); }
+  .trial span { font-size: 14.5px; color: var(--dim); max-width: 74ch; }
+
   /* ── FAQ ── */
   .faq { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 48px; align-items: start; }
   details { border: 1px solid var(--line); border-radius: 14px; background: rgba(146,176,236,.03); transition: border-color .2s; }
@@ -315,6 +339,38 @@
   .foot nav { display: flex; gap: 22px; }
   .foot a:hover { color: #fff; }
 
+  /* ── Movimento ──
+     Parallax é aplicado em [data-par] pelo script; aqui ficam as animações
+     contínuas, que não dependem da rolagem. */
+  .aurora .a1 { animation: deriva1 26s ease-in-out infinite alternate; }
+  .aurora .a2 { animation: deriva2 32s ease-in-out infinite alternate; }
+  .aurora .a3 { animation: deriva3 22s ease-in-out infinite alternate; }
+  @keyframes deriva1 { to { translate: 70px 40px; scale: 1.12; } }
+  @keyframes deriva2 { to { translate: -90px 60px; scale: 1.08; } }
+  @keyframes deriva3 { to { translate: -50% 42px; scale: 1.1; } }
+
+  /* Brilho percorrendo a borda do mockup */
+  .win::after { content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; z-index: 3;
+    background: linear-gradient(115deg, transparent 38%, rgba(143,193,255,.13) 48%, transparent 58%);
+    background-size: 280% 100%; animation: varre 7.5s ease-in-out infinite; }
+  @keyframes varre { 0%,60% { background-position: 130% 0; } 100% { background-position: -30% 0; } }
+
+  /* Barra de progresso da leitura */
+  .prog { position: fixed; top: 0; left: 0; height: 2px; z-index: 90; width: 0;
+    background: linear-gradient(90deg, var(--blue), var(--violet)); box-shadow: 0 0 12px rgba(79,139,240,.7); }
+
+  /* Revelação escalonada dos filhos */
+  .rv-stagger > * { opacity: 0; transform: translateY(18px); transition: opacity .6s ease, transform .7s cubic-bezier(.22,1,.36,1); }
+  .rv-stagger.in > * { opacity: 1; transform: none; }
+  .rv-stagger.in > :nth-child(2) { transition-delay: .09s; }
+  .rv-stagger.in > :nth-child(3) { transition-delay: .18s; }
+  .rv-stagger.in > :nth-child(4) { transition-delay: .27s; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .aurora i, .win::after { animation: none !important; }
+    .rv-stagger > * { opacity: 1; transform: none; }
+  }
+
   /* ── Entrada ao rolar ── */
   .rv { opacity: 0; transform: translateY(20px); transition: opacity .7s ease, transform .8s cubic-bezier(.22,1,.36,1); }
   .rv.in { opacity: 1; transform: none; }
@@ -322,6 +378,7 @@
 </style>
 </head>
 <body>
+<div class="prog" id="prog" aria-hidden="true"></div>
 
 <header class="nav" id="nav">
   <div class="shell nav-in">
@@ -332,7 +389,7 @@
       <a href="#planos">Planos</a>
       <a href="#faq">Perguntas</a>
     </nav>
-    <a class="btn btn-ghost btn-sm" href="#contato">Começar piloto</a>
+    <a class="btn btn-ghost btn-sm" href="#contato">Free trial</a>
   </div>
 </header>
 
@@ -343,17 +400,17 @@
 
 
   <div class="shell">
-    <span class="pill rv in"><span class="dot"></span>Coach de vendas com IA · <b>em português</b></span>
-    <h1 class="h1 rv in">Toda reunião do seu time<br>vira <em>método</em>.</h1>
-    <p class="sub rv in">O Sales Coach ouve a conversa, pontua pela metodologia da sua empresa, orienta o vendedor durante a chamada e devolve ao gestor o que o time precisa corrigir.</p>
-    <div class="cta rv in">
-      <a class="btn btn-solid" href="#contato">Começar piloto grátis</a>
+    <span class="pill rv in" data-par="0.10"><span class="dot"></span>Coach de vendas com IA · <b>em português</b></span>
+    <h1 class="h1 rv in" data-par="0.06">Toda reunião do seu time<br>vira <em>método</em>.</h1>
+    <p class="sub rv in" data-par="0.04">O Sales Coach ouve a conversa, pontua pela metodologia da sua empresa, orienta o vendedor durante a chamada e devolve ao gestor o que o time precisa corrigir.</p>
+    <div class="cta rv in" data-par="0.02">
+      <a class="btn btn-solid" href="#contato">Começar free trial</a>
       <a class="btn btn-ghost" href="#produto">Ver o produto <span aria-hidden="true">↗</span></a>
     </div>
-    <p class="note rv in">14 dias · sem cartão · com o seu portfólio já dentro</p>
+    <p class="note rv in">7 dias de free trial · sem cartão · com o seu portfólio já dentro</p>
   </div>
 
-  <div class="stage rv in">
+  <div class="stage rv in" data-par="-0.05">
   <div class="nodes" aria-hidden="true">
     <div class="node n1"><span class="ic"><svg viewBox="0 0 24 24"><path d="M3 12h4l3 8 4-16 3 8h4"/></svg></span>Nota por metodologia<i class="wire"></i></div>
     <div class="node n2"><span class="ic"><svg viewBox="0 0 24 24"><path d="M12 3v10m0 0a3 3 0 0 0 3-3V6a3 3 0 0 0-6 0v4a3 3 0 0 0 3 3zM5 11a7 7 0 0 0 14 0M12 18v3"/></svg></span>Coach ao vivo<i class="wire"></i></div>
@@ -468,12 +525,12 @@
       <p class="eyebrow">Depois da reunião</p>
       <h2 class="h2">A conversa vira nota, e a nota vira conversa com o time.</h2>
       <p class="lead">Cada reunião sai pontuada pelos critérios que a sua empresa definiu, com a frase do lead que justifica cada nota. O mesmo relatório serve para quem fez a reunião e para quem precisa cobrar o resultado dela.</p>
-      <div class="who">
+      <div class="who rv-stagger">
         <div><span>Para o executivo</span><p>Você sai da reunião sem saber se foi bem. Em minutos tem a nota, o que funcionou e a pergunta que faltou — sem depender do gestor ter tempo de ouvir a gravação.</p></div>
         <div><span>Para o gestor</span><p>Você para de avaliar por percepção. Toda agenda do time vem medida pelos mesmos critérios, com evidência, e o um a um deixa de ser sobre opinião.</p></div>
       </div>
     </div>
-    <figure>
+    <figure data-par="0.05">
       <div class="fr"><img src="assets/app/dashboard.webp" alt="Painel do gestor com indicadores do time e evolução de score por executivo" loading="lazy" width="1200" height="376"></div>
       <figcaption>Do lado do gestor: score médio, evolução por executivo e em quais critérios o time mais falha.</figcaption>
     </figure>
@@ -486,12 +543,12 @@
       <p class="eyebrow">Durante a reunião</p>
       <h2 class="h2">A ajuda chega enquanto a objeção ainda está no ar.</h2>
       <p class="lead">A extensão acompanha a chamada no Meet ou no Teams e mostra a frase para dizer nos próximos segundos — tirada da sua base de conhecimento, com o produto e o número certos.</p>
-      <div class="who">
+      <div class="who rv-stagger">
         <div><span>Para o executivo</span><p>A resposta certa aparece na hora, não depois, no caminho de casa. E o critério que você esqueceu de perguntar vira a próxima pergunta, na tela.</p></div>
         <div><span>Para o gestor</span><p>É treinamento acontecendo em toda reunião do time, sem você precisar estar em nenhuma delas — e sem esperar o ciclo de feedback da semana seguinte.</p></div>
       </div>
     </div>
-    <figure>
+    <figure data-par="0.06">
       <div class="fr narrow"><img src="assets/app/extensao.webp" alt="Painel da extensão durante a reunião com a orientação Fale agora" loading="lazy" width="760" height="1302"></div>
     </figure>
   </div>
@@ -503,12 +560,12 @@
       <p class="eyebrow">Antes da reunião</p>
       <h2 class="h2">Erre no simulado, não no lead de verdade.</h2>
       <p class="lead">A IA assume o papel do cliente, com uma dor do seu catálogo e as objeções que já apareceram nas suas reuniões. Por texto ou por voz. Ao encerrar, a conversa recebe a mesma nota de uma reunião real.</p>
-      <div class="who">
+      <div class="who rv-stagger">
         <div><span>Para o executivo</span><p>Pratique a conversa difícil quantas vezes quiser antes da primeira de verdade — inclusive a objeção que te travou na semana passada.</p></div>
         <div><span>Para o gestor</span><p>Rampagem mais curta: quem entrou essa semana chega na primeira reunião já tendo enfrentado as objeções do seu mercado, não as de um roteiro genérico.</p></div>
       </div>
     </div>
-    <figure>
+    <figure data-par="0.05">
       <div class="fr"><img src="assets/app/treino-conversa.webp" alt="Conversa de treino com o lead simulado levantando uma objeção de adoção" loading="lazy" width="1500" height="593"></div>
     </figure>
   </div>
@@ -520,45 +577,85 @@
       <p class="eyebrow">A qualquer momento</p>
       <h2 class="h2">Pergunte sobre a agenda como quem pergunta a um colega.</h2>
       <p class="lead">Um assistente em qualquer tela do sistema, que consulta as reuniões de verdade antes de responder e cita cada uma pelo nome. Vendedor vê o que é dele; gestor e admin veem o time.</p>
-      <div class="who">
+      <div class="who rv-stagger">
         <div><span>Para o executivo</span><p>"O que ficou combinado na última reunião com esse cliente?" — sem reabrir gravação nem procurar anotação.</p></div>
         <div><span>Para o gestor</span><p>"Quais objeções mais apareceram este mês?" A resposta que levaria uma tarde montando planilha, em uma frase.</p></div>
       </div>
     </div>
-    <figure>
+    <figure data-par="0.06">
       <div class="fr narrow"><img src="assets/app/assistente.webp" alt="Assistente respondendo quais são as agendas mais quentes, citando cada reunião" loading="lazy" width="760" height="1120"></div>
     </figure>
   </div>
 </section>
 
-<!-- ── Ecossistema ──────────────────────────────────────────────────────────── -->
-<section id="ecossistema">
-  <div class="shell">
-    <div class="head center rv">
-      <p class="eyebrow">Ecossistema</p>
-      <h2 class="h2">Entra na reunião.<br>Sai no CRM. Sem ninguém digitar.</h2>
-      <p>O Sales Coach se conecta ao que o time já usa: a reunião acontece onde sempre aconteceu, e o resultado dela vai parar onde sempre deveria estar.</p>
-    </div>
+<!-- ── Ecossistema: trilho horizontal ───────────────────────────────────────── -->
+<section class="rail eco-rail" id="ecossistema" data-rail>
+  <div class="rail-pin">
+    <div class="shell">
+      <div class="rail-head">
+        <div class="head">
+          <p class="eyebrow">Ecossistema</p>
+          <h2 class="h2">Entra na reunião.<br>Sai no CRM. Sem ninguém digitar.</h2>
+        </div>
+        <div class="rail-meta">
+          <div class="rail-hint"><i></i>Continue rolando</div>
+          <div class="rail-count"><b>01</b> / 04</div>
+          <div class="rail-bar"><i></i></div>
+        </div>
+      </div>
+      <div class="track" data-track>
 
-    <div class="orbit rv" aria-hidden="true">
-      <div class="ring r1"></div><div class="ring r2"></div>
-      <div class="pulse"></div><div class="pulse d2"></div>
-      <div class="arm" style="--a:0deg"><span class="sat"><img src="assets/logos/googlemeet.svg" alt="Google Meet"></span></div>
-      <div class="arm" style="--a:51deg"><span class="sat"><img src="assets/logos/hubspot.svg" alt="HubSpot"></span></div>
-      <div class="arm" style="--a:103deg"><span class="sat"><img src="assets/logos/salesforce.svg" alt="Salesforce"></span></div>
-      <div class="arm" style="--a:154deg"><span class="sat"><img src="assets/logos/pipedrive.png" alt="Pipedrive"></span></div>
-      <div class="arm" style="--a:206deg"><span class="sat"><img src="assets/logos/rdstation.png" alt="RD Station"></span></div>
-      <div class="arm" style="--a:257deg"><span class="sat"><img src="assets/logos/microsoftteams.svg" alt="Microsoft Teams"></span></div>
-      <div class="arm" style="--a:309deg"><span class="sat"><img src="assets/logos/zoom.svg" alt="Zoom"></span></div>
-      <div class="arm inner" style="--a:35deg"><span class="sat"><img src="assets/logos/slack.svg" alt="Slack"></span></div>
-      <div class="arm inner" style="--a:155deg"><span class="sat"><img src="assets/logos/googlecalendar.svg" alt="Google Calendar"></span></div>
-      <div class="arm inner" style="--a:275deg"><span class="sat"><img src="assets/logos/gmail.svg" alt="Gmail"></span></div>
-      <div class="core"><img src="assets/mark-white.png" alt=""></div>
-    </div>
-    <p class="orbit-cap rv">Resumo, próximos passos, temperatura e critérios da metodologia vão para a oportunidade ao fim da reunião.</p>
+        <article class="panel eco-panel">
+          <div class="panel-txt">
+            <div class="n">01</div>
+            <h3 class="h3">Tudo converge para a oportunidade</h3>
+            <p>O Sales Coach se conecta ao que o time já usa. A reunião acontece onde sempre aconteceu, e o resultado dela vai parar onde sempre deveria estar.</p>
+          </div>
+          <div class="orbit" aria-hidden="true">
+            <div class="ring r1"></div><div class="ring r2"></div>
+            <div class="pulse"></div><div class="pulse d2"></div>
+            <div class="arm" style="--a:0deg"><span class="sat"><img src="assets/logos/googlemeet.svg" alt="Google Meet"></span></div>
+            <div class="arm" style="--a:51deg"><span class="sat"><img src="assets/logos/hubspot.svg" alt="HubSpot"></span></div>
+            <div class="arm" style="--a:103deg"><span class="sat"><img src="assets/logos/salesforce.svg" alt="Salesforce"></span></div>
+            <div class="arm" style="--a:154deg"><span class="sat"><img src="assets/logos/pipedrive.png" alt="Pipedrive"></span></div>
+            <div class="arm" style="--a:206deg"><span class="sat"><img src="assets/logos/rdstation.png" alt="RD Station"></span></div>
+            <div class="arm" style="--a:257deg"><span class="sat"><img src="assets/logos/microsoftteams.svg" alt="Microsoft Teams"></span></div>
+            <div class="arm" style="--a:309deg"><span class="sat"><img src="assets/logos/zoom.svg" alt="Zoom"></span></div>
+            <div class="arm inner" style="--a:35deg"><span class="sat"><img src="assets/logos/slack.svg" alt="Slack"></span></div>
+            <div class="arm inner" style="--a:155deg"><span class="sat"><img src="assets/logos/googlecalendar.svg" alt="Google Calendar"></span></div>
+            <div class="arm inner" style="--a:275deg"><span class="sat"><img src="assets/logos/gmail.svg" alt="Gmail"></span></div>
+            <div class="core"><img src="assets/mark-white.png" alt=""></div>
+          </div>
+        </article>
 
-    <div class="flow rv" aria-hidden="true">
-      <div class="flow-track"><span class="chip"><img src="assets/logos/salesforce.svg" alt="">Salesforce</span><span class="chip"><img src="assets/logos/hubspot.svg" alt="">HubSpot</span><span class="chip"><img src="assets/logos/pipedrive.png" alt="">Pipedrive</span><span class="chip"><img src="assets/logos/rdstation.png" alt="">RD Station CRM</span><span class="chip"><img src="assets/logos/agendor.png" alt="">Agendor</span><span class="chip"><img src="assets/logos/ploomes.png" alt="">Ploomes</span><span class="chip"><img src="assets/logos/zoho.svg" alt="">Zoho CRM</span><span class="chip"><img src="assets/logos/bitrix24.png" alt="">Bitrix24</span><span class="chip"><img src="assets/logos/kommo.png" alt="">Kommo</span><span class="chip"><img src="assets/logos/monday.png" alt="">monday CRM</span><span class="chip"><img src="assets/logos/googlemeet.svg" alt="">Google Meet</span><span class="chip"><img src="assets/logos/microsoftteams.svg" alt="">Microsoft Teams</span><span class="chip"><img src="assets/logos/zoom.svg" alt="">Zoom</span><span class="chip"><img src="assets/logos/googlecalendar.svg" alt="">Google Calendar</span><span class="chip"><img src="assets/logos/slack.svg" alt="">Slack</span><span class="chip"><img src="assets/logos/whatsapp.svg" alt="">WhatsApp</span><span class="chip"><img src="assets/logos/salesforce.svg" alt="">Salesforce</span><span class="chip"><img src="assets/logos/hubspot.svg" alt="">HubSpot</span><span class="chip"><img src="assets/logos/pipedrive.png" alt="">Pipedrive</span><span class="chip"><img src="assets/logos/rdstation.png" alt="">RD Station CRM</span><span class="chip"><img src="assets/logos/agendor.png" alt="">Agendor</span><span class="chip"><img src="assets/logos/ploomes.png" alt="">Ploomes</span><span class="chip"><img src="assets/logos/zoho.svg" alt="">Zoho CRM</span><span class="chip"><img src="assets/logos/bitrix24.png" alt="">Bitrix24</span><span class="chip"><img src="assets/logos/kommo.png" alt="">Kommo</span><span class="chip"><img src="assets/logos/monday.png" alt="">monday CRM</span><span class="chip"><img src="assets/logos/googlemeet.svg" alt="">Google Meet</span><span class="chip"><img src="assets/logos/microsoftteams.svg" alt="">Microsoft Teams</span><span class="chip"><img src="assets/logos/zoom.svg" alt="">Zoom</span><span class="chip"><img src="assets/logos/googlecalendar.svg" alt="">Google Calendar</span><span class="chip"><img src="assets/logos/slack.svg" alt="">Slack</span><span class="chip"><img src="assets/logos/whatsapp.svg" alt="">WhatsApp</span></div>
+        <article class="panel eco-panel wide">
+          <div class="panel-txt">
+            <div class="n">02</div>
+            <h3 class="h3">Grava onde a reunião acontece</h3>
+            <p>Google Meet e Microsoft Teams pela extensão, com o coach ao vivo junto. Zoom e gravações de qualquer origem entram por upload ou link.</p>
+            <div class="logo-grid"><span class="chip"><img src="assets/logos/googlemeet.svg" alt="">Google Meet</span><span class="chip"><img src="assets/logos/microsoftteams.svg" alt="">Microsoft Teams</span><span class="chip"><img src="assets/logos/zoom.svg" alt="">Zoom</span></div>
+          </div>
+        </article>
+
+        <article class="panel eco-panel wide">
+          <div class="panel-txt">
+            <div class="n">03</div>
+            <h3 class="h3">Preenche o CRM sozinho</h3>
+            <p>Resumo, próximos passos, temperatura e critérios da metodologia vão para a oportunidade ao fim da reunião. O campo de observações para de dizer "reunião boa".</p>
+            <div class="logo-grid"><span class="chip"><img src="assets/logos/salesforce.svg" alt="">Salesforce</span><span class="chip"><img src="assets/logos/hubspot.svg" alt="">HubSpot</span><span class="chip"><img src="assets/logos/pipedrive.png" alt="">Pipedrive</span><span class="chip"><img src="assets/logos/rdstation.png" alt="">RD Station</span><span class="chip"><img src="assets/logos/agendor.png" alt="">Agendor</span><span class="chip"><img src="assets/logos/ploomes.png" alt="">Ploomes</span><span class="chip"><img src="assets/logos/zoho.svg" alt="">Zoho CRM</span><span class="chip"><img src="assets/logos/bitrix24.png" alt="">Bitrix24</span><span class="chip"><img src="assets/logos/kommo.png" alt="">Kommo</span><span class="chip"><img src="assets/logos/monday.png" alt="">monday CRM</span></div>
+          </div>
+        </article>
+
+        <article class="panel eco-panel wide">
+          <div class="panel-txt">
+            <div class="n">04</div>
+            <h3 class="h3">Aberto por API</h3>
+            <p>Cada análise é um dado estruturado. Puxe para o BI, dispare um alerta quando uma agenda esfriar, ou monte o fluxo que a sua operação precisar.</p>
+            <div class="logo-grid"><span class="chip"><img src="assets/logos/slack.svg" alt="">Slack</span><span class="chip"><img src="assets/logos/googlecalendar.svg" alt="">Google Calendar</span><span class="chip"><img src="assets/logos/gmail.svg" alt="">Gmail</span><span class="chip"><img src="assets/logos/whatsapp.svg" alt="">WhatsApp</span><span class="chip"><img src="assets/logos/notion.svg" alt="">Notion</span></div>
+          </div>
+        </article>
+
+      </div>
     </div>
   </div>
 </section>
@@ -581,11 +678,11 @@
 <!-- ── Números ──────────────────────────────────────────────────────────────── -->
 <section style="padding-top:0">
   <div class="shell">
-    <div class="nums rv">
+    <div class="nums rv rv-stagger">
       <div class="num"><b><span data-count="8">0</span><small>s</small></b><span>até a primeira orientação ao vivo depois de uma fala</span></div>
       <div class="num"><b><span data-count="100">0</span><small>%</small></b><span>da conversa analisada — não uma amostra</span></div>
       <div class="num"><b><span data-count="3">0</span><small>+</small></b><span>metodologias prontas, ou a sua, com pesos</span></div>
-      <div class="num"><b><span data-count="14">0</span><small>dias</small></b><span>de piloto sem cartão, com o seu portfólio dentro</span></div>
+      <div class="num"><b><span data-count="7">0</span><small>dias</small></b><span>de free trial sem cartão, com o seu portfólio já dentro</span></div>
     </div>
   </div>
 </section>
@@ -595,34 +692,70 @@
   <div class="shell">
     <div class="head center rv">
       <p class="eyebrow">Planos</p>
-      <h2 class="h2">Comece pelo piloto.<br>Decida com dado seu.</h2>
-      <p>Preço por time, não por assento — o produto só faz sentido se todo mundo gravar.</p>
-    </div>
-    <div class="plans">
-      <div class="plan rv">
-        <div class="tag">Piloto</div>
-        <h3>14 dias</h3>
-        <div class="price">Grátis</div>
-        <p class="obs">sem cartão, sem compromisso</p>
-        <ul><li>Até 5 executivos</li><li>Análise por metodologia</li><li>Coach ao vivo e extensão</li><li>Base de conhecimento</li><li>Modo de treino</li></ul>
-        <a class="btn btn-ghost" href="#contato">Começar agora</a>
+      <h2 class="h2">Simples de começar.<br>Feito para crescer com o time.</h2>
+      <div class="toggle">
+        <span class="on" data-ciclo="m">Mensal</span>
+        <button class="switch" id="ciclo" role="switch" aria-checked="false" aria-label="Alternar para cobrança anual"><i></i></button>
+        <span data-ciclo="a">Anual</span>
+        <span class="save">2 meses grátis</span>
       </div>
+    </div>
+
+    <div class="plans rv-stagger">
+      <div class="plan rv">
+        <h3>Essencial</h3>
+        <p class="for">Para o primeiro time que quer parar de perder reunião sem aprender nada com ela.</p>
+        <div class="price"><sup>R$</sup><b data-m="890" data-a="742">890</b><small>/mês</small></div>
+        <p class="obs" data-obs></p>
+        <ul>
+          <li>Até 5 usuários</li>
+          <li>60 reuniões analisadas por mês</li>
+          <li>Coach ao vivo (300 min/mês)</li>
+          <li>Base de conhecimento e gerador de argumentos</li>
+          <li>Extensão Chrome para Meet e Teams</li>
+          <li>BANT, MEDDIC e SPIN prontos</li>
+        </ul>
+        <a class="btn btn-ghost" href="#contato">Começar free trial</a>
+      </div>
+
       <div class="plan hot rv">
         <div class="tag">Mais escolhido</div>
         <h3>Profissional</h3>
-        <div class="price"><sup>R$</sup>2.400<small>/mês</small></div>
-        <p class="obs">até 15 executivos · cancele quando quiser</p>
-        <ul><li>Tudo do piloto, sem limite de tempo</li><li>Assistente de vendas</li><li>Gestão de time e ranking</li><li>Integração com o CRM</li><li>Compartilhamento por link</li></ul>
-        <a class="btn btn-solid" href="#contato">Falar com vendas</a>
+        <p class="for">Para operações com processo definido, que querem a metodologia da casa dentro da ferramenta.</p>
+        <div class="price"><sup>R$</sup><b data-m="2190" data-a="1825">2.190</b><small>/mês</small></div>
+        <p class="obs" data-obs></p>
+        <ul>
+          <li>Até 15 usuários</li>
+          <li>200 reuniões analisadas por mês</li>
+          <li>Coach ao vivo (1.000 min/mês)</li>
+          <li>Metodologia própria: critérios, pesos e faixas</li>
+          <li>Integração com o CRM: oportunidade preenchida sozinha</li>
+          <li>Modo de treino e assistente de vendas</li>
+          <li>Relatórios de gestão e compartilhamento com validade</li>
+        </ul>
+        <a class="btn btn-solid" href="#contato">Começar free trial</a>
       </div>
+
       <div class="plan rv">
-        <div class="tag">Enterprise</div>
-        <h3>Sob medida</h3>
-        <div class="price">Consulte</div>
-        <p class="obs">acima de 15 executivos</p>
-        <ul><li>Metodologia e catálogo dedicados</li><li>Integrações e API</li><li>Domínio próprio e marca</li><li>SSO e SLA</li><li>Gerente de conta</li></ul>
-        <a class="btn btn-ghost" href="#contato">Conversar</a>
+        <h3>Enterprise</h3>
+        <p class="for">Para operações grandes, com vários times, integrações próprias e exigências de segurança.</p>
+        <div class="price"><b class="consulta">Sob consulta</b></div>
+        <p class="obs">Contrato anual</p>
+        <ul>
+          <li>Usuários e análises sob medida</li>
+          <li>Integrações dedicadas e acesso à API</li>
+          <li>Onboarding da metodologia e da base</li>
+          <li>SSO e revisão de segurança</li>
+          <li>SLA e suporte dedicado</li>
+          <li>Relatório de consumo por time</li>
+        </ul>
+        <a class="btn btn-ghost" href="#contato">Falar com a gente</a>
       </div>
+    </div>
+
+    <div class="trial rv">
+      <span><b>Free trial de 7 dias, sem cartão:</b> até 3 usuários, 20 reuniões analisadas e coach ao vivo liberado. A sua base e a sua metodologia já entram no teste.</span>
+      <a class="btn btn-solid btn-sm" href="#contato">Quero testar</a>
     </div>
   </div>
 </section>
@@ -651,12 +784,12 @@
   <div class="shell">
     <div class="head center rv">
       <h2 class="h2">Comece pela próxima reunião<br>que o seu time tiver.</h2>
-      <p>Piloto de 14 dias, com o seu portfólio e a sua metodologia já configurados. Sem cartão.</p>
+      <p>Free trial de 7 dias, com o seu portfólio e a sua metodologia já configurados. Sem cartão.</p>
     </div>
     <form class="form rv" id="lead">
       <input type="email" name="email" placeholder="seu e-mail corporativo" required aria-label="E-mail corporativo">
       <input type="text" name="empresa" placeholder="empresa" required aria-label="Empresa">
-      <button class="btn btn-solid" type="submit">Começar piloto</button>
+      <button class="btn btn-solid" type="submit">Free trial</button>
     </form>
   </div>
 </section>
@@ -726,9 +859,30 @@
     });
   }
   addEventListener("resize", function () { medirTrilhos(); moverTrilhos(); });
-  addEventListener("scroll", moverTrilhos, { passive: true });
+  addEventListener("scroll", function () { moverTrilhos(); movimento(); }, { passive: true });
+  addEventListener("resize", movimento);
   addEventListener("load", function () { medirTrilhos(); moverTrilhos(); });
   medirTrilhos(); moverTrilhos();
+
+  // ── Parallax por elemento e barra de progresso ──
+  var parEls = [].slice.call(document.querySelectorAll("[data-par]"));
+  var prog = document.getElementById("prog");
+  function movimento() {
+    var vh = innerHeight;
+    if (!REDUZ && innerWidth > 820) {
+      for (var i = 0; i < parEls.length; i++) {
+        var el = parEls[i], r = el.getBoundingClientRect();
+        if (r.bottom < -240 || r.top > vh + 240) continue;
+        var centro = r.top + r.height / 2 - vh / 2;
+        el.style.translate = "0 " + (-centro * parseFloat(el.dataset.par)).toFixed(1) + "px";
+      }
+    } else {
+      for (var j = 0; j < parEls.length; j++) parEls[j].style.translate = "";
+    }
+    var total = document.body.scrollHeight - vh;
+    prog.style.width = total > 0 ? ((scrollY / total) * 100).toFixed(2) + "%" : "0";
+  }
+  movimento();
 
   // ── Revelação e contadores ──
   var io = new IntersectionObserver(function (es) {
@@ -738,7 +892,7 @@
       e.target.querySelectorAll("[data-count]").forEach(conta);
     });
   }, { rootMargin: "0px 0px -8% 0px", threshold: .12 });
-  document.querySelectorAll(".rv").forEach(function (el) { io.observe(el); });
+  document.querySelectorAll(".rv, .rv-stagger").forEach(function (el) { io.observe(el); });
 
   function conta(el) {
     var fim = +el.dataset.count, dur = 1200, t0 = performance.now();
@@ -750,13 +904,35 @@
     })(t0);
   }
 
+  // ── Planos: mensal x anual ──
+  var ciclo = document.getElementById("ciclo");
+  function precos(anual) {
+    document.querySelectorAll(".price b[data-m]").forEach(function (b) {
+      var v = Number(anual ? b.dataset.a : b.dataset.m);
+      b.textContent = v.toLocaleString("pt-BR");
+      var obs = b.closest(".plan").querySelector("[data-obs]");
+      if (obs) obs.textContent = anual
+        ? "cobrado anualmente (R$ " + (v * 12).toLocaleString("pt-BR") + "/ano)"
+        : "cobrado mensalmente, cancele quando quiser";
+    });
+    document.querySelectorAll(".toggle [data-ciclo]").forEach(function (e) {
+      e.classList.toggle("on", e.dataset.ciclo === (anual ? "a" : "m"));
+    });
+  }
+  ciclo.addEventListener("click", function () {
+    var n = ciclo.getAttribute("aria-checked") !== "true";
+    ciclo.setAttribute("aria-checked", String(n));
+    precos(n);
+  });
+  precos(false);
+
   // ── Formulário ──
   document.getElementById("lead").addEventListener("submit", function (e) {
     e.preventDefault();
     var f = new FormData(e.target);
     location.href = "mailto:" + CONTACT_EMAIL +
-      "?subject=" + encodeURIComponent("Piloto Sales Coach — " + f.get("empresa")) +
-      "&body=" + encodeURIComponent("E-mail: " + f.get("email") + "\nEmpresa: " + f.get("empresa") + "\n\nQuero começar o piloto de 14 dias.");
+      "?subject=" + encodeURIComponent("Free trial Sales Coach — " + f.get("empresa")) +
+      "&body=" + encodeURIComponent("E-mail: " + f.get("email") + "\nEmpresa: " + f.get("empresa") + "\n\nQuero começar o free trial de 7 dias.");
   });
 </script>
 </body>
