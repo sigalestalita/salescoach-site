@@ -108,8 +108,10 @@
   .node .ic { flex: 0 0 auto; width: 34px; height: 34px; border-radius: 11px; display: grid; place-items: center; border: 1px solid var(--line-2); background: rgba(10,13,22,.8); backdrop-filter: blur(8px); }
   .node .ic svg { position: static; width: 17px; height: 17px; stroke: var(--blue-2); fill: none; stroke-width: 1.7; }
   .node.right { flex-direction: row-reverse; }
-  .n1 { left: 10px; top: 10%; } .n2 { left: 10px; top: 40%; } .n3 { right: 10px; top: 10%; } .n4 { right: 10px; top: 40%; }
-  @media (max-width: 1420px) { .nodes { display: none; } }
+  .nodes { --lado: max(10px, calc(50% - 716px)); }
+  .n1 { left: var(--lado); top: 10%; } .n2 { left: var(--lado); top: 40%; }
+  .n3 { right: var(--lado); top: 10%; } .n4 { right: var(--lado); top: 40%; }
+  @media (max-width: 1440px) { .nodes { display: none; } }
 
   /* Mockup do produto na primeira dobra. */
   /* Sem rotação 3D: a projeção deformava a captura e o texto dentro dela. */
