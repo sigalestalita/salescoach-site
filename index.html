@@ -648,6 +648,10 @@
      time". A régua responde isso e acende o plano correspondente. */
   .plan .faixa { display: flex; align-items: center; justify-content: space-between; gap: 10px; font-size: 11px; font-weight: 500; letter-spacing: .13em; text-transform: uppercase; color: #6B7A93; margin-bottom: 14px; }
   .light .plan .faixa .tag { padding: 4px 10px; border-radius: 999px; font-size: 10px; letter-spacing: .12em; color: #15498D; border: 1px solid rgba(21,73,141,.28); background: rgba(21,73,141,.08); }
+  .plan li.herda { padding-left: 0; font-size: 12.5px; letter-spacing: .04em; opacity: .75; }
+  .plan li.herda::before { display: none; }
+  .plan .setup { margin-top: 12px; padding-top: 12px; border-top: 1px dashed rgba(7,26,52,.14); font-size: 12.5px; color: #6B7A93; }
+  .light .plan .setup b { font-weight: 500; color: #071A34; }
   .plan .price small { display: block; margin-top: 5px; font-size: 12.5px; letter-spacing: .01em; }
   .plan { transition: border-color .35s, box-shadow .35s, transform .35s cubic-bezier(.22,1,.36,1); }
   .light .plan.match { transform: translateY(-4px); }
@@ -671,6 +675,41 @@
   .light .calc-out strong { font-size: 30px; font-weight: 300; letter-spacing: -.035em; color: #071A34; font-variant-numeric: tabular-nums; }
   .calc-out .conta { font-size: 13px; color: #6B7A93; }
   @media (max-width: 560px) { .calc { padding: 22px 20px 20px; } .calc-out { gap: 8px; } }
+
+  /* ── A base da empresa ──────────────────────────────────────────────────
+     Duas colunas ligadas por um circuito que se fecha embaixo: à esquerda o
+     que a empresa coloca na base, à direita frases que o produto só consegue
+     dizer por causa disso, cada uma com a origem declarada. */
+  .base-grid { display: grid; grid-template-columns: 1fr 1.08fr; gap: 56px; margin-top: 52px; align-items: start; }
+  .base-lbl { display: inline-flex; align-items: center; gap: 9px; font-size: 10.5px; font-weight: 500; letter-spacing: .19em; text-transform: uppercase; color: var(--dim-2); margin-bottom: 20px; }
+  .base-lbl::before { content: ""; width: 18px; height: 1px; background: var(--blue-2); opacity: .7; }
+
+  .fontes { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+  .fontes li { display: grid; grid-template-columns: 38px 1fr; align-items: center; gap: 2px 14px; padding: 14px 18px; border-radius: 14px; border: 1px solid var(--line); background: rgba(146,176,236,.04); transition: border-color .25s, background .25s, transform .3s cubic-bezier(.22,1,.36,1); }
+  .fontes li:hover { border-color: var(--line-2); background: rgba(146,176,236,.08); transform: translateX(3px); }
+  .fontes .ic { grid-row: 1 / 3; width: 38px; height: 38px; border-radius: 12px; display: grid; place-items: center; border: 1px solid var(--line-2); background: rgba(10,13,22,.6); }
+  .fontes .ic svg { width: 17px; height: 17px; fill: none; stroke: var(--blue-2); stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+  .fontes b { font-size: 14px; font-weight: 500; }
+  .fontes i { font-style: normal; font-size: 12.5px; color: var(--dim-2); }
+
+  .saidas { display: grid; gap: 12px; }
+  .saida { position: relative; padding: 20px 22px; border-radius: 16px; border: 1px solid var(--line); background: linear-gradient(165deg, rgba(146,176,236,.07), rgba(10,13,22,.3)); overflow: hidden; }
+  .saida::before { content: ""; position: absolute; left: 0; top: 16px; bottom: 16px; width: 2px; border-radius: 2px; background: linear-gradient(180deg, var(--blue), var(--violet)); }
+  .saida .onde { font-size: 10.5px; font-weight: 500; letter-spacing: .15em; text-transform: uppercase; color: var(--blue-2); }
+  .saida q { display: block; margin-top: 11px; font-size: 16px; line-height: 1.45; color: #fff; quotes: "\201C" "\201D"; }
+  .saida p { margin-top: 12px; padding-top: 11px; border-top: 1px solid var(--line); font-size: 12.5px; color: var(--dim-2); }
+  .saida p b { color: var(--dim); font-weight: 400; }
+
+  /* O circuito que devolve a reunião para a base. */
+  .volta { position: relative; margin-top: 30px; height: 62px; }
+  .volta::before { content: ""; position: absolute; left: 2%; right: 2%; top: 0; height: 30px; border: 1px dashed var(--line-2); border-top: 0; border-radius: 0 0 22px 22px; }
+  .volta::after { content: ""; position: absolute; top: 3px; left: 2%; width: 6px; height: 6px; border-radius: 50%; background: var(--blue-2); box-shadow: 0 0 12px var(--blue); animation: retorna 5.5s cubic-bezier(.55,0,.45,1) infinite; }
+  @keyframes retorna { 0% { left: 96%; opacity: 0; } 8% { opacity: 1; } 92% { opacity: 1; } 100% { left: 2%; opacity: 0; } }
+  .volta span { position: absolute; left: 50%; top: 22px; translate: -50% 0; padding: 7px 16px; border-radius: 999px; border: 1px solid var(--line); background: var(--ink-0); font-size: 12px; color: var(--dim-2); white-space: nowrap; }
+
+  .base-nota { margin-top: 26px; text-align: center; font-size: 13px; color: var(--dim-2); }
+  @media (max-width: 940px) { .base-grid { grid-template-columns: 1fr; gap: 40px; } .volta { height: 78px; } .volta span { white-space: normal; max-width: 86vw; text-align: center; } }
+  @media (prefers-reduced-motion: reduce) { .volta::after { animation: none; } }
 
   /* ── Reforço de movimento ─────────────────────────────────────────────── */
   /* Título que sobe palavra por palavra. */
@@ -707,6 +746,7 @@
     <a class="brand" href="#top"><img src="assets/mark-white.png" alt=""><span>Sales Coach</span></a>
     <nav class="nav-links" aria-label="Seções">
       <a href="#produto">Produto</a>
+      <a href="#base">A sua base</a>
       <a href="#porque">Por quê</a>
       <a href="#planos">Planos</a>
       <a href="#faq">Perguntas</a>
@@ -858,6 +898,59 @@
     <figure class="rv shot-big tilt-wrap" data-par="0.04">
       <div class="fr"><img src="assets/app/dashboard.webp" alt="Painel do gestor com indicadores do time e evolução de score por executivo" loading="lazy" width="1400" height="571"></div>
     </figure>
+  </div>
+</section>
+
+<div class="seam rv" aria-hidden="true"></div>
+
+<!-- ── A base da empresa: de onde a IA tira o que diz ─────────────────────── -->
+<section class="spot" id="base">
+  <div class="mesh" aria-hidden="true"></div>
+  <div class="shell">
+    <div class="head rv" style="max-width:840px">
+      <p class="eyebrow">A base da sua empresa</p>
+      <h2 class="h2 split">A IA não chega sabendo<br>vender o que você vende.</h2>
+      <p>Modelo genérico dá conselho genérico. O Sales Coach lê o que a sua empresa já escreveu e já falou, e é daí que sai cada orientação. Quanto mais reunião passa por ele, mais afiado ele fica no seu mercado.</p>
+    </div>
+
+    <div class="base-grid">
+      <div class="base-col">
+        <span class="base-lbl">O que você coloca na base</span>
+        <ul class="fontes rv-stagger">
+          <li><span class="ic"><svg viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8zM14 3v5h5"/></svg></span><b>Playbook, scripts e propostas</b><i>PDF, DOCX, planilha ou link</i></li>
+          <li><span class="ic"><svg viewBox="0 0 24 24"><path d="M3 7h18M3 12h18M3 17h11"/></svg></span><b>Tabela de preços e condições</b><i>o que pode ser oferecido, e até onde</i></li>
+          <li><span class="ic"><svg viewBox="0 0 24 24"><path d="M12 3l2.6 5.6 6.4.8-4.7 4.3 1.3 6.3L12 17l-5.6 3 1.3-6.3L3 9.4l6.4-.8z"/></svg></span><b>Cases e provas de resultado</b><i>para citar cliente parecido na hora certa</i></li>
+          <li><span class="ic"><svg viewBox="0 0 24 24"><path d="M4 5h16v12H4zM9 21h6M12 17v4"/></svg></span><b>As reuniões que já aconteceram</b><i>cada nova conversa entra na base</i></li>
+          <li><span class="ic"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span><b>As objeções que o time mais ouve</b><i>extraídas das próprias gravações</i></li>
+          <li><span class="ic"><svg viewBox="0 0 24 24"><path d="M3 12h4l3 8 4-16 3 8h4"/></svg></span><b>A sua metodologia</b><i>BANT, MEDDIC, SPIN ou os critérios da casa, com pesos</i></li>
+        </ul>
+      </div>
+
+      <div class="base-col">
+        <span class="base-lbl">O que sai por causa dela</span>
+        <div class="saidas rv-stagger">
+          <article class="saida">
+            <span class="onde">Na reunião, pela extensão</span>
+            <q>Quanto vocês investem hoje em treinamento do comercial por ano?</q>
+            <p><b>Veio da</b> sua metodologia: o critério Budget ainda não estava coberto.</p>
+          </article>
+          <article class="saida">
+            <span class="onde">No modo de treino</span>
+            <q>A gente já testou uma ferramenta parecida e o pessoal não se adaptou.</q>
+            <p><b>Veio das</b> objeções que já apareceram nas suas gravações, não de um roteiro pronto.</p>
+          </article>
+          <article class="saida">
+            <span class="onde">Na análise da reunião</span>
+            <q>Vendedor externo sem visibilidade do estoque — dor citada três vezes.</q>
+            <p><b>Veio do</b> seu catálogo de dores, cruzado com o que o lead falou.</p>
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="volta rv" aria-hidden="true"><span>e a reunião de hoje volta para a base, para a próxima ser melhor</span></div>
+
+    <p class="base-nota rv">A base é da sua organização: separada das demais, com acesso por perfil, e você decide o que entra e o que sai dela.</p>
   </div>
 </section>
 
@@ -1023,12 +1116,6 @@
     <div class="head center rv">
       <p class="eyebrow">Planos</p>
       <h2 class="h2 split">Você paga por quem usa.<br>Nada de licença parada.</h2>
-      <div class="toggle">
-        <span class="on" data-ciclo="m">Mensal</span>
-        <button class="switch" id="ciclo" role="switch" aria-checked="false" aria-label="Alternar para cobrança anual"><i></i></button>
-        <span data-ciclo="a">Anual</span>
-        <span class="save">2 meses grátis</span>
-      </div>
     </div>
 
     <div class="calc rv">
@@ -1050,10 +1137,11 @@
         <div class="faixa">1 a 10 usuários</div>
         <h3>Essencial</h3>
         <p class="for">Para o primeiro time que quer parar de perder reunião sem aprender nada com ela.</p>
-        <div class="price"><sup>R$</sup><b data-m="14.90" data-a="12.42">14,90</b><small>por usuário/mês</small></div>
-        <p class="obs" data-obs></p>
+        <div class="price"><sup>R$</sup><b data-preco="19.90">19,90</b><small>por usuário/mês</small></div>
+        <p class="obs">cobrado mensalmente, cancele quando quiser</p>
+        <p class="setup"><b data-setup="990">R$ 990</b> de implantação, uma única vez</p>
         <ul>
-          <li>10 reuniões analisadas por usuário/mês</li>
+          <li>50 reuniões analisadas por usuário/mês</li>
           <li>Coach ao vivo durante a reunião</li>
           <li>Extensão para Meet e Teams</li>
           <li>BANT, MEDDIC e SPIN prontos</li>
@@ -1067,11 +1155,12 @@
         <div class="faixa">11 a 50 usuários<span class="tag">Mais escolhido</span></div>
         <h3>Profissional</h3>
         <p class="for">Para operações com processo definido, que querem a metodologia da casa dentro da ferramenta.</p>
-        <div class="price"><sup>R$</sup><b data-m="24.90" data-a="20.75">24,90</b><small>por usuário/mês</small></div>
-        <p class="obs" data-obs></p>
+        <div class="price"><sup>R$</sup><b data-preco="29.90">29,90</b><small>por usuário/mês</small></div>
+        <p class="obs">cobrado mensalmente, cancele quando quiser</p>
+        <p class="setup"><b data-setup="1690">R$ 1.690</b> de implantação, uma única vez</p>
         <ul>
-          <li>Tudo do Essencial, e mais:</li>
-          <li>25 reuniões analisadas por usuário/mês</li>
+          <li class="herda">Tudo do Essencial, e mais:</li>
+          <li>120 reuniões analisadas por usuário/mês</li>
           <li>Metodologia própria: critérios, pesos e faixas</li>
           <li>Integração com o CRM: oportunidade preenchida sozinha</li>
           <li>Modo de treino e assistente de vendas</li>
@@ -1085,9 +1174,9 @@
         <h3>Enterprise</h3>
         <p class="for">Para operações grandes, com vários times, integrações próprias e exigências de segurança.</p>
         <div class="price"><b class="consulta">Falar com o time</b></div>
-        <p class="obs">preço por usuário negociado por volume</p>
+        <p class="obs">preço por usuário e implantação negociados por volume</p>
         <ul>
-          <li>Tudo do Profissional, e mais:</li>
+          <li class="herda">Tudo do Profissional, e mais:</li>
           <li>Volume de análises sob medida</li>
           <li>Integrações dedicadas e acesso à API</li>
           <li>Onboarding da metodologia e da base</li>
@@ -1120,7 +1209,7 @@
       <details><summary>Em quais plataformas o coach ao vivo funciona?</summary><p>Pela extensão Chrome, no Google Meet e no Microsoft Teams. Para outras plataformas, a gravação pode ser enviada depois para análise.</p></details>
       <details><summary>O vendedor precisa fazer algo durante a reunião?</summary><p>Só clicar em gravar. A transcrição e as orientações aparecem num painel discreto; ao final, a gravação sobe sozinha e a análise fica pronta em minutos.</p></details>
       <details><summary>Onde ficam as gravações e quem tem acesso?</summary><p>Cada empresa tem seus dados isolados. Vendedor vê as próprias reuniões; gestor e admin veem as do time. Links externos só existem quando você ativa, com prazo e revogação.</p></details>
-      <details><summary>O que a base de conhecimento aceita?</summary><p>PDF, documentos, planilhas, links e texto. O conteúdo alimenta a análise (aderência ao portfólio, cross-sell) e o coach ao vivo.</p></details>
+      <details><summary>O que a base de conhecimento aceita?</summary><p>PDF, documentos, planilhas, links e texto. O conteúdo alimenta a análise, o coach ao vivo, o modo de treino e o assistente — e as próprias reuniões analisadas vão engrossando essa base com o tempo.</p></details>
       <details><summary>Como funciona a integração com o CRM?</summary><p>Ao fim de cada reunião analisada, resumo, próximos passos, temperatura e critérios vão para a oportunidade. Salesforce, HubSpot, Pipedrive e RD Station têm conexão direta; outros entram pela API.</p></details>
       <details><summary>O que acontece quando o time cresce de faixa?<span></span></summary><p>A cobrança é por usuário ativo. Ao passar de 10 pessoas, o time entra na faixa do Profissional e o preço por usuário passa a ser o dela — nada de plano travado nem de licença paga para quem não usa. Acima de 50, o preço por pessoa é negociado por volume.</p></details>
     </div>
@@ -1280,18 +1369,16 @@
 
   // ── Planos: por usuário, com régua de tamanho de time ──
   (function () {
-    var ciclo = document.getElementById("ciclo");
     var regua = document.getElementById("usuarios");
-    if (!ciclo || !regua) return;
+    if (!regua) return;
     var planos = [].slice.call(document.querySelectorAll(".plan"));
     var elN = document.querySelector("[data-calc-n]");
     var elPlano = document.querySelector("[data-calc-plano]");
     var elTotal = document.querySelector("[data-calc-total]");
     var elConta = document.querySelector("[data-calc-conta]");
-    var anual = false;
 
-    function moeda(v) {
-      return v.toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    function moeda(v, casas) {
+      return v.toLocaleString("pt-BR", { minimumFractionDigits: casas, maximumFractionDigits: casas });
     }
     // O plano é o primeiro cuja faixa ainda comporta o time; o último não tem
     // teto declarado e fica sendo o Enterprise.
@@ -1303,19 +1390,6 @@
       return planos[planos.length - 1];
     }
 
-    function precos() {
-      document.querySelectorAll(".price b[data-m]").forEach(function (b) {
-        b.textContent = moeda(Number(anual ? b.dataset.a : b.dataset.m));
-        var obs = b.closest(".plan").querySelector("[data-obs]");
-        if (obs) obs.textContent = anual
-          ? "cobrado anualmente, com 2 meses grátis"
-          : "cobrado mensalmente, cancele quando quiser";
-      });
-      document.querySelectorAll(".toggle [data-ciclo]").forEach(function (e) {
-        e.classList.toggle("on", e.dataset.ciclo === (anual ? "a" : "m"));
-      });
-    }
-
     function calcula() {
       var n = Number(regua.value);
       regua.style.setProperty("--p", ((n - regua.min) / (regua.max - regua.min) * 100).toFixed(1) + "%");
@@ -1323,24 +1397,22 @@
       var plano = planoPara(n);
       planos.forEach(function (p) { p.classList.toggle("match", p === plano); });
       elPlano.textContent = plano.querySelector("h3").textContent;
-      var b = plano.querySelector(".price b[data-m]");
+
+      var b = plano.querySelector("[data-preco]");
       if (!b) {
         elTotal.textContent = "Sob consulta";
-        elConta.textContent = "acima de 50 usuários, o preço por pessoa é negociado por volume";
+        elConta.textContent = "acima de 50 usuários, mensalidade e implantação são negociadas por volume";
         return;
       }
-      var unit = Number(anual ? b.dataset.a : b.dataset.m);
-      elTotal.textContent = "R$ " + moeda(n * unit);
-      elConta.textContent = "por mês · " + n + " × R$ " + moeda(unit) + (anual ? " (plano anual)" : "");
+      var unit = Number(b.dataset.preco);
+      var setup = Number(plano.querySelector("[data-setup]").dataset.setup);
+      elTotal.textContent = "R$ " + moeda(n * unit, 2);
+      elConta.textContent = "por mês · " + n + " × R$ " + moeda(unit, 2) +
+        "  ·  mais R$ " + moeda(setup, 0) + " de implantação, uma única vez";
     }
 
-    ciclo.addEventListener("click", function () {
-      anual = ciclo.getAttribute("aria-checked") !== "true";
-      ciclo.setAttribute("aria-checked", String(anual));
-      precos(); calcula();
-    });
     regua.addEventListener("input", calcula);
-    precos(); calcula();
+    calcula();
   })();
 
   // ── O produto: o passo mais próximo do meio da tela comanda a captura ──
