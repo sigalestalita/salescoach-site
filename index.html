@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Sales Coach</title>
-<meta name="description" content="O gestor não está em todas as reuniões. O Sales Coach está: ouve cada conversa, pontua pelos critérios da sua empresa, orienta o vendedor ao vivo e devolve o que o time precisa mudar.">
+<meta name="description" content="O gestor não ouve todas as reuniões. O Sales Coach ouve: analisa Meet, Teams e Zoom, devolve score por BANT, MEDDIC ou SPIN, a objeção que travou o deal e o próximo passo.">
 <link rel="icon" href="assets/favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -95,11 +95,23 @@
 
   /* ── Hero ── */
   .hero { padding-top: calc(var(--nav-h) + 74px); padding-bottom: 0; text-align: center; isolation: isolate; }
-  .hero .h1 { margin-top: 26px; font-size: clamp(31px, 4.9vw, 64px); }
+  .hero .h1 { margin-top: 26px; font-size: clamp(30px, 4.6vw, 60px); }
   .hero .h1 em { font-style: normal; background: linear-gradient(100deg, #fff 18%, var(--blue-2) 58%, var(--violet)); -webkit-background-clip: text; background-clip: text; color: transparent; }
-  .hero .sub { margin: 22px auto 0; max-width: 560px; font-size: 17px; color: var(--dim); }
+  .hero .sub { margin: 22px auto 0; max-width: 640px; font-size: 17px; color: var(--dim); }
   .hero .cta { display: flex; justify-content: center; gap: 13px; margin-top: 34px; flex-wrap: wrap; }
   .hero .note { margin-top: 16px; font-size: 12.5px; color: var(--dim-2); }
+
+  /* A segunda linha do título entra subindo, e o gradiente atravessa a
+     palavra logo depois — é ela que carrega a virada da frase. */
+  .sobe { display: inline-block; overflow: hidden; vertical-align: bottom; padding-bottom: .12em; margin-bottom: -.12em; }
+  .sobe > i { display: inline-block; font-style: normal; transform: translateY(112%); animation: sobeLinha 1s cubic-bezier(.22,1,.36,1) .5s forwards; }
+  @keyframes sobeLinha { to { transform: none; } }
+  .hero .h1 em { background-size: 210% 100%; background-position: 0 0; animation: atravessa 1.4s cubic-bezier(.22,1,.36,1) 1.15s forwards; }
+  @keyframes atravessa { to { background-position: 100% 0; } }
+  @media (prefers-reduced-motion: reduce) {
+    .sobe > i { transform: none; animation: none; }
+    .hero .h1 em { animation: none; background-position: 100% 0; }
+  }
 
   /* Grafismo de nós nas laterais, como na referência. */
   /* As tags acompanham o mockup, não o título. */
@@ -811,8 +823,8 @@
 
   <div class="shell">
     <span class="pill rv in" data-par="0.10"><span class="dot"></span>Coach de vendas com IA · <b>em português</b></span>
-    <h1 class="h1 rv in" data-par="0.06">O gestor não está em todas as reuniões.<br>O Sales Coach <em>está</em>.</h1>
-    <p class="sub rv in" data-par="0.04">Ele ouve cada conversa, pontua pelos critérios da sua empresa, sopra a resposta enquanto a objeção ainda está no ar e devolve em duas linhas o que cada vendedor precisa mudar.</p>
+    <h1 class="h1 rv in" data-par="0.06">O gestor não ouve todas as reuniões.<br><span class="sobe"><i>O Sales Coach <em>ouve</em>.</i></span></h1>
+    <p class="sub rv in" data-par="0.04">Analisa toda reunião do Meet, do Teams e do Zoom. Devolve score por BANT, MEDDIC ou SPIN, a objeção que travou o deal e o próximo passo. E mostra ao gestor o que treinar com cada vendedor.</p>
     <div class="cta rv in" data-par="0.02">
       <a class="btn btn-solid magnet" href="#contato">Começar free trial</a>
       <a class="btn btn-ghost magnet" href="#produto">Ver o produto <span aria-hidden="true">↗</span></a>
