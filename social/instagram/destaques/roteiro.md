@@ -1,15 +1,22 @@
-# Destaques do perfil — quatro, com o conteúdo de cada um
+# Destaques do perfil — seis, com o conteúdo de cada um
 
-Quatro destaques cobrem as perguntas que alguém faz antes de pedir uma
-demonstração: **o que é, como é por dentro, encaixa no que eu uso, quanto
-custa**. Nessa ordem no perfil.
+Os destaques cobrem as perguntas que alguém faz antes de pedir uma
+demonstração: **o que é, o que sai de cada reunião, o que dá para perguntar,
+como é por dentro, encaixa no que eu uso, quanto custa**. Nessa ordem no
+perfil.
 
 | Ordem | Nome a digitar no Instagram | Capa | Responde |
 |---|---|---|---|
 | 1 | **Como funciona** | `out/c1-como-funciona.png` | O que o produto faz, nos quatro momentos |
-| 2 | **Na prática** | `out/c2-na-pratica.png` | Como são as telas de verdade |
-| 3 | **Integrações** | `out/c3-integracoes.png` | Encaixa no Meet, no Teams e no meu CRM? |
-| 4 | **Planos** | `out/c4-planos.png` | Quanto custa e como é a cobrança |
+| 2 | **Análise** | `out/c6-analise.png` | O que sobra de cada reunião |
+| 3 | **Assistente** | `out/c5-assistente.png` | O que dá para perguntar, e como ele responde |
+| 4 | **Na prática** | `out/c2-na-pratica.png` | Como são as telas de verdade |
+| 5 | **Integrações** | `out/c3-integracoes.png` | Encaixa no Meet, no Teams e no meu CRM? |
+| 6 | **Planos** | `out/c4-planos.png` | Quanto custa e como é a cobrança |
+
+**Sobre a ordem no perfil:** o Instagram põe à esquerda o destaque atualizado
+por último. Para a fila ficar como na tabela, monte de trás para a frente —
+Planos primeiro, Como funciona por último.
 
 ## Sobre as capas
 
@@ -72,6 +79,36 @@ Prints do produto. É o destaque que responde "isso existe mesmo?".
 | 4 | `d4-04-enterprise` | Enterprise · acima de 50, preço por volume, API, SSO, SLA. |
 | 5 | `d4-05-cobranca` | O time cresce, o preço acompanha: como a faixa muda. |
 | 6 | `d4-06-fecho` | Implantação: uma única vez, no começo. |
+
+---
+
+## 5 · Assistente — 6 stories
+
+O chat. É o recurso que mais se explica sozinho quando a pessoa vê a
+pergunta sendo respondida.
+
+| # | Arquivo | Conteúdo |
+|---|---|---|
+| 1 | `d5-01-abre` | **Pergunte como a um colega.** O assistente consulta as reuniões de verdade antes de responder. |
+| 2 | `d5-02-agendas` | “Quais são as agendas mais quentes agora?” — resposta com lead, data, vendedor e score. |
+| 3 | `d5-03-causa` | “O que mais fez a gente perder negócio esse mês?” — ele devolve a causa contada, não um ranking. |
+| 4 | `d5-04-vendedor` | “O que ficou combinado com esse cliente?” — antes do follow-up, sem reabrir gravação. |
+| 5 | `d5-05-fonte` | De onde vem a resposta: das suas reuniões e da sua base, não de um modelo genérico. |
+| 6 | `d5-06-fecho` | Uma frase no lugar de uma tarde de planilha. |
+
+## 6 · Análise — 6 stories
+
+O que sobra de cada reunião. É o destaque que responde “e o que eu ganho com
+isso?”.
+
+| # | Arquivo | Conteúdo |
+|---|---|---|
+| 1 | `d6-01-abre` | **A reunião acabou. A análise já saiu.** Em minutos, sem ninguém escrever nada. |
+| 2 | `d6-02-nota` | De 0 a 100 pelos critérios da casa, com a temperatura junto. |
+| 3 | `d6-03-criterios` | Cada nota vem com a frase do lead que a justifica — BANT, MEDDIC, SPIN ou a sua. |
+| 4 | `d6-04-insights` | O que foi bem, o que faltou — duas listas tiradas da conversa. |
+| 5 | `d6-05-crm` | Resumo e próximo passo vão para o CRM sozinhos. |
+| 6 | `d6-06-fecho` | Intuição diz que a agenda está quente; evidência diz quais critérios foram atendidos. |
 
 ---
 
