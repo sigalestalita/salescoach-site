@@ -336,8 +336,8 @@
   .light .switch { border-color: rgba(7,26,52,.2); background: rgba(7,26,52,.06); }
   .light .switch i { background: #15498D; }
   .light .switch[aria-checked="true"] { background: rgba(21,73,141,.22); border-color: rgba(21,73,141,.45); }
-  .light .trial { border-color: rgba(21,73,141,.28); background: linear-gradient(100deg, rgba(21,73,141,.1), rgba(123,108,246,.06)); }
-  .light .trial span { color: #4E5D75; }
+  .light .faixa-impl { border-color: rgba(21,73,141,.28); background: linear-gradient(100deg, rgba(21,73,141,.1), rgba(123,108,246,.06)); }
+  .light .faixa-impl span { color: #4E5D75; }
   .light .ticks li, .light figcaption { color: #4E5D75; }
   /* A regra global deixa todo <b> branco; no fundo claro isso apagava preços,
      números e destaques. */
@@ -420,9 +420,9 @@
   .plan .price b.consulta { font-size: 28px; }
   .plan sup { font-size: .4em; vertical-align: super; color: var(--dim); margin-right: 3px; }
 
-  /* Faixa do free trial */
-  .trial { display: flex; align-items: center; justify-content: space-between; gap: 22px; flex-wrap: wrap; margin-top: 26px; padding: 22px 26px; border-radius: 18px; border: 1px solid rgba(79,139,240,.3); background: linear-gradient(100deg, rgba(79,139,240,.14), rgba(123,108,246,.07)); }
-  .trial span { font-size: 14.5px; color: var(--dim); max-width: 74ch; }
+  /* Faixa de implantação */
+  .faixa-impl { display: flex; align-items: center; justify-content: space-between; gap: 22px; flex-wrap: wrap; margin-top: 26px; padding: 22px 26px; border-radius: 18px; border: 1px solid rgba(79,139,240,.3); background: linear-gradient(100deg, rgba(79,139,240,.14), rgba(123,108,246,.07)); }
+  .faixa-impl span { font-size: 14.5px; color: var(--dim); max-width: 74ch; }
 
   /* ── FAQ ── */
   .faq { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 48px; align-items: start; }
@@ -810,7 +810,7 @@
     <div class="nav-cta">
       <!-- Endereço do sistema: trocar aqui quando o CNAME app.salescoach.app.br subir. -->
       <a class="entrar" href="https://salescoach.grougp.com.br"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M15 12H3"/></svg>Entrar</a>
-      <a class="btn btn-ghost btn-sm" href="#contato">Free trial</a>
+      <a class="btn btn-ghost btn-sm" href="#contato">Falar com o time</a>
     </div>
   </div>
 </header>
@@ -826,10 +826,9 @@
     <h1 class="h1 rv in" data-par="0.06">O gestor não ouve todas as reuniões.<br><span class="sobe"><i>O Sales Coach <em>ouve</em>.</i></span></h1>
     <p class="sub rv in" data-par="0.04">Analisa toda reunião do Meet, do Teams e do Zoom. Devolve score por BANT, MEDDIC ou SPIN, a objeção que travou o deal e o próximo passo. E mostra ao gestor o que treinar com cada vendedor.</p>
     <div class="cta rv in" data-par="0.02">
-      <a class="btn btn-solid magnet" href="#contato">Começar free trial</a>
-      <a class="btn btn-ghost magnet" href="#produto">Ver o produto <span aria-hidden="true">↗</span></a>
+      <a class="btn btn-solid magnet" href="#produto">Ver o Sales Coach em ação <span aria-hidden="true">↗</span></a>
     </div>
-    <p class="note rv in">7 dias de free trial · sem cartão · com o seu portfólio já dentro</p>
+    <p class="note rv in">No ar em uma semana · com o seu playbook e a sua metodologia já dentro</p>
   </div>
 
   <div class="stage rv in" data-par="-0.05">
@@ -1187,9 +1186,9 @@
           <span>metodologias prontas, ou a sua, com pesos</span>
         </div>
         <div class="num" data-parx="-0.055">
-          <b><span data-count="7">0</span><small>dias</small></b>
+          <b><span data-count="1">0</span><small>semana</small></b>
           <i class="fio" aria-hidden="true"></i>
-          <span>de free trial sem cartão, com o seu portfólio já dentro</span>
+          <span>para estar no ar, com o seu material e a sua metodologia dentro</span>
         </div>
     </div>
   </div>
@@ -1235,7 +1234,7 @@
           <li>Base de conhecimento e gerador de argumentos</li>
           <li>Suporte por e-mail</li>
         </ul>
-        <a class="btn btn-ghost" href="#contato">Começar free trial</a>
+        <a class="btn btn-ghost" href="#contato">Quero esse plano</a>
       </div>
 
       <div class="plan rv" data-ate="50">
@@ -1253,7 +1252,7 @@
           <li>Modo de treino e assistente de vendas</li>
           <li>Relatórios de gestão e compartilhamento com validade</li>
         </ul>
-        <a class="btn btn-solid" href="#contato">Começar free trial</a>
+        <a class="btn btn-solid" href="#contato">Quero esse plano</a>
       </div>
 
       <div class="plan rv">
@@ -1274,9 +1273,9 @@
       </div>
     </div>
 
-    <div class="trial rv">
-      <span><b>Free trial de 7 dias, sem cartão:</b> até 3 usuários, 20 reuniões analisadas e coach ao vivo liberado. A sua base e a sua metodologia já entram no teste.</span>
-      <a class="btn btn-solid btn-sm" href="#contato">Quero testar</a>
+    <div class="faixa-impl rv">
+      <span><b>A implantação não é você sozinho com um manual:</b> a gente sobe o seu playbook, a sua tabela de preços e os seus critérios, e acompanha as primeiras reuniões do time até a régua estar calibrada.</span>
+      <a class="btn btn-solid btn-sm" href="#contato">Falar com o time</a>
     </div>
   </div>
 </section>
@@ -1310,12 +1309,12 @@
   <div class="shell">
     <div class="head center rv">
       <h2 class="h2 split">Comece pela próxima reunião<br>que o seu time tiver.</h2>
-      <p>Free trial de 7 dias, com o seu portfólio e a sua metodologia já configurados. Sem cartão.</p>
+      <p>Mostramos o Sales Coach rodando sobre uma reunião parecida com as suas. Trinta minutos, sem compromisso.</p>
     </div>
     <form class="form rv" id="lead">
       <input type="email" name="email" placeholder="seu e-mail corporativo" required aria-label="E-mail corporativo">
       <input type="text" name="empresa" placeholder="empresa" required aria-label="Empresa">
-      <button class="btn btn-solid" type="submit">Free trial</button>
+      <button class="btn btn-solid" type="submit">Agendar demonstração</button>
     </form>
   </div>
 </section>
@@ -1572,8 +1571,8 @@
     e.preventDefault();
     var f = new FormData(e.target);
     location.href = "mailto:" + CONTACT_EMAIL +
-      "?subject=" + encodeURIComponent("Free trial Sales Coach — " + f.get("empresa")) +
-      "&body=" + encodeURIComponent("E-mail: " + f.get("email") + "\nEmpresa: " + f.get("empresa") + "\n\nQuero começar o free trial de 7 dias.");
+      "?subject=" + encodeURIComponent("Demonstração do Sales Coach — " + f.get("empresa")) +
+      "&body=" + encodeURIComponent("E-mail: " + f.get("email") + "\nEmpresa: " + f.get("empresa") + "\n\nQuero agendar uma demonstração do Sales Coach.");
   });
 </script>
 </body>

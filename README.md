@@ -20,6 +20,6 @@ Qualquer hospedagem estática serve a pasta raiz deste repositório:
 ## Editar
 
 - Textos, seções e estilos estão todos em `index.html`.
-- E-mail que recebe o formulário: constante `CONTACT_EMAIL` no início do `<script>`.
+- E-mail que recebe o formulário de demonstração: constante `CONTACT_EMAIL` no início do `<script>`.
 - Endereço do sistema no botão **Entrar** (menu e rodapé): hoje `https://salescoach.grougp.com.br`. Trocar pelos dois links quando o CNAME `app.salescoach.app.br` estiver apontado.
 - Logos de terceiros em `assets/logos/` (uso nominativo na seção Ecossistema).
