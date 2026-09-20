@@ -1,6 +1,6 @@
 # Posts 4:5 para Instagram
 
-Quarenta e um posts no formato 4:5 (1080 × 1350), escritos a partir do conteúdo, da
+Quarenta e dois posts no formato 4:5 (1080 × 1350), escritos a partir do conteúdo, da
 identidade visual e do foco de negócio do `index.html` deste repositório.
 Nenhum deles traz botão de CTA nem oferta de teste — a chamada é o endereço
 no alto da arte.
@@ -75,6 +75,39 @@ no alto da arte.
 | # | Arquivo | Tema | Fundo |
 |---|---|---|---|
 | 41 | `41-o-que-derrubou.html` | Assistente respondendo o que derrubou os negócios do mês | claro |
+
+**Animado (42)** — sai em vídeo, não em PNG:
+
+| # | Arquivo | Tema | Fundo |
+|---|---|---|---|
+| 42 | `42-ecossistema.html` | Mapa de fluxo do Ecossistema, animado | malha |
+
+## Post animado
+
+O 42 reaproveita o mapa de fluxo da seção Ecossistema do `index.html`: os
+mesmos traçados, os mesmos pulsos percorrendo os fios e o mesmo anel pulsando
+no núcleo. Mudam a escala (1080 de largura, com sangria nas laterais para os
+rótulos caberem legíveis) e as durações.
+
+```sh
+node anima.mjs 42          # gera out/42-ecossistema.mp4
+node anima.mjs 42 --gif    # e também um GIF de prévia
+```
+
+As animações **não** são gravadas em tempo real. Cada quadro é desenhado com o
+relógio parado numa posição exata — SMIL por `svg.setCurrentTime()`, CSS pela
+Web Animations API. Gravação em tempo real perde quadro quando a máquina
+engasga e o laço nunca fecha; assim o quadro N é sempre idêntico e o último
+encosta no primeiro.
+
+Para o laço fechar, as durações foram reencaixadas num ciclo único de 3,6 s:
+tracejado 1,2 s × 3, pulso 3,6 s, anel e varredura 3,6 s. O tracejado também
+anda 11px por ciclo — um período inteiro de `3 8` — em vez dos 12px do site,
+que numa página rolando não aparece, mas num laço de 3,6 s apareceria.
+
+Saída: MP4 H.264 High, yuv420p, 1080 × 1350, 30 fps, 10,8 s (três voltas), com
+faixa de áudio muda porque alguns uploads recusam vídeo sem áudio. O `render.mjs`
+continua gerando o PNG do mesmo post, que serve de capa.
 
 O 41 não usa `assets/app/assistente.webp`: a tela real mostra outra conversa
 (as agendas mais quentes). A janela é desenhada em HTML seguindo a UI do

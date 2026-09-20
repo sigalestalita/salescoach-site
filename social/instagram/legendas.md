@@ -8,6 +8,7 @@ Cinco séries, mesmo kit visual:
 - **21–33 · dados** — número-manchete com a fonte na própria arte.
 - **34–40 · argumento** — produto, sem dado externo.
 - **41 · conversa** — mockup desenhado do assistente.
+- **42 · animado** — vídeo, com o mapa de fluxo do site.
 
 Nenhum post traz botão nem oferta de teste: a chamada é o endereço no alto
 da arte. As legendas terminam em `salescoach.app.br`.
@@ -609,3 +610,37 @@ exatamente o que está derrubando o mês.
 salescoach.app.br
 
 #vendas #gestaodevendas #pipeline #forecast #objecoes #coachdevendas #IA #vendasb2b
+
+## Série animada
+
+### 42 · `42-ecossistema.mp4` — escuro · **vídeo 10,8 s**
+
+Entra na reunião. Sai no CRM. Sem ninguém digitar.
+
+O Sales Coach não pede que o time mude de ferramenta. A reunião acontece onde
+sempre aconteceu — Meet, Teams, Zoom, com a agenda vindo do Google Calendar —
+e o resultado chega onde sempre deveria estar: na oportunidade do HubSpot, do
+Salesforce, do Pipedrive ou do RD Station.
+
+No meio, o que ninguém quer fazer à mão:
+
+· Grava onde acontece — Meet e Teams pela extensão, com o coach ao vivo junto.
+Zoom e gravações de qualquer origem entram por upload.
+
+· Preenche o CRM — resumo, próximos passos, temperatura e critérios da
+metodologia vão para a oportunidade. O campo de observações para de dizer
+"reunião boa".
+
+· Aberto por API — cada análise é um dado estruturado. Puxe para o BI ou
+dispare um alerta quando uma agenda esfriar.
+
+Zoho, Bitrix24, Kommo, monday, Agendor, Ploomes, Slack, Gmail, WhatsApp e
+Notion também entram.
+
+salescoach.app.br
+
+#crm #integracao #hubspot #salesforce #pipedrive #rdstation #googlemeet #microsoftteams #vendasb2b #salesops #IA
+
+**Publicação:** subir o `.mp4` (1080 × 1350, H.264, 30 fps, 10,8 s, laço
+perfeito). O `.png` de mesmo nome serve de capa; o `.gif` é só para prévia em
+conversa, não para o feed.
