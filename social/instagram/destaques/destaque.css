@@ -1,0 +1,57 @@
+/* ═══════════════════════════════════════════════════════════════════════
+   Destaques do perfil: capas e stories, os dois em 1080 × 1920.
+
+   Reusa o kit dos posts — os mesmos tokens, fundos e tipografia — e muda o
+   que o formato exige: o quadro é mais alto e o Instagram cobre as pontas
+   com a própria interface, então o conteúdo respira 190px em cima e 210px
+   embaixo.
+   ═══════════════════════════════════════════════════════════════════════ */
+@import url("../post.css");
+
+.post.story { height: 1920px; padding: 190px 84px 210px; }
+
+/* ── Capa ──────────────────────────────────────────────────────────────
+   O Instagram recorta a capa num círculo tirado do centro da imagem, e no
+   perfil esse círculo aparece com uns 60px de diâmetro. Nesse tamanho
+   palavra nenhuma se lê — e o nome do destaque já aparece escrito embaixo
+   do círculo, então a capa é só o ícone, grande o bastante para virar
+   silhueta. O traço é grosso pela mesma razão: fino demais some. */
+.capa { justify-content: center; align-items: center; padding: 0; }
+.capa svg { width: 400px; height: 400px; fill: none; stroke: var(--blue-2); stroke-width: 1.5;
+            stroke-linecap: round; stroke-linejoin: round;
+            filter: drop-shadow(0 0 34px rgba(143,193,255,.45)); }
+.post.bg-light .capa svg { stroke: #2A66BE; filter: none; }
+
+/* ── Story ─────────────────────────────────────────────────────────────
+   A marca fica no alto, o assunto no miolo e o endereço no pé. */
+.story .brand img { height: 48px; }
+.story .brand span { font-size: 30px; }
+.story .brand .site { font-size: 23px; }
+
+.story .kicker { font-size: 26px; }
+.story .h1s { font-size: 88px; font-weight: 400; letter-spacing: -.04em; line-height: 1.06; }
+.story .h2s { font-size: 62px; font-weight: 400; letter-spacing: -.035em; line-height: 1.1; }
+.story .corpo { font-size: 34px; line-height: 1.45; color: var(--dim); }
+.story .corpo b { font-weight: 500; color: var(--txt); }
+.story .pe { font-size: 26px; color: var(--dim-2); letter-spacing: .02em; }
+
+/* Numeração do passo, para quem assiste saber onde está na sequência. */
+.passo { display: inline-flex; align-items: center; gap: 14px; font-size: 26px; color: var(--dim-2); letter-spacing: .14em; text-transform: uppercase; }
+.passo i { width: 44px; height: 44px; border-radius: 14px; display: grid; place-items: center; font-style: normal;
+           font-size: 24px; font-weight: 500; color: var(--blue-2); border: 1px solid var(--line-2); background: rgba(146,176,236,.06); }
+.post.bg-light .passo i { color: #2A66BE; border-color: rgba(21,73,141,.2); background: rgba(21,73,141,.05); }
+
+/* Lista de itens com marcador redondo, usada nas telas de integração. */
+.lista { display: flex; flex-direction: column; gap: 22px; }
+.lista .item { display: flex; align-items: center; gap: 20px; padding: 24px 28px; border-radius: 22px;
+               border: 1px solid var(--line); background: rgba(146,176,236,.05); font-size: 32px; }
+.post.bg-light .lista .item { background: #fff; border-color: rgba(21,73,141,.13); }
+.post.bg-brand .lista .item { background: rgba(255,255,255,.1); border-color: rgba(255,255,255,.2); }
+.lista .item i { flex: 0 0 auto; width: 54px; height: 54px; border-radius: 16px; display: grid; place-items: center; background: #fff; }
+.lista .item i img { width: 32px; height: 32px; object-fit: contain; }
+
+/* Moldura de print, na proporção que o story pede. */
+.story .shot { border-radius: 28px; }
+.story .shot .chrome { padding: 20px 26px; }
+.story .shot .chrome i { width: 13px; height: 13px; }
+.story .shot .chrome span { font-size: 23px; }

@@ -1,0 +1,271 @@
+/* ═══════════════════════════════════════════════════════════════════════
+   Sales Coach — kit de posts 4:5 para Instagram (1080 × 1350).
+   Mesma linguagem da landing: quase-preto com aurora, tipografia Poppins
+   leve e larga, pílula de rótulo, azul da marca em degradê e cartões de
+   vidro. Os tamanhos são maiores que os do site: no feed o post é lido
+   em ~350px de largura, então nada abaixo de ~26px sobrevive.
+   ═══════════════════════════════════════════════════════════════════════ */
+@import url("poppins.css");
+
+:root {
+  --ink-0: #06070C;
+  --ink-1: #0A0D16;
+  --ink-2: #111624;
+  --line: rgba(146,176,236,.13);
+  --line-2: rgba(146,176,236,.26);
+  --txt: #FFFFFF;
+  --dim: #97A3BB;
+  --dim-2: #6B768D;
+  --blue: #4F8BF0;
+  --blue-2: #8FC1FF;
+  --brand: #15498D;
+  --violet: #7B6CF6;
+  --pad: 78px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { background: #000; }
+body { font-family: Poppins, sans-serif; -webkit-font-smoothing: antialiased; }
+img { display: block; max-width: 100%; height: auto; }
+
+/* O quadro é fixo: 1080×1350 é o 4:5 nativo do Instagram. */
+.post {
+  position: relative;
+  width: 1080px;
+  height: 1350px;
+  overflow: hidden;
+  background: var(--ink-0);
+  color: var(--txt);
+  display: flex;
+  flex-direction: column;
+  padding: var(--pad);
+  isolation: isolate;
+}
+
+/* ── Aurora e estrelas, como no hero do site ── */
+.aurora { position: absolute; inset: 0; z-index: -2; overflow: hidden; }
+.aurora i { position: absolute; border-radius: 50%; filter: blur(90px); opacity: .55; display: block; }
+.aurora .a1 { width: 720px; height: 580px; left: -220px; top: -180px; background: radial-gradient(closest-side, rgba(21,73,141,.9), transparent); }
+.aurora .a2 { width: 780px; height: 620px; right: -260px; top: -220px; background: radial-gradient(closest-side, rgba(123,108,246,.5), transparent); }
+.aurora .a3 { width: 1000px; height: 520px; left: 50%; translate: -50% 0; bottom: -260px; background: radial-gradient(closest-side, rgba(79,139,240,.34), transparent); }
+canvas.stars { position: absolute; inset: 0; z-index: -1; width: 100%; height: 100%; }
+
+/* ── Cabeçalho da marca ── */
+.brand { display: flex; align-items: center; gap: 14px; flex: 0 0 auto; }
+.brand img { height: 42px; width: auto; }
+.brand span { font-size: 26px; font-weight: 500; letter-spacing: -.02em; }
+.brand .site { margin-left: auto; font-size: 20px; color: var(--dim-2); letter-spacing: .01em; }
+
+/* ── Pílula de rótulo ── */
+.pill { display: inline-flex; align-items: center; gap: 13px; padding: 12px 26px 12px 16px; border-radius: 999px; border: 1px solid var(--line-2); background: rgba(146,176,236,.05); font-size: 23px; color: var(--dim); align-self: flex-start; }
+.pill b { font-weight: 500; color: #fff; }
+.pill .dot { width: 11px; height: 11px; border-radius: 50%; background: var(--blue); box-shadow: 0 0 14px var(--blue); }
+
+/* ── Tipografia ── */
+h1, h2, h3 { font-weight: 400; letter-spacing: -.035em; line-height: 1.07; }
+.h1 { font-size: 86px; }
+.h2 { font-size: 66px; }
+.h3 { font-size: 40px; letter-spacing: -.028em; }
+.grad { background: linear-gradient(100deg, #fff 8%, var(--blue-2) 52%, var(--violet)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.sub { font-size: 29px; line-height: 1.5; color: var(--dim); }
+.sub strong { font-weight: 500; color: #fff; }
+.kicker { font-size: 22px; letter-spacing: .16em; text-transform: uppercase; color: var(--blue-2); font-weight: 500; }
+.dim { color: var(--dim); }
+.dim-2 { color: var(--dim-2); }
+
+/* ── Cartões de vidro ── */
+.card { border: 1px solid var(--line); border-radius: 30px; background: linear-gradient(180deg, rgba(17,22,36,.92), rgba(10,13,22,.86)); padding: 36px 38px; }
+.card.lit { border-color: rgba(79,139,240,.42); background: linear-gradient(180deg, rgba(20,38,72,.9), rgba(10,13,22,.9)); box-shadow: 0 40px 90px -50px rgba(79,139,240,.9); }
+.card-top { display: flex; align-items: center; justify-content: space-between; gap: 18px; }
+.tag { font-size: 20px; letter-spacing: .12em; text-transform: uppercase; color: var(--dim-2); font-weight: 500; }
+
+/* Sem flex-shrink os blocos encolhem em silêncio quando o conteúdo passa
+   do quadro — e o corte só aparece no PNG. Melhor deixar estourar, que o
+   render.mjs avisa. */
+.post > * { flex-shrink: 0; }
+
+/* Empurra o que vier depois para o rodapé do quadro. */
+.grow { flex: 1 1 auto; }
+.rule { height: 1px; background: var(--line); flex: 0 0 auto; }
+
+/* ═══════════════════════════════════════════════════════════════════════
+   Série "manchete" (posts 06–10): uma frase ocupa o quadro e o apoio cabe
+   em duas linhas. O miolo fica centrado entre a marca e o botão — daí os
+   dois .grow, com o de cima um pouco maior para o bloco não parecer caído.
+   Os posts não levam botão: o endereço no alto da marca é a única chamada.
+   ═══════════════════════════════════════════════════════════════════════ */
+.h0 { font-size: 126px; font-weight: 400; letter-spacing: -.045em; line-height: 1; }
+.grow.top { flex-grow: 1.25; }
+.after { margin-top: 44px; font-size: 40px; line-height: 1.32; letter-spacing: -.02em; color: var(--dim); }
+.after b { font-weight: 500; color: #fff; }
+
+/* ═══════════════════════════════════════════════════════════════════════
+   Série "tela" (posts 11–20): o print do sistema é o assunto do post.
+   Quase todas as telas do produto são claras, então elas entram dentro de
+   uma moldura com barra de janela — assim a mancha branca lê como um
+   screenshot e não como um bloco solto no meio do quadro escuro.
+   ═══════════════════════════════════════════════════════════════════════ */
+.shot { border-radius: 24px; overflow: hidden; border: 1px solid var(--line-2); background: var(--ink-1); box-shadow: 0 70px 130px -70px rgba(79,139,240,.95); }
+.shot .chrome { display: flex; align-items: center; gap: 9px; padding: 15px 20px; background: rgba(146,176,236,.07); border-bottom: 1px solid var(--line); }
+.shot .chrome i { width: 11px; height: 11px; border-radius: 50%; background: rgba(146,176,236,.28); }
+.shot .chrome span { margin-left: 12px; font-size: 19px; color: var(--dim-2); }
+.shot img { width: 100%; }
+
+/* A janela mostra só a fatia que interessa do print: a altura é fixa e a
+   imagem desliza dentro dela com margens negativas. O max-width do reset
+   precisa sair, senão o print volta a caber inteiro no quadro e o zoom
+   do recorte não acontece. */
+.shot .win { overflow: hidden; }
+.shot .win img { display: block; max-width: none; }
+
+/* Painel da extensão: já é escuro e flutuante, não precisa de moldura. */
+.shot.bare { border: 0; border-radius: 28px; background: none; box-shadow: 0 60px 120px -60px rgba(79,139,240,.9); }
+.shot.bare img { border-radius: 28px; }
+.shot.bare .win { border-radius: 28px; }
+
+/* ═══════════════════════════════════════════════════════════════════════
+   FUNDOS
+   Seis variações tiradas da mesma paleta do site. O padrão é a noite com
+   aurora (.bg-night, que é o comportamento original e não precisa de
+   classe); as outras entram como classe no .post. Num feed em grade, vinte
+   posts com o mesmo fundo viram uma mancha só.
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* Malha fina azul sobre o quase-preto, com um clarão no canto. */
+.post.bg-grid { background: var(--ink-0); }
+.post.bg-grid .aurora i { opacity: .38; filter: blur(110px); }
+.post.bg-grid::before {
+  content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background-image: linear-gradient(rgba(146,176,236,.075) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(146,176,236,.075) 1px, transparent 1px);
+  background-size: 72px 72px;
+  /* A malha some nas bordas para não brigar com o texto. */
+  -webkit-mask-image: radial-gradient(120% 85% at 50% 42%, #000 35%, transparent 78%);
+          mask-image: radial-gradient(120% 85% at 50% 42%, #000 35%, transparent 78%);
+}
+
+/* Azul profundo da marca subindo do pé do quadro. */
+.post.bg-deep { background: radial-gradient(125% 92% at 50% 118%, #1B57A8 0%, #10305F 32%, #0A1730 58%, var(--ink-0) 88%); }
+.post.bg-deep .aurora i { opacity: .3; }
+.post.bg-deep .card { background: linear-gradient(180deg, rgba(10,22,45,.72), rgba(6,12,26,.66)); }
+
+/* Chapado no azul da marca: o mais gráfico dos seis. */
+.post.bg-brand { background: linear-gradient(155deg, #1A5DB4 0%, #15498D 42%, #0C2A55 100%); --dim: #B9CDEE; --dim-2: #90A9D2; --line: rgba(255,255,255,.16); --line-2: rgba(255,255,255,.3); }
+.post.bg-brand .aurora, .post.bg-brand canvas.stars { display: none; }
+.post.bg-brand .grad { background: linear-gradient(100deg, #fff 10%, #BFE0FF 55%, #CFC6FF); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.post.bg-brand .card { border-color: rgba(255,255,255,.2); background: rgba(6,20,45,.34); }
+.post.bg-brand .card.lit { border-color: rgba(255,255,255,.42); background: rgba(255,255,255,.12); box-shadow: none; }
+.post.bg-brand .pill { border-color: rgba(255,255,255,.32); background: rgba(255,255,255,.1); }
+.post.bg-brand .kicker { color: #BFE0FF; }
+.post.bg-brand .shot { border-color: rgba(255,255,255,.26); box-shadow: 0 70px 130px -60px rgba(0,0,0,.85); }
+.post.bg-brand .shot .chrome { background: rgba(255,255,255,.1); border-bottom-color: rgba(255,255,255,.16); }
+.post.bg-brand .shot .chrome i { background: rgba(255,255,255,.34); }
+.post.bg-brand .shot .chrome span { color: #B9CDEE; }
+
+/* Claro: o mesmo azul, invertido. Serve de respiro na grade e combina com
+   as telas do produto, que também são claras. */
+.post.bg-light {
+  background: radial-gradient(118% 80% at 84% -8%, #DCE8FA 0%, #EFF4FC 46%, #F7F9FD 100%);
+  --txt: #091426; --dim: #46587A; --dim-2: #7C8BA8;
+  /* O azul-claro do fundo escuro some no branco: o destaque vira o azul
+     médio da marca. */
+  --blue-2: #2A66BE;
+  --line: rgba(21,73,141,.14); --line-2: rgba(21,73,141,.24);
+  color: var(--txt);
+}
+.post.bg-light .aurora, .post.bg-light canvas.stars { display: none; }
+.post.bg-light strong, .post.bg-light b { color: #091426; }
+.post.bg-light .grad { background: linear-gradient(100deg, #15498D 8%, #2F74D8 52%, #6C5CE0); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.post.bg-light .kicker { color: #2A66BE; }
+.post.bg-light .pill { border-color: rgba(21,73,141,.24); background: rgba(21,73,141,.05); }
+.post.bg-light .card { border-color: rgba(21,73,141,.13); background: #fff; box-shadow: 0 30px 60px -40px rgba(9,26,58,.35); }
+.post.bg-light .card.lit { border-color: rgba(47,116,216,.4); background: linear-gradient(180deg, #EAF1FD, #fff); box-shadow: 0 40px 80px -46px rgba(47,116,216,.6); }
+.post.bg-light .shot { border-color: rgba(21,73,141,.16); background: #fff; box-shadow: 0 50px 100px -55px rgba(9,26,58,.45); }
+.post.bg-light .shot .chrome { background: rgba(21,73,141,.05); border-bottom-color: rgba(21,73,141,.1); }
+.post.bg-light .shot .chrome i { background: rgba(21,73,141,.2); }
+
+/* Um halo só, atrás do miolo: fundo para manchete curta. */
+.post.bg-halo { background: #04050A; }
+.post.bg-halo .aurora i { display: none; }
+.post.bg-halo::before {
+  content: ""; position: absolute; z-index: -1; left: 50%; top: 46%; translate: -50% -50%;
+  width: 1260px; height: 1260px; border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(79,139,240,.5), rgba(123,108,246,.22) 52%, transparent 74%);
+  filter: blur(40px);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   COMPOSIÇÕES
+   Por padrão tudo alinha à esquerda. Estas classes mudam o eixo do post —
+   centrado, à direita, ancorado no pé — para a grade não virar vinte
+   variações da mesma página.
+   ═══════════════════════════════════════════════════════════════════════ */
+.post.center { text-align: center; }
+.post.center .brand { text-align: left; }
+.post.center .pill { align-self: center; }
+.post.center .after, .post.center .sub, .post.center .head .sub { margin-inline: auto; }
+.post.center .big, .post.center .keep, .post.center .chips, .post.center .steps { justify-content: center; }
+/* Sem o max-width, a margem automática faz a moldura encolher para o
+   tamanho do print — que é maior que o quadro — e ela vaza pela direita. */
+.post.center .shot { margin-inline: auto; max-width: 100%; }
+
+.post.right { text-align: right; }
+.post.right .brand { text-align: left; }
+.post.right .pill { align-self: flex-end; }
+.post.right .after, .post.right .sub { margin-left: auto; }
+.post.right .big, .post.right .keep, .post.right .chips { justify-content: flex-end; }
+
+/* Texto no alto, visual encostado no pé — ou o contrário, quando o print
+   vem antes do título no HTML. */
+.post.bottom .grow.top { flex-grow: 6; }
+.post.bottom > .grow:not(.top) { flex-grow: .35; }
+
+/* Duas colunas: o print estreito de um lado, o texto do outro. */
+.split { display: grid; grid-template-columns: var(--split, 1fr 1fr); gap: 46px; align-items: center; }
+.split .shot { margin: 0; }
+
+/* ═══════════════════════════════════════════════════════════════════════
+   DADOS (posts 21–40)
+   Um número solto não é gráfico: é um número grande, e é assim que ele
+   entra. Barra só quando há comparação de verdade — e com o valor escrito
+   em cada uma, para a identidade nunca depender só da cor.
+
+   As duas cores de série foram validadas contra as seis checagens de
+   daltonismo e contraste (scripts/validate_palette.js), por superfície:
+   claro  #2F74D8 / #D2751F · escuro #4F8BF0 / #C87A2A
+   ═══════════════════════════════════════════════════════════════════════ */
+.post { --serie-1: #4F8BF0; --serie-2: #C87A2A; }
+.post.bg-light { --serie-1: #2F74D8; --serie-2: #D2751F; }
+.post.bg-brand { --serie-1: #BFE0FF; --serie-2: #F2B87A; }
+
+/* Número-manchete. */
+.stat { display: flex; align-items: baseline; gap: 14px; line-height: 1; }
+.stat .n { font-size: 230px; font-weight: 300; letter-spacing: -.055em; }
+.stat .un { font-size: 92px; font-weight: 300; letter-spacing: -.04em; color: var(--dim); }
+.stat.md .n { font-size: 150px; }
+.stat.md .un { font-size: 64px; }
+
+/* A fonte anda junto com o número. Dado sem origem não sai daqui. */
+.fonte { margin-top: 26px; font-size: 20px; line-height: 1.45; color: var(--dim-2); }
+.fonte b { font-weight: 500; color: var(--dim); }
+
+/* Comparação de dois valores. Cada barra leva o próprio rótulo e o próprio
+   número, então a cor é reforço e não a única pista. */
+.barras { display: flex; flex-direction: column; gap: 26px; }
+.barra .topo { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; margin-bottom: 10px; }
+.barra .rot { font-size: 25px; color: var(--dim); }
+.barra .rot b { font-weight: 500; color: var(--txt); }
+.barra .val { font-size: 40px; font-weight: 400; letter-spacing: -.03em; }
+.barra .trilho { height: 26px; border-radius: 13px; background: rgba(146,176,236,.13); overflow: hidden; }
+.post.bg-light .barra .trilho { background: rgba(21,73,141,.1); }
+.barra .preenche { display: block; height: 100%; border-radius: 13px; background: var(--serie-1); }
+.barra.b2 .preenche { background: var(--serie-2); }
+
+/* Régua de proporção: uma linha, duas fatias, cada uma escrita. O vão de
+   2px entre elas impede que as fatias se colem numa mancha só. */
+.regua { display: flex; gap: 3px; height: 34px; border-radius: 17px; overflow: hidden; }
+.regua i { display: block; }
+.regua .a { background: var(--serie-1); border-radius: 17px 3px 3px 17px; }
+.regua .b { background: var(--serie-2); border-radius: 3px 17px 17px 3px; }
+.regua-leg { display: flex; justify-content: space-between; margin-top: 12px; font-size: 22px; color: var(--dim); }
+.regua-leg b { font-weight: 500; color: var(--txt); }

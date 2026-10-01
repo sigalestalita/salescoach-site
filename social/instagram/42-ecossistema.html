@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Sales Coach · 42 · Ecossistema</title>
+<link rel="stylesheet" href="post.css">
+<style>
+  /* ═══════════════════════════════════════════════════════════════════════
+     Post animado, com o mapa de fluxo da seção Ecossistema do index.html:
+     os mesmos traçados, os mesmos pulsos percorrendo os fios e o mesmo anel
+     pulsando no núcleo. O que muda é a escala (aqui é 1080 de largura, não
+     uma página inteira) e a duração das animações.
+
+     As durações foram reencaixadas num ciclo único de 3,6 s para o vídeo
+     fechar o laço sem salto: fluxo 1,2 s × 3, pulso 3,6 s × 1, anel e
+     varredura 3,6 s × 1. O tracejado também passou a andar 11px por ciclo —
+     um período inteiro de "3 8" — em vez dos 12px do site, que no meio de
+     uma página rolando não aparece, mas num loop de 3,6 s apareceria.
+     ═══════════════════════════════════════════════════════════════════════ */
+  .grow.top { flex-grow: .8; }
+  .head { margin-top: 12px; }
+  .head .h2 { margin-top: 15px; font-size: 52px; }
+  .head .after { margin-top: 18px; font-size: 26px; max-width: 900px; }
+
+  /* Sangra nas laterais: o mapa é largo, e apertado em 924px os rótulos
+     das ferramentas ficariam ilegíveis no feed. */
+  .flowmap { position: relative; margin: 42px -78px 0; width: 1080px; }
+  .flowmap > svg { display: block; width: 100%; height: auto; overflow: visible; }
+  .flowmap .wire { fill: none; stroke-width: 2.2; stroke-dasharray: 3 8; animation: fluxo 1.2s linear infinite; }
+  @keyframes fluxo { to { stroke-dashoffset: -11; } }
+  .flowmap .pulso { fill: #BBD8FF; filter: drop-shadow(0 0 6px rgba(143,193,255,.95)); }
+  .flowmap .pulso.v { fill: #C9C2FF; filter: drop-shadow(0 0 6px rgba(160,146,255,.95)); }
+
+  .fm-node { position: absolute; width: 20.2%; translate: 0 -50%; display: flex; align-items: center; gap: 11px;
+             padding: 12px 16px; border-radius: 16px; border: 1px solid var(--line-2); background: rgba(9,13,24,.92);
+             font-size: 18px; white-space: nowrap; color: var(--dim); box-shadow: 0 16px 34px -20px rgba(0,0,0,.9); }
+  .fm-node i { flex: 0 0 auto; width: 34px; height: 34px; border-radius: 10px; display: grid; place-items: center; background: #fff; }
+  .fm-node i img { width: 21px; height: 21px; object-fit: contain; }
+  .fm-node.in { left: 1.13%; }
+  .fm-node.out { left: 78.7%; }
+
+  .fm-core { position: absolute; left: 37.9%; top: 30.4%; width: 24.19%; height: 36.17%; border-radius: 26px;
+             display: grid; place-content: center; justify-items: center; gap: 4px; text-align: center;
+             border: 1px solid rgba(143,193,255,.4); background: linear-gradient(165deg, rgba(30,91,176,.5), rgba(10,13,22,.94));
+             box-shadow: 0 0 70px rgba(79,139,240,.35), inset 0 1px 0 rgba(255,255,255,.16); }
+  .fm-core img { width: 46px; height: 46px; }
+  .fm-core::before { content: ""; position: absolute; inset: -2px; border-radius: inherit; border: 1px solid rgba(143,193,255,.5);
+                     animation: anel 3.6s ease-out infinite; pointer-events: none; }
+  @keyframes anel { from { transform: scale(1); opacity: .7; } to { transform: scale(1.34); opacity: 0; } }
+  .fm-core b { margin-top: 8px; font-size: 24px; font-weight: 500; letter-spacing: -.02em; }
+  .fm-core span { font-size: 16px; letter-spacing: .06em; color: var(--blue-2); }
+  .fm-core::after { content: ""; position: absolute; inset: -1px; border-radius: inherit; pointer-events: none;
+                    border: 1px solid transparent;
+                    background: linear-gradient(120deg, transparent 35%, rgba(143,193,255,.5) 50%, transparent 65%) border-box;
+                    -webkit-mask: linear-gradient(#000 0 0) padding-box, linear-gradient(#000 0 0);
+                    -webkit-mask-composite: xor; mask-composite: exclude;
+                    background-size: 280% 100%; animation: varre 3.6s linear infinite; }
+  @keyframes varre { 0%,60% { background-position: 130% 0; } 100% { background-position: -30% 0; } }
+
+  .fm-tag { position: absolute; top: -16px; font-size: 18px; letter-spacing: .2em; text-transform: uppercase; color: var(--dim-2); }
+  .fm-tag.l { left: 1.13%; }
+  .fm-tag.r { left: 78.7%; }
+
+  .eco-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 34px; }
+  .eco-card { padding: 26px 24px; border-radius: 20px; border: 1px solid var(--line);
+              background: linear-gradient(170deg, rgba(146,176,236,.06), transparent); }
+  .eco-card .ic { width: 48px; height: 48px; border-radius: 15px; display: grid; place-items: center;
+                  border: 1px solid var(--line-2); background: rgba(146,176,236,.06); margin-bottom: 16px; }
+  .eco-card .ic svg { width: 24px; height: 24px; fill: none; stroke: var(--blue-2); stroke-width: 1.6; }
+  .eco-card h3 { font-size: 26px; }
+  .eco-card p { margin-top: 10px; font-size: 20px; line-height: 1.42; color: var(--dim); }
+</style>
+</head>
+<body>
+<div class="post bg-grid">
+  <div class="aurora"><i class="a1"></i><i class="a2"></i><i class="a3"></i></div>
+  <canvas class="stars"></canvas>
+
+  <header class="brand">
+    <img src="../../assets/mark-white.png" alt="Sales Coach">
+    <span>Sales Coach</span>
+    <em class="site" style="font-style:normal">salescoach.app.br</em>
+  </header>
+
+  <div class="grow top"></div>
+
+  <div class="head">
+    <div class="kicker">Ecossistema</div>
+    <h2 class="h2">Entra na reunião.<br><span class="grad">Sai no CRM. Sem ninguém digitar.</span></h2>
+    <p class="after">O Sales Coach se encaixa no que o time já usa: a reunião acontece onde sempre aconteceu e o resultado dela chega onde sempre deveria estar.</p>
+  </div>
+
+  <div class="flowmap">
+    <svg viewBox="0 0 1240 470" role="img" aria-label="As reuniões entram pelo Google Meet, Teams, Zoom e Google Calendar, passam pelo Sales Coach e saem no HubSpot, Salesforce, Pipedrive e RD Station" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+      <defs>
+        <linearGradient id="gE" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0" stop-color="#4F8BF0" stop-opacity=".12"/><stop offset="1" stop-color="#8FC1FF" stop-opacity=".7"/>
+        </linearGradient>
+        <linearGradient id="gS" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0" stop-color="#9C8CFF" stop-opacity=".7"/><stop offset="1" stop-color="#7B6CF6" stop-opacity=".12"/>
+        </linearGradient>
+        <radialGradient id="gGlow"><stop offset="0" stop-color="#4F8BF0" stop-opacity=".34"/><stop offset="1" stop-color="#4F8BF0" stop-opacity="0"/></radialGradient>
+      </defs>
+      <ellipse cx="620" cy="228" rx="260" ry="170" fill="url(#gGlow)"/>
+      <path id="we0" class="wire" stroke="url(#gE)" d="M210 85 C 312 85, 368 228, 470 228"/>
+      <path id="we1" class="wire" stroke="url(#gE)" d="M210 180 C 312 180, 368 228, 470 228"/>
+      <path id="we2" class="wire" stroke="url(#gE)" d="M210 275 C 312 275, 368 228, 470 228"/>
+      <path id="we3" class="wire" stroke="url(#gE)" d="M210 370 C 312 370, 368 228, 470 228"/>
+      <path id="ws0" class="wire" stroke="url(#gS)" d="M770 228 C 872 228, 928 85, 1030 85"/>
+      <path id="ws1" class="wire" stroke="url(#gS)" d="M770 228 C 872 228, 928 180, 1030 180"/>
+      <path id="ws2" class="wire" stroke="url(#gS)" d="M770 228 C 872 228, 928 275, 1030 275"/>
+      <path id="ws3" class="wire" stroke="url(#gS)" d="M770 228 C 872 228, 928 370, 1030 370"/>
+      <circle class="pulso" r="4.6"><animateMotion dur="3.6s" begin="0s"    repeatCount="indefinite"><mpath href="#we0" xlink:href="#we0"/></animateMotion></circle>
+      <circle class="pulso" r="4.6"><animateMotion dur="3.6s" begin="-0.9s" repeatCount="indefinite"><mpath href="#we1" xlink:href="#we1"/></animateMotion></circle>
+      <circle class="pulso" r="4.6"><animateMotion dur="3.6s" begin="-1.8s" repeatCount="indefinite"><mpath href="#we2" xlink:href="#we2"/></animateMotion></circle>
+      <circle class="pulso" r="4.6"><animateMotion dur="3.6s" begin="-2.7s" repeatCount="indefinite"><mpath href="#we3" xlink:href="#we3"/></animateMotion></circle>
+      <circle class="pulso v" r="4.6"><animateMotion dur="3.6s" begin="-1.8s" repeatCount="indefinite"><mpath href="#ws0" xlink:href="#ws0"/></animateMotion></circle>
+      <circle class="pulso v" r="4.6"><animateMotion dur="3.6s" begin="-2.7s" repeatCount="indefinite"><mpath href="#ws1" xlink:href="#ws1"/></animateMotion></circle>
+      <circle class="pulso v" r="4.6"><animateMotion dur="3.6s" begin="0s"    repeatCount="indefinite"><mpath href="#ws2" xlink:href="#ws2"/></animateMotion></circle>
+      <circle class="pulso v" r="4.6"><animateMotion dur="3.6s" begin="-0.9s" repeatCount="indefinite"><mpath href="#ws3" xlink:href="#ws3"/></animateMotion></circle>
+    </svg>
+    <span class="fm-tag l">Entra</span>
+    <span class="fm-tag r">Sai</span>
+    <div class="fm-node in" style="top:18.085%"><i><img src="../../assets/logos/googlemeet.svg" alt=""></i>Google Meet</div>
+    <div class="fm-node in" style="top:38.298%"><i><img src="../../assets/logos/microsoftteams.svg" alt=""></i>Microsoft Teams</div>
+    <div class="fm-node in" style="top:58.511%"><i><img src="../../assets/logos/zoom.svg" alt=""></i>Zoom</div>
+    <div class="fm-node in" style="top:78.723%"><i><img src="../../assets/logos/googlecalendar.svg" alt=""></i>Google Calendar</div>
+    <div class="fm-node out" style="top:18.085%"><i><img src="../../assets/logos/hubspot.svg" alt=""></i>HubSpot</div>
+    <div class="fm-node out" style="top:38.298%"><i><img src="../../assets/logos/salesforce.svg" alt=""></i>Salesforce</div>
+    <div class="fm-node out" style="top:58.511%"><i><img src="../../assets/logos/pipedrive.png" alt=""></i>Pipedrive</div>
+    <div class="fm-node out" style="top:78.723%"><i><img src="../../assets/logos/rdstation.png" alt=""></i>RD Station</div>
+    <div class="fm-core">
+      <img src="../../assets/mark-white.png" alt="">
+      <b>Sales Coach</b>
+      <span>transcreve · pontua · devolve</span>
+    </div>
+  </div>
+
+  <div class="eco-cards">
+    <div class="eco-card">
+      <div class="ic"><svg viewBox="0 0 24 24"><path d="M4 6h11v12H4zM15 10l5-3v10l-5-3z"/></svg></div>
+      <h3>Grava onde acontece</h3>
+      <p>Meet e Teams pela extensão, com o coach ao vivo junto. Zoom e gravações de qualquer origem entram por upload.</p>
+    </div>
+    <div class="eco-card">
+      <div class="ic"><svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h9M17 17l2 2 3-4"/></svg></div>
+      <h3>Preenche o CRM</h3>
+      <p>Resumo, próximos passos, temperatura e critérios vão para a oportunidade. O campo de observações para de dizer “reunião boa”.</p>
+    </div>
+    <div class="eco-card">
+      <div class="ic"><svg viewBox="0 0 24 24"><path d="M9 6 4 12l5 6M15 6l5 6-5 6"/></svg></div>
+      <h3>Aberto por API</h3>
+      <p>Cada análise é um dado estruturado. Puxe para o BI ou dispare um alerta quando uma agenda esfriar.</p>
+    </div>
+  </div>
+
+  <div class="grow"></div>
+</div>
+<script src="stars.js"></script>
+</body>
+</html>

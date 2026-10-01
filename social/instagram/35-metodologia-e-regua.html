@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Sales Coach · 35 · Metodologia é régua</title>
+<link rel="stylesheet" href="post.css">
+<style>
+  .grow.top { flex-grow: .9; }
+  .head .h2 { margin-top: 16px; font-size: 58px; }
+  .head .after { margin-top: 20px; font-size: 27px; max-width: 880px; }
+  .metodos { margin-top: 44px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .metodos .card { padding: 28px 26px; }
+  .metodos .nome { font-size: 30px; font-weight: 500; letter-spacing: -.02em; }
+  .metodos .desc { margin-top: 10px; font-size: 21px; line-height: 1.4; color: var(--dim); }
+  .sua { margin-top: 22px; padding: 26px 30px; font-size: 25px; line-height: 1.45; color: var(--dim); }
+  .sua b { font-weight: 500; color: var(--txt); }
+</style>
+</head>
+<body>
+<div class="post bg-light">
+  <div class="aurora"><i class="a1"></i><i class="a2"></i><i class="a3"></i></div>
+  <canvas class="stars"></canvas>
+
+  <header class="brand">
+    <img src="../../assets/mark.png" alt="Sales Coach">
+    <span>Sales Coach</span>
+    <em class="site" style="font-style:normal">salescoach.app.br</em>
+  </header>
+
+  <div class="grow top"></div>
+
+  <div class="head">
+    <div class="kicker">Metodologia</div>
+    <h2 class="h2">Metodologia não é slide.<br><span class="grad">É régua.</span></h2>
+    <p class="after">Três vêm prontas. A quarta é a sua.</p>
+  </div>
+
+  <div class="metodos">
+    <div class="card"><div class="nome">BANT</div><div class="desc">Verba, decisor, dor e prazo</div></div>
+    <div class="card"><div class="nome">MEDDIC</div><div class="desc">Métricas, campeão interno e processo de decisão</div></div>
+    <div class="card"><div class="nome">SPIN</div><div class="desc">Situação, problema, implicação e necessidade</div></div>
+  </div>
+
+  <div class="card lit sua">A <b>sua</b>: critérios, pesos e faixas de temperatura definidos por você. A análise e o coach ao vivo passam a seguir isso.</div>
+
+  <div class="grow"></div>
+</div>
+<script src="stars.js"></script>
+</body>
+</html>

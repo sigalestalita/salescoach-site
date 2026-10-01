@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Sales Coach · 41 · O que derrubou os negócios</title>
+<link rel="stylesheet" href="post.css">
+<style>
+  /* Este mockup é desenhado, não é print: a tela real do assistente mostra
+     outra conversa. Os nomes e os números são os mesmos dados de exemplo que
+     o produto usa no site, para não inventar uma operação nova.
+
+     A janela segue a UI do assistente: barra azul-marinho no topo, balão
+     claro para a resposta e balão escuro para a pergunta de quem digitou. */
+  .grow.top { flex-grow: .8; }
+  .head { margin-top: 18px; }
+  .head .h2 { margin-top: 15px; font-size: 54px; }
+  .head .after { margin-top: 16px; font-size: 26px; max-width: 840px; }
+
+  .chat { margin-top: 22px; border-radius: 28px; overflow: hidden; background: #fff;
+          border: 1px solid rgba(21,73,141,.14); box-shadow: 0 50px 100px -55px rgba(9,26,58,.5); }
+
+  .chat .barra { display: flex; align-items: center; gap: 14px; padding: 20px 28px;
+                 background: linear-gradient(120deg, #17376A, #1D55A0); color: #fff; }
+  .chat .barra img { width: 30px; height: 30px; }
+  .chat .barra b { font-size: 25px; font-weight: 500; letter-spacing: -.02em; }
+  .chat .barra span { font-size: 20px; color: #A9C4EA; }
+  .chat .barra .on { margin-left: auto; display: flex; align-items: center; gap: 9px; font-size: 19px; color: #A9C4EA; }
+  .chat .barra .on i { width: 9px; height: 9px; border-radius: 50%; background: #4ADE9A; box-shadow: 0 0 10px #4ADE9A; }
+
+  .chat .corpo { padding: 22px 28px 18px; display: flex; flex-direction: column; gap: 18px; }
+
+  /* Pergunta de quem está usando: alinhada à direita, no azul da marca. */
+  .balao-eu { align-self: flex-end; max-width: 82%; padding: 18px 26px; border-radius: 22px 22px 6px 22px;
+              background: linear-gradient(120deg, #1B4E96, #143A72); color: #fff; font-size: 24px; line-height: 1.4; }
+
+  /* Resposta: balão claro, largo, com a lista dentro. */
+  .balao-ia { align-self: flex-start; max-width: 93%; padding: 22px 26px; border-radius: 22px 22px 22px 6px;
+              background: #EDF2F9; color: #091426; font-size: 23px; line-height: 1.45; }
+  .balao-ia .intro { color: #46587A; }
+
+  .balao-ia .fecho { margin-top: 14px; color: #46587A; }
+
+  .balao-ia .intro { padding-bottom: 16px; border-bottom: 1px solid rgba(21,73,141,.12); }
+  .causa { display: flex; gap: 16px; align-items: flex-start; margin-top: 13px; }
+  .causa + .causa { padding-top: 13px; border-top: 1px solid rgba(21,73,141,.12); }
+  .causa .pos { flex: 0 0 auto; width: 44px; height: 44px; border-radius: 14px; display: grid; place-items: center;
+                font-size: 22px; font-weight: 600; background: #DCE6F7; color: #1B4E96; }
+  .causa .txt { flex: 1 1 auto; }
+  .causa .linha1 { display: flex; align-items: baseline; gap: 12px; }
+  .causa .nome { font-size: 25px; font-weight: 600; letter-spacing: -.01em; }
+  /* A contagem é o dado: fica à direita e escrita por extenso, para não
+     depender de cor nem de posição para ser entendida. */
+  .causa .quantas { margin-left: auto; font-size: 24px; font-weight: 600; color: #9C560D;
+                    background: #FBEBD8; padding: 5px 14px; border-radius: 999px; white-space: nowrap; }
+  .causa .por { margin-top: 7px; font-size: 22px; line-height: 1.4; color: #46587A; }
+  .causa .por b { font-weight: 600; color: #091426; }
+
+  .chat .entrada { display: flex; align-items: center; gap: 14px; padding: 14px 28px 22px; }
+  .chat .entrada .campo { flex: 1 1 auto; padding: 17px 24px; border-radius: 16px; border: 1px solid rgba(21,73,141,.16);
+                          background: #F7F9FD; font-size: 21px; color: #9AA7BF; }
+  .chat .entrada .enviar { flex: 0 0 auto; width: 54px; height: 54px; border-radius: 16px; display: grid; place-items: center;
+                           background: linear-gradient(120deg, #1B4E96, #143A72); }
+  .chat .entrada .enviar svg { width: 24px; height: 24px; fill: none; stroke: #fff; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+</style>
+</head>
+<body>
+<div class="post bg-light">
+  <div class="aurora"><i class="a1"></i><i class="a2"></i><i class="a3"></i></div>
+  <canvas class="stars"></canvas>
+
+  <header class="brand">
+    <img src="../../assets/mark.png" alt="Sales Coach">
+    <span>Sales Coach</span>
+    <em class="site" style="font-style:normal">salescoach.app.br</em>
+  </header>
+
+  <div class="grow top"></div>
+
+  <div class="head">
+    <div class="kicker">Assistente de vendas</div>
+    <h2 class="h2">O que derrubou os<br><span class="grad">negócios deste mês?</span></h2>
+    <p class="after">O assistente cruza as reuniões analisadas e devolve a causa — com <b>quantas vezes</b> cada uma apareceu.</p>
+  </div>
+
+  <div class="chat">
+    <div class="barra">
+      <img src="../../assets/mark-white.png" alt="">
+      <b>Assistente de vendas</b>
+      <span>· 47 reuniões analisadas no mês</span>
+      <span class="on"><i></i>on-line</span>
+    </div>
+
+    <div class="corpo">
+      <div class="balao-eu">O que mais fez a gente perder negócio esse mês?</div>
+
+      <div class="balao-ia">
+        <div class="intro">Nas 12 agendas que não avançaram, três motivos se repetem:</div>
+
+        <div class="causa">
+          <div class="pos">1</div>
+          <div class="txt">
+            <div class="linha1"><span class="nome">Preço sem ROI</span><span class="quantas">7 reuniões</span></div>
+            <div class="por">Em 5 delas o vendedor ofereceu <b>desconto antes de quantificar a dor</b>.</div>
+          </div>
+        </div>
+
+        <div class="causa">
+          <div class="pos">2</div>
+          <div class="txt">
+            <div class="linha1"><span class="nome">Decisor fora da sala</span><span class="quantas">5 reuniões</span></div>
+            <div class="por">Foram para proposta com <b>Authority em aberto</b> — ninguém confirmou quem assina.</div>
+          </div>
+        </div>
+
+        <div class="causa">
+          <div class="pos">3</div>
+          <div class="txt">
+            <div class="linha1"><span class="nome">Prazo vago</span><span class="quantas">4 reuniões</span></div>
+            <div class="por">“Quanto antes melhor” <b>não virou data</b> em nenhuma delas.</div>
+          </div>
+        </div>
+
+        <div class="fecho">As três já viraram objeção no modo de treino. Quer que eu monte a simulação com elas?</div>
+      </div>
+    </div>
+
+    <div class="entrada">
+      <div class="campo">Pergunte algo…</div>
+      <div class="enviar"><svg viewBox="0 0 24 24"><path d="M4 12h15M13 6l6 6-6 6"/></svg></div>
+    </div>
+  </div>
+
+  <div class="grow"></div>
+</div>
+<script src="stars.js"></script>
+</body>
+</html>

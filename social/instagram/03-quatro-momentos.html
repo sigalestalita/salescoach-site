@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Sales Coach · 03 · Quatro momentos, uma régua só</title>
+<link rel="stylesheet" href="post.css">
+<style>
+  /* Post do produto: os quatro momentos da seção "Antes / Durante / Depois /
+     Sempre" numa linha do tempo vertical. O fio ligando os números é o mesmo
+     grafismo de nós que corre nas laterais do hero do site. */
+  .head { margin-top: 26px; }
+  .head .h2 { margin-top: 16px; }
+
+  .steps { margin-top: 34px; display: flex; flex-direction: column; gap: 36px; }
+  .step { position: relative; display: flex; gap: 26px; }
+  /* O fio desce do número até o próximo, menos no último passo. */
+  .step:not(:last-child)::before { content: ""; position: absolute; left: 33px; top: 74px; bottom: -36px; width: 1px; background: linear-gradient(180deg, rgba(146,176,236,.42), rgba(146,176,236,.06)); }
+
+  .step .num { color: #8FC1FF; flex: 0 0 auto; width: 66px; height: 66px; border-radius: 22px; display: grid; place-items: center; font-size: 26px; font-weight: 500; border: 1px solid var(--line-2); background: rgba(10,13,22,.9); }
+  .step.now .num { color: #fff; border-color: rgba(79,139,240,.6); background: linear-gradient(180deg, rgba(31,72,140,.95), rgba(10,13,22,.95)); box-shadow: 0 0 40px -10px rgba(79,139,240,.8); }
+
+  .step .txt { padding-top: 2px; }
+  .step .when { font-size: 21px; letter-spacing: .14em; text-transform: uppercase; color: var(--dim-2); font-weight: 500; }
+  .step .what { margin-top: 8px; font-size: 34px; font-weight: 400; letter-spacing: -.03em; line-height: 1.16; }
+  .step .how { margin-top: 10px; font-size: 24px; line-height: 1.45; color: var(--dim); max-width: 800px; }
+  .step .how b { font-weight: 500; color: var(--blue-2); }
+</style>
+</head>
+<body>
+<div class="post bg-light">
+  <div class="aurora"><i class="a1"></i><i class="a2"></i><i class="a3"></i></div>
+  <canvas class="stars"></canvas>
+
+  <header class="brand">
+    <img src="../../assets/mark.png" alt="Sales Coach">
+    <span>Sales Coach</span>
+    <em class="site" style="font-style:normal">salescoach.app.br</em>
+  </header>
+
+  <div class="grow top"></div>
+
+  <div class="head">
+    <div class="kicker">O produto</div>
+    <h2 class="h2">Quatro momentos.<br><span class="grad">Uma régua só.</span></h2>
+  </div>
+
+  <div class="steps">
+    <div class="step">
+      <div class="num">01</div>
+      <div class="txt">
+        <div class="when">Antes da reunião</div>
+        <div class="what">Erre no simulado, não no lead de verdade</div>
+        <div class="how">A IA faz o papel do cliente com <b>as objeções que já apareceram nas suas reuniões</b> — e a conversa termina com nota.</div>
+      </div>
+    </div>
+    <div class="step now">
+      <div class="num">02</div>
+      <div class="txt">
+        <div class="when">Durante a reunião</div>
+        <div class="what">A ajuda chega enquanto a objeção está no ar</div>
+        <div class="how">No Meet ou no Teams, <b>a frase exata para dizer nos próximos segundos</b> — tirada da base da sua empresa.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="num">03</div>
+      <div class="txt">
+        <div class="when">Depois da reunião</div>
+        <div class="what">A conversa vira nota, e a nota vira um a um</div>
+        <div class="how">Cada reunião pontuada pelos seus critérios, <b>com a frase do lead que justifica cada nota</b>.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="num">04</div>
+      <div class="txt">
+        <div class="when">A qualquer momento</div>
+        <div class="what">Pergunte sobre a agenda, como a um colega</div>
+        <div class="how">“O que ficou combinado com esse cliente?” — o assistente <b>consulta as reuniões de verdade</b> e cita cada uma pelo nome.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="grow" style="min-height:26px"></div>
+</div>
+<script src="stars.js"></script>
+</body>
+</html>

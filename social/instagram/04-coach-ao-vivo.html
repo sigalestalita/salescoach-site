@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Sales Coach · 04 · Coach ao vivo</title>
+<link rel="stylesheet" href="post.css">
+<style>
+  /* Post do coach ao vivo: em vez de descrever o painel, mostra o painel.
+     Objeção do lead em cima, a frase sugerida embaixo, e a fonte citada —
+     que é o que separa este produto de um chat genérico. */
+  .head { margin-top: 14px; }
+  .head .h2 { margin-top: 16px; }
+  .head .sub { margin-top: 20px; max-width: 860px; }
+
+  .panel { margin-top: 34px; padding: 0; overflow: hidden; }
+  .panel .bar { display: flex; align-items: center; gap: 14px; padding: 22px 32px; border-bottom: 1px solid var(--line); font-size: 22px; color: var(--dim); }
+  .panel .bar .rec { width: 13px; height: 13px; border-radius: 50%; background: #FF5C5C; box-shadow: 0 0 14px rgba(255,92,92,.9); }
+  .panel .bar b { font-weight: 500; color: #fff; }
+  .panel .bar .clock { margin-left: auto; font-variant-numeric: tabular-nums; color: var(--dim-2); }
+  .panel .body { padding: 30px 32px 32px; }
+
+  .line { display: flex; gap: 18px; }
+  .line .av { flex: 0 0 auto; width: 54px; height: 54px; border-radius: 16px; display: grid; place-items: center; font-size: 20px; font-weight: 500; color: var(--dim); border: 1px solid var(--line-2); background: rgba(146,176,236,.06); }
+  .line .say .who { font-size: 20px; letter-spacing: .1em; text-transform: uppercase; color: var(--dim-2); }
+  .line .say .txt { margin-top: 6px; font-size: 30px; line-height: 1.38; font-weight: 300; }
+
+  .tip { margin-top: 26px; border-radius: 24px; border: 1px solid rgba(79,139,240,.45); background: linear-gradient(180deg, rgba(23,49,96,.9), rgba(12,18,34,.9)); padding: 26px 30px; box-shadow: 0 40px 90px -54px rgba(79,139,240,1); }
+  .tip .top { display: flex; align-items: center; gap: 12px; font-size: 21px; letter-spacing: .1em; text-transform: uppercase; color: var(--blue-2); font-weight: 500; }
+  .tip .top .dot { width: 10px; height: 10px; border-radius: 50%; background: var(--blue-2); box-shadow: 0 0 12px var(--blue-2); }
+  .tip .top .age { margin-left: auto; letter-spacing: 0; text-transform: none; color: var(--dim-2); font-weight: 400; font-size: 20px; }
+  .tip .say { margin-top: 14px; font-size: 30px; line-height: 1.4; }
+  .tip .src { margin-top: 18px; display: inline-flex; align-items: center; gap: 10px; padding: 9px 18px; border-radius: 999px; border: 1px solid var(--line-2); font-size: 20px; color: var(--dim); }
+
+  .chips { margin-top: 24px; display: flex; gap: 12px; flex-wrap: wrap; }
+  .chips span { padding: 11px 22px; border-radius: 999px; border: 1px solid var(--line); background: rgba(146,176,236,.04); font-size: 21px; color: var(--dim); }
+</style>
+</head>
+<body>
+<div class="post bg-deep">
+  <div class="aurora"><i class="a1"></i><i class="a2"></i><i class="a3"></i></div>
+  <canvas class="stars"></canvas>
+
+  <header class="brand">
+    <img src="../../assets/mark-white.png" alt="Sales Coach">
+    <span>Sales Coach</span>
+    <em class="site" style="font-style:normal">salescoach.app.br</em>
+  </header>
+
+  <div class="grow top"></div>
+
+  <div class="head">
+    <div class="kicker">Durante a reunião</div>
+    <h2 class="h2">A resposta chega<br>com <span class="grad">a objeção ainda no ar.</span></h2>
+    <p class="sub">A frase exata para dizer nos próximos segundos — tirada do material da sua empresa, não de um modelo genérico. O vendedor só clica em gravar.</p>
+  </div>
+
+  <div class="card panel">
+    <div class="bar"><i class="rec"></i><b>Coach ao vivo</b> · Google Meet · extensão Chrome<span class="clock">27:14</span></div>
+    <div class="body">
+      <div class="line">
+        <div class="av">RC</div>
+        <div class="say">
+          <div class="who">Lead · Atacado Norte</div>
+          <div class="txt">“Sinceramente? Vocês estão bem mais caros que o outro que a gente olhou.”</div>
+        </div>
+      </div>
+
+      <div class="tip">
+        <div class="top"><i class="dot"></i>Diga agora<span class="age">5 s depois da fala</span></div>
+        <div class="say">Devolva a conta, não o preço: “vocês têm 12 vendedores externos — a diferença mensal se paga com uma visita a menos por semana.”</div>
+        <span class="src">Base da empresa · comparativo-concorrentes.pdf</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="chips">
+    <span>Google Meet</span><span>Microsoft Teams</span><span>Painel discreto, só o vendedor vê</span>
+  </div>
+
+  <div class="grow" style="min-height:26px"></div>
+</div>
+<script src="stars.js"></script>
+</body>
+</html>
