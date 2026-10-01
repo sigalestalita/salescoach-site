@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>NEXA · Sales Coach · 12 · Fale agora</title>
+<link rel="stylesheet" href="post.css">
+<style>
+  /* Painel da extensão: o recorte vai direto no cartão FALE AGORA, que é a
+     única coisa que o vendedor olha no meio da reunião. */
+  /* O painel da extensão é vertical: em vez de atravessar o quadro, ele
+     fica numa coluna ao lado do texto. */
+  .split { --split: 1fr 392px; }
+  .head .h2 { margin-top: 14px; font-size: 46px; }
+  .head .after { margin-top: 18px; font-size: 26px; }
+  /* Recorte de extensao.webp: só o painel, sem a moldura escura do print. */
+  .win { height: 608px; }
+  .win img { width: 454px; margin: -17px 0 0 -55px; }
+</style>
+</head>
+<body>
+<div class="post bg-deep">
+  <div class="aurora"><i class="a1"></i><i class="a2"></i><i class="a3"></i></div>
+  <canvas class="stars"></canvas>
+
+  <header class="brand">
+    <svg class="nexa" viewBox="0 0 800 150" aria-label="NEXA"><path d="M8 139V12L175 139V12M200 12H366M200 12V139H366M200 75H366M390 12L558 139M558 12L390 139M580 139L685 12L792 139M618 95H755"/></svg><i class="sep"></i>
+    <img src="../../assets/mark-white.png" alt="Sales Coach">
+    <span>Sales Coach</span>
+    <em class="site" style="font-style:normal">um produto NEXA</em>
+  </header>
+
+  <div class="grow top"></div>
+
+  <div class="split">
+    <div class="head">
+      <div class="kicker">Durante a reunião</div>
+      <h2 class="h2">A objeção entrou.<br><span class="grad">A resposta já<br>está na tela.</span></h2>
+      <p class="after">O painel da extensão, no Meet e no Teams. Discreto: <b>só o vendedor vê</b>.</p>
+    </div>
+
+    <div class="shot bare">
+      <div class="win"><img src="../../assets/app/extensao.webp" alt="Painel da extensão durante a reunião com a orientação Fale agora e a transcrição ao vivo"></div>
+    </div>
+  </div>
+
+  <div class="grow" style="min-height:24px"></div>
+</div>
+<script src="stars.js"></script>
+</body>
+</html>

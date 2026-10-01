@@ -1,0 +1,238 @@
+/* ═══════════════════════════════════════════════════════════════════════
+   Sales Coach · um produto NEXA — kit de posts 4:5 (1080 × 1350).
+   Identidade NEXA: quase-preto #10110f, lima #d4f969, creme, tipografia
+   Space Grotesk (títulos), DM Sans (texto) e JetBrains Mono (rótulos).
+   Mesma API de classes do kit original — só muda a pele.
+   ═══════════════════════════════════════════════════════════════════════ */
+@import url("nexa-fonts.css");
+
+:root {
+  --ink-0: #10110f;
+  --ink-1: #141612;
+  --ink-2: #1b1d18;
+  --line: rgba(245,246,241,.11);
+  --line-2: rgba(245,246,241,.22);
+  --txt: #f5f6f1;
+  --dim: #b9bdb1;
+  --dim-2: #8a8e83;
+  /* Os nomes ficaram do kit original; os valores agora são NEXA. */
+  --blue: #d4f969;
+  --blue-2: #d4f969;
+  --brand: #d4f969;
+  --violet: #7b6cf6;
+  --lime: #d4f969;
+  --pad: 78px;
+  --display: 'Space Grotesk', 'DM Sans', sans-serif;
+  --mono: 'JetBrains Mono', monospace;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { background: #000; }
+body { font-family: 'DM Sans', sans-serif; -webkit-font-smoothing: antialiased; }
+img { display: block; max-width: 100%; height: auto; }
+
+.post {
+  position: relative;
+  width: 1080px;
+  height: 1350px;
+  overflow: hidden;
+  background: var(--ink-0);
+  color: var(--txt);
+  display: flex;
+  flex-direction: column;
+  padding: var(--pad);
+  isolation: isolate;
+}
+/* Grão de filme da NEXA por cima de tudo, bem leve. */
+.post::after {
+  content: ""; position: absolute; inset: 0; z-index: 50; pointer-events: none; opacity: .055; mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+
+/* ── Brilho de fundo (antiga aurora) ── */
+.aurora { position: absolute; inset: 0; z-index: -2; overflow: hidden; }
+.aurora i { position: absolute; border-radius: 50%; filter: blur(100px); opacity: .5; display: block; }
+.aurora .a1 { width: 720px; height: 580px; left: -240px; top: -200px; background: radial-gradient(closest-side, rgba(212,249,105,.32), transparent); }
+.aurora .a2 { width: 780px; height: 620px; right: -280px; top: -240px; background: radial-gradient(closest-side, rgba(123,108,246,.22), transparent); }
+.aurora .a3 { width: 1000px; height: 520px; left: 50%; translate: -50% 0; bottom: -280px; background: radial-gradient(closest-side, rgba(212,249,105,.2), transparent); }
+canvas.stars { position: absolute; inset: 0; z-index: -1; width: 100%; height: 100%; }
+
+/* ── Cabeçalho: NEXA | Sales Coach ··· um produto NEXA ── */
+.brand { display: flex; align-items: center; gap: 16px; flex: 0 0 auto; color: var(--txt); }
+.brand .nexa { width: 126px; height: 24px; flex: 0 0 auto; overflow: visible; }
+.brand .nexa path { fill: none; stroke: currentColor; stroke-width: 11; stroke-linecap: round; }
+.brand .sep { width: 1px; height: 30px; background: var(--line-2); margin: 0 4px; }
+.brand img { height: 32px; width: auto; }
+.brand span { font-family: var(--display); font-size: 25px; font-weight: 500; letter-spacing: -.01em; }
+.brand .site { margin-left: auto; font-family: var(--mono); font-size: 15px; letter-spacing: .2em; text-transform: uppercase; color: var(--dim-2); }
+
+/* ── Pílula de rótulo ── */
+.pill { display: inline-flex; align-items: center; gap: 13px; padding: 12px 26px 12px 16px; border-radius: 999px; border: 1px solid var(--line-2); background: rgba(245,246,241,.04); font-size: 23px; color: var(--dim); align-self: flex-start; }
+.pill b { font-weight: 500; color: var(--txt); }
+.pill .dot { width: 11px; height: 11px; border-radius: 50%; background: var(--lime); box-shadow: 0 0 14px var(--lime); }
+
+/* ── Tipografia ── */
+h1, h2, h3 { font-family: var(--display); font-weight: 500; letter-spacing: -.04em; line-height: 1.04; }
+.h1 { font-size: 86px; }
+.h2 { font-size: 66px; }
+.h3 { font-size: 40px; letter-spacing: -.028em; }
+.grad { color: var(--lime); }
+.sub { font-size: 29px; line-height: 1.5; color: var(--dim); }
+.sub strong { font-weight: 500; color: var(--txt); }
+.kicker { font-family: var(--mono); font-size: 19px; letter-spacing: .2em; text-transform: uppercase; color: var(--lime); font-weight: 500; }
+.dim { color: var(--dim); }
+.dim-2 { color: var(--dim-2); }
+
+/* ── Cartões ── */
+.card { border: 1px solid var(--line); border-radius: 26px; background: linear-gradient(180deg, rgba(31,33,28,.92), rgba(20,22,18,.88)); padding: 36px 38px; }
+.card.lit { border-color: rgba(212,249,105,.45); background: linear-gradient(180deg, rgba(42,48,26,.92), rgba(20,22,18,.92)); box-shadow: 0 40px 90px -50px rgba(212,249,105,.55); }
+.card-top { display: flex; align-items: center; justify-content: space-between; gap: 18px; }
+.tag { font-family: var(--mono); font-size: 17px; letter-spacing: .16em; text-transform: uppercase; color: var(--dim-2); font-weight: 500; }
+
+.post > * { flex-shrink: 0; }
+.grow { flex: 1 1 auto; }
+.rule { height: 1px; background: var(--line); flex: 0 0 auto; }
+
+/* Série "manchete" */
+.h0 { font-family: var(--display); font-size: 126px; font-weight: 500; letter-spacing: -.05em; line-height: .98; }
+.grow.top { flex-grow: 1.25; }
+.after { margin-top: 44px; font-size: 40px; line-height: 1.32; letter-spacing: -.02em; color: var(--dim); }
+.after b { font-weight: 500; color: var(--txt); }
+
+/* Série "tela" */
+.shot { border-radius: 22px; overflow: hidden; border: 1px solid var(--line-2); background: var(--ink-1); box-shadow: 0 70px 130px -60px rgba(0,0,0,.95), 0 0 80px -40px rgba(212,249,105,.35); }
+.shot .chrome { display: flex; align-items: center; gap: 9px; padding: 15px 20px; background: rgba(245,246,241,.05); border-bottom: 1px solid var(--line); }
+.shot .chrome i { width: 11px; height: 11px; border-radius: 50%; background: rgba(245,246,241,.22); }
+.shot .chrome i:first-child { background: var(--lime); }
+.shot .chrome span { margin-left: 12px; font-family: var(--mono); font-size: 16px; letter-spacing: .06em; color: var(--dim-2); }
+.shot img { width: 100%; }
+.shot .win { overflow: hidden; }
+.shot .win img { display: block; max-width: none; }
+.shot.bare { border: 0; border-radius: 28px; background: none; box-shadow: 0 60px 120px -60px rgba(0,0,0,.9), 0 0 0 1.5px rgba(212,249,105,.35); }
+.shot.bare img { border-radius: 28px; }
+.shot.bare .win { border-radius: 28px; }
+
+/* ═══════════════════════════════════════════════════════════════════════
+   FUNDOS — os seis do kit, na paleta NEXA.
+   ═══════════════════════════════════════════════════════════════════════ */
+.post.bg-grid { background: var(--ink-0); }
+.post.bg-grid .aurora i { opacity: .32; filter: blur(120px); }
+.post.bg-grid::before {
+  content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background-image: linear-gradient(rgba(245,246,241,.06) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(245,246,241,.06) 1px, transparent 1px);
+  background-size: 72px 72px;
+  -webkit-mask-image: radial-gradient(120% 85% at 50% 42%, #000 35%, transparent 78%);
+          mask-image: radial-gradient(120% 85% at 50% 42%, #000 35%, transparent 78%);
+}
+
+/* Verde-oliva subindo do pé do quadro. */
+.post.bg-deep { background: radial-gradient(125% 92% at 50% 118%, #55661f 0%, #2c3415 30%, #171a10 56%, var(--ink-0) 86%); }
+.post.bg-deep .aurora i { opacity: .22; }
+.post.bg-deep .card { background: linear-gradient(180deg, rgba(24,27,18,.78), rgba(16,17,15,.72)); }
+
+/* Chapado em lima: o mais gráfico. Texto escuro, destaque vazado. */
+.post.bg-brand { background: radial-gradient(120% 90% at 20% 0%, #e2ff8a 0%, #d4f969 45%, #c4ea55 100%); --txt: #10110f; --dim: #2f3326; --dim-2: #4b5235; --line: rgba(16,17,15,.16); --line-2: rgba(16,17,15,.32); --lime-ink: #10110f; --blue: #10110f; --blue-2: #10110f; --lime: #10110f; color: var(--txt); }
+.post.bg-brand .aurora, .post.bg-brand canvas.stars { display: none; }
+.post.bg-brand .grad { color: #3f4c0c; -webkit-text-stroke: 0; }
+.post.bg-brand .h0 .grad, .post.bg-brand .h1 .grad, .post.bg-brand .stat .grad, .post.bg-brand .stat .n.grad { color: transparent; -webkit-text-stroke: 3px #10110f; }
+.post.bg-brand .card { border-color: rgba(16,17,15,.18); background: rgba(16,17,15,.05); }
+.post.bg-brand .card.lit { border-color: #10110f; background: rgba(16,17,15,.09); box-shadow: none; }
+.post.bg-brand .pill { border-color: rgba(16,17,15,.3); background: rgba(16,17,15,.06); }
+.post.bg-brand .pill .dot { background: #10110f; box-shadow: none; }
+.post.bg-brand .kicker { color: #10110f; }
+.post.bg-brand .brand img { filter: brightness(0); opacity: .85; }
+.post.bg-brand .shot { border-color: rgba(16,17,15,.3); box-shadow: 0 60px 120px -60px rgba(16,17,15,.7); }
+.post.bg-brand .shot .chrome { background: rgba(16,17,15,.06); border-bottom-color: rgba(16,17,15,.14); }
+.post.bg-brand .shot .chrome i { background: rgba(16,17,15,.3); }
+.post.bg-brand .shot .chrome span { color: #4b5235; }
+
+/* Creme: o respiro da grade, como nos posts da NEXA. */
+.post.bg-light {
+  background: radial-gradient(ellipse at 50% 38%, #fbf6ee 0%, #f4ecdf 60%, #eee3d2 100%);
+  --txt: #1c1d1a; --dim: #4a4c45; --dim-2: #75776d;
+  --blue: #4d5c12; --blue-2: #4d5c12;
+  --line: rgba(35,36,32,.13); --line-2: rgba(35,36,32,.24);
+  color: var(--txt);
+}
+.post.bg-light .aurora, .post.bg-light canvas.stars { display: none; }
+.post.bg-light strong, .post.bg-light b { color: #1c1d1a; }
+.post.bg-light .grad { color: #1c1d1a; background: linear-gradient(transparent 62%, #d4f969 62%, #d4f969 94%, transparent 94%); -webkit-box-decoration-break: clone; box-decoration-break: clone; }
+.post.bg-light .kicker { color: #4d5c12; }
+.post.bg-light .pill { border-color: rgba(35,36,32,.24); background: rgba(35,36,32,.04); }
+.post.bg-light .pill .dot { box-shadow: 0 0 0 1px #4d5c12; }
+.post.bg-light .brand img { filter: brightness(0); opacity: .82; }
+.post.bg-light .card { border-color: rgba(35,36,32,.12); background: #fbf8f2; box-shadow: 0 30px 60px -40px rgba(16,17,15,.28); }
+.post.bg-light .card.lit { border-color: #4d5c12; background: linear-gradient(180deg, #f4f9df, #fbf8f2); box-shadow: 0 40px 80px -46px rgba(77,92,18,.45); }
+.post.bg-light .shot { border-color: rgba(35,36,32,.16); background: #fff; box-shadow: 0 50px 100px -55px rgba(16,17,15,.45); }
+.post.bg-light .shot .chrome { background: rgba(35,36,32,.04); border-bottom-color: rgba(35,36,32,.1); }
+.post.bg-light .shot .chrome i { background: rgba(35,36,32,.2); }
+.post.bg-light .shot .chrome i:first-child { background: #d4f969; box-shadow: 0 0 0 1px #4d5c12; }
+
+/* Um halo lima atrás do miolo. */
+.post.bg-halo { background: #0b0c0a; }
+.post.bg-halo .aurora i { display: none; }
+.post.bg-halo::before {
+  content: ""; position: absolute; z-index: -1; left: 50%; top: 46%; translate: -50% -50%;
+  width: 1260px; height: 1260px; border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(212,249,105,.34), rgba(123,108,246,.12) 52%, transparent 74%);
+  filter: blur(40px);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   COMPOSIÇÕES (iguais ao kit original)
+   ═══════════════════════════════════════════════════════════════════════ */
+.post.center { text-align: center; }
+.post.center .brand { text-align: left; }
+.post.center .pill { align-self: center; }
+.post.center .after, .post.center .sub, .post.center .head .sub { margin-inline: auto; }
+.post.center .big, .post.center .keep, .post.center .chips, .post.center .steps { justify-content: center; }
+.post.center .shot { margin-inline: auto; max-width: 100%; }
+
+.post.right { text-align: right; }
+.post.right .brand { text-align: left; }
+.post.right .pill { align-self: flex-end; }
+.post.right .after, .post.right .sub { margin-left: auto; }
+.post.right .big, .post.right .keep, .post.right .chips { justify-content: flex-end; }
+
+.post.bottom .grow.top { flex-grow: 6; }
+.post.bottom > .grow:not(.top) { flex-grow: .35; }
+
+.split { display: grid; grid-template-columns: var(--split, 1fr 1fr); gap: 46px; align-items: center; }
+.split .shot { margin: 0; }
+
+/* ═══════════════════════════════════════════════════════════════════════
+   DADOS — duas séries que diferem em claridade, não só em matiz.
+   escuro: lima (claro) × violeta (médio) · creme: oliva × laranja ·
+   lima: quase-preto × oliva.
+   ═══════════════════════════════════════════════════════════════════════ */
+.post { --serie-1: #d4f969; --serie-2: #8f83ff; }
+.post.bg-light { --serie-1: #4d5c12; --serie-2: #D2751F; }
+.post.bg-brand { --serie-1: #10110f; --serie-2: #6b7a2a; }
+
+.stat { display: flex; align-items: baseline; gap: 14px; line-height: 1; }
+.stat .n { font-family: var(--display); font-size: 230px; font-weight: 400; letter-spacing: -.06em; }
+.stat .un { font-family: var(--display); font-size: 92px; font-weight: 300; letter-spacing: -.04em; color: var(--dim); }
+.stat.md .n { font-size: 150px; }
+.stat.md .un { font-size: 64px; }
+
+.fonte { margin-top: 26px; font-size: 20px; line-height: 1.45; color: var(--dim-2); }
+.fonte b { font-weight: 500; color: var(--dim); }
+
+.barras { display: flex; flex-direction: column; gap: 26px; }
+.barra .topo { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; margin-bottom: 10px; }
+.barra .rot { font-size: 25px; color: var(--dim); }
+.barra .rot b { font-weight: 500; color: var(--txt); }
+.barra .val { font-family: var(--display); font-size: 40px; font-weight: 500; letter-spacing: -.03em; }
+.barra .trilho { height: 26px; border-radius: 13px; background: rgba(245,246,241,.1); overflow: hidden; }
+.post.bg-light .barra .trilho { background: rgba(35,36,32,.09); }
+.post.bg-brand .barra .trilho { background: rgba(16,17,15,.1); }
+.barra .preenche { display: block; height: 100%; border-radius: 13px; background: var(--serie-1); }
+.barra.b2 .preenche { background: var(--serie-2); }
+
+.regua { display: flex; gap: 3px; height: 34px; border-radius: 17px; overflow: hidden; }
+.regua i { display: block; }
+.regua .a { background: var(--serie-1); border-radius: 17px 3px 3px 17px; }
+.regua .b { background: var(--serie-2); border-radius: 3px 17px 17px 3px; }
+.regua-leg { display: flex; justify-content: space-between; margin-top: 12px; font-size: 22px; color: var(--dim); }
+.regua-leg b { font-weight: 500; color: var(--txt); }

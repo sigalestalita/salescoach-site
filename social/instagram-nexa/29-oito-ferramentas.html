@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>NEXA · Sales Coach · 29 · Oito ferramentas</title>
+<link rel="stylesheet" href="post.css">
+<style>
+  /* O número é a manchete; os dois dados que o explicam entram como
+     cartões, não como mais um parágrafo. */
+  .head .h2 { margin-top: 18px; font-size: 54px; }
+  .grow.top { flex-grow: .85; }
+  .stat { margin-top: 14px; }
+  .dupla { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; margin-top: 40px; }
+  .dupla .card { padding: 30px 32px; }
+  .dupla .n { font-size: 66px; font-weight: 300; letter-spacing: -.04em; line-height: 1; }
+  .dupla .l { margin-top: 12px; font-size: 23px; line-height: 1.38; color: var(--dim); }
+</style>
+</head>
+<body>
+<div class="post bg-light">
+  <div class="aurora"><i class="a1"></i><i class="a2"></i><i class="a3"></i></div>
+  <canvas class="stars"></canvas>
+
+  <header class="brand">
+    <svg class="nexa" viewBox="0 0 800 150" aria-label="NEXA"><path d="M8 139V12L175 139V12M200 12H366M200 12V139H366M200 75H366M390 12L558 139M558 12L390 139M580 139L685 12L792 139M618 95H755"/></svg><i class="sep"></i>
+    <img src="../../assets/mark.png" alt="Sales Coach">
+    <span>Sales Coach</span>
+    <em class="site" style="font-style:normal">um produto NEXA</em>
+  </header>
+
+  <div class="grow top"></div>
+
+  <div class="head">
+    <div class="kicker">Dado de mercado</div>
+    <div class="stat"><span class="n grad">8</span><span class="un">ferramentas</span></div>
+    <h2 class="h2">para fechar <span class="grad">um</span> negócio.</h2>
+  </div>
+
+  <div class="dupla">
+    <div class="card"><div class="n">42%</div><div class="l">dos vendedores se sentem sobrecarregados por ferramenta demais</div></div>
+    <div class="card"><div class="n">45%</div><div class="l">menos chance de bater meta é o que a sobrecarga custa</div></div>
+  </div>
+
+  <p class="fonte" style="margin-top:32px">Salesforce · <b>State of Sales</b>, 7ª ed. (2026) · 4.000+ profissionais de vendas.<br>O Sales Coach roda dentro do Meet, do Teams e do CRM que o time já usa.</p>
+
+  <div class="grow"></div>
+</div>
+<script src="stars.js"></script>
+</body>
+</html>

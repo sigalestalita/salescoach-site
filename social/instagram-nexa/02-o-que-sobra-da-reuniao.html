@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>NEXA · Sales Coach · 02 · O que sobra da reunião</title>
+<link rel="stylesheet" href="post.css">
+<style>
+  /* Post do "por que existe": a mesma reunião, escrita de memória e
+     analisada pelo Sales Coach, uma embaixo da outra. O contraste entre
+     a linha solta e os quatro critérios é o argumento inteiro. */
+  .post > .card { padding: 24px 32px; }
+  .head { margin-top: 20px; }
+  .head .h2 { margin-top: 16px; }
+
+  .vs { display: flex; align-items: center; gap: 18px; margin: 18px 0 12px; }
+  .vs .rule { flex: 1 1 auto; }
+  .vs span { font-size: 21px; letter-spacing: .1em; text-transform: uppercase; color: var(--dim-2); }
+
+  .opp { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; }
+  .opp .who { font-size: 27px; font-weight: 500; letter-spacing: -.02em; }
+
+  .quote { margin-top: 14px; padding-left: 22px; border-left: 3px solid rgba(245,246,241,.3); font-size: 29px; line-height: 1.4; color: var(--dim); font-weight: 300; }
+  .miss { margin-top: 16px; font-size: 22px; color: var(--dim-2); }
+
+  .crit { margin-top: 22px; display: grid; grid-template-columns: 1fr 1fr; gap: 16px 24px; }
+  .crit div b { display: block; font-size: 23px; font-weight: 500; color: var(--blue-2); letter-spacing: .02em; margin-bottom: 5px; }
+  .crit div span { font-size: 21px; line-height: 1.36; color: var(--dim); }
+
+  .next { margin-top: 18px; padding-top: 16px; border-top: 1px solid var(--line); font-size: 24px; color: var(--dim); }
+  .next b { font-weight: 500; color: var(--txt); }
+
+  .temp { display: flex; align-items: center; gap: 14px; }
+  .temp .n { font-size: 46px; font-weight: 400; letter-spacing: -.03em; }
+  .temp .n small { font-size: 22px; color: var(--dim-2); }
+  .temp .bad { font-size: 22px; padding: 8px 18px; border-radius: 999px; border: 1px solid var(--line-2); color: var(--dim-2); }
+  .temp .hot { font-size: 22px; padding: 8px 18px; border-radius: 999px; background: rgba(212,249,105,.18); border: 1px solid rgba(212,249,105,.5); color: var(--blue-2); }
+</style>
+</head>
+<body>
+<div class="post bg-grid">
+  <div class="aurora"><i class="a1"></i><i class="a2"></i><i class="a3"></i></div>
+  <canvas class="stars"></canvas>
+
+  <header class="brand">
+    <svg class="nexa" viewBox="0 0 800 150" aria-label="NEXA"><path d="M8 139V12L175 139V12M200 12H366M200 12V139H366M200 75H366M390 12L558 139M558 12L390 139M580 139L685 12L792 139M618 95H755"/></svg><i class="sep"></i>
+    <img src="../../assets/mark-white.png" alt="Sales Coach">
+    <span>Sales Coach</span>
+    <em class="site" style="font-style:normal">um produto NEXA</em>
+  </header>
+
+  <div class="grow top"></div>
+
+  <div class="head">
+    <div class="kicker">Por que existe</div>
+    <h2 class="h2" style="font-size:62px">O problema não é<br>falta de reunião.<br>É <span class="grad">o que sobra dela.</span></h2>
+  </div>
+
+  <div class="vs"><span>Hoje, no CRM</span><i class="rule"></i><span>escrito de memória, 3 h depois</span></div>
+  <div class="card">
+    <div class="opp"><span class="who">Oportunidade · Atacado Norte</span><span class="temp"><i class="bad" style="font-style:normal">sem nota</i></span></div>
+    <p class="quote">“Reunião boa, o cliente gostou da demo.”</p>
+    <p class="miss">A conversa durou uma hora. Tem verba? Quem decide? O gestor lê e segue sem saber.</p>
+  </div>
+
+  <div class="vs"><span>A mesma reunião, com o Sales Coach</span><i class="rule"></i><span>pronto ao fim da chamada</span></div>
+  <div class="card lit">
+    <div class="opp"><span class="who">Oportunidade · Atacado Norte</span><span class="temp"><b class="n">87<small>/100</small></b><i class="hot" style="font-style:normal">Muito quente</i></span></div>
+    <div class="crit">
+      <div><b>Budget</b><span>Verba aprovada pela diretoria.</span></div>
+      <div><b>Authority</b><span>Sócio-proprietário presente na reunião.</span></div>
+      <div><b>Need</b><span>Vendedor externo sem visão do estoque — dor citada 3 ×.</span></div>
+      <div><b>Timeline</b><span>Decisão até o fim do mês.</span></div>
+    </div>
+    <p class="next"><b>Próximo passo:</b> enviar a proposta com o financeiro junto, até sexta.</p>
+  </div>
+
+  <div class="grow" style="min-height:26px"></div>
+</div>
+<script src="stars.js"></script>
+</body>
+</html>

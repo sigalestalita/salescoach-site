@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>NEXA · Sales Coach · 19 · Todas as agendas com nota</title>
+<link rel="stylesheet" href="post.css">
+<style>
+  /* Lista de agendas: a nota e a temperatura em cada linha. É a tela que
+     responde "como está o mês" sem abrir uma planilha. */
+  .head { margin-top: 22px; }
+  .head .h2 { margin-top: 14px; }
+  .head .after { margin-top: 18px; font-size: 29px; }
+  .shot { margin-top: 34px; }
+  /* Recorte de agendas.webp: mostra as linhas com nota, temperatura e status no lugar do print inteiro, que
+     encolhido para 924px ficaria ilegível no feed. */
+  .win { height: 421px; }
+  .win img { width: 936px; margin: -15px 0 0 -6px; }
+</style>
+</head>
+<body>
+<div class="post bottom">
+  <div class="aurora"><i class="a1"></i><i class="a2"></i><i class="a3"></i></div>
+  <canvas class="stars"></canvas>
+
+  <header class="brand">
+    <svg class="nexa" viewBox="0 0 800 150" aria-label="NEXA"><path d="M8 139V12L175 139V12M200 12H366M200 12V139H366M200 75H366M390 12L558 139M558 12L390 139M580 139L685 12L792 139M618 95H755"/></svg><i class="sep"></i>
+    <img src="../../assets/mark-white.png" alt="Sales Coach">
+    <span>Sales Coach</span>
+    <em class="site" style="font-style:normal">um produto NEXA</em>
+  </header>
+
+  <div class="grow top"></div>
+
+  <div class="head">
+    <div class="kicker">Para quem lidera</div>
+    <h2 class="h2">Todas as agendas do time,<br><span class="grad">com nota e temperatura.</span></h2>
+    <p class="after">Quem conduziu, quando foi e quanto valeu —<br>numa lista, não numa <b>planilha</b>.</p>
+  </div>
+
+  <div class="shot">
+    <div class="chrome"><i></i><i></i><i></i><span>Agendas do time</span></div>
+    <div class="win"><img src="../../assets/app/agendas.webp" alt="Lista de agendas do time com score, temperatura e status de cada reunião"></div>
+  </div>
+
+  <div class="grow" style="min-height:24px"></div>
+</div>
+<script src="stars.js"></script>
+</body>
+</html>

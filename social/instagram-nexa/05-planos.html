@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>NEXA · Sales Coach · 05 · Planos</title>
+<link rel="stylesheet" href="post.css">
+<style>
+  /* Post de preço: as duas faixas lado a lado, como na seção Planos, e a
+     terceira — Enterprise, sem preço de tabela — numa tira embaixo. */
+  .head { margin-top: 10px; }
+  .head .h2 { margin-top: 14px; }
+  .head .sub { margin-top: 16px; max-width: 920px; }
+
+  .plans { margin-top: 22px; display: grid; grid-template-columns: 1fr 1fr; gap: 22px; align-items: stretch; }
+  .plan { position: relative; display: flex; flex-direction: column; padding: 28px 28px; }
+  .plan .range { font-size: 20px; letter-spacing: .12em; text-transform: uppercase; color: var(--dim-2); font-weight: 500; }
+  .plan .name { margin-top: 8px; font-size: 31px; font-weight: 400; letter-spacing: -.03em; }
+  .plan .price { margin-top: 14px; display: flex; align-items: baseline; gap: 6px; }
+  .plan .price .cur { font-size: 26px; color: var(--dim); }
+  .plan .price .val { font-size: 56px; font-weight: 300; letter-spacing: -.045em; line-height: 1; }
+  .plan .per { margin-top: 6px; font-size: 21px; color: var(--dim); }
+  .plan .setup { margin-top: 4px; font-size: 19px; color: var(--dim-2); }
+  .plan ul { margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--line); list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .plan li { position: relative; padding-left: 26px; font-size: 20px; line-height: 1.32; color: var(--dim); }
+  .plan li::before { content: ""; position: absolute; left: 4px; top: 10px; width: 9px; height: 9px; border-radius: 50%; background: var(--blue); }
+  .plan .best { position: absolute; top: -14px; right: 24px; padding: 7px 18px; border-radius: 999px; font-size: 18px; font-weight: 500; color: #0A0D16; background: linear-gradient(100deg, var(--blue-2), var(--violet)); }
+
+  .ent { margin-top: 18px; display: flex; align-items: center; gap: 26px; padding: 24px 30px; }
+  .ent .r { flex: 0 0 auto; font-size: 20px; letter-spacing: .12em; text-transform: uppercase; color: var(--dim-2); font-weight: 500; }
+  .ent .t b { display: block; font-size: 27px; font-weight: 500; letter-spacing: -.02em; margin-bottom: 5px; }
+  .ent .t span { font-size: 22px; line-height: 1.4; color: var(--dim); }
+</style>
+</head>
+<body>
+<div class="post bg-light center">
+  <div class="aurora"><i class="a1"></i><i class="a2"></i><i class="a3"></i></div>
+  <canvas class="stars"></canvas>
+
+  <header class="brand">
+    <svg class="nexa" viewBox="0 0 800 150" aria-label="NEXA"><path d="M8 139V12L175 139V12M200 12H366M200 12V139H366M200 75H366M390 12L558 139M558 12L390 139M580 139L685 12L792 139M618 95H755"/></svg><i class="sep"></i>
+    <img src="../../assets/mark.png" alt="Sales Coach">
+    <span>Sales Coach</span>
+    <em class="site" style="font-style:normal">um produto NEXA</em>
+  </header>
+
+  <div class="grow top"></div>
+
+  <div class="head">
+    <div class="kicker">Planos</div>
+    <h2 class="h2" style="font-size:58px">Você paga por quem usa.<br><span class="grad">Nada de licença parada.</span></h2>
+    <p class="sub">A cobrança é por usuário ativo: quando o time cresce de faixa, o preço por pessoa acompanha.</p>
+  </div>
+
+  <div class="plans">
+    <div class="card plan">
+      <div class="range">1 a 10 usuários</div>
+      <div class="name">Essencial</div>
+      <div class="price"><span class="cur">R$</span><span class="val">19,90</span></div>
+      <div class="per">por usuário/mês</div>
+      <div class="setup">R$ 990 de implantação, uma única vez</div>
+      <ul>
+        <li>50 reuniões por usuário/mês</li>
+        <li>Coach ao vivo durante a reunião</li>
+        <li>Extensão para Meet e Teams</li>
+        <li>BANT, MEDDIC e SPIN prontos</li>
+      </ul>
+    </div>
+
+    <div class="card lit plan">
+      <span class="best">Mais escolhido</span>
+      <div class="range">11 a 50 usuários</div>
+      <div class="name">Profissional</div>
+      <div class="price"><span class="cur">R$</span><span class="val">29,90</span></div>
+      <div class="per">por usuário/mês</div>
+      <div class="setup">R$ 1.690 de implantação, uma única vez</div>
+      <ul>
+        <li>120 reuniões por usuário/mês</li>
+        <li>Metodologia própria: critérios e pesos</li>
+        <li>CRM preenchido sozinho</li>
+        <li>Modo de treino e relatórios de gestão</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card lit ent">
+    <div class="r">Acima de<br>50 usuários</div>
+    <div class="t"><b>Enterprise</b><span>Preço por pessoa negociado por volume, integrações dedicadas e acesso à API, SSO, revisão de segurança e SLA.</span></div>
+  </div>
+
+  <div class="grow" style="min-height:18px"></div>
+</div>
+<script src="stars.js"></script>
+</body>
+</html>

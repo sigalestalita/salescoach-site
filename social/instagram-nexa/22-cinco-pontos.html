@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>NEXA · Sales Coach · 22 · Cinco pontos de conversa</title>
+<link rel="stylesheet" href="post.css">
+<style>
+  /* Duas barras, cada uma com o próprio rótulo e o próprio número: a cor
+     reforça, mas não é a única pista de quem é quem. */
+  .head .h2 { margin-top: 16px; font-size: 56px; }
+  .head .after { margin-top: 20px; font-size: 27px; max-width: 880px; }
+  .grow.top { flex-grow: .85; }
+  .barras { margin-top: 48px; }
+</style>
+</head>
+<body>
+<div class="post bg-light">
+  <div class="aurora"><i class="a1"></i><i class="a2"></i><i class="a3"></i></div>
+  <canvas class="stars"></canvas>
+
+  <header class="brand">
+    <svg class="nexa" viewBox="0 0 800 150" aria-label="NEXA"><path d="M8 139V12L175 139V12M200 12H366M200 12V139H366M200 75H366M390 12L558 139M558 12L390 139M580 139L685 12L792 139M618 95H755"/></svg><i class="sep"></i>
+    <img src="../../assets/mark.png" alt="Sales Coach">
+    <span>Sales Coach</span>
+    <em class="site" style="font-style:normal">um produto NEXA</em>
+  </header>
+
+  <div class="grow top"></div>
+
+  <div class="head">
+    <div class="kicker">Dado de mercado</div>
+    <h2 class="h2">Ganhar e perder cabe em<br><span class="grad">cinco pontos de conversa.</span></h2>
+    <p class="after">Quanto o vendedor falou, do começo ao fim da chamada:</p>
+  </div>
+
+  <div class="barras">
+    <div class="barra">
+      <div class="topo"><span class="rot"><b>Negócio ganho</b> · vendedor falando</span><span class="val">57%</span></div>
+      <div class="trilho"><i class="preenche" style="width:57%"></i></div>
+    </div>
+    <div class="barra b2">
+      <div class="topo"><span class="rot"><b>Negócio perdido</b> · vendedor falando</span><span class="val">62%</span></div>
+      <div class="trilho"><i class="preenche" style="width:62%"></i></div>
+    </div>
+  </div>
+
+  <p class="fonte" style="margin-top:34px">Gong Labs · 326 mil chamadas de vendas analisadas.<br>O Sales Coach mede essa proporção em <b>toda reunião</b> — e diz quando o lead parou de falar.</p>
+
+  <div class="grow"></div>
+</div>
+<script src="stars.js"></script>
+</body>
+</html>

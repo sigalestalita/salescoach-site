@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>NEXA · Sales Coach · 38 · Os dados são seus</title>
+<link rel="stylesheet" href="post.css">
+<style>
+  .grow.top { flex-grow: .9; }
+  .head .h2 { margin-top: 16px; font-size: 58px; }
+  .head .after { margin-top: 20px; font-size: 27px; max-width: 880px; }
+  .itens { margin-top: 42px; display: flex; flex-direction: column; gap: 18px; }
+  .itens .card { display: flex; gap: 22px; align-items: flex-start; padding: 26px 30px; }
+  .itens .marca { flex: 0 0 auto; width: 12px; height: 12px; border-radius: 50%; background: var(--serie-1); margin-top: 11px; }
+  .itens b { display: block; font-size: 27px; font-weight: 500; letter-spacing: -.02em; margin-bottom: 6px; }
+  .itens span { font-size: 23px; line-height: 1.42; color: var(--dim); }
+</style>
+</head>
+<body>
+<div class="post bg-light">
+  <div class="aurora"><i class="a1"></i><i class="a2"></i><i class="a3"></i></div>
+  <canvas class="stars"></canvas>
+
+  <header class="brand">
+    <svg class="nexa" viewBox="0 0 800 150" aria-label="NEXA"><path d="M8 139V12L175 139V12M200 12H366M200 12V139H366M200 75H366M390 12L558 139M558 12L390 139M580 139L685 12L792 139M618 95H755"/></svg><i class="sep"></i>
+    <img src="../../assets/mark.png" alt="Sales Coach">
+    <span>Sales Coach</span>
+    <em class="site" style="font-style:normal">um produto NEXA</em>
+  </header>
+
+  <div class="grow top"></div>
+
+  <div class="head">
+    <div class="kicker">Segurança</div>
+    <h2 class="h2">A conversa é sua.<br><span class="grad">A gravação também.</span></h2>
+  </div>
+
+  <div class="itens">
+    <div class="card"><i class="marca"></i><div><b>Dados isolados por empresa</b><span>Cada cliente tem os seus, separados dos demais.</span></div></div>
+    <div class="card"><i class="marca"></i><div><b>Vendedor vê as dele. Gestor vê as do time.</b><span>O acesso segue o papel de cada um.</span></div></div>
+    <div class="card"><i class="marca"></i><div><b>Link externo só quando você ativa</b><span>Com prazo de validade e revogação a qualquer momento.</span></div></div>
+    <div class="card"><i class="marca"></i><div><b>SSO e revisão de segurança no Enterprise</b><span>Para quem precisa passar pelo time de TI antes.</span></div></div>
+  </div>
+
+  <div class="grow"></div>
+</div>
+<script src="stars.js"></script>
+</body>
+</html>

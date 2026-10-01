@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>NEXA · Sales Coach · 16 · Pergunte sobre a agenda</title>
+<link rel="stylesheet" href="post.css">
+<style>
+  /* Assistente: a resposta cita as reuniões pelo nome, com data, vendedor
+     e score. É o que separa de um chat genérico. */
+  /* O print do assistente é uma tela de celular: fica numa coluna ao lado
+     do texto, na largura dele mesmo. */
+  .split { --split: 1fr 424px; }
+  .head .h2 { margin-top: 14px; font-size: 44px; }
+  .head .after { margin-top: 18px; font-size: 26px; }
+  .win { height: 553px; }
+  .win img { width: 424px; margin: 0; }
+</style>
+</head>
+<body>
+<div class="post bg-brand">
+  <div class="aurora"><i class="a1"></i><i class="a2"></i><i class="a3"></i></div>
+  <canvas class="stars"></canvas>
+
+  <header class="brand">
+    <svg class="nexa" viewBox="0 0 800 150" aria-label="NEXA"><path d="M8 139V12L175 139V12M200 12H366M200 12V139H366M200 75H366M390 12L558 139M558 12L390 139M580 139L685 12L792 139M618 95H755"/></svg><i class="sep"></i>
+    <img src="../../assets/mark-white.png" alt="Sales Coach">
+    <span>Sales Coach</span>
+    <em class="site" style="font-style:normal">um produto NEXA</em>
+  </header>
+
+  <div class="grow top"></div>
+
+  <div class="split">
+    <div class="head">
+      <div class="kicker">A qualquer momento</div>
+      <h2 class="h2">Pergunte.<br><span class="grad">Ele responde com as reuniões de verdade.</span></h2>
+      <p class="after">Com nome do lead, data, vendedor e nota de cada uma.</p>
+    </div>
+
+    <div class="shot">
+      <div class="chrome"><i></i><i></i><i></i><span>Assistente</span></div>
+      <div class="win"><img src="../../assets/app/assistente.webp" alt="Assistente listando as três agendas mais quentes, com lead, data, vendedor e score de cada uma"></div>
+    </div>
+  </div>
+
+  <div class="grow" style="min-height:24px"></div>
+</div>
+<script src="stars.js"></script>
+</body>
+</html>
