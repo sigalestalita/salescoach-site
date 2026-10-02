@@ -450,7 +450,7 @@ function render() {
   const nt = toquesHoje().length, na = abertas().filter(alerta).filter(o => alerta(o).cls === 'bad').length;
   $('#bCad').hidden = !nt; $('#bCad').textContent = nt; $('#bPipe').hidden = !na; $('#bPipe').textContent = na;
   let banner = '';
-  if (S.noDb) banner = `<p class="banner">Não foi possível conectar ao banco de dados. Confira a internet e recarregue a página.</p>`;
+  if (S.noDb) banner = `<p class="banner">Não foi possível carregar os dados agora. O sistema está tentando de novo sozinho; se continuar, confira a internet.</p>`;
   else if (S.ro) banner = `<p class="banner">Você está em modo leitura. Para editar, peça a um administrador o papel de vendas ou admin.</p>`;
   else if (S.loaded < 5 && S.db) banner = `<p class="banner">Carregando dados…</p>`;
   $('#view').innerHTML = banner + VIEWS[view]();
@@ -1038,9 +1038,13 @@ function criarDb(sb) {
   const snap = path => { const d = cache.get(path); return { id: segs(path).pop(), exists: d !== undefined, data: () => d === undefined ? undefined : JSON.parse(JSON.stringify(d)), metadata: {} }; };
   const erro = e => ({ code: /row-level security|permission|42501/i.test((e && (e.message || e.code)) || '') ? 'invalid_argument' : 'unavailable', message: e && e.message });
   const novoId = () => (crypto.randomUUID ? crypto.randomUUID().replace(/-/g, '').slice(0, 20) : Date.now().toString(36) + Math.random().toString(36).slice(2, 10));
+  const espera = ms => new Promise(r => setTimeout(r, ms));
+  async function comRetentativa(fn) {
+    for (let t = 0; ; t++) { const res = await fn(); if (!res.error || t >= 2 || !/fetch|network|Failed/i.test(res.error.message || '')) return res; await espera(600 * (t + 1)); }
+  }
   async function carregar() {
     const todos = [];
-    for (let de = 0; ; de += 1000) { const { data, error } = await sb.from('docs').select('path,data').order('path').range(de, de + 999); if (error) throw error; todos.push(...data); if (data.length < 1000) break; }
+    for (let de = 0; ; de += 1000) { const { data, error } = await comRetentativa(() => sb.from('docs').select('path,data').order('path').range(de, de + 999)); if (error) throw error; todos.push(...data); if (data.length < 1000) break; }
     cache.clear(); todos.forEach(r => cache.set(r.path, r.data)); pronto = true; notify();
   }
   sb.channel('docs-mudancas').on('postgres_changes', { event: '*', schema: 'public', table: 'docs' }, p => {
@@ -1050,17 +1054,17 @@ function criarDb(sb) {
   document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible' && pronto) carregar().catch(() => {}); });
   const docRef = path => ({ id: segs(path).pop(), path,
     async set(d) { const ant = cache.get(path); cache.set(path, d); notify();
-      const { error } = await sb.from('docs').upsert({ path, data: d }, { onConflict: 'path' });
+      const { error } = await comRetentativa(() => sb.from('docs').upsert({ path, data: d }, { onConflict: 'path' }));
       if (error) { if (ant === undefined) cache.delete(path); else cache.set(path, ant); notify(); throw erro(error); } },
     async delete() { const ant = cache.get(path); cache.delete(path); notify();
-      const { error } = await sb.from('docs').delete().eq('path', path);
+      const { error } = await comRetentativa(() => sb.from('docs').delete().eq('path', path));
       if (error) { if (ant !== undefined) cache.set(path, ant); notify(); throw erro(error); } },
     onSnapshot(fn) { const s2 = () => pronto && fn(snap(path)); subs.add(s2); s2(); return () => subs.delete(s2); },
     collection: sub => colRef(path + '/' + sub) });
   const colRef = path => ({ path, doc: id => docRef(path + '/' + (id || novoId())),
     onSnapshot(fn) { const n = segs(path).length + 1; const s2 = () => { if (!pronto) return; const docs = [...cache.keys()].filter(k => k.startsWith(path + '/') && segs(k).length === n).sort().map(snap); fn({ docs, size: docs.length, empty: !docs.length }); };
       subs.add(s2); s2(); return () => subs.delete(s2); } });
-  return { doc: docRef, collection: colRef, carregar };
+  return { doc: docRef, collection: colRef, carregar, comRetentativa };
 }
 
 /* ───────── login ───────── */
@@ -1118,13 +1122,15 @@ let iniciado = null;
 async function iniciar(session) {
   if (iniciado === session.user.id) return; iniciado = session.user.id;
   S.email = (session.user.email || '').toLowerCase(); $('#meEmail').textContent = S.email; $('#me').hidden = false;
-  const { data: mb, error } = await sb.from('membros').select('papel,nome').eq('email', S.email).maybeSingle();
+  let mb = null, error = null;
+  for (let t = 0; t < 3; t++) { ({ data: mb, error } = await sb.from('membros').select('papel,nome').eq('email', S.email).maybeSingle()); if (!error) break; await new Promise(r => setTimeout(r, 700 * (t + 1))); }
   if (error) { S.noDb = true; $('#auth').hidden = true; return render(); }
   if (!mb) { iniciado = null; return telaNegado(S.email); }
   S.papel = mb.papel; S.ro = mb.papel === 'leitura'; $('#navEquipe').hidden = mb.papel !== 'admin';
   S.dl = { save: ({ filename, data }) => { const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([data], { type: 'text/csv;charset=utf-8' })); a.download = filename; document.body.appendChild(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 500); return Promise.resolve(); } };
   const db = criarDb(sb); S.db = db; $('#auth').hidden = true; render();
-  try { await db.carregar(); } catch (er) { S.noDb = true; return render(); }
+  const tentarCarregar = async () => { try { await db.carregar(); if (S.noDb) { S.noDb = false; render(); } } catch (er) { S.noDb = true; render(); setTimeout(tentarCarregar, 5000); } };
+  await tentarCarregar();
   const done = () => { S.loaded++; schedule(); };
   let f1 = 0, f2 = 0, f3 = 0, f4 = 0, f5 = 0;
   db.doc('config/geral').onSnapshot(s => { S.cfgExists = s.exists; S.cfg = deep(DEFAULTS, s.exists ? s.data() : {}); if (!f1++) done(); else schedule(); });
