@@ -1,0 +1,1152 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>NEXA Comercial</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#0d0e0b">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&family=Geist+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: ferramenta de trabalho — barra lateral de navegação, área de trabalho larga; o painel resume, as outras telas operam. */
+:root{
+  --bg:#f3f4ef; --surface:#ffffff; --surface-2:#eceee6; --fg:#16170f; --soft:#555849; --mute:#80837a; --line:#dcdfd3;
+  --accent:#d4f969; --accent-ink:#16170f; --accent-text:#4d5c12; --ok:#3f7d1c; --warn:#a1600a; --bad:#b3321f; --bad-bg:#fbe3df; --warn-bg:#fbefd9;
+  --shadow:0 18px 50px -20px rgba(20,22,10,.35);
+  --sans:'Geist',system-ui,-apple-system,'Segoe UI',sans-serif; --mono:'Geist Mono',ui-monospace,Menlo,monospace;
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0d0e0b; --surface:#16180f; --surface-2:#1e2117; --fg:#eceee4; --soft:#a8ac9d; --mute:#767a6c; --line:#2b2e24;
+  --accent:#d4f969; --accent-ink:#0d0e0b; --accent-text:#d4f969; --ok:#9ccf5a; --warn:#f0b35a; --bad:#f08a78; --bad-bg:#3a1c16; --warn-bg:#3a2a12;
+  --shadow:0 18px 50px -20px rgba(0,0,0,.8); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0d0e0b; --surface:#16180f; --surface-2:#1e2117; --fg:#eceee4; --soft:#a8ac9d; --mute:#767a6c; --line:#2b2e24;
+  --accent:#d4f969; --accent-ink:#0d0e0b; --accent-text:#d4f969; --ok:#9ccf5a; --warn:#f0b35a; --bad:#f08a78; --bad-bg:#3a1c16; --warn-bg:#3a2a12;
+  --shadow:0 18px 50px -20px rgba(0,0,0,.8); color-scheme:dark}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--sans);font-size:14.5px;line-height:1.5;-webkit-font-smoothing:antialiased}
+h1,h2,h3,p{margin:0}
+h1{font-size:26px;font-weight:400;letter-spacing:-.03em;text-wrap:balance}
+h2{font-size:16px;font-weight:500;letter-spacing:-.01em}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--accent-text);outline-offset:2px;border-radius:6px}
+.mono{font-family:var(--mono);font-size:11px;letter-spacing:.07em;text-transform:uppercase}
+.soft{color:var(--soft)} .mute{color:var(--mute)}
+.num{font-variant-numeric:tabular-nums}
+[hidden]{display:none!important}
+
+.app{display:grid;grid-template-columns:220px minmax(0,1fr);min-height:100%}
+aside.side{position:sticky;top:0;height:100vh;border-right:1px solid var(--line);background:var(--surface);padding:20px 12px;display:flex;flex-direction:column;gap:22px}
+.brand{display:flex;align-items:baseline;gap:8px;padding:0 8px}
+.brand svg{width:76px;color:var(--fg)}
+.brand span{font-size:12px;color:var(--soft)}
+nav.tabs{display:grid;gap:2px}
+nav.tabs a{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:9px 10px;border-radius:8px;color:var(--soft);text-decoration:none;font-size:14px}
+nav.tabs a:hover{background:var(--surface-2);color:var(--fg)}
+nav.tabs a.on{background:var(--surface-2);color:var(--fg);font-weight:500}
+nav.tabs a.on::before{content:"";width:3px;height:16px;border-radius:2px;background:var(--accent-text);margin-left:-6px;margin-right:2px}
+nav.tabs a .lbl{flex:1}
+.badge{min-width:20px;height:20px;padding:0 6px;border-radius:999px;background:var(--accent);color:var(--accent-ink);font-size:11.5px;font-weight:600;display:inline-grid;place-items:center;font-variant-numeric:tabular-nums}
+.badge.bad{background:var(--bad);color:#fff}
+.side .foot{margin-top:auto;font-size:12px;color:var(--mute);padding:0 8px;line-height:1.45}
+main#view{min-width:0;padding:28px clamp(16px,3vw,40px) 80px;display:grid;gap:22px;align-content:start}
+@media (max-width:860px){
+  .app{grid-template-columns:1fr}
+  aside.side{position:sticky;top:env(safe-area-inset-top,0px);height:auto;z-index:20;flex-direction:row;align-items:center;gap:10px;padding:10px 12px;border-right:0;border-bottom:1px solid var(--line);overflow-x:auto}
+  .brand span,.side .foot{display:none}
+  nav.tabs{display:flex;gap:4px}
+  nav.tabs a{white-space:nowrap;padding:8px 10px}
+  nav.tabs a.on::before{display:none}
+}
+
+.top{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:12px}
+.top .sub{color:var(--soft);margin-top:4px;max-width:70ch}
+.tools{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.btn{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px;border-radius:8px;border:1px solid var(--line);background:var(--surface);cursor:pointer;font-size:14px;white-space:nowrap}
+a.btn,a.mono{text-decoration:none;color:inherit}
+.btn:hover{border-color:var(--soft)}
+.btn.pri{background:var(--accent);border-color:var(--accent);color:var(--accent-ink);font-weight:500}
+.btn.pri:hover{filter:brightness(.96)}
+.btn.sm{height:30px;padding:0 10px;font-size:13px}
+.btn.danger{color:var(--bad);border-color:var(--bad)}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.inp,select.inp,textarea.inp{height:36px;padding:0 10px;border-radius:8px;border:1px solid var(--line);background:var(--surface);min-width:0}
+textarea.inp{height:auto;min-height:72px;padding:8px 10px;resize:vertical;width:100%}
+.inp:disabled{background:var(--surface-2)}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:var(--surface)}
+.seg button{border:0;background:none;padding:0 12px;height:34px;cursor:pointer;color:var(--soft);font-size:13.5px}
+.seg button.on{background:var(--surface-2);color:var(--fg);font-weight:500}
+
+.banner{border:1px solid var(--line);border-left:3px solid var(--warn);background:var(--surface);padding:12px 14px;border-radius:8px;color:var(--soft)}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:18px;display:grid;gap:14px;min-width:0;align-content:start}
+.card>header{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+.grid2{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:18px}
+@media (max-width:1100px){.grid2{grid-template-columns:1fr}}
+
+/* KPIs */
+.kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.kpis>div{background:var(--surface);padding:16px 18px;display:grid;gap:4px;min-width:0}
+.kpis b{font-size:26px;font-weight:400;letter-spacing:-.03em;font-variant-numeric:tabular-nums;line-height:1.1}
+.kpis span{font-size:12.5px;color:var(--soft)}
+@media (max-width:860px){.kpis{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+/* metas */
+.meters{display:grid;gap:12px}
+.meter{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 12px;align-items:baseline}
+.meter .v{font-variant-numeric:tabular-nums;font-size:13.5px}
+.meter .v b{font-weight:500}
+.meter .bar{grid-column:1/-1;height:6px;border-radius:3px;background:var(--surface-2);overflow:hidden}
+.meter .bar i{display:block;height:100%;background:var(--accent-text);border-radius:3px}
+.meter.done .bar i{background:var(--ok)}
+
+/* listas */
+.list{display:grid}
+.row{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:12px;align-items:center;padding:10px 0;border-top:1px solid var(--line)}
+.row:first-child{border-top:0}
+.row .t{font-weight:500}
+.row .d{font-size:13px;color:var(--soft)}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--mute)}
+.dot.bad{background:var(--bad)} .dot.warn{background:var(--warn)} .dot.ok{background:var(--ok)} .dot.acc{background:var(--accent-text)}
+.chip{display:inline-flex;align-items:center;height:22px;padding:0 8px;border-radius:999px;font-size:12px;border:1px solid var(--line);color:var(--soft);white-space:nowrap}
+.chip.acc{background:var(--accent);border-color:var(--accent);color:var(--accent-ink);font-weight:500}
+.chip.bad{background:var(--bad-bg);border-color:transparent;color:var(--bad);font-weight:500}
+.chip.warn{background:var(--warn-bg);border-color:transparent;color:var(--warn);font-weight:500}
+.empty{border:1px dashed var(--line);border-radius:12px;padding:28px;text-align:center;color:var(--soft);display:grid;gap:10px;justify-items:center}
+.empty b{color:var(--fg);font-weight:500}
+
+/* kanban */
+.kan-wrap{overflow-x:auto;padding-bottom:6px}
+.kan{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(250px,1fr);gap:12px;min-width:min-content}
+.col{background:var(--surface-2);border-radius:12px;padding:10px;display:grid;gap:8px;align-content:start;min-height:180px}
+.col.over{outline:2px dashed var(--accent-text);outline-offset:-2px}
+.col>header{display:flex;justify-content:space-between;align-items:baseline;padding:2px 4px 4px;gap:8px}
+.col>header b{font-weight:500;font-size:13.5px}
+.col>header span{font-size:12px;color:var(--soft);font-variant-numeric:tabular-nums}
+.opp{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:10px 12px;display:grid;gap:6px;cursor:pointer;text-align:left;width:100%}
+.opp:hover{border-color:var(--soft)}
+.opp.alert{border-left:3px solid var(--bad)}
+.opp .h{display:flex;justify-content:space-between;gap:8px;align-items:baseline}
+.opp .h b{font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.opp .v{font-size:13px;font-variant-numeric:tabular-nums;white-space:nowrap}
+.opp .s{font-size:12.5px;color:var(--soft)}
+.opp .meta{display:flex;flex-wrap:wrap;gap:4px}
+
+/* tabelas */
+.tw{overflow-x:auto;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:13.5px}
+th{font-family:var(--mono);font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;font-weight:400;color:var(--soft);text-align:left;padding:10px 12px;background:var(--surface-2);border-bottom:1px solid var(--line);white-space:nowrap}
+td{padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:middle}
+tr:last-child td{border-bottom:0}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+tbody tr.click{cursor:pointer}
+tbody tr.click:hover td{background:var(--surface-2)}
+td .inp{height:32px;width:100%}
+td .inp.small{width:84px;text-align:right}
+.prio{display:inline-grid;place-items:center;width:24px;height:24px;border-radius:6px;font-weight:600;font-size:12.5px;background:var(--surface-2)}
+.prio.A{background:var(--accent);color:var(--accent-ink)}
+.prio.B{background:var(--surface-2);color:var(--accent-text);box-shadow:inset 0 0 0 1px var(--accent-text)}
+
+/* cadência */
+.touch{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px 14px;padding:14px 0;border-top:1px solid var(--line)}
+.touch:first-child{border-top:0}
+.touch .who b{font-weight:500}
+.touch .what{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:4px}
+.touch .acts{display:flex;flex-wrap:wrap;gap:6px;justify-content:flex-end;align-items:flex-start}
+.touch .msg{grid-column:1/-1;background:var(--surface-2);border-radius:8px;padding:12px 14px;white-space:pre-wrap;font-size:14px;line-height:1.55}
+.touch .msg mark{background:var(--warn-bg);color:var(--warn);border-radius:3px;padding:0 2px}
+.dots{display:flex;gap:4px}
+.dots i{width:10px;height:10px;border-radius:3px;background:var(--surface-2);box-shadow:inset 0 0 0 1px var(--line)}
+.dots i.done{background:var(--accent-text);box-shadow:none}
+.dots i.late{background:var(--bad-bg);box-shadow:inset 0 0 0 1px var(--bad)}
+@media (max-width:620px){.touch{grid-template-columns:1fr}.touch .acts{justify-content:flex-start}}
+
+/* drawer */
+.scrim{position:fixed;inset:0;background:rgba(10,11,8,.45);z-index:50}
+.drawer{position:fixed;top:0;right:0;bottom:0;width:min(560px,100%);background:var(--bg);z-index:51;box-shadow:var(--shadow);display:grid;grid-template-rows:auto minmax(0,1fr) auto;border-left:1px solid var(--line)}
+.drawer>header{padding:calc(env(safe-area-inset-top,0px) + 16px) 20px 14px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;gap:12px}
+.drawer>header h2{font-size:18px;font-weight:500}
+.drawer .body{overflow-y:auto;padding:18px 20px;display:grid;gap:16px;align-content:start}
+.drawer>footer{padding:12px 20px calc(env(safe-area-inset-bottom,0px) + 12px);border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;background:var(--surface)}
+.fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.fields label{display:grid;gap:4px;font-size:12.5px;color:var(--soft);min-width:0}
+.fields label.full{grid-column:1/-1}
+.fields .inp{width:100%}
+.fields .check{display:flex;align-items:center;gap:8px;font-size:14px;color:var(--fg);height:36px}
+.fields .check input{width:18px;height:18px;accent-color:var(--accent-text)}
+@media (max-width:520px){.fields{grid-template-columns:1fr}}
+.summary{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.summary div{background:var(--surface);padding:10px 12px;display:grid;gap:2px}
+.summary b{font-size:17px;font-weight:500;font-variant-numeric:tabular-nums}
+.summary span{font-size:12px;color:var(--soft)}
+.sect{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--mute);margin-top:4px}
+
+.toast{position:fixed;left:50%;bottom:calc(env(safe-area-inset-bottom,0px) + 20px);transform:translateX(-50%);background:var(--fg);color:var(--bg);padding:10px 16px;border-radius:999px;font-size:13.5px;z-index:60;box-shadow:var(--shadow)}
+.progress{display:flex;align-items:center;gap:12px}
+.progress .bar{flex:1;max-width:360px;height:6px;border-radius:3px;background:var(--surface-2);overflow:hidden}
+.progress .bar i{display:block;height:100%;background:var(--accent-text)}
+.task{display:grid;grid-template-columns:110px minmax(0,1fr) auto;gap:12px;align-items:center;padding:10px 0;border-top:1px solid var(--line)}
+.task:first-child{border-top:0}
+.task.feito .tt{color:var(--mute);text-decoration:line-through}
+.task .tt b{font-weight:500}
+@media (max-width:620px){.task{grid-template-columns:1fr}}
+.auth{position:fixed;inset:0;z-index:70;background:var(--bg);display:grid;place-items:center;padding:24px 16px}
+.auth .box{width:min(400px,100%);display:grid;gap:18px}
+.auth .box svg{width:120px;color:var(--fg)}
+.auth h1{font-size:24px}
+.auth form{display:grid;gap:12px}
+.auth label{display:grid;gap:4px;font-size:12.5px;color:var(--soft)}
+.auth .inp{height:42px;width:100%;font-size:15px}
+.auth .btn{height:42px;justify-content:center}
+.auth .msg{font-size:13.5px;color:var(--soft);min-height:1.4em}
+.auth .msg.bad{color:var(--bad)}
+.auth .link{background:none;border:0;color:var(--accent-text);cursor:pointer;padding:0;font-size:13.5px;justify-self:start;text-decoration:underline}
+.me{display:grid;gap:6px;padding:10px 8px 0;border-top:1px solid var(--line);font-size:12.5px}
+.me b{font-weight:500;color:var(--fg);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.me .row2{display:flex;gap:6px;flex-wrap:wrap}
+@media (max-width:860px){.me{border-top:0;padding:0;display:flex;align-items:center}.me>span{display:none}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="side">
+    <div class="brand"><svg viewBox="0 0 800 150" fill="none" aria-label="NEXA"><path d="M8 139V12L175 139V12M200 12H366M200 12V139H366M200 75H366M390 12L558 139M558 12L390 139M580 139L685 12L792 139M618 95H755" stroke="currentColor" stroke-width="13" stroke-linecap="round"/></svg><span>Comercial</span></div>
+    <nav class="tabs" id="tabs" aria-label="Telas">
+      <a href="#painel" data-v="painel"><span class="lbl">Painel</span></a>
+      <a href="#cadencia" data-v="cadencia"><span class="lbl">Cadência</span><span class="badge" id="bCad" hidden></span></a>
+      <a href="#pipeline" data-v="pipeline"><span class="lbl">Pipeline</span><span class="badge bad" id="bPipe" hidden></span></a>
+      <a href="#contas" data-v="contas"><span class="lbl">Contas-alvo</span></a>
+      <a href="#semana" data-v="semana"><span class="lbl">Semana</span></a>
+      <a href="#metas" data-v="metas"><span class="lbl">Metas e preços</span></a>
+      <a href="#plano" data-v="plano"><span class="lbl">Plano 90 dias</span></a>
+      <a href="#ajustes" data-v="ajustes"><span class="lbl">Ajustes e importar</span></a>
+      <a href="#equipe" data-v="equipe" id="navEquipe" hidden><span class="lbl">Equipe</span></a>
+    </nav>
+    <div class="me" id="me" hidden><span>Conectado como</span><b id="meEmail"></b><div class="row2"><button class="btn sm" id="trocarSenha">Trocar senha</button><button class="btn sm" id="sair">Sair</button></div></div>
+  </aside>
+  <main id="view" aria-live="polite"></main>
+</div>
+<div id="drawerRoot"></div>
+<div class="toast" id="toast" hidden></div>
+<div class="auth" id="auth">
+  <div class="box">
+    <svg viewBox="0 0 800 150" fill="none" aria-label="NEXA"><path d="M8 139V12L175 139V12M200 12H366M200 12V139H366M200 75H366M390 12L558 139M558 12L390 139M580 139L685 12L792 139M618 95H755" stroke="currentColor" stroke-width="12" stroke-linecap="round"/></svg>
+    <div id="authBody"><p class="msg">Carregando…</p></div>
+  </div>
+</div>
+<script src="config.js"></script>
+<script src="vendor/supabase.js"></script>
+
+<script>
+(() => {
+/* ───────── constantes ───────── */
+const STAGES = [null, 'Em cadência', 'Conversa iniciada', 'Diagnóstico agendado', 'Diagnóstico feito', 'Proposta enviada', 'Negociação', 'Ganho', 'Perdido', 'Nutrir'];
+const PRODUTOS = ['Sales Coach', 'Atlas Clima', 'Atlas 360', 'Fábrica de soluções'];
+const CANAIS = ['LinkedIn', 'E-mail', 'Ligação', 'Indicação', 'Parceiro', 'Evento/comunidade', 'Inbound (site/Instagram)', 'WhatsApp'];
+const SEGMENTOS = ['Software/SaaS', 'Serviços B2B', 'Consultoria', 'Distribuidora/indústria', 'Educação corporativa', 'Agência', 'Saúde/clínicas', 'Financeiro/seguros', 'Imobiliário', 'Varejo', 'Outro'];
+const CSTATUS = { fila: 'Na fila', cadencia: 'Em cadência', oportunidade: 'Virou oportunidade', nutrir: 'Nutrir', descartada: 'Descartada' };
+const DEFAULTS = {
+  vendedora: '',
+  precos: { scEss: 19.9, scEssImpl: 990, scPro: 29.9, scProImpl: 1690, atlas: 8, atlasImpl: 2000 },
+  taxas: { resposta: .15, diagnostico: .45, proposta: .5, fechamento: .3 },
+  medias: { scUsers: 12, atlasColab: 150 },
+  metas: { '2026-10': { dias: 18, sc: 1, atlas: 0, fabrica: 1 }, '2026-11': { dias: 19, sc: 2, atlas: 1, fabrica: 1 }, '2026-12': { dias: 18, sc: 3, atlas: 1, fabrica: 1 } },
+  probs: { 1: 0, 2: .05, 3: .1, 4: .2, 5: .4, 6: .6, 7: 1, 8: 0, 9: 0 },
+  etapas: {
+    1: { nome: 'Em cadência', sig: 'A conta está recebendo os toques da cadência e ainda não respondeu.', crit: 'A pessoa respondeu, aceitou conexão e trocou mensagem, ou atendeu a ligação.' },
+    2: { nome: 'Conversa iniciada', sig: 'Houve troca real com alguém da conta.', crit: 'Reunião de diagnóstico marcada na agenda, com convite aceito.' },
+    3: { nome: 'Diagnóstico agendado', sig: 'Reunião de 30 min marcada.', crit: 'Reunião aconteceu.' },
+    4: { nome: 'Diagnóstico feito', sig: 'Entendemos a dor, quem decide e o prazo. A conta tem encaixe.', crit: 'Dor confirmada + decisor identificado + próximo passo com data (demo ou proposta).' },
+    5: { nome: 'Proposta enviada', sig: 'Demo feita e proposta com valores enviada.', crit: 'O decisor viu a proposta e pediu ajuste, prazo ou condição.' },
+    6: { nome: 'Negociação', sig: 'Estamos discutindo condição, prazo, piloto ou contrato.', crit: 'Contrato ou aceite por escrito.' },
+    7: { nome: 'Ganho', sig: 'Contrato assinado ou aceite formal.', crit: 'Passar para implantação.' },
+    8: { nome: 'Perdido', sig: 'Disse não ou sumiu depois de 3 tentativas na negociação.', crit: 'Registrar o motivo nas observações.' },
+    9: { nome: 'Nutrir', sig: 'Tem encaixe, mas não é o momento.', crit: 'Recontato na data do próximo passo.' },
+  },
+  listas: {
+    segmentos: ['Software/SaaS', 'Serviços B2B', 'Consultoria', 'Distribuidora/indústria', 'Educação corporativa', 'Agência', 'Saúde/clínicas', 'Financeiro/seguros', 'Imobiliário', 'Varejo', 'Outro'],
+    canais: ['LinkedIn', 'E-mail', 'Ligação', 'Indicação', 'Parceiro', 'Evento/comunidade', 'Inbound (site/Instagram)', 'WhatsApp'],
+  },
+};
+const TOUCHES = [
+  { d: 1, canal: 'LinkedIn', acao: 'Visitar o perfil, comentar um post e pedir conexão' },
+  { d: 2, canal: 'E-mail', acao: 'E-mail 1' },
+  { d: 4, canal: 'Ligação', acao: 'Ligação 1, sem recado' },
+  { d: 5, canal: 'LinkedIn', acao: 'Mensagem 1, se aceitou a conexão' },
+  { d: 7, canal: 'E-mail', acao: 'E-mail 2' },
+  { d: 9, canal: 'Ligação', acao: 'Ligação 2 com recado' },
+  { d: 11, canal: 'LinkedIn', acao: 'Mensagem 2 com conteúdo' },
+  { d: 14, canal: 'E-mail', acao: 'E-mail 3, encerramento' },
+];
+const T_SC = {
+  1: 'Oi {nome}, vi seu post sobre [tema] e gostei da parte de [detalhe]. Trabalho com times comerciais e de RH na NEXA. Vamos nos conectar?',
+  2: 'Assunto: As reuniões do time da {empresa}\n\nOi {nome},\n\n[uma linha sobre a empresa: vaga aberta, post, crescimento].\n\nTimes que vendem por videochamada fazem dezenas de reuniões por semana, e o gestor costuma ver só o que o vendedor escreve no CRM depois. O Sales Coach, da NEXA, ouve todas as reuniões no Meet, Teams ou Zoom e devolve a nota pela metodologia de vocês, a objeção que travou o negócio e o próximo passo.\n\nFaz sentido conversarmos 20 minutos esta semana?\n\n{eu}\nSe preferir não receber mais mensagens minhas, é só responder "não".',
+  4: 'Oi {nome}, aqui é {eu}, da NEXA. Te liguei sem avisar. Posso levar 30 segundos para dizer por que liguei, e você decide se vale continuar?\n\n(Se sim)\nConverso com gestores comerciais que têm o time vendendo por videochamada e não conseguem acompanhar as reuniões. Eles ficam sabendo o que aconteceu pelo CRM, escrito de memória. Isso acontece aí também?\n\n(Se sim)\nFaz sentido conversarmos 20 minutos para eu entender melhor e mostrar como resolvemos? Pode ser [dia] às [hora]?',
+  5: 'Obrigada por aceitar, {nome}. Uma curiosidade: hoje, quantas reuniões do seu time você consegue acompanhar de verdade?\n\nPergunto porque é o problema que mais ouço de gestores comerciais, e foi por isso que a NEXA criou o Sales Coach. Se quiser, te mostro em 20 minutos como fica uma reunião analisada.',
+  7: 'Assunto: Re: As reuniões do time da {empresa}\n\n{nome}, um exemplo de como fica.\n\nHoje, no CRM: "Reunião boa, o cliente gostou da demo. Mandar proposta."\n\nCom o Sales Coach, a mesma reunião: verba aprovada pela diretoria, sócio presente, dor citada três vezes, decisão até o fim do mês e o próximo passo com data.\n\nÉ essa diferença que o gestor passa a ter em todas as reuniões, não numa amostra. Te mostro com uma reunião de vocês?',
+  9: 'Oi {nome}, é {eu}, da NEXA. Te mandei um e-mail sobre como acompanhar as reuniões do time comercial. Meu número é [número]. Volto a te procurar na [dia].',
+  11: '{nome}, lembrei de você com este [post / vídeo]: [link]. Mostra [o que mostra, em uma linha]. Se quiser ver isso com as reuniões do seu time, é só me falar.',
+  14: 'Assunto: Fecho por aqui\n\n{nome}, não quero lotar sua caixa, então este é meu último e-mail sobre o assunto.\n\nSe acompanhar as reuniões do time virar prioridade, é só responder esta mensagem que eu retomo. E se quem cuida disso for outra pessoa, fico grata se puder me indicar.',
+};
+const T_ATLAS = Object.assign({}, T_SC, {
+  2: 'Assunto: Como o time da {empresa} está, de verdade?\n\nOi {nome},\n\n[uma linha sobre a empresa: crescimento, vagas, post do RH].\n\nMuitas empresas só descobrem como o time está quando alguém pede demissão ou se afasta. O Atlas Clima, da NEXA, é uma pesquisa de clima com leitura por área e por liderança, feita para orientar conversas e planos de ação.\n\nPosso te mostrar em 20 minutos como fica o resultado?\n\n{eu}\nSe preferir não receber mais mensagens minhas, é só responder "não".',
+  4: 'Oi {nome}, aqui é {eu}, da NEXA. Te liguei sem avisar. Posso levar 30 segundos para dizer por que liguei, e você decide se vale continuar?\n\n(Se sim)\nConverso com pessoas de RH que querem saber como o time está antes de alguém pedir demissão ou se afastar. Hoje vocês medem o clima de alguma forma?\n\n(Se sim)\nFaz sentido conversarmos 20 minutos para eu entender melhor e mostrar o Atlas? Pode ser [dia] às [hora]?',
+  5: 'Obrigada por aceitar, {nome}. Uma pergunta que tenho feito para quem cuida de pessoas: como vocês ficam sabendo como o time está, antes de alguém pedir demissão ou se afastar?\n\nNa NEXA temos o Atlas, para pesquisa de clima e feedback 360. Se fizer sentido, te mostro em 20 minutos.',
+  7: 'Assunto: Re: Como o time da {empresa} está\n\n{nome}, um dado que tenho levado para conversas com RH: o Brasil teve 472 mil afastamentos por saúde mental em 2024, alta de 68% (Ministério da Previdência Social). Com a NR-1 atualizada, os riscos psicossociais também passaram a fazer parte do gerenciamento de riscos.\n\nO Atlas não substitui esse trabalho técnico, mas ajuda o RH a escutar as pessoas e acompanhar o tema por área. E, se vocês estão no ciclo de avaliação de fim de ano, o Atlas 360 entra no mesmo processo.\n\nVale uma conversa de 20 minutos?',
+  9: 'Oi {nome}, é {eu}, da NEXA. Te mandei um e-mail sobre pesquisa de clima e feedback 360. Meu número é [número]. Volto a te procurar na [dia].',
+  11: '{nome}, lembrei de você com este [post / vídeo]: [link]. Mostra [o que mostra, em uma linha]. Se quiser ver isso com o time de vocês, é só me falar.',
+  14: 'Assunto: Fecho por aqui\n\n{nome}, não quero lotar sua caixa, então este é meu último e-mail sobre o assunto.\n\nSe escutar o time virar prioridade, é só responder esta mensagem que eu retomo. E se quem cuida disso for outra pessoa, fico grata se puder me indicar.',
+});
+
+DEFAULTS.cadencia = TOUCHES.map(t => ({ ...t, sc: T_SC[t.d], atlas: T_ATLAS[t.d] }));
+const stg = n => (S.cfg.etapas[n] && S.cfg.etapas[n].nome) || STAGES[n] || "";
+const cad = () => (S.cfg.cadencia || []).slice().sort((a, b) => a.d - b.d);
+
+/* ───────── utilitários ───────── */
+const $ = s => document.querySelector(s), $$ = (s, r = document) => [...r.querySelectorAll(s)];
+const esc = v => String(v ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const pad = n => String(n).padStart(2, '0');
+const iso = d => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+const parse = s => { const [y, m, d] = s.split('-').map(Number); return new Date(y, m - 1, d); };
+const hoje = () => iso(new Date());
+const addDays = (s, n) => { const d = parse(s); d.setDate(d.getDate() + n); return iso(d); };
+const diff = (a, b) => Math.round((parse(a) - parse(b)) / 864e5);
+const mondayOf = s => { const d = parse(s); const w = (d.getDay() + 6) % 7; d.setDate(d.getDate() - w); return iso(d); };
+const br = s => s ? s.split('-').reverse().join('/') : '';
+const brShort = s => s ? s.split('-').slice(1).reverse().join('/') : '';
+const MESES = ['jan', 'fev', 'mar', 'abr', 'mai', 'jun', 'jul', 'ago', 'set', 'out', 'nov', 'dez'];
+const mesLabel = k => { const [y, m] = k.split('-'); return `${MESES[+m - 1]}/${y}`; };
+const brl = (v, d = 0) => (+v || 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL', minimumFractionDigits: d, maximumFractionDigits: d });
+const pct = v => `${Math.round((+v || 0) * 100)}%`;
+const isAtlas = p => p === 'Atlas Clima' || p === 'Atlas 360';
+const deep = (a, b) => { const o = Array.isArray(a) ? [...a] : { ...a }; for (const k in b) { o[k] = b[k] && typeof b[k] === 'object' && !Array.isArray(b[k]) && a && typeof a[k] === 'object' ? deep(a[k], b[k]) : b[k]; } return o; };
+function toast(msg) { const t = $('#toast'); t.textContent = msg; t.hidden = false; clearTimeout(toast.t); toast.t = setTimeout(() => t.hidden = true, 2200); }
+
+/* ───────── estado ───────── */
+const S = { cfg: deep(DEFAULTS, {}), cfgExists: false, opps: [], contas: [], semanas: {}, tarefas: [], loaded: 0, ro: false, db: null, dl: null, noDb: false, showClosed: false, filtroProd: '', busca: '', contaFiltro: 'abertas', contaPrio: '', openMsg: null };
+let view = (location.hash || '#painel').slice(1);
+
+/* ───────── cálculos ───────── */
+function valores(o) {
+  const p = S.cfg.precos, q = +o.qtd || 0; let m = 0, i = 0, plano = '';
+  if (o.produto === 'Sales Coach' && q > 0) { if (q <= 10) { m = q * p.scEss; i = p.scEssImpl; plano = 'Essencial'; } else { m = q * p.scPro; i = p.scProImpl; plano = q > 50 ? 'Enterprise (negociar)' : 'Profissional'; } }
+  else if (isAtlas(o.produto) && q > 0) { m = q * p.atlas; i = p.atlasImpl; plano = 'Atlas'; }
+  const proj = o.produto === 'Fábrica de soluções' ? (+o.valorProjeto || 0) : 0;
+  const ano = m * 12 + i + proj, prob = +S.cfg.probs[o.etapa] || 0;
+  return { m, i, proj, ano, prob, pond: ano * prob, plano };
+}
+function alerta(o) {
+  if (!o.etapa || o.etapa >= 7) return null;
+  const h = hoje();
+  if (o.dataProximo && o.dataProximo < h) return { cls: 'bad', txt: 'Próximo passo vencido' };
+  if (!o.proximoPasso) return { cls: 'warn', txt: 'Sem próximo passo' };
+  if (o.ultimaInteracao) { const d = diff(h, o.ultimaInteracao); if (d > 7) return { cls: 'warn', txt: `Parada há ${d} dias` }; }
+  return null;
+}
+function notas(c) {
+  const v = +c.vendedores || 0, k = +c.colaboradores || 0;
+  const sc = (v >= 5 && v <= 60 ? 2 : v >= 3 ? 1 : 0) + (c.online ? 2 : 0) + (c.crm ? 1 : 0);
+  const at = (k >= 50 && k <= 1000 ? 2 : k > 1000 ? 1 : 0) + (c.rh ? 2 : 0) + ((c.gatilho || '').trim() ? 1 : 0);
+  const mx = Math.max(sc, at);
+  const sug = mx < 3 ? 'Fábrica de soluções' : sc >= at ? 'Sales Coach' : 'Atlas Clima';
+  return { sc, at, sug, prio: mx >= 4 ? 'A' : mx === 3 ? 'B' : 'C' };
+}
+const produtoConta = c => c.produto || notas(c).sug;
+function toques(c) {
+  if (!c.inicioCadencia) return [];
+  const feitos = c.toques || [], h = hoje();
+  return cad().map(t => { const due = addDays(c.inicioCadencia, t.d - 1); return { ...t, due, done: feitos.includes(t.d), late: !feitos.includes(t.d) && due < h }; });
+}
+const proximoToque = c => toques(c).find(t => !t.done) || null;
+function funil(k) {
+  const m = S.cfg.metas[k] || { dias: 20, sc: 0, atlas: 0, fabrica: 0 }, t = S.cfg.taxas, p = S.cfg.precos, md = S.cfg.medias;
+  const contratos = (+m.sc || 0) + (+m.atlas || 0);
+  const propostas = contratos ? Math.ceil(contratos / t.fechamento) : 0;
+  const diags = Math.ceil(propostas / t.proposta), resp = Math.ceil(diags / t.diagnostico), contas = Math.ceil(resp / t.resposta);
+  const porDia = m.dias ? Math.ceil(contas / m.dias) : 0;
+  const u = md.scUsers, sp = u <= 10 ? p.scEss : p.scPro, si = u <= 10 ? p.scEssImpl : p.scProImpl;
+  return { m, contratos, propostas, diags, resp, contas, porDia, mrr: (+m.sc || 0) * u * sp + (+m.atlas || 0) * md.atlasColab * p.atlas, impl: (+m.sc || 0) * si + (+m.atlas || 0) * p.atlasImpl };
+}
+const inPeriod = (d, a, b) => d && d >= a && d <= b;
+function realizado(a, b) {
+  const H = o => o.hist || {};
+  return {
+    sc: S.opps.filter(o => o.produto === 'Sales Coach' && inPeriod(H(o)[7], a, b)).length,
+    atlas: S.opps.filter(o => isAtlas(o.produto) && inPeriod(H(o)[7], a, b)).length,
+    fabrica: S.opps.filter(o => o.produto === 'Fábrica de soluções' && inPeriod(H(o)[4], a, b)).length,
+    propostas: S.opps.filter(o => inPeriod(H(o)[5], a, b)).length,
+    diags: S.opps.filter(o => inPeriod(H(o)[4], a, b)).length,
+    resp: S.opps.filter(o => inPeriod(H(o)[2], a, b)).length,
+    contas: S.contas.filter(c => inPeriod(c.inicioCadencia, a, b)).length,
+    mrr: S.opps.filter(o => inPeriod(H(o)[7], a, b)).reduce((s, o) => s + valores(o).m, 0),
+    impl: S.opps.filter(o => inPeriod(H(o)[7], a, b)).reduce((s, o) => s + valores(o).i, 0),
+  };
+}
+const fimMes = k => { const [y, m] = k.split('-').map(Number); return iso(new Date(y, m, 0)); };
+function mesAtual() { const ks = Object.keys(S.cfg.metas).sort(), k = hoje().slice(0, 7); return ks.includes(k) ? k : (ks.find(x => x > k) || ks[ks.length - 1] || k); }
+const abertas = () => S.opps.filter(o => o.etapa && o.etapa <= 6);
+const toquesHoje = () => S.contas.filter(c => c.status === 'cadencia').map(c => ({ c, t: proximoToque(c) })).filter(x => x.t && x.t.due <= hoje()).sort((a, b) => a.t.due.localeCompare(b.t.due));
+
+/* ───────── gravação ───────── */
+const chains = {};
+function write(path, fn) {
+  if (!S.db) { toast('Entre com seu login para salvar.'); return Promise.resolve(false); }
+  if (S.ro) { toast('Você está em modo leitura.'); return Promise.resolve(false); }
+  const run = () => fn().then(() => true, e => {
+    if (e && e.code === 'invalid_argument') { S.ro = true; render(); toast('Sem permissão para editar. Peça a um administrador para mudar seu papel.'); }
+    else if (e && e.code === 'quota_exceeded') toast('O limite de dados deste sistema foi atingido.');
+    else toast('Não foi possível salvar. Tente de novo.');
+    return false;
+  });
+  chains[path] = (chains[path] || Promise.resolve()).then(run, run);
+  return chains[path];
+}
+function histFor(o, etapa, d = hoje()) {
+  const h = { ...(o.hist || {}) };
+  if (etapa >= 8) { if (!h[etapa]) h[etapa] = d; }
+  else for (let k = 2; k <= etapa; k++) if (!h[k]) h[k] = d;
+  if (etapa === 1 && !h[1]) h[1] = d;
+  return h;
+}
+function saveOpp(id, data) {
+  const ref = id ? S.db.collection('oportunidades').doc(id) : S.db.collection('oportunidades').doc();
+  const body = { ...data, atualizadoEm: new Date().toISOString() };
+  if (!id) body.criadoEm = body.atualizadoEm;
+  const i = S.opps.findIndex(o => o.id === ref.id);
+  if (i >= 0) S.opps[i] = { ...body, id: ref.id }; else S.opps.push({ ...body, id: ref.id });
+  render();
+  return write(ref.path, () => ref.set(body)).then(ok => ok && ref.id);
+}
+function saveConta(id, data) {
+  const ref = id ? S.db.collection('contas').doc(id) : S.db.collection('contas').doc();
+  const body = { ...data, atualizadoEm: new Date().toISOString() };
+  if (!id) body.criadoEm = body.atualizadoEm;
+  const i = S.contas.findIndex(o => o.id === ref.id);
+  if (i >= 0) S.contas[i] = { ...body, id: ref.id }; else S.contas.push({ ...body, id: ref.id });
+  render();
+  return write(ref.path, () => ref.set(body)).then(ok => ok && ref.id);
+}
+const strip = o => { const { id, ...r } = o; return r; };
+function saveCfg(next) { S.cfg = next; render(); const ref = S.db && S.db.doc('config/geral'); return write('config/geral', () => ref.set(JSON.parse(JSON.stringify(next)))); }
+
+/* ───────── render ───────── */
+let pending = false;
+function schedule() {
+  const a = document.activeElement;
+  if (a && $('#view').contains(a) && /INPUT|TEXTAREA|SELECT/.test(a.tagName)) { pending = true; return; }
+  render();
+}
+$('#view').addEventListener('focusout', () => { if (pending) setTimeout(() => { const a = document.activeElement; if (!(a && $('#view').contains(a) && /INPUT|TEXTAREA|SELECT/.test(a.tagName))) { pending = false; render(); } }, 0); });
+
+function render() {
+  pending = false;
+  if (!VIEWS[view]) view = 'painel';
+  $$('#tabs a').forEach(a => a.classList.toggle('on', a.dataset.v === view));
+  const nt = toquesHoje().length, na = abertas().filter(alerta).filter(o => alerta(o).cls === 'bad').length;
+  $('#bCad').hidden = !nt; $('#bCad').textContent = nt; $('#bPipe').hidden = !na; $('#bPipe').textContent = na;
+  let banner = '';
+  if (S.noDb) banner = `<p class="banner">Não foi possível conectar ao banco de dados. Confira a internet e recarregue a página.</p>`;
+  else if (S.ro) banner = `<p class="banner">Você está em modo leitura. Para editar, peça a um administrador o papel de vendas ou admin.</p>`;
+  else if (S.loaded < 5 && S.db) banner = `<p class="banner">Carregando dados…</p>`;
+  $('#view').innerHTML = banner + VIEWS[view]();
+}
+const dis = () => S.ro || !S.db ? 'disabled' : '';
+
+const VIEWS = {
+  painel() {
+    const k = S.painelMes || mesAtual(), f = funil(k), r = realizado(k + '-01', fimMes(k));
+    const ab = abertas(), pip = ab.reduce((s, o) => s + valores(o).ano, 0), pond = ab.reduce((s, o) => s + valores(o).pond, 0);
+    const ganhoTot = S.opps.filter(o => o.etapa === 7).reduce((s, o) => s + valores(o).m, 0);
+    const meses = Object.keys(S.cfg.metas).sort();
+    const meter = (lbl, real, meta) => { const p = meta ? Math.min(1, real / meta) : (real ? 1 : 0); return `<div class="meter ${meta && real >= meta ? 'done' : ''}"><span>${lbl}</span><span class="v"><b>${real}</b> / ${meta}</span><span class="bar"><i style="width:${p * 100}%"></i></span></div>`; };
+    const th = toquesHoje(), h = hoje();
+    const passos = ab.filter(o => o.dataProximo && o.dataProximo <= h).sort((a, b) => a.dataProximo.localeCompare(b.dataProximo));
+    const outros = ab.filter(o => alerta(o) && !(o.dataProximo && o.dataProximo <= h));
+    const porEtapa = [1, 2, 3, 4, 5, 6].map(e => { const os = ab.filter(o => o.etapa === e); return { e, n: os.length, v: os.reduce((s, o) => s + valores(o).ano, 0) }; });
+    const maxV = Math.max(1, ...porEtapa.map(x => x.n));
+    return `
+    <div class="top"><div><h1>Painel</h1><p class="sub">Metas do mês, o que fazer hoje e o pipeline aberto.</p></div>
+      <div class="tools"><label class="mono soft" for="pMes">Mês</label><select class="inp" id="pMes">${meses.map(m => `<option value="${m}" ${m === k ? 'selected' : ''}>${mesLabel(m)}</option>`).join('')}</select></div></div>
+    <div class="kpis">
+      <div><b>${brl(r.mrr)}</b><span>mensalidade ganha em ${mesLabel(k)} · meta ${brl(f.mrr)}</span></div>
+      <div><b>${brl(ganhoTot)}</b><span>receita mensal de todos os contratos ganhos</span></div>
+      <div><b>${brl(pip)}</b><span>pipeline aberto, valor do 1º ano</span></div>
+      <div><b>${brl(pond)}</b><span>pipeline ponderado pela etapa</span></div>
+    </div>
+    <div class="grid2">
+      <section class="card"><header><h2>Para hoje</h2><span class="mono soft">${br(h)}</span></header>
+        ${!th.length && !passos.length && !outros.length ? `<div class="empty"><b>Nada pendente.</b><span>Coloque contas A e B em cadência para gerar os toques do dia.</span><a class="btn" href="#contas">Ir para Contas-alvo</a></div>` : ''}
+        ${th.length ? `<div class="list"><div class="row"><span class="dot acc"></span><div><div class="t">${th.length} ${th.length === 1 ? 'toque' : 'toques'} de cadência</div><div class="d">${esc(th.slice(0, 3).map(x => x.c.empresa).join(', '))}${th.length > 3 ? '…' : ''}</div></div><a class="btn sm" href="#cadencia">Abrir</a></div></div>` : ''}
+        ${passos.length || outros.length ? `<div class="list">${[...passos, ...outros].slice(0, 8).map(o => { const a = alerta(o); return `<div class="row"><span class="dot ${a ? a.cls : 'acc'}"></span><div><div class="t">${esc(o.empresa)}</div><div class="d">${esc(o.proximoPasso || 'Definir próximo passo')}${o.dataProximo ? ' · ' + brShort(o.dataProximo) : ''}${a ? ' · ' + a.txt : ''}</div></div><button class="btn sm" data-open-opp="${o.id}">Abrir</button></div>`; }).join('')}</div>` : ''}
+      </section>
+      <section class="card"><header><h2>Metas de ${mesLabel(k)}</h2><a class="mono soft" href="#metas">Ajustar</a></header>
+        <div class="meters">
+          ${meter('Contratos de Sales Coach', r.sc, +f.m.sc || 0)}
+          ${meter('Contratos de Atlas', r.atlas, +f.m.atlas || 0)}
+          ${meter('Oportunidades da Fábrica qualificadas', r.fabrica, +f.m.fabrica || 0)}
+          ${meter('Propostas enviadas', r.propostas, f.propostas)}
+          ${meter('Diagnósticos feitos', r.diags, f.diags)}
+          ${meter('Contas novas em cadência', r.contas, f.contas)}
+        </div>
+        <p class="mute" style="font-size:12.5px">Meta de ${f.porDia} contas novas por dia útil, calculada com as taxas de conversão da tela Metas.</p>
+      </section>
+    </div>
+    <section class="card"><header><h2>Pipeline aberto por etapa</h2><a class="mono soft" href="#pipeline">Ver pipeline</a></header>
+      <div class="meters">${porEtapa.filter(x => x.e > 1 || x.n).map(x => `<div class="meter"><span>${stg(x.e)}</span><span class="v"><b>${x.n}</b> · ${brl(x.v)}</span><span class="bar"><i style="width:${x.n / maxV * 100}%"></i></span></div>`).join('')}</div>
+    </section>`;
+  },
+
+  pipeline() {
+    const q = S.busca.toLowerCase();
+    const os = S.opps.filter(o => (!S.filtroProd || o.produto === S.filtroProd) && (!q || `${o.empresa} ${o.contato}`.toLowerCase().includes(q)));
+    const cols = [1, 2, 3, 4, 5, 6].filter(e => e > 1 || os.some(o => o.etapa === 1)).concat(S.showClosed ? [7, 8, 9] : []);
+    const card = o => { const v = valores(o), a = alerta(o);
+      return `<button class="opp ${a && a.cls === 'bad' ? 'alert' : ''}" draggable="${!dis()}" data-open-opp="${o.id}" data-drag="${o.id}">
+        <span class="h"><b>${esc(o.empresa)}</b><span class="v">${brl(v.ano)}</span></span>
+        <span class="meta"><span class="chip">${esc(o.produto || 'Sem produto')}</span>${a ? `<span class="chip ${a.cls}">${a.txt}</span>` : ''}</span>
+        <span class="s">${esc(o.proximoPasso || 'Sem próximo passo')}${o.dataProximo ? ' · ' + brShort(o.dataProximo) : ''}</span></button>`; };
+    return `
+    <div class="top"><div><h1>Pipeline</h1><p class="sub">Arraste o cartão para mudar de etapa, ou abra para editar. O valor é o do primeiro ano.</p></div>
+      <div class="tools">
+        <input class="inp" id="busca" type="search" placeholder="Buscar empresa ou contato" value="${esc(S.busca)}" aria-label="Buscar">
+        <select class="inp" id="fProd" aria-label="Produto"><option value="">Todos os produtos</option>${PRODUTOS.map(p => `<option ${p === S.filtroProd ? 'selected' : ''}>${p}</option>`).join('')}</select>
+        <button class="btn" id="tClosed">${S.showClosed ? 'Ocultar fechadas' : 'Ver ganhas, perdidas e nutrir'}</button>
+        ${S.dl ? `<button class="btn" id="expOpp">Exportar CSV</button>` : ''}
+        <button class="btn pri" id="newOpp" ${dis()}>+ Oportunidade</button>
+      </div></div>
+    ${!S.opps.length ? `<div class="empty"><b>Nenhuma oportunidade ainda.</b><span>Quando uma conta responder na cadência, use “Respondeu” para trazê-la para cá. Ou crie uma direto.</span></div>` : ''}
+    <div class="kan-wrap"><div class="kan">${cols.map(e => { const cs = os.filter(o => o.etapa === e); const tot = cs.reduce((s, o) => s + valores(o).ano, 0);
+      return `<section class="col" data-drop="${e}"><header><b>${stg(e)}</b><span>${cs.length} · ${brl(tot)}</span></header>${cs.sort((a, b) => (a.dataProximo || '9').localeCompare(b.dataProximo || '9')).map(card).join('')}</section>`; }).join('')}</div></div>`;
+  },
+
+  contas() {
+    const q = S.busca.toLowerCase();
+    let cs = S.contas.map(c => ({ c, n: notas(c) }));
+    if (S.contaFiltro === 'abertas') cs = cs.filter(x => ['fila', 'cadencia', undefined, ''].includes(x.c.status));
+    else if (S.contaFiltro) cs = cs.filter(x => x.c.status === S.contaFiltro);
+    if (S.contaPrio) cs = cs.filter(x => x.n.prio === S.contaPrio);
+    if (q) cs = cs.filter(x => `${x.c.empresa} ${x.c.decisor}`.toLowerCase().includes(q));
+    cs.sort((a, b) => a.n.prio.localeCompare(b.n.prio) || Math.max(b.n.sc, b.n.at) - Math.max(a.n.sc, a.n.at));
+    const nA = S.contas.filter(c => notas(c).prio !== 'C' && (c.status || 'fila') === 'fila').length;
+    return `
+    <div class="top"><div><h1>Contas-alvo</h1><p class="sub">Pesquise antes de abordar. A nota de encaixe vai de 0 a 5 e define a prioridade. Só coloque em cadência contas A ou B. ${nA ? `<b>${nA}</b> na fila com prioridade A ou B.` : ''}</p></div>
+      <div class="tools">
+        <input class="inp" id="busca" type="search" placeholder="Buscar" value="${esc(S.busca)}" aria-label="Buscar">
+        <select class="inp" id="fStatus" aria-label="Situação"><option value="abertas" ${S.contaFiltro === 'abertas' ? 'selected' : ''}>Na fila e em cadência</option><option value="" ${!S.contaFiltro ? 'selected' : ''}>Todas</option>${Object.entries(CSTATUS).map(([k, v]) => `<option value="${k}" ${S.contaFiltro === k ? 'selected' : ''}>${v}</option>`).join('')}</select>
+        <div class="seg" role="group" aria-label="Prioridade">${['', 'A', 'B', 'C'].map(p => `<button data-prio="${p}" class="${S.contaPrio === p ? 'on' : ''}">${p || 'Todas'}</button>`).join('')}</div>
+        ${S.dl ? `<button class="btn" id="expContas">Exportar CSV</button>` : ''}
+        <button class="btn pri" id="newConta" ${dis()}>+ Conta</button>
+      </div></div>
+    ${!S.contas.length ? `<div class="empty"><b>Nenhuma conta cadastrada.</b><span>Comece pelas empresas do cliente ideal: 5 a 50 vendedores que vendem por videochamada (Sales Coach) ou 50 a 1.000 pessoas com RH estruturado (Atlas).</span></div>` :
+    `<div class="tw"><table><thead><tr><th>Prioridade</th><th>Empresa</th><th>Segmento</th><th class="n">Sales Coach</th><th class="n">Atlas</th><th>Produto</th><th>Decisor</th><th>Situação</th><th></th></tr></thead><tbody>
+      ${cs.map(({ c, n }) => `<tr class="click" data-open-conta="${c.id}"><td><span class="prio ${n.prio}">${n.prio}</span></td><td><b style="font-weight:500">${esc(c.empresa)}</b></td><td>${esc(c.segmento)}</td><td class="n">${n.sc}</td><td class="n">${n.at}</td><td>${esc(produtoConta(c))}</td><td>${esc(c.decisor)}${c.cargo ? `<div class="mute" style="font-size:12px">${esc(c.cargo)}</div>` : ''}</td><td>${CSTATUS[c.status || 'fila']}${c.status === 'cadencia' ? ` <span class="mute">· ${(c.toques || []).length}/${cad().length}</span>` : ''}</td>
+        <td class="n">${(c.status || 'fila') === 'fila' && n.prio !== 'C' && !dis() ? `<button class="btn sm" data-start="${c.id}">Iniciar cadência</button>` : ''}</td></tr>`).join('') || `<tr><td colspan="9" class="mute">Nenhuma conta com esse filtro.</td></tr>`}
+    </tbody></table></div>`}`;
+  },
+
+  cadencia() {
+    const th = toquesHoje(), em = S.contas.filter(c => c.status === 'cadencia');
+    const futuras = em.filter(c => { const t = proximoToque(c); return t && t.due > hoje(); }).sort((a, b) => proximoToque(a).due.localeCompare(proximoToque(b).due));
+    const terminadas = em.filter(c => !proximoToque(c));
+    const tmpl = (c, t) => { const nome = (c.decisor || '').trim().split(/\s+/)[0];
+      return esc(((isAtlas(produtoConta(c)) ? t.atlas : t.sc) || t.sc || '').replaceAll('{nome}', nome || '[nome]').replaceAll('{empresa}', c.empresa || '[empresa]').replaceAll('{eu}', S.cfg.vendedora || '[seu nome]')).replace(/\[[^\]]+\]/g, m => `<mark>${m}</mark>`); };
+    const dots = c => `<span class="dots" aria-label="${(c.toques || []).length} de ${cad().length} toques">${toques(c).map(t => `<i class="${t.done ? 'done' : t.late ? 'late' : ''}" title="Dia ${t.d} · ${t.canal}"></i>`).join('')}</span>`;
+    const item = ({ c, t }) => { const key = c.id + ':' + t.d, open = S.openMsg === key;
+      return `<div class="touch"><div><div class="who"><b>${esc(c.empresa)}</b> <span class="soft">· ${esc(c.decisor || 'sem decisor')}${c.cargo ? ', ' + esc(c.cargo) : ''}</span></div>
+        <div class="what"><span class="chip acc">Dia ${t.d} · ${t.canal}</span><span>${t.acao}</span>${t.due < hoje() ? `<span class="chip bad">atrasado ${diff(hoje(), t.due)}d</span>` : ''}<span class="chip">${esc(isAtlas(produtoConta(c)) ? 'Atlas' : 'Sales Coach')}</span>${dots(c)}</div></div>
+        <div class="acts"><button class="btn sm" data-msg="${key}">${open ? 'Fechar mensagem' : 'Ver mensagem'}</button>
+          ${c.linkedin ? `<a class="btn sm" href="${esc(/^https?:\/\//.test(c.linkedin) ? c.linkedin : 'https://' + c.linkedin)}" target="_blank" rel="noopener">LinkedIn ↗</a>` : ''}
+          <button class="btn sm pri" data-done="${key}" ${dis()}>Feito</button><button class="btn sm" data-resp="${c.id}" ${dis()}>Respondeu</button></div>
+        ${open ? `<div class="msg" id="msg-${esc(key)}">${tmpl(c, t)}</div><div><button class="btn sm" data-copy="${key}">Copiar mensagem</button></div>` : ''}</div>`; };
+    return `
+    <div class="top"><div><h1>Cadência</h1><p class="sub">${cad().length ? cad()[cad().length - 1].d : 0} dias, ${cad().length} toques. Edite a sequência e as mensagens em Ajustes. A mensagem já vem com o nome e a empresa; troque o que está destacado. Quando a pessoa responder em qualquer canal, clique em “Respondeu”.</p></div></div>
+    <section class="card"><header><h2>Toques de hoje</h2><span class="mono soft">${th.length}</span></header>
+      ${th.length ? `<div>${th.map(item).join('')}</div>` : `<div class="empty"><b>Nenhum toque para hoje.</b><span>${em.length ? 'Os próximos toques aparecem abaixo.' : 'Inicie a cadência de contas A ou B em Contas-alvo.'}</span></div>`}
+    </section>
+    ${terminadas.length ? `<section class="card"><header><h2>Cadência concluída sem resposta</h2></header><div class="list">${terminadas.map(c => `<div class="row"><span class="dot warn"></span><div><div class="t">${esc(c.empresa)}</div><div class="d">Todos os toques feitos. Mova para Nutrir e volte em 60 dias com um motivo novo.</div></div><div class="tools"><button class="btn sm" data-resp="${c.id}" ${dis()}>Respondeu</button><button class="btn sm" data-nutrir="${c.id}" ${dis()}>Nutrir</button></div></div>`).join('')}</div></section>` : ''}
+    ${futuras.length ? `<section class="card"><header><h2>Próximos toques</h2><span class="mono soft">${futuras.length} em cadência</span></header><div class="list">${futuras.map(c => { const t = proximoToque(c); return `<div class="row"><span class="dot"></span><div><div class="t">${esc(c.empresa)}</div><div class="d">Dia ${t.d} · ${t.canal} · ${brShort(t.due)}</div></div><div class="tools">${dots(c)}<button class="btn sm" data-resp="${c.id}" ${dis()}>Respondeu</button></div></div>`; }).join('')}</div></section>` : ''}`;
+  },
+
+  semana() {
+    const h = hoje(), ini = '2026-09-28', fim = mondayOf(h > '2026-12-28' ? h : '2026-12-28');
+    const ws = []; for (let w = ini; w <= fim; w = addDays(w, 7)) ws.push(w);
+    const H = (o, k) => (o.hist || {})[k];
+    const cnt = (a, b) => ({ contas: S.contas.filter(c => inPeriod(c.inicioCadencia, a, b)).length, resp: S.opps.filter(o => inPeriod(H(o, 2), a, b)).length, diag: S.opps.filter(o => inPeriod(H(o, 4), a, b)).length, prop: S.opps.filter(o => inPeriod(H(o, 5), a, b)).length, gan: S.opps.filter(o => inPeriod(H(o, 7), a, b)).length });
+    return `
+    <div class="top"><div><h1>Semana</h1><p class="sub">Preencha na quarta, no fim do dia, para a reunião de quinta às 9h. Contas novas, respostas, diagnósticos, propostas e contratos são contados sozinhos a partir da cadência e do pipeline.</p></div></div>
+    <div class="tw"><table><thead><tr><th>Semana</th><th class="n">Meta contas</th><th class="n">Contas novas</th><th class="n">Atingido</th><th class="n">Ligações</th><th class="n">Conexões aceitas</th><th class="n">Respostas</th><th class="n">Diagnósticos</th><th class="n">Propostas</th><th class="n">Contratos</th><th>Aprendizado da semana</th></tr></thead><tbody>
+    ${ws.slice().reverse().map(w => { const e = addDays(w, 6), mk = addDays(w, 3).slice(0, 7), meta = S.cfg.metas[mk] ? funil(mk).porDia * 5 : 0, c = cnt(w, e), s = S.semanas[w] || {}, at = meta ? c.contas / meta : 0, cur = w === mondayOf(h);
+      return `<tr${cur ? ' style="background:var(--surface-2)"' : ''}><td><b style="font-weight:500">${brShort(w)}–${brShort(e)}</b>${cur ? ' <span class="chip acc">atual</span>' : ''}</td><td class="n">${meta || '–'}</td><td class="n">${c.contas}</td>
+        <td class="n">${meta ? `<span class="chip ${at >= 1 ? 'acc' : at < .7 && w <= h ? 'bad' : ''}">${pct(at)}</span>` : '–'}</td>
+        <td class="n"><input class="inp small" type="number" min="0" id="lig-${w}" data-sem="${w}" data-f="ligacoes" value="${esc(s.ligacoes ?? '')}" ${dis()} aria-label="Ligações"></td>
+        <td class="n"><input class="inp small" type="number" min="0" id="con-${w}" data-sem="${w}" data-f="conexoes" value="${esc(s.conexoes ?? '')}" ${dis()} aria-label="Conexões aceitas"></td>
+        <td class="n">${c.resp}</td><td class="n">${c.diag}</td><td class="n">${c.prop}</td><td class="n">${c.gan}</td>
+        <td style="min-width:260px"><input class="inp" id="apr-${w}" data-sem="${w}" data-f="aprendizado" value="${esc(s.aprendizado ?? '')}" ${dis()} aria-label="Aprendizado"></td></tr>`; }).join('')}
+    </tbody></table></div>`;
+  },
+
+  metas() {
+    const c = S.cfg, ks = Object.keys(c.metas).sort();
+    const f = (path, val, kind, extra = '') => `<input class="inp" style="width:100%" type="number" step="any" id="cfg-${path.replaceAll('.', '-')}" data-cfg="${path}" data-kind="${kind}" value="${kind === 'pct' ? Math.round(val * 1000) / 10 : val}" ${dis()} ${extra}>`;
+    return `
+    <div class="top"><div><h1>Metas e preços</h1><p class="sub">As taxas de conversão começam conservadoras. Depois de 4 semanas, troque pelas reais: as metas diárias e o painel se recalculam. Cada campo salva ao sair dele.</p></div></div>
+    <div class="grid2">
+      <section class="card"><header><h2>Taxas de conversão</h2></header>
+        <div class="fields">
+          <label>Contas abordadas que respondem (%)${f('taxas.resposta', c.taxas.resposta, 'pct')}</label>
+          <label>Respostas que viram diagnóstico (%)${f('taxas.diagnostico', c.taxas.diagnostico, 'pct')}</label>
+          <label>Diagnósticos que viram proposta (%)${f('taxas.proposta', c.taxas.proposta, 'pct')}</label>
+          <label>Propostas que fecham (%)${f('taxas.fechamento', c.taxas.fechamento, 'pct')}</label>
+          <label>Usuários por contrato de Sales Coach (média)${f('medias.scUsers', c.medias.scUsers, 'num')}</label>
+          <label>Colaboradores por contrato de Atlas (média)${f('medias.atlasColab', c.medias.atlasColab, 'num')}</label>
+          <label class="full">Seu nome, para as mensagens da cadência<input class="inp" id="cfg-vendedora" data-cfg="vendedora" data-kind="txt" value="${esc(c.vendedora)}" ${dis()} placeholder="Nome e sobrenome"></label>
+        </div>
+        <p class="mute" style="font-size:12.5px">Conversão total de conta abordada para contrato: ${(c.taxas.resposta * c.taxas.diagnostico * c.taxas.proposta * c.taxas.fechamento * 100).toFixed(2).replace('.', ',')}%.</p>
+      </section>
+      <section class="card"><header><h2>Preços</h2><span class="chip warn">Atlas a confirmar</span></header>
+        <div class="fields">
+          <label>Sales Coach Essencial, por usuário/mês (1 a 10)${f('precos.scEss', c.precos.scEss, 'num')}</label>
+          <label>Implantação Essencial${f('precos.scEssImpl', c.precos.scEssImpl, 'num')}</label>
+          <label>Sales Coach Profissional, por usuário/mês (11 a 50)${f('precos.scPro', c.precos.scPro, 'num')}</label>
+          <label>Implantação Profissional${f('precos.scProImpl', c.precos.scProImpl, 'num')}</label>
+          <label>Atlas, por colaborador/mês${f('precos.atlas', c.precos.atlas, 'num')}</label>
+          <label>Implantação Atlas${f('precos.atlasImpl', c.precos.atlasImpl, 'num')}</label>
+        </div>
+        <p class="mute" style="font-size:12.5px">Acima de 50 usuários é Enterprise, negociado com os sócios. Fábrica: valor por projeto, informado na oportunidade.</p>
+      </section>
+    </div>
+    <section class="card"><header><h2>Metas por mês e atividade necessária</h2><button class="btn sm" id="addMes" ${dis()}>+ Mês</button></header>
+      <div class="tw"><table><thead><tr><th>Mês</th><th class="n">Dias úteis</th><th class="n">Sales Coach</th><th class="n">Atlas</th><th class="n">Fábrica</th><th class="n">Propostas</th><th class="n">Diagnósticos</th><th class="n">Respostas</th><th class="n">Contas novas</th><th class="n">Por dia</th><th class="n">Mensalidade nova</th><th class="n">Implantações</th><th></th></tr></thead><tbody>
+      ${ks.map(k => { const r = funil(k), m = c.metas[k], inp = (fld) => `<input class="inp small" type="number" min="0" id="m-${k}-${fld}" data-cfg="metas.${k}.${fld}" data-kind="num" value="${m[fld] ?? 0}" ${dis()} aria-label="${fld}">`;
+        return `<tr><td><b style="font-weight:500">${mesLabel(k)}</b></td><td class="n">${inp('dias')}</td><td class="n">${inp('sc')}</td><td class="n">${inp('atlas')}</td><td class="n">${inp('fabrica')}</td><td class="n">${r.propostas}</td><td class="n">${r.diags}</td><td class="n">${r.resp}</td><td class="n">${r.contas}</td><td class="n"><span class="chip acc">${r.porDia}</span></td><td class="n">${brl(r.mrr)}</td><td class="n">${brl(r.impl)}</td><td class="n"><button class="btn sm" data-delmes="${k}" ${dis()} aria-label="Remover ${mesLabel(k)}">Remover</button></td></tr>`; }).join('')}
+      </tbody></table></div>
+    </section>`;
+  },
+
+  ajustes() {
+    const c = S.cfg, d = dis(), im = S.imp;
+    const chip = (lista, v, i) => `<span class="chip" style="gap:6px">${esc(v)}<button class="btn sm" style="height:20px;padding:0 6px;border:0" data-listdel="${lista}:${i}" ${d} aria-label="Remover ${esc(v)}">×</button></span>`;
+    const lista = (k, tit) => `<div style="display:grid;gap:8px"><h2>${tit}</h2><div style="display:flex;flex-wrap:wrap;gap:6px">${c.listas[k].map((v, i) => chip(k, v, i)).join('')}</div>
+      <div class="tools"><input class="inp" id="listadd-${k}" placeholder="Novo item" ${d}><button class="btn sm" data-listadd="${k}" ${d}>Adicionar</button></div></div>`;
+    const cs = c.cadencia.map((t, i) => ({ t, i })).sort((a, b) => a.t.d - b.t.d);
+    return `
+    <div class="top"><div><h1>Ajustes e importar</h1><p class="sub">Tudo o que vinha da planilha: etapas, listas, cadência e mensagens. Cada campo salva ao sair dele.</p></div></div>
+    <section class="card"><header><h2>Importar da planilha</h2><span class="mono soft">.xlsx</span></header>
+      <p class="soft">Escolha o arquivo <b>NEXA_operacao_comercial.xlsx</b> preenchido. O sistema lê as abas Pipeline, Contas-alvo, Atividades, Metas e funil, Preços, Etapas e Plano 90 dias. Linhas de EXEMPLO e empresas que já existem aqui são ignoradas.</p>
+      <div class="tools"><input type="file" id="impFile" accept=".xlsx,.xls" ${d}></div>
+      ${im ? (im.erro ? `<p class="banner">${esc(im.erro)}</p>` : `<div class="list">
+        ${[['opps', 'oportunidades novas', im.opps.length, im.dupOpp], ['contas', 'contas-alvo novas', im.contas.length, im.dupConta], ['semanas', 'semanas de atividades', im.semanas.length]].map(([k, l, n, dup]) => `<label class="row" style="grid-template-columns:auto minmax(0,1fr)"><input type="checkbox" id="imp-${k}" ${n ? 'checked' : 'disabled'}><span><b style="font-weight:500">${n}</b> ${l}${dup ? ` <span class="mute">· ${dup} já existem e serão ignoradas</span>` : ''}</span></label>`).join('')}
+        <label class="row" style="grid-template-columns:auto minmax(0,1fr)"><input type="checkbox" id="imp-cfg" ${im.cfg ? '' : 'disabled'}><span>Metas, taxas, preços e etapas da planilha <span class="mute">· substitui os atuais</span></span></label>
+        <label class="row" style="grid-template-columns:auto minmax(0,1fr)"><input type="checkbox" id="imp-tarefas" ${im.tarefas.length ? '' : 'disabled'}><span><b style="font-weight:500">${im.tarefas.length}</b> tarefas do plano de 90 dias <span class="mute">· substitui o plano atual</span></span></label>
+      </div><div class="tools"><button class="btn pri" id="impGo" ${d} ${S.importando ? 'disabled' : ''}>${S.importando ? 'Importando…' : 'Importar'}</button><button class="btn" id="impCancel">Cancelar</button><span class="soft" id="impProg"></span></div>`) : ''}
+    </section>
+    <section class="card"><header><h2>Etapas do funil</h2></header>
+      <p class="soft">A ordem é fixa: 7 é sempre Ganho, 8 Perdido e 9 Nutrir. Os nomes, as definições e a probabilidade são editáveis.</p>
+      <div class="tw"><table><thead><tr><th>#</th><th>Nome</th><th>O que significa</th><th>Critério para avançar</th><th class="n">Probabilidade (%)</th></tr></thead><tbody>
+      ${[1, 2, 3, 4, 5, 6, 7, 8, 9].map(e => `<tr><td class="n">${e}</td>
+        <td style="min-width:170px"><input class="inp" id="et-${e}-nome" data-cfg="etapas.${e}.nome" data-kind="txt" value="${esc(c.etapas[e].nome)}" ${d}></td>
+        <td style="min-width:260px"><input class="inp" id="et-${e}-sig" data-cfg="etapas.${e}.sig" data-kind="txt" value="${esc(c.etapas[e].sig)}" ${d}></td>
+        <td style="min-width:260px"><input class="inp" id="et-${e}-crit" data-cfg="etapas.${e}.crit" data-kind="txt" value="${esc(c.etapas[e].crit)}" ${d}></td>
+        <td class="n"><input class="inp small" type="number" step="any" min="0" max="100" id="et-${e}-p" data-cfg="probs.${e}" data-kind="pct" value="${Math.round((c.probs[e] || 0) * 1000) / 10}" ${d}></td></tr>`).join('')}
+      </tbody></table></div>
+    </section>
+    <section class="card"><header><h2>Listas</h2></header><div class="grid2">${lista('segmentos', 'Segmentos')}${lista('canais', 'Canais de origem')}</div></section>
+    <section class="card"><header><h2>Cadência e mensagens</h2><button class="btn sm" id="addToque" ${d}>+ Toque</button></header>
+      <p class="soft">Use {nome}, {empresa} e {eu} nas mensagens: o sistema troca pelo primeiro nome do decisor, pela empresa e pelo seu nome. O que estiver entre colchetes aparece destacado para você trocar. Mudar o dia de um toque desmarca esse toque nas contas que já o tinham feito.</p>
+      ${cs.map(({ t, i }) => `<div class="card" style="background:var(--bg)"><div class="fields" style="grid-template-columns:90px minmax(0,1fr) minmax(0,2fr) auto;align-items:end">
+        <label>Dia<input class="inp" type="number" min="1" id="cd-${i}-d" data-cfg="cadencia.${i}.d" data-kind="num" value="${t.d}" ${d}></label>
+        <label>Canal<input class="inp" id="cd-${i}-canal" data-cfg="cadencia.${i}.canal" data-kind="txt" value="${esc(t.canal)}" ${d}></label>
+        <label>Ação<input class="inp" id="cd-${i}-acao" data-cfg="cadencia.${i}.acao" data-kind="txt" value="${esc(t.acao)}" ${d}></label>
+        <button class="btn sm danger" data-deltoque="${i}" ${d}>Excluir</button></div>
+        <div class="grid2"><label class="fields" style="display:grid;gap:4px;font-size:12.5px;color:var(--soft)">Mensagem · Sales Coach<textarea class="inp" rows="6" id="cd-${i}-sc" data-cfg="cadencia.${i}.sc" data-kind="msg" ${d}>${esc(t.sc)}</textarea></label>
+        <label class="fields" style="display:grid;gap:4px;font-size:12.5px;color:var(--soft)">Mensagem · Atlas<textarea class="inp" rows="6" id="cd-${i}-atlas" data-cfg="cadencia.${i}.atlas" data-kind="msg" ${d}>${esc(t.atlas)}</textarea></label></div></div>`).join('')}
+    </section>`;
+  },
+
+  equipe() {
+    if (S.papel !== 'admin') return `<div class="empty"><b>Só administradores gerenciam a equipe.</b></div>`;
+    const ms = S.membros || [];
+    return `
+    <div class="top"><div><h1>Equipe</h1><p class="sub">Quem pode entrar no sistema. Depois de incluir a pessoa aqui, crie o login dela no Supabase (Authentication → Users → Add user), com o mesmo e-mail e uma senha provisória. No primeiro acesso ela troca a senha.</p></div></div>
+    <section class="card"><header><h2>Incluir pessoa</h2></header>
+      <form class="fields" id="fMembro" style="grid-template-columns:minmax(0,2fr) minmax(0,1.4fr) minmax(0,1fr) auto;align-items:end">
+        <label>E-mail<input class="inp" type="email" name="email" id="mb-email" required></label>
+        <label>Nome<input class="inp" name="nome" id="mb-nome"></label>
+        <label>Papel<select class="inp" name="papel" id="mb-papel"><option value="vendas">Vendas</option><option value="leitura">Leitura</option><option value="admin">Admin</option></select></label>
+        <button class="btn pri" type="submit">Incluir</button>
+      </form>
+      <p class="mute" style="font-size:12.5px">Admin: usa o sistema e gerencia a equipe. Vendas: cria, edita e exclui. Leitura: só consulta.</p>
+    </section>
+    <div class="tw"><table><thead><tr><th>E-mail</th><th>Nome</th><th>Papel</th><th></th></tr></thead><tbody>
+      ${ms.map(m => `<tr><td>${esc(m.email)}</td><td>${esc(m.nome)}</td><td><select class="inp" id="pp-${esc(m.email)}" data-papel="${esc(m.email)}" ${m.email === S.email ? 'disabled' : ''}>${[['admin', 'Admin'], ['vendas', 'Vendas'], ['leitura', 'Leitura']].map(([v, l]) => `<option value="${v}" ${m.papel === v ? 'selected' : ''}>${l}</option>`).join('')}</select></td>
+        <td class="n">${m.email === S.email ? '<span class="mute">você</span>' : `<button class="btn sm danger" data-rmembro="${esc(m.email)}">Remover</button>`}</td></tr>`).join('')}
+    </tbody></table></div>`;
+  },
+
+  plano() {
+    const ts = S.tarefas.slice().sort((a, b) => (a.ordem || 0) - (b.ordem || 0)), feitos = ts.filter(t => t.status === 'Feito').length;
+    const fases = [...new Set(ts.map(t => t.fase))];
+    return `
+    <div class="top"><div><h1>Plano 90 dias</h1><p class="sub">Atualize o status toda quarta, antes da reunião de quinta. Clique numa tarefa para editar ou excluir.</p></div><div class="tools"><button class="btn pri" id="newTask" ${dis()}>+ Tarefa</button></div>
+      <div class="progress"><span class="mono soft">${feitos} de ${ts.length} feitos</span><span class="bar"><i style="width:${ts.length ? feitos / ts.length * 100 : 0}%"></i></span></div></div>
+    ${!ts.length ? `<div class="empty"><b>O plano ainda não foi carregado.</b></div>` : fases.map(fs => `<section class="card"><header><h2>${esc(fs)}</h2></header><div>${ts.filter(t => t.fase === fs).map(t => `
+      <div class="task ${t.status === 'Feito' ? 'feito' : ''}"><span class="mono soft">${esc(t.quando)}</span><div class="tt" data-edit-task="${t.id}" style="cursor:pointer"><b>${esc(t.tarefa)}</b><div class="mute" style="font-size:12.5px">${esc(t.entregavel)} · ${esc(t.resp)}</div></div>
+      <select class="inp" id="tk-${t.id}" data-task="${t.id}" ${dis()} aria-label="Status">${['A fazer', 'Fazendo', 'Feito'].map(s => `<option ${s === t.status ? 'selected' : ''}>${s}</option>`).join('')}</select></div>`).join('')}</div></section>`).join('')}`;
+  },
+};
+
+/* ───────── drawers ───────── */
+function closeDrawer() { $('#drawerRoot').innerHTML = ''; document.body.style.overflow = ''; }
+function openDrawer(title, bodyHtml, footHtml) {
+  $('#drawerRoot').innerHTML = `<div class="scrim" data-close></div><aside class="drawer" role="dialog" aria-modal="true" aria-label="${esc(title)}"><header><h2>${esc(title)}</h2><button class="btn sm" data-close>Fechar</button></header><div class="body">${bodyHtml}</div><footer>${footHtml}</footer></aside>`;
+  document.body.style.overflow = 'hidden';
+  const f = $('.drawer .body input, .drawer .body select'); f && f.focus();
+}
+const opts = (arr, sel, blank) => (blank !== undefined ? `<option value="">${blank}</option>` : '') + (sel && !arr.includes(sel) ? [...arr, sel] : arr).map(v => `<option ${v === sel ? 'selected' : ''}>${esc(v)}</option>`).join('');
+
+function oppForm(o) {
+  const d = dis();
+  return `<form class="fields" id="fOpp">
+    <label class="full">Empresa<input class="inp" name="empresa" id="o-empresa" required value="${esc(o.empresa)}" ${d}></label>
+    <label>Produto<select class="inp" name="produto" id="o-produto" ${d}>${opts(PRODUTOS, o.produto)}</select></label>
+    <label>Etapa<select class="inp" name="etapa" id="o-etapa" ${d}>${[1, 2, 3, 4, 5, 6, 7, 8, 9].map(i => `<option value="${i}" ${o.etapa === i ? 'selected' : ''}>${i}. ${esc(stg(i))}</option>`).join('')}</select></label>
+    <label id="lQtd">${isAtlas(o.produto) ? 'Colaboradores' : 'Usuários'}<input class="inp" type="number" min="0" name="qtd" id="o-qtd" value="${esc(o.qtd ?? '')}" ${d}></label>
+    <label id="lProj" ${o.produto === 'Fábrica de soluções' ? '' : 'hidden'}>Valor do projeto (R$)<input class="inp" type="number" min="0" name="valorProjeto" id="o-proj" value="${esc(o.valorProjeto ?? '')}" ${d}></label>
+    <label>Segmento<select class="inp" name="segmento" id="o-seg" ${d}>${opts(S.cfg.listas.segmentos, o.segmento, '—')}</select></label>
+    <label>Canal de origem<select class="inp" name="canal" id="o-canal" ${d}>${opts(S.cfg.listas.canais, o.canal, '—')}</select></label>
+    <label>Contato<input class="inp" name="contato" id="o-contato" value="${esc(o.contato)}" ${d}></label>
+    <label>Cargo<input class="inp" name="cargo" id="o-cargo" value="${esc(o.cargo)}" ${d}></label>
+    <p class="sect full" style="grid-column:1/-1">Próximo passo</p>
+    <label class="full">O que fazer<input class="inp" name="proximoPasso" id="o-prox" value="${esc(o.proximoPasso)}" placeholder="Ex.: demo com o diretor" ${d}></label>
+    <label>Data<input class="inp" type="date" name="dataProximo" id="o-dprox" value="${esc(o.dataProximo)}" ${d}></label>
+    <label>Última interação<input class="inp" type="date" name="ultimaInteracao" id="o-ult" value="${esc(o.ultimaInteracao)}" ${d}></label>
+    <label>Primeiro contato<input class="inp" type="date" name="primeiroContato" id="o-pri" value="${esc(o.primeiroContato)}" ${d}></label>
+    <label class="full">Observações, dor, motivo de perda<textarea class="inp" name="obs" id="o-obs" ${d}>${esc(o.obs)}</textarea></label>
+  </form><div class="summary" id="oSum"></div>
+  ${o.hist && Object.keys(o.hist).length ? `<p class="mute" style="font-size:12.5px">Histórico: ${Object.entries(o.hist).sort((a, b) => a[0] - b[0]).map(([k, v]) => `${stg(k)} em ${br(v)}`).join(' · ')}</p>` : ''}`;
+}
+function readOpp() {
+  const fd = new FormData($('#fOpp')), o = {};
+  for (const [k, v] of fd) o[k] = typeof v === 'string' ? v.trim() : v;
+  o.etapa = +o.etapa; o.qtd = o.qtd === '' ? '' : +o.qtd; o.valorProjeto = o.valorProjeto === '' || o.valorProjeto == null ? '' : +o.valorProjeto;
+  return o;
+}
+function oppSummary() {
+  const o = readOpp(), v = valores(o);
+  $('#lQtd').firstChild.textContent = isAtlas(o.produto) ? 'Colaboradores' : 'Usuários';
+  $('#lProj').hidden = o.produto !== 'Fábrica de soluções';
+  $('#oSum').innerHTML = `<div><b>${brl(v.m, 2)}</b><span>mensalidade${v.plano ? ' · ' + v.plano : ''}</span></div><div><b>${brl(v.i)}</b><span>implantação</span></div><div><b>${brl(v.ano)}</b><span>1º ano · ${pct(v.prob)} → ${brl(v.pond)}</span></div>`;
+}
+function openOpp(id, preset) {
+  const o = id ? S.opps.find(x => x.id === id) : Object.assign({ etapa: 2, produto: 'Sales Coach', primeiroContato: hoje(), ultimaInteracao: hoje() }, preset || {});
+  if (!o) return;
+  openDrawer(id ? o.empresa : 'Nova oportunidade', oppForm(o),
+    `<div class="tools">${id && !dis() ? `<button class="btn danger" id="delOpp">Excluir</button>` : ''}${id && !dis() ? `<button class="btn" id="touchOpp">Registrar contato hoje</button>` : ''}</div><div class="tools"><button class="btn" data-close>Cancelar</button><button class="btn pri" id="saveOpp" ${dis()}>Salvar</button></div>`);
+  oppSummary();
+  $('#fOpp').addEventListener('input', oppSummary);
+  $('#fOpp').addEventListener('submit', e => e.preventDefault());
+  const doSave = async (extra = {}) => {
+    const n = { ...readOpp(), ...extra };
+    if (!n.empresa) { toast('Informe a empresa.'); $('#o-empresa').focus(); return; }
+    const base = id ? strip(o) : { ...(preset || {}) };
+    const body = { ...base, ...n, hist: n.etapa !== o.etapa || !id ? histFor(id ? o : {}, n.etapa) : (o.hist || {}) };
+    closeDrawer();
+    const nid = await saveOpp(id, body);
+    if (nid) toast('Oportunidade salva');
+    if (nid && preset && preset.contaId) { const c = S.contas.find(x => x.id === preset.contaId); if (c) saveConta(c.id, { ...strip(c), status: 'oportunidade', oppId: nid }); }
+  };
+  $('#saveOpp') && $('#saveOpp').addEventListener('click', () => doSave());
+  $('#touchOpp') && $('#touchOpp').addEventListener('click', () => doSave({ ultimaInteracao: hoje() }));
+  const del = $('#delOpp');
+  del && del.addEventListener('click', () => {
+    if (del.dataset.c) { closeDrawer(); S.opps = S.opps.filter(x => x.id !== id); render(); write('oportunidades/' + id, () => S.db.collection('oportunidades').doc(id).delete()).then(ok => ok && toast('Oportunidade excluída')); }
+    else { del.dataset.c = 1; del.textContent = 'Confirmar exclusão'; }
+  });
+}
+
+function contaForm(c) {
+  const d = dis(), yn = (name, val, lbl) => `<label><span>${lbl}</span><span class="check"><input type="checkbox" name="${name}" id="c-${name}" ${val ? 'checked' : ''} ${d}> Sim</span></label>`;
+  return `<form class="fields" id="fConta">
+    <label class="full">Empresa<input class="inp" name="empresa" id="c-empresa" required value="${esc(c.empresa)}" ${d}></label>
+    <label>Site ou LinkedIn da empresa<input class="inp" name="site" id="c-site" value="${esc(c.site)}" ${d}></label>
+    <label>Segmento<select class="inp" name="segmento" id="c-seg" ${d}>${opts(S.cfg.listas.segmentos, c.segmento, '—')}</select></label>
+    <label>Cidade<input class="inp" name="cidade" id="c-cidade" value="${esc(c.cidade)}" ${d}></label>
+    <label>Gatilho observado<input class="inp" name="gatilho" id="c-gat" value="${esc(c.gatilho)}" placeholder="Ex.: 3 vagas de SDR" ${d}></label>
+    <p class="sect" style="grid-column:1/-1">Encaixe Sales Coach</p>
+    <label>Nº de vendedores<input class="inp" type="number" min="0" name="vendedores" id="c-vend" value="${esc(c.vendedores ?? '')}" ${d}></label>
+    ${yn('online', c.online, 'Vende por videochamada?')}
+    ${yn('crm', c.crm, 'Usa CRM?')}
+    <p class="sect" style="grid-column:1/-1">Encaixe Atlas</p>
+    <label>Nº de colaboradores<input class="inp" type="number" min="0" name="colaboradores" id="c-colab" value="${esc(c.colaboradores ?? '')}" ${d}></label>
+    ${yn('rh', c.rh, 'Tem RH estruturado?')}
+    <p class="sect" style="grid-column:1/-1">Decisor</p>
+    <label>Nome<input class="inp" name="decisor" id="c-dec" value="${esc(c.decisor)}" ${d}></label>
+    <label>Cargo<input class="inp" name="cargo" id="c-cargo" value="${esc(c.cargo)}" ${d}></label>
+    <label class="full">LinkedIn do decisor<input class="inp" name="linkedin" id="c-li" value="${esc(c.linkedin)}" ${d}></label>
+    <label>Produto da abordagem<select class="inp" name="produto" id="c-prod" ${d}><option value="">Automático pela nota</option>${opts(PRODUTOS, c.produto)}</select></label>
+    <label>Situação<select class="inp" name="status" id="c-status" ${d}>${Object.entries(CSTATUS).map(([k, v]) => `<option value="${k}" ${(c.status || 'fila') === k ? 'selected' : ''}>${v}</option>`).join('')}</select></label>
+    <label class="full">Observações<textarea class="inp" name="obs" id="c-obs" ${d}>${esc(c.obs)}</textarea></label>
+    ${c.inicioCadencia ? `<p class="sect" style="grid-column:1/-1">Cadência</p>
+    <label>Início da cadência<input class="inp" type="date" name="inicioCadencia" id="c-ini" value="${esc(c.inicioCadencia)}" ${d}></label>
+    <div class="full" style="grid-column:1/-1;display:grid;gap:4px">${cad().map(t => `<label class="check" style="height:auto"><input type="checkbox" name="tq" value="${t.d}" id="c-tq-${t.d}" ${(c.toques || []).includes(t.d) ? 'checked' : ''} ${d}> Dia ${t.d} · ${esc(t.canal)} · ${esc(t.acao)}</label>`).join('')}</div>` : ''}
+  </form><div class="summary" id="cSum"></div>`;
+}
+function readConta() {
+  const f = $('#fConta'), fd = new FormData(f), o = {};
+  for (const [k, v] of fd) o[k] = typeof v === 'string' ? v.trim() : v;
+  ['online', 'crm', 'rh'].forEach(k => o[k] = f.elements[k].checked);
+  if (f.elements.inicioCadencia) { o.toques = fd.getAll('tq').map(Number); }
+  delete o.tq;
+  ['vendedores', 'colaboradores'].forEach(k => o[k] = o[k] === '' ? '' : +o[k]);
+  return o;
+}
+function contaSummary() { const n = notas(readConta()); $('#cSum').innerHTML = `<div><b>${n.sc} / 5</b><span>encaixe Sales Coach</span></div><div><b>${n.at} / 5</b><span>encaixe Atlas</span></div><div><b>${n.prio}</b><span>prioridade · ${esc(n.sug === 'Fábrica de soluções' ? 'avaliar Fábrica' : n.sug)}</span></div>`; }
+function openConta(id) {
+  const c = id ? S.contas.find(x => x.id === id) : { status: 'fila' };
+  if (!c) return;
+  const st = c.status || 'fila';
+  openDrawer(id ? c.empresa : 'Nova conta-alvo', contaForm(c),
+    `<div class="tools">${id && !dis() ? `<button class="btn danger" id="delConta">Excluir</button>` : ''}${id && !dis() && st === 'cadencia' ? `<button class="btn" id="respConta">Respondeu</button>` : ''}</div>
+     <div class="tools"><button class="btn" data-close>Cancelar</button>${!dis() && st === 'fila' ? `<button class="btn" id="saveStart">Salvar e iniciar cadência</button>` : ''}<button class="btn pri" id="saveConta" ${dis()}>Salvar</button></div>`);
+  contaSummary();
+  $('#fConta').addEventListener('input', contaSummary);
+  $('#fConta').addEventListener('submit', e => e.preventDefault());
+  const doSave = async (start) => {
+    const n = readConta(); if (!n.empresa) { toast('Informe a empresa.'); $('#c-empresa').focus(); return; }
+    const body = { ...(id ? strip(c) : {}), ...n };
+    if (start) Object.assign(body, { status: 'cadencia', inicioCadencia: hoje(), toques: [] });
+    if (body.status === 'cadencia' && !body.inicioCadencia) Object.assign(body, { inicioCadencia: hoje(), toques: [] });
+    closeDrawer(); const ok = await saveConta(id, body); if (ok) toast(start ? 'Cadência iniciada: o toque do dia 1 já está em Cadência' : 'Conta salva');
+  };
+  $('#saveConta') && $('#saveConta').addEventListener('click', () => doSave(false));
+  $('#saveStart') && $('#saveStart').addEventListener('click', () => doSave(true));
+  $('#respConta') && $('#respConta').addEventListener('click', () => { closeDrawer(); respondeu(id); });
+  const del = $('#delConta');
+  del && del.addEventListener('click', () => {
+    if (del.dataset.c) { closeDrawer(); S.contas = S.contas.filter(x => x.id !== id); render(); write('contas/' + id, () => S.db.collection('contas').doc(id).delete()).then(ok => ok && toast('Conta excluída')); }
+    else { del.dataset.c = 1; del.textContent = 'Confirmar exclusão'; }
+  });
+}
+function respondeu(contaId) {
+  const c = S.contas.find(x => x.id === contaId); if (!c) return;
+  const prod = produtoConta(c), feitos = toques(c).filter(t => t.done), ult = feitos[feitos.length - 1];
+  openOpp(null, { contaId, empresa: c.empresa, segmento: c.segmento || '', produto: prod, contato: c.decisor || '', cargo: c.cargo || '', canal: ult ? ult.canal : 'LinkedIn', qtd: isAtlas(prod) ? (c.colaboradores || '') : prod === 'Sales Coach' ? (c.vendedores || '') : '', primeiroContato: c.inicioCadencia || hoje(), ultimaInteracao: hoje(), etapa: 2, proximoPasso: 'Marcar diagnóstico', dataProximo: addDays(hoje(), 1) });
+}
+
+function openTask(id) {
+  const t = id ? S.tarefas.find(x => x.id === id) : { status: 'A fazer', fase: '', resp: 'Vendedora' };
+  if (!t) return; const d = dis(), fases = [...new Set(S.tarefas.map(x => x.fase).filter(Boolean))];
+  openDrawer(id ? 'Editar tarefa' : 'Nova tarefa', `<form class="fields" id="fTask">
+    <label class="full">Tarefa<textarea class="inp" name="tarefa" id="tk-tarefa" ${d}>${esc(t.tarefa)}</textarea></label>
+    <label>Quando<input class="inp" name="quando" id="tk-quando" value="${esc(t.quando)}" placeholder="Ex.: Seg 12/10 ou Novembro" ${d}></label>
+    <label>Fase<input class="inp" name="fase" id="tk-fase" list="fasesList" value="${esc(t.fase)}" ${d}><datalist id="fasesList">${fases.map(f => `<option value="${esc(f)}">`).join('')}</datalist></label>
+    <label>Entregável<input class="inp" name="entregavel" id="tk-ent" value="${esc(t.entregavel)}" ${d}></label>
+    <label>Responsável<input class="inp" name="resp" id="tk-resp" value="${esc(t.resp)}" ${d}></label>
+    <label>Status<select class="inp" name="status" id="tk-status" ${d}>${opts(['A fazer', 'Fazendo', 'Feito'], t.status)}</select></label>
+  </form>`, `<div class="tools">${id && !d ? `<button class="btn danger" id="delTask">Excluir</button>` : ''}</div><div class="tools"><button class="btn" data-close>Cancelar</button><button class="btn pri" id="saveTask" ${d}>Salvar</button></div>`);
+  $('#fTask').addEventListener('submit', e => e.preventDefault());
+  $('#saveTask') && $('#saveTask').addEventListener('click', () => {
+    const fd = new FormData($('#fTask')), n = {}; for (const [k, v] of fd) n[k] = v.trim();
+    if (!n.tarefa) { toast('Descreva a tarefa.'); return; }
+    const ref = id ? S.db.collection('tarefas').doc(id) : S.db.collection('tarefas').doc();
+    const body = { ...(id ? strip(t) : { ordem: Math.max(0, ...S.tarefas.map(x => x.ordem || 0)) + 1 }), ...n };
+    const i = S.tarefas.findIndex(x => x.id === ref.id); if (i >= 0) S.tarefas[i] = { ...body, id: ref.id }; else S.tarefas.push({ ...body, id: ref.id });
+    closeDrawer(); render(); write('tarefas/' + ref.id, () => ref.set(body)).then(ok => ok && toast('Tarefa salva'));
+  });
+  const del = $('#delTask');
+  del && del.addEventListener('click', () => { if (!del.dataset.c) { del.dataset.c = 1; del.textContent = 'Confirmar exclusão'; return; }
+    closeDrawer(); S.tarefas = S.tarefas.filter(x => x.id !== id); render(); write('tarefas/' + id, () => S.db.collection('tarefas').doc(id).delete()).then(ok => ok && toast('Tarefa excluída')); });
+}
+
+/* ───────── importar planilha ───────── */
+function loadXLSX() {
+  if (window.XLSX) return Promise.resolve(window.XLSX);
+  return new Promise((res, rej) => { const sc = document.createElement('script'); sc.src = 'vendor/xlsx.full.min.js'; sc.onload = () => res(window.XLSX); sc.onerror = rej; document.head.appendChild(sc); });
+}
+const norm = v => String(v ?? '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/\s+/g, ' ').trim();
+function asDate(v) {
+  if (v instanceof Date && !isNaN(v)) return iso(new Date(v.getTime() + 12 * 36e5));
+  if (typeof v === 'number' && v > 30000) { const d = new Date(Math.round((v - 25569) * 864e5) + 12 * 36e5); return `${d.getUTCFullYear()}-${pad(d.getUTCMonth() + 1)}-${pad(d.getUTCDate())}`; }
+  const m = String(v || '').match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})/); if (m) return `${m[3]}-${pad(m[2])}-${pad(m[1])}`;
+  const m2 = String(v || '').match(/^\d{4}-\d{2}-\d{2}/); return m2 ? m2[0] : '';
+}
+const numOr = v => v === '' || v == null || isNaN(+v) ? '' : +v;
+const sim = v => norm(v) === 'sim';
+function tabela(ws, chave) {
+  const rows = XLSX.utils.sheet_to_json(ws, { header: 1, raw: true, defval: '' });
+  const hi = rows.findIndex(r => r.some(c => norm(c) === chave)); if (hi < 0) return [];
+  const H = rows[hi].map(norm);
+  return rows.slice(hi + 1).map(r => { const o = {}; H.forEach((h, i) => { if (h && !(h in o)) o[h] = r[i]; }); return o; });
+}
+const pick = (o, test) => { for (const k in o) if (test(k)) return o[k]; return ''; };
+const cell = (ws, a) => ws && ws[a] ? ws[a].v : undefined;
+const MES_N = { jan: 1, fev: 2, mar: 3, abr: 4, mai: 5, jun: 6, jul: 7, ago: 8, set: 9, out: 10, nov: 11, dez: 12 };
+async function lerPlanilha(file) {
+  S.imp = null;
+  try {
+    await loadXLSX();
+    const wb = XLSX.read(await file.arrayBuffer(), { cellDates: true });
+    const sh = n => wb.Sheets[wb.SheetNames.find(x => norm(x) === norm(n))];
+    const valido = o => { const e = String(o.empresa || '').trim(); return e && !/^exemplo/i.test(e); };
+    const exO = new Set(S.opps.map(o => norm(o.empresa))), exC = new Set(S.contas.map(c => norm(c.empresa)));
+    let opps = [], contas = [], semanas = [], tarefas = [], cfg = null, dupOpp = 0, dupConta = 0;
+    if (sh('Pipeline')) opps = tabela(sh('Pipeline'), 'empresa').map(r => {
+      const etapa = parseInt(String(pick(r, k => k === 'etapa'))) || 2;
+      const o = { empresa: String(pick(r, k => k === 'empresa')).trim(), segmento: String(pick(r, k => k === 'segmento')), produto: String(pick(r, k => k === 'produto')), contato: String(pick(r, k => k === 'contato')), cargo: String(pick(r, k => k === 'cargo')),
+        canal: String(pick(r, k => k.startsWith('canal'))), etapa, qtd: numOr(pick(r, k => k.startsWith('usuarios'))), valorProjeto: numOr(pick(r, k => k.startsWith('valor de projeto'))),
+        primeiroContato: asDate(pick(r, k => k.startsWith('data do 1'))), ultimaInteracao: asDate(pick(r, k => k.startsWith('ultima interacao'))), proximoPasso: String(pick(r, k => k === 'proximo passo')),
+        dataProximo: asDate(pick(r, k => k.startsWith('data do proximo'))), obs: String(pick(r, k => k.startsWith('observacoes'))) };
+      o.hist = histFor({}, etapa, o.ultimaInteracao || o.primeiroContato || hoje()); return o; }).filter(valido).filter(o => exO.has(norm(o.empresa)) ? (dupOpp++, false) : true);
+    if (sh('Contas-alvo')) { const ST = { 'na fila': 'fila', 'em cadencia': 'cadencia', 'virou oportunidade': 'oportunidade', 'descartada': 'descartada', 'nutrir': 'nutrir' };
+      contas = tabela(sh('Contas-alvo'), 'empresa').map(r => { const st = ST[norm(pick(r, k => k === 'status'))] || 'fila';
+        const c = { empresa: String(pick(r, k => k === 'empresa')).trim(), site: String(pick(r, k => k.startsWith('site'))), segmento: String(pick(r, k => k === 'segmento')), cidade: String(pick(r, k => k === 'cidade')),
+          vendedores: numOr(pick(r, k => k.includes('vendedores'))), online: sim(pick(r, k => k.includes('reuniao online'))), crm: sim(pick(r, k => k.startsWith('usa crm'))),
+          colaboradores: numOr(pick(r, k => k.includes('colaboradores'))), rh: sim(pick(r, k => k.includes('rh estruturado'))), gatilho: String(pick(r, k => k.startsWith('gatilho'))),
+          decisor: String(pick(r, k => k === 'decisor')), cargo: String(pick(r, k => k === 'cargo')), linkedin: String(pick(r, k => k.includes('linkedin do decisor'))), produto: '', status: st, obs: '' };
+        if (st === 'cadencia') { c.inicioCadencia = hoje(); c.toques = []; } return c; }).filter(valido).filter(c => exC.has(norm(c.empresa)) ? (dupConta++, false) : true); }
+    if (sh('Atividades')) semanas = tabela(sh('Atividades'), 'semana (segunda)').map(r => ({ w: asDate(pick(r, k => k.startsWith('semana'))), ligacoes: numOr(pick(r, k => k.startsWith('ligacoes'))), conexoes: numOr(pick(r, k => k.startsWith('conexoes'))), aprendizado: String(pick(r, k => k.startsWith('aprendizado')) || '').trim() }))
+      .filter(x => x.w && (x.ligacoes !== '' || x.conexoes !== '' || x.aprendizado)).map(x => ({ ...x, w: mondayOf(x.w) }));
+    if (sh('Plano 90 dias')) tarefas = tabela(sh('Plano 90 dias'), 'quando').map((r, i) => ({ ordem: i + 1, quando: String(pick(r, k => k === 'quando')), fase: String(pick(r, k => k === 'fase')), tarefa: String(pick(r, k => k === 'tarefa')).trim(), entregavel: String(pick(r, k => k.startsWith('entregavel'))), resp: String(pick(r, k => k.startsWith('responsavel'))), status: ['A fazer', 'Fazendo', 'Feito'].includes(String(pick(r, k => k === 'status'))) ? String(pick(r, k => k === 'status')) : 'A fazer' })).filter(t => t.tarefa);
+    const M = sh('Metas e funil'), P = sh('Preços'), E = sh('Etapas');
+    if (M || P || E) {
+      cfg = JSON.parse(JSON.stringify(S.cfg)); const n = a => { const v = cell(M, a); return typeof v === 'number' ? v : null; };
+      if (M) {
+        [['resposta', 'B5'], ['diagnostico', 'B6'], ['proposta', 'B7'], ['fechamento', 'B8']].forEach(([k, a]) => { const v = n(a); if (v > 0) cfg.taxas[k] = v; });
+        if (n('B12') > 0) cfg.medias.scUsers = n('B12'); if (n('B15') > 0) cfg.medias.atlasColab = n('B15');
+        const metas = {};
+        for (let r = 21; r < 40; r++) { const lab = norm(cell(M, 'A' + r)); const mm = lab.match(/^([a-z]{3})\/(\d{4})$/); if (!mm || !MES_N[mm[1]]) { if (lab.startsWith('total')) break; continue; }
+          metas[`${mm[2]}-${pad(MES_N[mm[1]])}`] = { dias: +cell(M, 'B' + r) || 0, sc: +cell(M, 'C' + r) || 0, atlas: +cell(M, 'D' + r) || 0, fabrica: +cell(M, 'E' + r) || 0 }; }
+        if (Object.keys(metas).length) cfg.metas = metas;
+      }
+      if (P) { const p = a => { const v = cell(P, a); return typeof v === 'number' ? v : null; };
+        [['scEss', 'C4'], ['scEssImpl', 'D4'], ['scPro', 'C5'], ['scProImpl', 'D5'], ['atlas', 'C7'], ['atlasImpl', 'D7']].forEach(([k, a]) => { if (p(a) != null) cfg.precos[k] = p(a); }); }
+      if (E) for (let r = 4; r <= 12; r++) { const lab = String(cell(E, 'A' + r) || ''), mm = lab.match(/^(\d)\.\s*(.+)$/); if (!mm) continue; const e = +mm[1];
+        cfg.etapas[e] = { nome: mm[2].trim(), sig: String(cell(E, 'B' + r) || ''), crit: String(cell(E, 'C' + r) || '') }; const pv = cell(E, 'D' + r); if (typeof pv === 'number') cfg.probs[e] = pv; }
+    }
+    if (!opps.length && !contas.length && !semanas.length && !tarefas.length && !cfg && !dupOpp && !dupConta) S.imp = { erro: 'Não encontrei as abas da planilha da NEXA neste arquivo.' };
+    else S.imp = { opps, contas, semanas, tarefas, cfg, dupOpp, dupConta };
+  } catch (er) { S.imp = { erro: 'Não consegui ler este arquivo. Confira se é o .xlsx da planilha comercial.' }; }
+  render();
+}
+async function importar() {
+  const im = S.imp; if (!im || im.erro || !S.db) return;
+  const sel = {}; ['opps', 'contas', 'semanas', 'cfg', 'tarefas'].forEach(k => { const el = $('#imp-' + k); sel[k] = !!(el && el.checked); });
+  const on = k => sel[k]; S.importando = true;
+  const prog = m => { const el = $('#impProg'); if (el) el.textContent = m; };
+  const btn = $('#impGo'); if (btn) btn.disabled = true;
+  let n = 0; const ag = new Date().toISOString();
+  if (on('opps')) for (const o of im.opps) { const ref = S.db.collection('oportunidades').doc(); if (await write(ref.path, () => ref.set({ ...o, criadoEm: ag, atualizadoEm: ag }))) n++; prog(`${n} registros importados…`); }
+  if (on('contas')) for (const c of im.contas) { const ref = S.db.collection('contas').doc(); if (await write(ref.path, () => ref.set({ ...c, criadoEm: ag, atualizadoEm: ag }))) n++; prog(`${n} registros importados…`); }
+  if (on('semanas')) for (const s of im.semanas) { const { w, ...rest } = s, body = { ...(S.semanas[w] || {}), ...rest }; const ref = S.db.collection('semanas').doc(w); if (await write(ref.path, () => ref.set(body))) n++; prog(`${n} registros importados…`); }
+  if (on('cfg') && im.cfg) { if (await saveCfg(im.cfg)) n++; }
+  if (on('tarefas') && im.tarefas.length) {
+    const ids = im.tarefas.map((t, i) => 't' + pad(i + 1));
+    for (const old of S.tarefas.filter(t => !ids.includes(t.id))) await write('tarefas/' + old.id, () => S.db.collection('tarefas').doc(old.id).delete());
+    for (let i = 0; i < im.tarefas.length; i++) { const ref = S.db.collection('tarefas').doc(ids[i]); if (await write(ref.path, () => ref.set(im.tarefas[i]))) n++; prog(`${n} registros importados…`); }
+  }
+  S.imp = null; S.importando = false; render(); toast(`Importação concluída: ${n} registros`);
+}
+
+/* ───────── eventos ───────── */
+addEventListener('hashchange', () => { view = location.hash.slice(1) || 'painel'; S.busca = ''; render(); scrollTo(0, 0); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && $('#drawerRoot').innerHTML) closeDrawer(); });
+document.addEventListener('click', e => {
+  const et = e.target.closest('[data-edit-task]'); if (et) return openTask(et.dataset.editTask);
+  const t = e.target.closest('button,[data-open-conta],[data-close]'); if (!t) return;
+  const ds = t.dataset;
+  if ('close' in ds) return closeDrawer();
+  if (ds.openOpp) return openOpp(ds.openOpp);
+  if (ds.start) { e.stopPropagation(); const c = S.contas.find(x => x.id === ds.start); return saveConta(c.id, { ...strip(c), status: 'cadencia', inicioCadencia: hoje(), toques: [] }).then(ok => ok && toast('Cadência iniciada')); }
+  if (ds.openConta) return openConta(ds.openConta);
+  if (ds.rmembro) { if (!t.dataset.c) { t.dataset.c = 1; t.textContent = 'Confirmar'; return; } return sb.from('membros').delete().eq('email', ds.rmembro).then(({ error }) => { if (error) return toast('Não foi possível remover.'); toast('Pessoa removida. Exclua também o login dela no Supabase.'); carregarMembros(); }); }
+  if (ds.deltoque !== undefined) { if (!t.dataset.c) { t.dataset.c = 1; t.textContent = 'Confirmar'; return; } const cs = (S.cfg.cadencia || []).filter((x, i) => i !== +ds.deltoque); return saveCfg({ ...S.cfg, cadencia: cs }).then(ok => ok && toast('Toque excluído')); }
+  if (ds.listdel) { const [k, i] = ds.listdel.split(':'); const l = S.cfg.listas[k].filter((x, j) => j !== +i); return saveCfg({ ...S.cfg, listas: { ...S.cfg.listas, [k]: l } }); }
+  if (ds.listadd) { const k = ds.listadd, inp = $('#listadd-' + k), v = inp.value.trim(); if (!v) return; if (S.cfg.listas[k].includes(v)) return toast('Esse item já existe.'); return saveCfg({ ...S.cfg, listas: { ...S.cfg.listas, [k]: [...S.cfg.listas[k], v] } }).then(ok => ok && toast('Adicionado')); }
+  if (ds.msg) { S.openMsg = S.openMsg === ds.msg ? null : ds.msg; return render(); }
+  if (ds.copy) { const el = document.getElementById('msg-' + ds.copy); const txt = el.innerText;
+    try { navigator.clipboard.writeText(txt).then(() => toast('Mensagem copiada'), () => { getSelection().selectAllChildren(el); toast('Selecionada: use Ctrl+C'); }); } catch (er) { getSelection().selectAllChildren(el); toast('Selecionada: use Ctrl+C'); } return; }
+  if (ds.done) { const [cid, d] = ds.done.split(':'), c = S.contas.find(x => x.id === cid); if (S.openMsg === ds.done) S.openMsg = null;
+    return saveConta(cid, { ...strip(c), toques: [...new Set([...(c.toques || []), +d])].sort((a, b) => a - b) }).then(ok => ok && toast(`Dia ${d} feito`)); }
+  if (ds.resp) return respondeu(ds.resp);
+  if (ds.nutrir) { const c = S.contas.find(x => x.id === ds.nutrir); return saveConta(c.id, { ...strip(c), status: 'nutrir', retomarEm: addDays(hoje(), 60) }).then(ok => ok && toast('Conta movida para Nutrir')); }
+  if (ds.prio !== undefined && t.closest('.seg')) { S.contaPrio = ds.prio; return render(); }
+  if (ds.delmes) { if (Object.keys(S.cfg.metas).length <= 1) return toast('Mantenha pelo menos um mês.'); const m = { ...S.cfg.metas }; delete m[ds.delmes]; return saveCfg({ ...S.cfg, metas: m }); }
+  switch (t.id) {
+    case 'newOpp': return openOpp(null);
+    case 'newConta': return openConta(null);
+    case 'tClosed': S.showClosed = !S.showClosed; return render();
+    case 'newTask': return openTask(null);
+    case 'sair': return sb.auth.signOut().then(() => location.reload());
+    case 'trocarSenha': return abrirTrocaSenha();
+    case 'addToque': { const cs = cad(), last = cs[cs.length - 1]; return saveCfg({ ...S.cfg, cadencia: [...cs, { d: (last ? last.d : 0) + 2, canal: 'E-mail', acao: 'Novo toque', sc: '', atlas: '' }] }); }
+    case 'impGo': return importar();
+    case 'impCancel': S.imp = null; const fi = $('#impFile'); if (fi) fi.value = ''; return render();
+    case 'addMes': { const ks = Object.keys(S.cfg.metas).sort(), last = ks[ks.length - 1] || hoje().slice(0, 7); const [y, m] = last.split('-').map(Number); const nk = m === 12 ? `${y + 1}-01` : `${y}-${pad(m + 1)}`; const prev = S.cfg.metas[last] || { dias: 20, sc: 0, atlas: 0, fabrica: 0 };
+      return saveCfg({ ...S.cfg, metas: { ...S.cfg.metas, [nk]: { ...prev } } }); }
+    case 'expOpp': return exportar('pipeline');
+    case 'expContas': return exportar('contas');
+  }
+});
+document.addEventListener('input', e => {
+  if (e.target.id === 'busca') { const pos = e.target.selectionStart; S.busca = e.target.value; render(); const b = $('#busca'); b.focus(); try { b.setSelectionRange(pos, pos); } catch (er) {} }
+});
+document.addEventListener('change', e => {
+  const t = e.target, ds = t.dataset;
+  if (t.id === 'impFile' && t.files[0]) return lerPlanilha(t.files[0]);
+  if (ds.papel) return sb.from('membros').update({ papel: t.value }).eq('email', ds.papel).then(({ error }) => { if (error) toast('Não foi possível mudar o papel.'); else toast('Papel atualizado'); carregarMembros(); });
+  if (t.id === 'fProd') { S.filtroProd = t.value; return render(); }
+  if (t.id === 'fStatus') { S.contaFiltro = t.value; return render(); }
+  if (t.id === 'pMes') { S.painelMes = t.value; return render(); }
+  if (ds.sem) { const w = ds.sem, cur = { ...(S.semanas[w] || {}) }; cur[ds.f] = ds.f === 'aprendizado' ? t.value.trim() : (t.value === '' ? '' : +t.value);
+    S.semanas[w] = cur; const ref = S.db && S.db.collection('semanas').doc(w); write('semanas/' + w, () => ref.set(cur)).then(ok => ok && toast('Semana salva')); return; }
+  if (ds.cfg) { const path = ds.cfg.split('.'); let v = t.value; if (ds.kind === 'pct') { v = (+v || 0) / 100; if (path[0] === 'taxas' && v <= 0) return toast('A taxa precisa ser maior que zero.'); } else if (ds.kind === 'num') v = +v || 0; else if (ds.kind !== 'msg') v = v.trim();
+    if (path[0] === 'cadencia' && path[2] === 'd' && v < 1) return toast('O dia precisa ser 1 ou mais.');
+    const next = JSON.parse(JSON.stringify(S.cfg)); if (!next.cadencia) next.cadencia = cad(); let o = next; path.slice(0, -1).forEach(k => { o[k] = o[k] || {}; o = o[k]; }); o[path[path.length - 1]] = v;
+    return saveCfg(next).then(ok => ok && toast('Salvo')); }
+  if (ds.task) { const tk = S.tarefas.find(x => x.id === ds.task); tk.status = t.value; const ref = S.db && S.db.collection('tarefas').doc(tk.id); write('tarefas/' + tk.id, () => ref.set(strip(tk))).then(ok => ok && toast('Status salvo')); render(); }
+});
+/* arrastar cartões entre etapas */
+document.addEventListener('dragstart', e => { const c = e.target.closest && e.target.closest('[data-drag]'); if (c) { e.dataTransfer.setData('text/plain', c.dataset.drag); e.dataTransfer.effectAllowed = 'move'; } });
+document.addEventListener('dragover', e => { const col = e.target.closest && e.target.closest('[data-drop]'); if (col) { e.preventDefault(); $$('.col.over').forEach(x => x !== col && x.classList.remove('over')); col.classList.add('over'); } });
+document.addEventListener('dragleave', e => { const col = e.target.closest && e.target.closest('[data-drop]'); if (col && !col.contains(e.relatedTarget)) col.classList.remove('over'); });
+document.addEventListener('drop', e => { const col = e.target.closest && e.target.closest('[data-drop]'); if (!col) return; e.preventDefault(); col.classList.remove('over');
+  const id = e.dataTransfer.getData('text/plain'), o = S.opps.find(x => x.id === id), et = +col.dataset.drop; if (!o || o.etapa === et) return;
+  saveOpp(id, { ...strip(o), etapa: et, hist: histFor(o, et), ultimaInteracao: hoje() }).then(ok => ok && toast(`${o.empresa}: ${stg(et)}`)); });
+
+/* exportar */
+function exportar(tipo) {
+  const q = v => `"${String(v ?? '').replace(/"/g, '""')}"`;
+  let rows;
+  if (tipo === 'pipeline') rows = [['Empresa', 'Produto', 'Etapa', 'Contato', 'Cargo', 'Canal', 'Segmento', 'Qtd', 'Mensalidade', 'Implantação', 'Projeto', '1º ano', 'Probabilidade', 'Ponderado', 'Próximo passo', 'Data', 'Última interação', 'Observações'],
+    ...S.opps.map(o => { const v = valores(o); return [o.empresa, o.produto, stg(o.etapa), o.contato, o.cargo, o.canal, o.segmento, o.qtd, v.m.toFixed(2), v.i, v.proj, v.ano.toFixed(2), v.prob, v.pond.toFixed(2), o.proximoPasso, o.dataProximo, o.ultimaInteracao, o.obs]; })];
+  else rows = [['Empresa', 'Site', 'Segmento', 'Cidade', 'Vendedores', 'Videochamada', 'CRM', 'Colaboradores', 'RH', 'Gatilho', 'Nota SC', 'Nota Atlas', 'Prioridade', 'Produto', 'Decisor', 'Cargo', 'LinkedIn', 'Situação', 'Início cadência', 'Toques feitos'],
+    ...S.contas.map(c => { const n = notas(c); return [c.empresa, c.site, c.segmento, c.cidade, c.vendedores, c.online ? 'Sim' : 'Não', c.crm ? 'Sim' : 'Não', c.colaboradores, c.rh ? 'Sim' : 'Não', c.gatilho, n.sc, n.at, n.prio, produtoConta(c), c.decisor, c.cargo, c.linkedin, CSTATUS[c.status || 'fila'], c.inicioCadencia, (c.toques || []).length]; })];
+  const csv = '﻿' + rows.map(r => r.map(q).join(';')).join('\r\n');
+  S.dl.save({ filename: `nexa-${tipo}-${hoje()}.csv`, data: csv }).then(() => toast('Arquivo baixado'), () => toast('Não foi possível baixar o arquivo.'));
+}
+
+/* ───────── banco (Supabase) ───────── */
+function criarDb(sb) {
+  const cache = new Map(), subs = new Set(); let pronto = false;
+  const segs = p => p.split('/');
+  const notify = () => subs.forEach(fn => fn());
+  const snap = path => { const d = cache.get(path); return { id: segs(path).pop(), exists: d !== undefined, data: () => d === undefined ? undefined : JSON.parse(JSON.stringify(d)), metadata: {} }; };
+  const erro = e => ({ code: /row-level security|permission|42501/i.test((e && (e.message || e.code)) || '') ? 'invalid_argument' : 'unavailable', message: e && e.message });
+  const novoId = () => (crypto.randomUUID ? crypto.randomUUID().replace(/-/g, '').slice(0, 20) : Date.now().toString(36) + Math.random().toString(36).slice(2, 10));
+  async function carregar() {
+    const todos = [];
+    for (let de = 0; ; de += 1000) { const { data, error } = await sb.from('docs').select('path,data').order('path').range(de, de + 999); if (error) throw error; todos.push(...data); if (data.length < 1000) break; }
+    cache.clear(); todos.forEach(r => cache.set(r.path, r.data)); pronto = true; notify();
+  }
+  sb.channel('docs-mudancas').on('postgres_changes', { event: '*', schema: 'public', table: 'docs' }, p => {
+    if (p.eventType === 'DELETE') { if (p.old && p.old.path) cache.delete(p.old.path); } else if (p.new && p.new.path) cache.set(p.new.path, p.new.data);
+    notify();
+  }).subscribe(st => { if (st === 'SUBSCRIBED' && pronto) carregar().catch(() => {}); });
+  document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible' && pronto) carregar().catch(() => {}); });
+  const docRef = path => ({ id: segs(path).pop(), path,
+    async set(d) { const ant = cache.get(path); cache.set(path, d); notify();
+      const { error } = await sb.from('docs').upsert({ path, data: d }, { onConflict: 'path' });
+      if (error) { if (ant === undefined) cache.delete(path); else cache.set(path, ant); notify(); throw erro(error); } },
+    async delete() { const ant = cache.get(path); cache.delete(path); notify();
+      const { error } = await sb.from('docs').delete().eq('path', path);
+      if (error) { if (ant !== undefined) cache.set(path, ant); notify(); throw erro(error); } },
+    onSnapshot(fn) { const s2 = () => pronto && fn(snap(path)); subs.add(s2); s2(); return () => subs.delete(s2); },
+    collection: sub => colRef(path + '/' + sub) });
+  const colRef = path => ({ path, doc: id => docRef(path + '/' + (id || novoId())),
+    onSnapshot(fn) { const n = segs(path).length + 1; const s2 = () => { if (!pronto) return; const docs = [...cache.keys()].filter(k => k.startsWith(path + '/') && segs(k).length === n).sort().map(snap); fn({ docs, size: docs.length, empty: !docs.length }); };
+      subs.add(s2); s2(); return () => subs.delete(s2); } });
+  return { doc: docRef, collection: colRef, carregar };
+}
+
+/* ───────── login ───────── */
+const CFG = window.NEXA_CONFIG || {};
+const sb = window.supabase && CFG.url && !/COLE_AQUI/.test(CFG.url) ? window.supabase.createClient(CFG.url, CFG.anonKey, { auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true } }) : null;
+const authBox = $('#authBody');
+function mostrarAuth(html) { $('#auth').hidden = false; authBox.innerHTML = html; const f = $('#auth input'); f && f.focus(); }
+function telaLogin(msg = '', bad = false) {
+  mostrarAuth(`<h1>Entrar</h1><form id="fLogin">
+    <label>E-mail<input class="inp" type="email" id="lg-email" autocomplete="username" required></label>
+    <label>Senha<input class="inp" type="password" id="lg-senha" autocomplete="current-password" required></label>
+    <button class="btn pri" type="submit">Entrar</button>
+    <p class="msg ${bad ? 'bad' : ''}" id="lg-msg" aria-live="polite">${esc(msg)}</p>
+    <button class="link" type="button" id="lg-esqueci">Esqueci minha senha</button></form>`);
+  $('#fLogin').addEventListener('submit', async e => { e.preventDefault(); const m = $('#lg-msg'); m.className = 'msg'; m.textContent = 'Entrando…';
+    const { error } = await sb.auth.signInWithPassword({ email: $('#lg-email').value.trim().toLowerCase(), password: $('#lg-senha').value });
+    if (error) { m.className = 'msg bad'; m.textContent = /invalid/i.test(error.message) ? 'E-mail ou senha incorretos.' : 'Não foi possível entrar. Tente de novo.'; } });
+  $('#lg-esqueci').addEventListener('click', async () => { const em = $('#lg-email').value.trim().toLowerCase(), m = $('#lg-msg');
+    if (!em) { m.className = 'msg bad'; m.textContent = 'Digite seu e-mail acima e clique de novo.'; $('#lg-email').focus(); return; }
+    const { error } = await sb.auth.resetPasswordForEmail(em, { redirectTo: location.origin + location.pathname });
+    m.className = error ? 'msg bad' : 'msg'; m.textContent = error ? 'Não foi possível enviar agora. Peça a um administrador para redefinir sua senha.' : 'Se o e-mail estiver cadastrado, você receberá um link para criar uma nova senha.'; });
+}
+function telaNovaSenha(titulo, aposSalvar) {
+  mostrarAuth(`<h1>${esc(titulo)}</h1><form id="fSenha">
+    <label>Nova senha (mínimo 8 caracteres)<input class="inp" type="password" id="ns-1" autocomplete="new-password" minlength="8" required></label>
+    <label>Repita a nova senha<input class="inp" type="password" id="ns-2" autocomplete="new-password" minlength="8" required></label>
+    <button class="btn pri" type="submit">Salvar senha</button><p class="msg" id="ns-msg" aria-live="polite"></p>
+    ${aposSalvar ? '<button class="link" type="button" id="ns-cancel">Cancelar</button>' : ''}</form>`);
+  $('#fSenha').addEventListener('submit', async e => { e.preventDefault(); const a = $('#ns-1').value, b = $('#ns-2').value, m = $('#ns-msg');
+    if (a.length < 8) { m.className = 'msg bad'; m.textContent = 'Use pelo menos 8 caracteres.'; return; }
+    if (a !== b) { m.className = 'msg bad'; m.textContent = 'As duas senhas não são iguais.'; return; }
+    m.className = 'msg'; m.textContent = 'Salvando…';
+    const { error } = await sb.auth.updateUser({ password: a });
+    if (error) { m.className = 'msg bad'; m.textContent = /different|same/i.test(error.message) ? 'A nova senha precisa ser diferente da atual.' : 'Não foi possível salvar. Tente de novo.'; return; }
+    toast('Senha alterada'); history.replaceState(null, '', location.pathname + (location.hash.length > 1 && !/access_token|type=/.test(location.hash) ? location.hash : '#painel'));
+    if (aposSalvar) { $('#auth').hidden = true; } else { location.reload(); } });
+  $('#ns-cancel') && $('#ns-cancel').addEventListener('click', () => { $('#auth').hidden = true; });
+}
+function abrirTrocaSenha() { telaNovaSenha('Trocar senha', true); }
+function telaNegado(email) {
+  mostrarAuth(`<h1>Acesso ainda não liberado</h1><p class="soft">O login <b>${esc(email)}</b> existe, mas ainda não está na equipe do sistema. Peça a um administrador para incluir este e-mail na tela Equipe.</p><button class="btn" id="ng-sair">Sair</button>`);
+  $('#ng-sair').addEventListener('click', () => sb.auth.signOut().then(() => location.reload()));
+}
+async function carregarMembros() { if (S.papel !== 'admin') return; const { data } = await sb.from('membros').select('email,nome,papel').order('email'); S.membros = data || []; schedule(); }
+document.addEventListener('submit', async e => {
+  if (e.target.id !== 'fMembro') return; e.preventDefault();
+  const fd = new FormData(e.target), email = String(fd.get('email')).trim().toLowerCase();
+  if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) return toast('Digite um e-mail válido.');
+  const { error } = await sb.from('membros').upsert({ email, nome: String(fd.get('nome')).trim(), papel: fd.get('papel') }, { onConflict: 'email' });
+  if (error) return toast('Não foi possível incluir.');
+  toast('Incluída. Agora crie o login no Supabase com este e-mail.'); e.target.reset(); carregarMembros();
+});
+
+let iniciado = null;
+async function iniciar(session) {
+  if (iniciado === session.user.id) return; iniciado = session.user.id;
+  S.email = (session.user.email || '').toLowerCase(); $('#meEmail').textContent = S.email; $('#me').hidden = false;
+  const { data: mb, error } = await sb.from('membros').select('papel,nome').eq('email', S.email).maybeSingle();
+  if (error) { S.noDb = true; $('#auth').hidden = true; return render(); }
+  if (!mb) { iniciado = null; return telaNegado(S.email); }
+  S.papel = mb.papel; S.ro = mb.papel === 'leitura'; $('#navEquipe').hidden = mb.papel !== 'admin';
+  S.dl = { save: ({ filename, data }) => { const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([data], { type: 'text/csv;charset=utf-8' })); a.download = filename; document.body.appendChild(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 500); return Promise.resolve(); } };
+  const db = criarDb(sb); S.db = db; $('#auth').hidden = true; render();
+  try { await db.carregar(); } catch (er) { S.noDb = true; return render(); }
+  const done = () => { S.loaded++; schedule(); };
+  let f1 = 0, f2 = 0, f3 = 0, f4 = 0, f5 = 0;
+  db.doc('config/geral').onSnapshot(s => { S.cfgExists = s.exists; S.cfg = deep(DEFAULTS, s.exists ? s.data() : {}); if (!f1++) done(); else schedule(); });
+  db.collection('oportunidades').onSnapshot(s => { S.opps = s.docs.map(d => ({ ...d.data(), id: d.id })); if (!f2++) done(); else schedule(); });
+  db.collection('contas').onSnapshot(s => { S.contas = s.docs.map(d => ({ ...d.data(), id: d.id })); if (!f3++) done(); else schedule(); });
+  db.collection('semanas').onSnapshot(s => { const o = {}; s.docs.forEach(d => o[d.id] = d.data()); S.semanas = o; if (!f4++) done(); else schedule(); });
+  db.collection('tarefas').onSnapshot(s => { S.tarefas = s.docs.map(d => ({ ...d.data(), id: d.id })); if (!f5++) done(); else schedule(); });
+  carregarMembros();
+}
+
+/* ───────── início ───────── */
+render();
+if (!sb) mostrarAuth('<h1>Falta configurar</h1><p class="soft">Preencha o endereço e a chave pública do Supabase no arquivo <b>config.js</b> e publique de novo.</p>');
+else {
+  let recuperando = /type=(recovery|invite)/.test(location.hash);
+  sb.auth.onAuthStateChange((ev, session) => setTimeout(() => {
+    if (ev === 'PASSWORD_RECOVERY' || (recuperando && session)) { recuperando = false; return telaNovaSenha('Crie sua nova senha', false); }
+    if (ev === 'SIGNED_OUT' || !session) { iniciado = null; return telaLogin(); }
+    if (ev === 'INITIAL_SESSION' || ev === 'SIGNED_IN') iniciar(session);
+  }, 0));
+}
+})();
+</script>
+</body>
+</html>
