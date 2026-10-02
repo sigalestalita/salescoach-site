@@ -1,7 +1,7 @@
-// Dados do projeto no Supabase: Project Settings → API (ou Data API).
-// A chave "anon public" pode ficar aqui: a segurança vem das regras do banco (schema.sql).
+// Projeto Supabase "nexa-comercial" (São Paulo).
+// A chave "anon" é pública por natureza: a segurança vem das regras do banco (supabase/schema.sql).
 // Nunca coloque aqui a chave "service_role".
 window.NEXA_CONFIG = {
-  url: 'COLE_AQUI_A_PROJECT_URL',      // ex.: https://abcdefghijkl.supabase.co
-  anonKey: 'COLE_AQUI_A_ANON_PUBLIC_KEY',
+  url: 'https://atzwinvlemkyttkrdumn.supabase.co',
+  anonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF0endpbnZsZW1reXR0a3JkdW1uIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTA4OTg3MjAsImV4cCI6MjEwNjQ3NDcyMH0.gv9-0s3b7nxr4ovxmMCYN9eU9S0iABF7Mzh3ssNCsZ8',
 };
