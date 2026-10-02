@@ -9,7 +9,7 @@
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&family=Geist+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap">
 <style>
 /* Layout: ferramenta de trabalho — barra lateral de navegação, área de trabalho larga; o painel resume, as outras telas operam. */
 :root{
@@ -209,6 +209,17 @@ td .inp.small{width:84px;text-align:right}
 .me b{font-weight:500;color:var(--fg);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .me .row2{display:flex;gap:6px;flex-wrap:wrap}
 @media (max-width:860px){.me{border-top:0;padding:0;display:flex;align-items:center}.me>span{display:none}}
+.res-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px}
+.res{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px;display:grid;gap:10px;align-content:start;min-width:0}
+.res>header{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
+.res>header b{font-weight:500;font-size:15.5px}
+.res p{color:var(--soft);font-size:13.5px}
+.res video{width:100%;border-radius:8px;background:#000;aspect-ratio:16/9}
+.kv{display:grid;grid-template-columns:52px minmax(0,1fr) auto auto;gap:8px;align-items:center;font-size:13.5px}
+.kv code{font-family:var(--mono);font-size:12.5px;background:var(--surface-2);padding:5px 8px;border-radius:6px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.res .acts{display:flex;gap:8px;flex-wrap:wrap}
+.res .pend{color:var(--warn);font-size:13px}
+.pb-host{display:block;margin:-28px calc(-1 * clamp(16px,3vw,40px)) 0}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 </head>
@@ -218,6 +229,8 @@ td .inp.small{width:84px;text-align:right}
     <div class="brand"><svg viewBox="0 0 800 150" fill="none" aria-label="NEXA"><path d="M8 139V12L175 139V12M200 12H366M200 12V139H366M200 75H366M390 12L558 139M558 12L390 139M580 139L685 12L792 139M618 95H755" stroke="currentColor" stroke-width="13" stroke-linecap="round"/></svg><span>Comercial</span></div>
     <nav class="tabs" id="tabs" aria-label="Telas">
       <a href="#painel" data-v="painel"><span class="lbl">Painel</span></a>
+      <a href="#recursos" data-v="recursos"><span class="lbl">Recursos</span></a>
+      <a href="#playbook" data-v="playbook"><span class="lbl">Playbook</span></a>
       <a href="#cadencia" data-v="cadencia"><span class="lbl">Cadência</span><span class="badge" id="bCad" hidden></span></a>
       <a href="#pipeline" data-v="pipeline"><span class="lbl">Pipeline</span><span class="badge bad" id="bPipe" hidden></span></a>
       <a href="#contas" data-v="contas"><span class="lbl">Contas-alvo</span></a>
@@ -328,7 +341,7 @@ const deep = (a, b) => { const o = Array.isArray(a) ? [...a] : { ...a }; for (co
 function toast(msg) { const t = $('#toast'); t.textContent = msg; t.hidden = false; clearTimeout(toast.t); toast.t = setTimeout(() => t.hidden = true, 2200); }
 
 /* ───────── estado ───────── */
-const S = { cfg: deep(DEFAULTS, {}), cfgExists: false, opps: [], contas: [], semanas: {}, tarefas: [], loaded: 0, ro: false, db: null, dl: null, noDb: false, showClosed: false, filtroProd: '', busca: '', contaFiltro: 'abertas', contaPrio: '', openMsg: null };
+const S = { cfg: deep(DEFAULTS, {}), cfgExists: false, opps: [], contas: [], semanas: {}, tarefas: [], recursos: [], playbook: null, loaded: 0, ro: false, db: null, dl: null, noDb: false, showClosed: false, filtroProd: '', busca: '', contaFiltro: 'abertas', contaPrio: '', openMsg: null };
 let view = (location.hash || '#painel').slice(1);
 
 /* ───────── cálculos ───────── */
@@ -438,7 +451,7 @@ function saveCfg(next) { S.cfg = next; render(); const ref = S.db && S.db.doc('c
 let pending = false;
 function schedule() {
   const a = document.activeElement;
-  if (a && $('#view').contains(a) && /INPUT|TEXTAREA|SELECT/.test(a.tagName)) { pending = true; return; }
+  if (a && $('#view').contains(a) && (/INPUT|TEXTAREA|SELECT/.test(a.tagName) || (a === pbHost && pbHost.shadowRoot.activeElement))) { pending = true; return; }
   render();
 }
 $('#view').addEventListener('focusout', () => { if (pending) setTimeout(() => { const a = document.activeElement; if (!(a && $('#view').contains(a) && /INPUT|TEXTAREA|SELECT/.test(a.tagName))) { pending = false; render(); } }, 0); });
@@ -454,8 +467,36 @@ function render() {
   else if (S.ro) banner = `<p class="banner">Você está em modo leitura. Para editar, peça a um administrador o papel de vendas ou admin.</p>`;
   else if (S.loaded < 5 && S.db) banner = `<p class="banner">Carregando dados…</p>`;
   $('#view').innerHTML = banner + VIEWS[view]();
+  if (view === 'playbook') { const el = playbookEl(), slot = $('#pbSlot'); if (el && slot) slot.replaceWith(el); }
 }
 const dis = () => S.ro || !S.db ? 'disabled' : '';
+let pbHost = null, pbChave = '';
+function playbookEl() {
+  const d = S.playbook; if (!d || !d.html) return null;
+  const chave = (d.atualizadoEm || '') + ':' + d.html.length + ':' + (d.css || '').length;
+  if (pbHost && pbChave === chave) return pbHost;
+  pbHost = document.createElement('div'); pbHost.className = 'pb-host'; pbChave = chave;
+  const r = pbHost.attachShadow({ mode: 'open' });
+  r.innerHTML = `<style>${d.css || ''}</style>${d.html}`;
+  r.querySelectorAll('a[href^="#"]').forEach(a => a.addEventListener('click', e => { e.preventDefault(); const t = r.getElementById(a.getAttribute('href').slice(1)); t && t.scrollIntoView({ behavior: 'smooth', block: 'start' }); }));
+  r.querySelectorAll('.script').forEach(sc => { const b = sc.querySelector('.copy'), t = sc.querySelector('.txt'); if (!b || !t) return;
+    b.addEventListener('click', () => { const ok = () => { b.textContent = 'Copiado'; b.classList.add('ok'); setTimeout(() => { b.textContent = 'Copiar'; b.classList.remove('ok'); }, 1800); };
+      const fb = () => { const rg = document.createRange(); rg.selectNodeContents(t); const sel = getSelection(); sel.removeAllRanges(); sel.addRange(rg); b.textContent = 'Selecionado, use Ctrl+C'; };
+      try { navigator.clipboard.writeText(t.innerText).then(ok, fb); } catch (e) { fb(); } }); });
+  const boxes = [...r.querySelectorAll('#check input')], pT = r.getElementById('pText'), pB = r.getElementById('pBar');
+  let salvo = {}; try { salvo = JSON.parse(localStorage.getItem('nexa-semana1') || '{}'); } catch (e) {}
+  const upd = () => { const n = boxes.filter(b => b.checked).length; if (pT) pT.textContent = `${n} de ${boxes.length} feitos`; if (pB) pB.style.width = (boxes.length ? n / boxes.length * 100 : 0) + '%'; };
+  boxes.forEach(b => { b.checked = !!salvo[b.id]; b.addEventListener('change', () => { salvo[b.id] = b.checked; try { localStorage.setItem('nexa-semana1', JSON.stringify(salvo)); } catch (e) {} upd(); }); }); upd();
+  const g = id => r.getElementById(id);
+  if (g('cMeta')) { const calc = () => { const meta = Math.max(0, +g('cMeta').value || 0), resp = (+g('cResp').value || 1) / 100, diag = (+g('cDiag').value || 1) / 100, fech = (+g('cFech').value || 1) / 100;
+      const prop = Math.ceil(meta / fech), dg = Math.ceil(prop / .5), rs = Math.ceil(dg / diag), ct = Math.ceil(rs / resp);
+      g('oProp').textContent = prop; g('oDiag').textContent = dg; g('oContas').textContent = ct.toLocaleString('pt-BR'); g('oDia').textContent = Math.ceil(ct / 20); };
+    ['cMeta', 'cResp', 'cDiag', 'cFech'].forEach(id => g(id).addEventListener('input', calc)); calc(); }
+  const links = [...r.querySelectorAll('#tocList a')];
+  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) links.forEach(a => a.classList.toggle('on', a.getAttribute('href') === '#' + e.target.id)); }), { rootMargin: '-30% 0px -60% 0px' });
+  r.querySelectorAll('main section[id]').forEach(sec => io.observe(sec));
+  return pbHost;
+}
 
 const VIEWS = {
   painel() {
@@ -688,6 +729,28 @@ const VIEWS = {
     </tbody></table></div>`;
   },
 
+  recursos() {
+    const rs = S.recursos.slice().sort((a, b) => (a.ordem || 0) - (b.ordem || 0));
+    const ordem = ['Acessos', 'Apresentações', 'Vídeos'];
+    const cats = [...new Set([...ordem.filter(c => rs.some(r => r.categoria === c)), ...rs.map(r => r.categoria || 'Outros')])];
+    const url = u => /^https?:\/\//i.test(u || '') ? u : '';
+    const kv = (rot, val, segredo, id) => val ? `<div class="kv"><span class="mono soft">${rot}</span><code id="${id}" data-real="${esc(val)}">${segredo ? '••••••••' : esc(val)}</code>${segredo ? `<button class="btn sm" data-showpw="${id}">Mostrar</button>` : '<span></span>'}<button class="btn sm" data-copyval="${esc(val)}">Copiar</button></div>` : '';
+    const card = r => { const u = url(r.url);
+      return `<article class="res"><header><b>${esc(r.titulo)}</b>${dis() ? '' : `<button class="btn sm" data-edit-rec="${r.id}">Editar</button>`}</header>
+        ${r.descricao ? `<p>${esc(r.descricao)}</p>` : ''}
+        ${r.tipo === 'video' && u ? `<video controls preload="none" playsinline src="${esc(u)}" ${url(r.poster) ? `poster="${esc(r.poster)}"` : ''}></video>` : ''}
+        ${kv('Login', r.login, false, 'l-' + r.id)}${kv('Senha', r.senha, true, 's-' + r.id)}
+        <div class="acts">${u ? `<a class="btn sm ${r.tipo === 'video' ? '' : 'pri'}" href="${esc(u)}" target="_blank" rel="noopener">${r.tipo === 'video' ? 'Abrir em tela cheia ↗' : 'Abrir ↗'}</a>` : `<span class="pend">Link ainda não cadastrado. ${dis() ? 'Peça aos sócios.' : 'Clique em Editar para incluir.'}</span>`}
+        ${u && r.tipo !== 'video' ? `<button class="btn sm" data-copyval="${esc(u)}">Copiar link</button>` : ''}</div></article>`; };
+    return `<div class="top"><div><h1>Recursos</h1><p class="sub">Tudo o que você precisa para começar: acessos, agenda, apresentações e vídeos de demonstração.</p></div>
+      <div class="tools"><button class="btn pri" id="newRec" ${dis()}>+ Recurso</button></div></div>
+      ${!rs.length ? `<div class="empty"><b>Nenhum recurso cadastrado.</b></div>` : cats.map(c => `<section style="display:grid;gap:12px"><h2>${esc(c)}</h2><div class="res-grid">${rs.filter(r => (r.categoria || 'Outros') === c).map(card).join('')}</div></section>`).join('')}`;
+  },
+
+  playbook() {
+    return S.playbook ? '<div id="pbSlot"></div>' : `<div class="top"><div><h1>Playbook</h1></div></div><div class="empty"><b>O playbook ainda não foi carregado.</b></div>`;
+  },
+
   plano() {
     const ts = S.tarefas.slice().sort((a, b) => (a.ordem || 0) - (b.ordem || 0)), feitos = ts.filter(t => t.status === 'Feito').length;
     const fases = [...new Set(ts.map(t => t.fase))];
@@ -863,6 +926,35 @@ function openTask(id) {
     closeDrawer(); S.tarefas = S.tarefas.filter(x => x.id !== id); render(); write('tarefas/' + id, () => S.db.collection('tarefas').doc(id).delete()).then(ok => ok && toast('Tarefa excluída')); });
 }
 
+function openRec(id) {
+  const r = id ? S.recursos.find(x => x.id === id) : { categoria: 'Acessos', tipo: 'link', ordem: (Math.max(0, ...S.recursos.map(x => x.ordem || 0)) + 1) };
+  if (!r) return; const d = dis(), cats = [...new Set(['Acessos', 'Apresentações', 'Vídeos', ...S.recursos.map(x => x.categoria).filter(Boolean)])];
+  openDrawer(id ? 'Editar recurso' : 'Novo recurso', `<form class="fields" id="fRec">
+    <label class="full">Título<input class="inp" name="titulo" id="rc-titulo" value="${esc(r.titulo)}" required ${d}></label>
+    <label>Categoria<input class="inp" name="categoria" id="rc-cat" list="rcCats" value="${esc(r.categoria)}" ${d}><datalist id="rcCats">${cats.map(c => `<option value="${esc(c)}">`).join('')}</datalist></label>
+    <label>Tipo<select class="inp" name="tipo" id="rc-tipo" ${d}>${[['link', 'Link'], ['acesso', 'Acesso com login'], ['video', 'Vídeo']].map(([v, l]) => `<option value="${v}" ${r.tipo === v ? 'selected' : ''}>${l}</option>`).join('')}</select></label>
+    <label class="full">Link (https://…)<input class="inp" name="url" id="rc-url" value="${esc(r.url)}" ${d}></label>
+    <label class="full">Descrição<textarea class="inp" name="descricao" id="rc-desc" ${d}>${esc(r.descricao)}</textarea></label>
+    <label>Login<input class="inp" name="login" id="rc-login" value="${esc(r.login)}" autocomplete="off" ${d}></label>
+    <label>Senha<input class="inp" name="senha" id="rc-senha" value="${esc(r.senha)}" autocomplete="off" ${d}></label>
+    <label>Capa do vídeo (link da imagem)<input class="inp" name="poster" id="rc-poster" value="${esc(r.poster)}" ${d}></label>
+    <label>Ordem<input class="inp" type="number" name="ordem" id="rc-ordem" value="${esc(r.ordem ?? '')}" ${d}></label>
+  </form><p class="mute" style="font-size:12.5px">Tudo aqui é visível para toda a equipe do CRM.</p>`,
+  `<div class="tools">${id && !d ? '<button class="btn danger" id="delRec">Excluir</button>' : ''}</div><div class="tools"><button class="btn" data-close>Cancelar</button><button class="btn pri" id="saveRec" ${d}>Salvar</button></div>`);
+  $('#fRec').addEventListener('submit', e => e.preventDefault());
+  $('#saveRec') && $('#saveRec').addEventListener('click', () => {
+    const fd = new FormData($('#fRec')), n = {}; for (const [k, v] of fd) n[k] = String(v).trim(); n.ordem = +n.ordem || 0;
+    if (!n.titulo) return toast('Dê um título ao recurso.');
+    if (n.url && !/^https?:\/\//i.test(n.url)) return toast('O link precisa começar com https://');
+    const ref = id ? S.db.collection('recursos').doc(id) : S.db.collection('recursos').doc();
+    const i = S.recursos.findIndex(x => x.id === ref.id); if (i >= 0) S.recursos[i] = { ...n, id: ref.id }; else S.recursos.push({ ...n, id: ref.id });
+    closeDrawer(); render(); write('recursos/' + ref.id, () => ref.set(n)).then(ok => ok && toast('Recurso salvo'));
+  });
+  const del = $('#delRec');
+  del && del.addEventListener('click', () => { if (!del.dataset.c) { del.dataset.c = 1; del.textContent = 'Confirmar exclusão'; return; }
+    closeDrawer(); S.recursos = S.recursos.filter(x => x.id !== id); render(); write('recursos/' + id, () => S.db.collection('recursos').doc(id).delete()).then(ok => ok && toast('Recurso excluído')); });
+}
+
 /* ───────── importar planilha ───────── */
 function loadXLSX() {
   if (window.XLSX) return Promise.resolve(window.XLSX);
@@ -963,6 +1055,9 @@ document.addEventListener('click', e => {
   if (ds.openOpp) return openOpp(ds.openOpp);
   if (ds.start) { e.stopPropagation(); const c = S.contas.find(x => x.id === ds.start); return saveConta(c.id, { ...strip(c), status: 'cadencia', inicioCadencia: hoje(), toques: [] }).then(ok => ok && toast('Cadência iniciada')); }
   if (ds.openConta) return openConta(ds.openConta);
+  if (ds.editRec) return openRec(ds.editRec);
+  if (ds.copyval !== undefined) { const v = ds.copyval; try { navigator.clipboard.writeText(v).then(() => toast('Copiado'), () => toast('Não foi possível copiar')); } catch (er) { toast('Não foi possível copiar'); } return; }
+  if (ds.showpw) { const el = document.getElementById(ds.showpw); const vis = t.textContent === 'Ocultar'; el.textContent = vis ? '••••••••' : el.dataset.real; t.textContent = vis ? 'Mostrar' : 'Ocultar'; return; }
   if (ds.rmembro) { if (!t.dataset.c) { t.dataset.c = 1; t.textContent = 'Confirmar'; return; } return sb.from('membros').delete().eq('email', ds.rmembro).then(({ error }) => { if (error) return toast('Não foi possível remover.'); toast('Pessoa removida. Exclua também o login dela no Supabase.'); carregarMembros(); }); }
   if (ds.deltoque !== undefined) { if (!t.dataset.c) { t.dataset.c = 1; t.textContent = 'Confirmar'; return; } const cs = (S.cfg.cadencia || []).filter((x, i) => i !== +ds.deltoque); return saveCfg({ ...S.cfg, cadencia: cs }).then(ok => ok && toast('Toque excluído')); }
   if (ds.listdel) { const [k, i] = ds.listdel.split(':'); const l = S.cfg.listas[k].filter((x, j) => j !== +i); return saveCfg({ ...S.cfg, listas: { ...S.cfg.listas, [k]: l } }); }
@@ -981,6 +1076,7 @@ document.addEventListener('click', e => {
     case 'newConta': return openConta(null);
     case 'tClosed': S.showClosed = !S.showClosed; return render();
     case 'newTask': return openTask(null);
+    case 'newRec': return openRec(null);
     case 'sair': return sb.auth.signOut().then(() => location.reload());
     case 'trocarSenha': return abrirTrocaSenha();
     case 'addToque': { const cs = cad(), last = cs[cs.length - 1]; return saveCfg({ ...S.cfg, cadencia: [...cs, { d: (last ? last.d : 0) + 2, canal: 'E-mail', acao: 'Novo toque', sc: '', atlas: '' }] }); }
@@ -1140,6 +1236,8 @@ async function iniciar(session) {
   db.collection('contas').onSnapshot(s => { S.contas = s.docs.map(d => ({ ...d.data(), id: d.id })); if (!f3++) done(); else schedule(); });
   db.collection('semanas').onSnapshot(s => { const o = {}; s.docs.forEach(d => o[d.id] = d.data()); S.semanas = o; if (!f4++) done(); else schedule(); });
   db.collection('tarefas').onSnapshot(s => { S.tarefas = s.docs.map(d => ({ ...d.data(), id: d.id })); if (!f5++) done(); else schedule(); });
+  db.collection('recursos').onSnapshot(s => { S.recursos = s.docs.map(d => ({ ...d.data(), id: d.id })); schedule(); });
+  db.doc('conteudo/playbook').onSnapshot(s => { S.playbook = s.exists ? s.data() : null; schedule(); });
   carregarMembros();
 }
 
