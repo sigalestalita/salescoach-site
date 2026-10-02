@@ -1080,7 +1080,9 @@ function telaLogin(msg = '', bad = false) {
     <p class="msg ${bad ? 'bad' : ''}" id="lg-msg" aria-live="polite">${esc(msg)}</p>
     <button class="link" type="button" id="lg-esqueci">Esqueci minha senha</button></form>`);
   $('#fLogin').addEventListener('submit', async e => { e.preventDefault(); const m = $('#lg-msg'); m.className = 'msg'; m.textContent = 'Entrando…';
-    const { error } = await sb.auth.signInWithPassword({ email: $('#lg-email').value.trim().toLowerCase(), password: $('#lg-senha').value });
+    const cred = { email: $('#lg-email').value.trim().toLowerCase(), password: $('#lg-senha').value };
+    let error = null;
+    for (let t = 0; t < 3; t++) { ({ error } = await sb.auth.signInWithPassword(cred)); if (!error || !/fetch|network|Failed|retry/i.test(error.message || '')) break; await new Promise(r => setTimeout(r, 800 * (t + 1))); }
     if (error) { m.className = 'msg bad'; m.textContent = /invalid/i.test(error.message) ? 'E-mail ou senha incorretos.' : 'Não foi possível entrar. Tente de novo.'; } });
   $('#lg-esqueci').addEventListener('click', async () => { const em = $('#lg-email').value.trim().toLowerCase(), m = $('#lg-msg');
     if (!em) { m.className = 'msg bad'; m.textContent = 'Digite seu e-mail acima e clique de novo.'; $('#lg-email').focus(); return; }
