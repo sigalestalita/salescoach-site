@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>NEXA · Atlas 360 · 03-olhares</title>
+<link rel="stylesheet" href="destaque.css">
+<style>.orb{position:relative;margin:56px auto 0;width:880px;height:700px}
+.orb .c{position:absolute;left:50%;top:50%;translate:-50% -50%;width:230px;height:230px;border-radius:50%;display:grid;place-items:center;text-align:center;
+  background:radial-gradient(circle,rgba(212,249,105,.28),rgba(212,249,105,.06));border:2px solid rgba(212,249,105,.6);font-family:var(--display);font-size:34px;line-height:1.1}
+.orb .n{position:absolute;width:280px;padding:24px 26px;border-radius:24px;border:1px solid var(--line-2);background:rgba(24,27,18,.82)}
+.orb .n b{display:block;font-size:24px;letter-spacing:.1em;text-transform:uppercase;color:var(--blue-2);margin-bottom:8px}
+.orb .n span{font-size:26px;line-height:1.35;color:var(--dim)}
+.orb .t{left:50%;top:0;translate:-50% 0}.orb .b{left:50%;bottom:0;translate:-50% 0}.orb .l{left:0;top:50%;translate:0 -50%}.orb .r{right:0;top:50%;translate:0 -50%}
+.orb svg{position:absolute;inset:0;width:100%;height:100%}.orb svg line{stroke:rgba(212,249,105,.35);stroke-width:2;stroke-dasharray:6 8}</style>
+</head>
+<body>
+<div class="post story bg-grid">
+  <div class="aurora"><i class="a1"></i><i class="a2"></i><i class="a3"></i></div>
+  <canvas class="stars"></canvas>
+
+  <header class="brand">
+    <svg class="nexa" viewBox="0 0 800 150" aria-label="NEXA"><path d="M8 139V12L175 139V12M200 12H366M200 12V139H366M200 75H366M390 12L558 139M558 12L390 139M580 139L685 12L792 139M618 95H755"/></svg><i class="sep"></i>
+    <img class="atlas" src="../../../assets/atlas-white.png" alt="Atlas"><span>360</span>
+    <em class="site" style="font-style:normal">um produto NEXA</em>
+  </header>
+
+  <div class="grow top"></div>
+  <div>
+    <div class="kicker">Quatro olhares</div>
+    <h2 class="h2s" style="margin-top:24px">A mesma pessoa,<br>vista de quatro lugares.</h2>
+    <div class="orb"><svg viewBox="0 0 880 700"><line x1="440" y1="150" x2="440" y2="250"/><line x1="440" y1="450" x2="440" y2="550"/><line x1="280" y1="350" x2="325" y2="350"/><line x1="555" y1="350" x2="600" y2="350"/></svg>
+<div class="c">A pessoa<br>avaliada</div>
+<div class="n t"><b>Autoavaliação</b><span>Como ela se vê.</span></div>
+<div class="n l"><b>Gestor</b><span>O que a liderança percebe.</span></div>
+<div class="n r"><b>Pares</b><span>Quem trabalha ao lado.</span></div>
+<div class="n b"><b>Liderados</b><span>Quem é liderado por ela.</span></div></div>
+  </div>
+
+  <div class="grow"></div>
+  <p class="pe">Atlas 360 · um produto NEXA</p>
+</div>
+<script src="../stars.js"></script>
+</body>
+</html>

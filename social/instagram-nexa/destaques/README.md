@@ -1,6 +1,7 @@
 # Destaques do perfil
 
-Seis capas e trinta e seis stories, todos em 1080 × 1920, no mesmo kit
+Nove capas e cinquenta e quatro stories (seis destaques do Sales Coach,
+dois do Atlas e um da Fábrica de soluções), todos em 1080 × 1920, no mesmo kit
 visual dos posts (`../post.css`). O roteiro de cada destaque — títulos,
 ordem e o que cada story diz — está em [`roteiro.md`](roteiro.md).
 
@@ -16,12 +17,14 @@ Saem em `out/`. O script avisa quando o conteúdo estoura o quadro.
 
 ## Estrutura
 
-- `c1…c6-*.html` — capas. **Só ícone, sem palavra:** no perfil o círculo
+- `c1…c9-*.html` — capas. **Só ícone, sem palavra:** no perfil o círculo
   aparece com uns 60px e nenhuma palavra se lê; o nome do destaque é digitado
   no próprio Instagram, embaixo do círculo. O traço do ícone é grosso pela
   mesma razão.
-- `d1…d6-NN-*.html` — os stories, na ordem de publicação. O `d5-03` traz a
+- `d1…d9-NN-*.html` — os stories, na ordem de publicação. O `d5-03` traz a
   conversa desenhada em HTML: a tela real do assistente mostra outra pergunta.
+  Os gráficos do Atlas (`d7-04`, `d8-04`) também são HTML e vêm marcados
+  como exemplo ilustrativo.
 - `destaque.css` — importa o kit dos posts e acrescenta o que o formato
   vertical exige: o quadro de 1920 e **190px de folga em cima e 210px
   embaixo**, que é onde a interface do Instagram passa por cima.

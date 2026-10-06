@@ -56,3 +56,7 @@
 .story .shot .chrome { padding: 20px 26px; }
 .story .shot .chrome i { width: 13px; height: 13px; }
 .story .shot .chrome span { font-size: 23px; }
+
+/* Logo do Atlas no cabeçalho: já vem em branco; no fundo lima vira escuro. */
+.brand img.atlas { height: 30px; }
+.post.bg-brand .brand img.atlas { filter: brightness(0); opacity: .85; }

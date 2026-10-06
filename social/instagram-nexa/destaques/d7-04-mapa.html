@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>NEXA · Atlas Clima · 04-mapa</title>
+<link rel="stylesheet" href="destaque.css">
+<style>.heat{margin-top:44px;display:grid;grid-template-columns:200px repeat(4,1fr);gap:10px;align-items:center}
+.heat .h{font-family:var(--mono);font-size:18px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim-2);text-align:center}
+.heat .a{font-size:27px;color:var(--dim)}
+.heat i{height:86px;border-radius:16px;display:block}
+.v1{background:rgba(212,249,105,.92)}.v2{background:rgba(212,249,105,.6)}.v3{background:rgba(212,249,105,.32)}.v4{background:rgba(245,246,241,.1);box-shadow:inset 0 0 0 2px rgba(240,138,120,.75)}
+.leg{margin-top:24px;display:flex;gap:28px;font-size:22px;color:var(--dim-2);align-items:center}.leg i{width:26px;height:26px;border-radius:8px;display:inline-block;margin-right:10px;vertical-align:-6px}</style>
+</head>
+<body>
+<div class="post story bg-grid">
+  <div class="aurora"><i class="a1"></i><i class="a2"></i><i class="a3"></i></div>
+  <canvas class="stars"></canvas>
+
+  <header class="brand">
+    <svg class="nexa" viewBox="0 0 800 150" aria-label="NEXA"><path d="M8 139V12L175 139V12M200 12H366M200 12V139H366M200 75H366M390 12L558 139M558 12L390 139M580 139L685 12L792 139M618 95H755"/></svg><i class="sep"></i>
+    <img class="atlas" src="../../../assets/atlas-white.png" alt="Atlas"><span>Clima</span>
+    <em class="site" style="font-style:normal">um produto NEXA</em>
+  </header>
+
+  <div class="grow top"></div>
+  <div>
+    <div class="kicker">Leitura por área</div>
+    <h2 class="h2s" style="margin-top:24px">Onde o clima está bom,<br>e onde pede conversa.</h2>
+    <div class="heat"><span></span><span class="h">Liderança</span><span class="h">Rotina</span><span class="h">Reconh.</span><span class="h">Bem-estar</span><span class="a">Comercial</span><i class="v2"></i><i class="v1"></i><i class="v3"></i><i class="v2"></i><span class="a">Produto</span><i class="v1"></i><i class="v2"></i><i class="v2"></i><i class="v1"></i><span class="a">Operações</span><i class="v3"></i><i class="v4"></i><i class="v3"></i><i class="v2"></i><span class="a">Pessoas</span><i class="v1"></i><i class="v1"></i><i class="v2"></i><i class="v2"></i><span class="a">Financeiro</span><i class="v2"></i><i class="v3"></i><i class="v4"></i><i class="v3"></i></div><div class="leg"><span><i class="v1"></i>bom</span><span><i class="v3"></i>atenção</span><span><i class="v4"></i>pede conversa</span></div><p class="corpo" style="margin-top:26px;font-size:24px;color:var(--dim-2)">Exemplo ilustrativo.</p>
+  </div>
+
+  <div class="grow"></div>
+  <p class="pe">Atlas Clima · um produto NEXA</p>
+</div>
+<script src="../stars.js"></script>
+</body>
+</html>

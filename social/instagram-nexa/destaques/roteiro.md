@@ -1,4 +1,4 @@
-# Destaques do perfil — seis, com o conteúdo de cada um
+# Destaques do perfil — nove, com o conteúdo de cada um
 
 Os destaques cobrem as perguntas que alguém faz antes de pedir uma
 demonstração: **o que é, o que sai de cada reunião, o que dá para perguntar,
@@ -13,10 +13,15 @@ perfil.
 | 4 | **Na prática** | `out/c2-na-pratica.png` | Como são as telas de verdade |
 | 5 | **Integrações** | `out/c3-integracoes.png` | Encaixa no Meet, no Teams e no meu CRM? |
 | 6 | **Planos** | `out/c4-planos.png` | Quanto custa e como é a cobrança |
+| 7 | **Atlas Clima** | `out/c7-atlas-clima.png` | O que é a pesquisa de clima e por que agora (NR-1) |
+| 8 | **Atlas 360** | `out/c8-atlas-360.png` | Como funciona a avaliação 360 e o que vem depois dela |
+| 9 | **Fábrica** | `out/c9-fabrica.png` | Quando a NEXA constrói um produto sob medida, e como |
+
+Os seis primeiros são do Sales Coach; os três últimos cobrem o resto da NEXA.
 
 **Sobre a ordem no perfil:** o Instagram põe à esquerda o destaque atualizado
 por último. Para a fila ficar como na tabela, monte de trás para a frente —
-Planos primeiro, Como funciona por último.
+Fábrica primeiro, Como funciona por último.
 
 ## Sobre as capas
 
@@ -121,3 +126,44 @@ destaque nenhum.
 
 Os demais só mudam se o produto mudar. Se entrar uma integração nova, ela
 entra em `d3-04-tambem`.
+
+## 7 · Atlas Clima — 6 stories
+
+A pesquisa de clima, com o gancho da NR-1. Sem preço: o valor do Atlas
+ainda não está fechado.
+
+| # | Arquivo | Conteúdo |
+|---|---|---|
+| 1 | `d7-01-abre` | **Escute sua organização.** O Atlas Clima dá espaço à percepção do time e orienta as conversas. |
+| 2 | `d7-02-porque` | **472 mil** afastamentos por saúde mental no Brasil em 2024, alta de 68%. Fonte: Ministério da Previdência Social. |
+| 3 | `d7-03-como` | Escutar → Ler (por área e liderança) → Agir. |
+| 4 | `d7-04-mapa` | Mapa de calor por área — onde o clima está bom e onde pede conversa. **Exemplo ilustrativo.** |
+| 5 | `d7-05-nr1` | Riscos psicossociais na NR-1. Ressalva: não substitui o programa de gerenciamento de riscos nem a avaliação técnica de SST. |
+| 6 | `d7-06-fecho` | Escutar é o primeiro passo para cuidar. |
+
+## 8 · Atlas 360 — 6 stories
+
+A avaliação 360, pensada para o ciclo de avaliação de fim de ano.
+
+| # | Arquivo | Conteúdo |
+|---|---|---|
+| 1 | `d8-01-abre` | **Amplie a visão sobre pessoas.** |
+| 2 | `d8-02-problema` | Uma avaliação, um olhar só. |
+| 3 | `d8-03-olhares` | Quatro olhares: autoavaliação, gestor, pares, liderados. |
+| 4 | `d8-04-mapa` | Mapa de competências: autoavaliação × média dos outros olhares. **Exemplo ilustrativo.** |
+| 5 | `d8-05-plano` | Devolutiva → prioridades → plano de desenvolvimento. |
+| 6 | `d8-06-fecho` | Feedback que vira caminho. |
+
+## 9 · Fábrica — 6 stories
+
+A Fábrica de soluções: software sob medida, com IA na construção e critério
+humano nas decisões.
+
+| # | Arquivo | Conteúdo |
+|---|---|---|
+| 1 | `d9-01-abre` | **Um desafio pode virar o próximo produto.** |
+| 2 | `d9-02-sinais` | Quatro sinais de que é hora: processo manual, dados espalhados, ideia parada, nada pronto resolve. |
+| 3 | `d9-03-dado` | **95%** das organizações não viram retorno mensurável da IA generativa. Fonte: MIT NANDA, 2025. |
+| 4 | `d9-04-metodo` | Visão de negócio · Construção com IA · Critério humano · Evolução contínua. |
+| 5 | `d9-05-de-para` | De → para: o que muda quando a NEXA constrói. |
+| 6 | `d9-06-fecho` | Qual desafio do seu negócio vira o próximo produto? Site e WhatsApp. |
