@@ -17,10 +17,11 @@ Saem em `out/`. O script avisa quando o conteúdo estoura o quadro.
 
 ## Estrutura
 
-- `c1…c9-*.html` — capas. **Só ícone, sem palavra:** no perfil o círculo
-  aparece com uns 60px e nenhuma palavra se lê; o nome do destaque é digitado
-  no próprio Instagram, embaixo do círculo. O traço do ícone é grosso pela
-  mesma razão.
+- `c1…c9-*.html` — capas: medalhão com o logo do produto no centro e o ponto
+  lima da NEXA, com o ícone do tema, na borda. Sem palavra — no perfil o
+  círculo aparece com uns 60px e o nome do destaque vem do próprio Instagram.
+  O "A" do Atlas está redesenhado em SVG (o logo original só existe em baixa
+  resolução); o "S" do Sales Coach vem de `assets/mark-white.png`.
 - `d1…d9-NN-*.html` — os stories, na ordem de publicação. O `d5-03` traz a
   conversa desenhada em HTML: a tela real do assistente mostra outra pergunta.
   Os gráficos do Atlas (`d7-04`, `d8-04`) também são HTML e vêm marcados

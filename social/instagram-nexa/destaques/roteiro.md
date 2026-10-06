@@ -25,10 +25,14 @@ Fábrica primeiro, Como funciona por último.
 
 ## Sobre as capas
 
-As capas são **só ícone**, sem palavra. No perfil o círculo aparece com uns
-60px de diâmetro: nesse tamanho nenhuma palavra se lê — e o Instagram já
-escreve o nome do destaque embaixo do círculo. Por isso o nome vai no campo
-do Instagram, não na arte.
+Cada capa é um **medalhão com o logo do produto** — o "S" do Sales Coach, o
+"A" do Atlas ou a NEXA, no caso da Fábrica — e, na borda, o **ponto lima** da
+NEXA com o ícone do tema. O logo diz de qual produto é o destaque; o ponto
+diferencia um destaque do outro. Não há palavra na arte: no perfil o círculo
+aparece com uns 60px e o Instagram já escreve o nome embaixo.
+
+`jpg/capas/_previa-perfil.jpg` mostra como a fila fica no perfil, grande e no
+tamanho real.
 
 Para aplicar: publique a capa como story, crie o destaque, depois **Editar
 destaque → Editar capa** e escolha a imagem. Ou salve o PNG no celular e use

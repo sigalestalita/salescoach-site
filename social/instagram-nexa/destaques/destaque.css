@@ -11,16 +11,53 @@
 .post.story { height: 1920px; padding: 190px 84px 210px; }
 
 /* ── Capa ──────────────────────────────────────────────────────────────
-   O Instagram recorta a capa num círculo tirado do centro da imagem, e no
-   perfil esse círculo aparece com uns 60px de diâmetro. Nesse tamanho
-   palavra nenhuma se lê — e o nome do destaque já aparece escrito embaixo
-   do círculo, então a capa é só o ícone, grande o bastante para virar
-   silhueta. O traço é grosso pela mesma razão: fino demais some. */
-.capa { justify-content: center; align-items: center; padding: 0; }
-.capa svg { width: 400px; height: 400px; fill: none; stroke: var(--blue-2); stroke-width: 1.5;
-            stroke-linecap: round; stroke-linejoin: round;
-            filter: drop-shadow(0 0 34px rgba(212,249,105,.45)); }
-.post.bg-light .capa svg { stroke: #4d5c12; filter: none; }
+   O Instagram recorta a capa num círculo tirado do centro da imagem e, no
+   perfil, mostra esse círculo com uns 60px. Por isso a capa é um medalhão
+   centrado, sem palavra (o nome do destaque já aparece embaixo do círculo):
+   - no centro, o logo do produto (Sales Coach, Atlas ou NEXA), que diz de
+     qual família é o destaque;
+   - na borda, o ponto lima da NEXA, com o ícone do tema, que diferencia um
+     destaque do outro dentro da mesma família. */
+.capa { justify-content: center; align-items: center; padding: 0;
+        background: radial-gradient(50% 30% at 50% 50%, rgba(212,249,105,.10), transparent 70%),
+                    radial-gradient(80% 50% at 50% 50%, #15170f 0%, #0b0c0a 70%); }
+.capa canvas.stars { opacity: .35; }
+
+.medalha { position: relative; width: 940px; height: 940px; border-radius: 50%; display: grid; place-items: center;
+           background: radial-gradient(120% 120% at 28% 18%, rgba(245,246,241,.10), rgba(245,246,241,.02) 45%, rgba(0,0,0,.25) 100%),
+                       #121410;
+           box-shadow: 0 80px 160px -60px rgba(0,0,0,.9), 0 0 120px -20px rgba(212,249,105,.18),
+                       inset 0 2px 0 rgba(255,255,255,.06), inset 0 -30px 80px rgba(0,0,0,.45); }
+/* Aro com brilho de metal: lima no alto à esquerda, apagando para o lado oposto. */
+.medalha::before { content: ""; position: absolute; inset: 0; border-radius: 50%; padding: 3px;
+                   background: conic-gradient(from 200deg, rgba(212,249,105,.95), rgba(245,246,241,.35) 70deg, rgba(245,246,241,.06) 160deg,
+                               rgba(245,246,241,.04) 230deg, rgba(212,249,105,.4) 320deg, rgba(212,249,105,.95));
+                   -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+                   -webkit-mask-composite: xor; mask-composite: exclude; }
+/* Segundo aro, fino, por dentro, como nas moedas. */
+.medalha::after { content: ""; position: absolute; inset: 40px; border-radius: 50%; border: 1px solid rgba(245,246,241,.08); }
+/* Órbita externa, bem discreta. */
+.orbita { position: absolute; width: 1040px; height: 1040px; border-radius: 50%; border: 1px solid rgba(212,249,105,.14);
+          left: 50%; top: 50%; translate: -50% -50%; }
+.orbita::before { content: ""; position: absolute; width: 12px; height: 12px; border-radius: 50%; background: #d4f969;
+                  box-shadow: 0 0 22px #d4f969; left: 50%; top: -6px; translate: -50% 0; opacity: .7; }
+
+/* Logo do produto, preenchido com o degradê branco → lima. */
+.marca { position: relative; z-index: 1; filter: drop-shadow(0 0 40px rgba(212,249,105,.28)) drop-shadow(0 16px 30px rgba(0,0,0,.5)); }
+.marca.sc svg { width: 470px; height: 439px; }
+.marca svg { display: block; }
+.marca.atlas svg { width: 500px; height: 500px; margin-top: -14px; }
+.marca.nexa svg { width: 680px; height: 128px; overflow: visible; }
+.marca.nexa path { fill: none; stroke: url(#g); stroke-width: 19; stroke-linecap: round; stroke-linejoin: round; }
+
+/* O ponto lima, com o ícone do tema. Fica na borda do medalhão, embaixo à
+   direita, e “corta” o aro com um anel da cor do fundo. */
+.ponto { position: absolute; z-index: 2; width: 236px; height: 236px; border-radius: 50%; display: grid; place-items: center;
+         left: calc(50% + 268px - 118px); top: calc(50% + 268px - 118px);
+         background: radial-gradient(circle at 32% 28%, #ecffb0, #d4f969 55%, #b9e046);
+         box-shadow: 0 0 0 18px #0d0e0b, 0 0 70px rgba(212,249,105,.55); }
+.ponto svg { width: 132px; height: 132px; fill: none; stroke: #10110f; stroke-width: 1.9;
+             stroke-linecap: round; stroke-linejoin: round; }
 
 /* ── Story ─────────────────────────────────────────────────────────────
    A marca fica no alto, o assunto no miolo e o endereço no pé. */
