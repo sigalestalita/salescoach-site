@@ -1,0 +1,10 @@
+{
+ "endpoint": "higgsfield-ai/soul/cinema",
+ "args": {
+  "prompt": "A warm one-on-one conversation in a bright meeting room: a Brazilian HR manager in her 40s listens attentively and nods to a younger male colleague who is speaking, both seated facing each other with coffee cups, empathy and trust. Documentary-style cinematic photograph, 35mm lens, shallow depth of field, natural light, subtle desaturated colors with olive green undertones, modern Brazilian office, realistic skin texture, no text, no logos.",
+  "aspect_ratio": "9:16",
+  "resolution": "1080p",
+  "batch_size": 1
+ },
+ "request_id": "8496d3b7-a7c0-4188-8d7a-562b4a7eb93a"
+}

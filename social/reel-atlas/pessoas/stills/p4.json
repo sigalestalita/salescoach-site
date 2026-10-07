@@ -1,0 +1,10 @@
+{
+ "endpoint": "higgsfield-ai/soul/cinema",
+ "args": {
+  "prompt": "A small diverse Brazilian team of four laughing together around a wooden table with laptops and notebooks, genuine joy, warm late-afternoon sunlight through large windows. Documentary-style cinematic photograph, 35mm lens, shallow depth of field, natural light, subtle desaturated colors with olive green undertones, modern Brazilian office, realistic skin texture, no text, no logos.",
+  "aspect_ratio": "9:16",
+  "resolution": "1080p",
+  "batch_size": 1
+ },
+ "request_id": "bb5c6397-c53a-466d-9b6c-7126e5ecb6ef"
+}

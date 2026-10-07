@@ -1,0 +1,10 @@
+{
+ "endpoint": "higgsfield-ai/soul/cinema",
+ "args": {
+  "prompt": "A Brazilian woman around 35 sitting alone at her office desk late in the evening, lit by the cold glow of her laptop screen, she has taken off her glasses and rubs her tired eyes, empty dark open-plan office behind her, quiet exhaustion. Documentary-style cinematic photograph, 35mm lens, shallow depth of field, natural light, subtle desaturated colors with olive green undertones, modern Brazilian office, realistic skin texture, no text, no logos.",
+  "aspect_ratio": "9:16",
+  "resolution": "1080p",
+  "batch_size": 1
+ },
+ "request_id": "65af6eae-7bc0-4117-8972-70da524773ab"
+}

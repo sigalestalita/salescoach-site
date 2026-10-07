@@ -1,0 +1,10 @@
+{
+ "endpoint": "higgsfield-ai/soul/cinema",
+ "args": {
+  "prompt": "A Brazilian man around 40 sitting in a meeting room, staring out of the window, distant and absent, while blurred colleagues talk around the table in the foreground, afternoon light. Documentary-style cinematic photograph, 35mm lens, shallow depth of field, natural light, subtle desaturated colors with olive green undertones, modern Brazilian office, realistic skin texture, no text, no logos.",
+  "aspect_ratio": "9:16",
+  "resolution": "1080p",
+  "batch_size": 1
+ },
+ "request_id": "4f7f24e9-08ac-4152-9367-bd4994b0ab27"
+}
