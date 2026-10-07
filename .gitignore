@@ -3,3 +3,7 @@ Thumbs.db
 
 # PNGs gerados pelo stories.mjs (os JPGs finais ficam em jpg/)
 social/instagram-nexa/destaques/out/
+
+# Gerado pelo trilha.py
+social/reel-atlas/trilha.wav
+social/reel-atlas/node_modules
