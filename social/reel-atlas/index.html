@@ -299,6 +299,14 @@ function pessoaEm(el, lt, durCena) {
     el.style.transform = `scale(${1.04 + .06 * lt / durCena})`;
     return Promise.resolve();
   }
+  if (info.still) {
+    // Foto com movimento de câmera lento (Ken Burns): zoom e deslocamento suaves.
+    let img = el.querySelector('img'); if (!img) { el.innerHTML = '<img>'; img = el.querySelector('img'); }
+    const k = eio(clamp(lt / durCena)), [dx, dy, z0, z1] = info.move;
+    el.style.transform = `translate(${dx * k}px, ${dy * k}px) scale(${z0 + (z1 - z0) * k})`;
+    if (img.getAttribute('src') === info.still) return Promise.resolve();
+    img.src = info.still; return img.decode().catch(() => {});
+  }
   const n = info.n, fps = info.fps || 24;
   let f = Math.floor(lt * fps); const ciclo = 2 * (n - 1); f = f % ciclo; if (f >= n) f = ciclo - f;
   const src = `pessoas/${id}/${String(f + 1).padStart(4, '0')}.jpg`;

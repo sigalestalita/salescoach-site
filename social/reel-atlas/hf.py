@@ -4,7 +4,7 @@ A credencial vem da variável HF_AUTH ("KEY_ID:SECRET"), nunca do repositório.
   python3 hf.py estimate <endpoint> '<json>'
   python3 hf.py run <endpoint> '<json>' <arquivo-de-saída>
 """
-import json, os, sys, time, uuid, urllib.request
+import json, os, sys, time, uuid, urllib.request, urllib.error
 
 API = 'https://api.higgsfield.ai'
 AUTH = {'Authorization': 'Key ' + os.environ['HF_AUTH'], 'Content-Type': 'application/json'}
@@ -12,8 +12,11 @@ AUTH = {'Authorization': 'Key ' + os.environ['HF_AUTH'], 'Content-Type': 'applic
 def req(method, url, body=None, extra=None):
     data = json.dumps(body).encode() if body is not None else None
     r = urllib.request.Request(url, data=data, method=method, headers={**AUTH, **(extra or {})})
-    with urllib.request.urlopen(r, timeout=60) as resp:
-        return json.loads(resp.read())
+    try:
+        with urllib.request.urlopen(r, timeout=60) as resp:
+            return json.loads(resp.read())
+    except urllib.error.HTTPError as e:
+        sys.exit(f'HTTP {e.code}: {e.read().decode()[:500]}')
 
 def run(endpoint, args, out):
     sub = req('POST', f'{API}/{endpoint}', args, {'Idempotency-Key': str(uuid.uuid4())})
