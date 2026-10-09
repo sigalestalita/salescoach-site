@@ -1,0 +1,586 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Reel Sales Coach</title>
+<link rel="stylesheet" href="fonts.css">
+<link rel="stylesheet" href="poppins.css">
+<style>
+/* Reel 9:16 do Sales Coach (44,5s). Determinístico: o render chama
+   window.renderAt(t) quadro a quadro. ?play toca em tempo real. */
+:root { --lime: #d4f969; --ink: #0b0c0a; --txt: #f5f6f1; --dim: #b9bcb0; --dim2: #7d8173;
+  --navy: #0f2c5c; --navy2: #1d4f9a; --app: #f3f5f9; --line: #e3e7ef; --t1: #16213a; --t2: #66708a;
+  --or1: #f2902f; --or2: #e2552a; --te1: #0f9f93; --te2: #1fb9a6; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { width: 1080px; height: 1920px; background: var(--ink); overflow: hidden; }
+body { font-family: 'DM Sans', sans-serif; color: var(--txt); -webkit-font-smoothing: antialiased; }
+#stage { position: absolute; inset: 0; overflow: hidden; }
+canvas.fx { position: absolute; inset: 0; width: 1080px; height: 1920px; }
+.abs { position: absolute; }
+.disp { font-family: 'Space Grotesk', sans-serif; font-weight: 400; letter-spacing: -.045em; line-height: 1.04; }
+.mono { font-family: 'JetBrains Mono', monospace; letter-spacing: .22em; text-transform: uppercase; }
+.lime { color: var(--lime); }
+.w { display: inline-block; }
+
+/* Legenda do topo */
+#cap { position: absolute; left: 80px; right: 80px; top: 236px; height: 250px; }
+#cap .k { font-size: 28px; color: var(--lime); }
+#cap .t { font-size: 76px; margin-top: 20px; }
+#marca { position: absolute; left: 80px; top: 128px; display: flex; align-items: center; gap: 16px; z-index: 40; }
+#marca img { height: 34px; } #marca span { font-family: 'Space Grotesk'; font-size: 26px; }
+#marca em { font-style: normal; margin-left: 10px; font-family: 'JetBrains Mono'; font-size: 16px; letter-spacing: .2em; color: var(--dim2); text-transform: uppercase; }
+#prog { position: absolute; left: 60px; right: 60px; top: 74px; height: 4px; border-radius: 2px; background: rgba(245,246,241,.14); z-index: 40; }
+#prog i { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 2px; background: var(--lime); }
+
+/* Palco das telas do produto */
+.cena { position: absolute; left: 80px; top: 540px; width: 920px; height: 1140px; opacity: 0; transform-origin: 50% 30%; }
+.app { font-family: 'Poppins', sans-serif; color: var(--t1); }
+.card { background: #fff; border-radius: 28px; box-shadow: 0 40px 100px -40px rgba(0,0,0,.75), 0 0 0 1px rgba(255,255,255,.04); }
+.janela { position: absolute; inset: 0; background: var(--app); border-radius: 36px; overflow: hidden;
+  box-shadow: 0 70px 160px -50px rgba(0,0,0,.95), 0 0 140px -40px rgba(212,249,105,.22); }
+.barra { height: 64px; display: flex; align-items: center; gap: 12px; padding: 0 28px; background: #fff; border-bottom: 1px solid var(--line); }
+.barra i { width: 14px; height: 14px; border-radius: 50%; background: #dfe3ea; }
+.barra span { margin-left: 14px; font-size: 19px; color: var(--t2); }
+.barra b { margin-left: auto; font-weight: 500; font-size: 19px; color: var(--t2); display: flex; align-items: center; gap: 10px; }
+.barra b img { height: 26px; filter: invert(18%) sepia(40%) saturate(2000%) hue-rotate(200deg) brightness(70%); }
+.vista { position: absolute; left: 0; right: 0; top: 64px; bottom: 0; padding: 30px; }
+h3.ttl { font-size: 34px; font-weight: 600; letter-spacing: -.01em; }
+.sub { font-size: 20px; color: var(--t2); margin-top: 4px; }
+.chip { display: inline-flex; align-items: center; gap: 6px; font-size: 17px; font-weight: 500; padding: 6px 14px; border-radius: 999px; }
+.c-med { background: #fff1dc; color: #b36b12; } .c-dif { background: #ffe3de; color: #c2412c; } .c-fac { background: #dff6ee; color: #12865f; }
+.c-q { background: #ffe7dc; color: #d2491f; } .c-ok { background: #e3f7ec; color: #1c8a52; } .c-cinza { background: #eef1f6; color: var(--t2); }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; font-size: 21px; font-weight: 600; border-radius: 16px; padding: 18px 28px; }
+.btn-n { background: var(--navy); color: #fff; } .btn-l { background: #fff; color: var(--t1); border: 1.5px solid var(--line); }
+.btn-r { background: #ef6a5a; color: #fff; }
+
+/* 1 · Treino */
+.pers { display: flex; align-items: center; gap: 20px; padding: 24px; border-radius: 22px; background: #fff; border: 1.5px solid var(--line); margin-top: 18px; }
+.av { width: 72px; height: 72px; border-radius: 50%; display: grid; place-items: center; color: #fff; font-weight: 600; font-size: 26px; flex: 0 0 auto; }
+.pers .n { font-weight: 600; font-size: 25px; } .pers .d { font-size: 18px; color: var(--t2); margin-top: 2px; }
+.pers .chip { margin-left: auto; }
+.cab { background: #fff; margin: -30px -30px 0; padding: 24px 30px; border-bottom: 1px solid var(--line); display: flex; gap: 14px; align-items: flex-start; }
+.cab .n { font-weight: 600; font-size: 24px; } .cab .d { font-size: 17px; color: var(--t2); margin-top: 2px; }
+.msgs { display: flex; flex-direction: column; gap: 18px; padding-top: 28px; }
+.m { max-width: 80%; font-size: 21px; line-height: 1.45; padding: 18px 22px; border-radius: 20px; }
+.m.l { background: #fff; border: 1px solid var(--line); align-self: flex-start; border-top-left-radius: 6px; }
+.m.r { background: linear-gradient(135deg, #0f2c5c, #1d4f9a); color: #fff; align-self: flex-end; border-top-right-radius: 6px; }
+.pe1 { position: absolute; left: 0; right: 0; bottom: 0; height: 220px; background: #fff; border-top: 1px solid var(--line); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 18px; }
+.mic { position: relative; width: 96px; height: 96px; border-radius: 50%; background: var(--navy); display: grid; place-items: center; }
+.mic svg { width: 40px; height: 40px; fill: none; stroke: #fff; stroke-width: 2; stroke-linecap: round; }
+.mic .anel { position: absolute; inset: 0; border-radius: 50%; border: 3px solid #1d4f9a; }
+.onda { display: flex; gap: 6px; align-items: center; height: 40px; }
+.onda i { width: 6px; border-radius: 3px; background: var(--navy2); }
+.kpis { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.kpi { border-radius: 24px; padding: 24px; color: #fff; min-height: 200px; }
+.kpi .l { font-size: 17px; opacity: .85; } .kpi .v { font-size: 64px; font-weight: 600; letter-spacing: -.02em; line-height: 1.1; margin-top: 8px; }
+.kpi .s { font-size: 15px; opacity: .8; margin-top: 6px; line-height: 1.35; }
+.g-n { background: linear-gradient(135deg, #0f2c5c, #2459a8); } .g-o { background: linear-gradient(135deg, #f2a23a, #e2552a); } .g-t { background: linear-gradient(135deg, #0f9f93, #23bfa6); }
+.crit { margin-top: 20px; padding: 26px; }
+.crit h4 { font-size: 22px; font-weight: 600; margin-bottom: 8px; }
+.cr { padding: 13px 0; border-top: 1px solid var(--line); }
+.cr:first-of-type { border-top: 0; }
+.cr .h { display: flex; justify-content: space-between; font-size: 17px; font-weight: 600; letter-spacing: .06em; }
+.cr .tr { height: 12px; border-radius: 6px; background: #edf0f5; margin-top: 10px; overflow: hidden; }
+.cr .tr i { display: block; height: 100%; border-radius: 6px; background: var(--navy2); width: 0; }
+.cr .x { font-size: 16px; color: var(--t2); margin-top: 8px; line-height: 1.4; }
+
+/* 2 · Ao vivo */
+.meet { position: absolute; inset: 0; background: #202124; border-radius: 36px; overflow: hidden; box-shadow: 0 70px 160px -50px rgba(0,0,0,.95); }
+.meet .topo { height: 64px; display: flex; align-items: center; padding: 0 28px; gap: 12px; color: #c4c7c5; font-size: 18px; font-family: 'Poppins'; }
+.meet .topo img { height: 26px; }
+.tile { position: absolute; border-radius: 24px; background: #3c4043; overflow: hidden; display: grid; place-items: center; }
+.tile .nm { position: absolute; left: 18px; bottom: 14px; font-family: 'Poppins'; font-size: 18px; color: #fff; }
+.tile .av { width: 130px; height: 130px; font-size: 48px; }
+.tile .fala { position: absolute; inset: 0; border-radius: 24px; box-shadow: inset 0 0 0 4px #8ab4f8; }
+.ctrl { position: absolute; left: 0; right: 0; bottom: 26px; display: flex; justify-content: flex-start; gap: 16px; padding-left: 40px; }
+.ctrl i { width: 64px; height: 64px; border-radius: 50%; background: #3c4043; } .ctrl i.r { background: #ea4335; width: 90px; border-radius: 32px; }
+.ext { position: absolute; top: 84px; right: 18px; width: 600px; bottom: 22px; border-radius: 30px; background: #0b1d3d; border: 1.5px solid #1b345f;
+  font-family: 'Poppins'; color: #fff; padding: 28px; box-shadow: -30px 0 80px -20px rgba(0,0,0,.7); }
+.ext .hd { display: flex; align-items: center; gap: 14px; font-weight: 600; font-size: 26px; }
+.ext .hd img { height: 36px; } .ext .hd i { width: 14px; height: 14px; border-radius: 50%; background: #32d47c; box-shadow: 0 0 12px #32d47c; }
+.rec { text-align: center; margin-top: 22px; }
+.rec .g { font-size: 22px; display: inline-flex; align-items: center; gap: 12px; }
+.rec .g i { width: 16px; height: 16px; border-radius: 50%; background: #ef4b4b; }
+.rec .g b { font-size: 17px; letter-spacing: .1em; padding: 4px 12px; border-radius: 8px; background: #1b345f; }
+.rec .tm { font-size: 64px; font-weight: 700; letter-spacing: .02em; margin-top: 6px; font-variant-numeric: tabular-nums; }
+.rec .src { color: #4ee59a; font-size: 20px; }
+.sec { font-size: 16px; font-weight: 600; letter-spacing: .14em; color: #8ea3c7; margin: 22px 0 12px; }
+.dica { border-radius: 18px; padding: 20px 22px; background: #13284d; border-left: 5px solid #4d86e8; margin-bottom: 14px; }
+.dica.alta { background: #2a1b26; border-left-color: #ef6a5a; }
+.dica .h { display: flex; justify-content: space-between; font-size: 15px; font-weight: 600; letter-spacing: .12em; color: #8fb2ff; }
+.dica.alta .h { color: #ffb0a6; } .dica .h em { font-style: normal; color: #8ea3c7; }
+.dica .fa { font-size: 15px; letter-spacing: .12em; font-weight: 600; color: #8fb2ff; margin-top: 4px; }
+.dica .q { font-size: 23px; font-weight: 600; line-height: 1.35; margin-top: 8px; }
+.dica .c { font-size: 16px; color: #a9b6cf; margin-top: 8px; line-height: 1.4; }
+.trans { border-radius: 14px; background: #071430; padding: 16px 18px; font-size: 20px; line-height: 1.45; color: #d5dcea; min-height: 92px; }
+.ext .parar { position: absolute; left: 28px; right: 28px; bottom: 28px; }
+
+/* 3 · Análise */
+.proc { position: absolute; left: 110px; right: 110px; top: 300px; padding: 40px; text-align: center; }
+.spin { width: 74px; height: 74px; margin: 0 auto 20px; border-radius: 50%; border: 7px solid #e6ebf3; border-top-color: var(--navy2); }
+.passos { text-align: left; margin-top: 24px; display: flex; flex-direction: column; gap: 14px; font-size: 21px; }
+.passos div { display: flex; align-items: center; gap: 14px; color: var(--t2); }
+.passos i { width: 30px; height: 30px; border-radius: 50%; border: 2px solid var(--line); display: grid; place-items: center; font-style: normal; font-size: 16px; color: #fff; }
+.passos .ok i { background: #22a565; border-color: #22a565; } .passos .ok { color: var(--t1); }
+.big { border-radius: 26px; padding: 22px 28px; color: #fff; }
+.big .l { font-size: 18px; opacity: .85; display: flex; align-items: center; gap: 8px; }
+.big .v { font-size: 84px; font-weight: 600; line-height: 1; letter-spacing: -.03em; }
+.big .s { font-size: 17px; opacity: .85; line-height: 1.4; }
+.ratio { height: 14px; border-radius: 7px; background: rgba(255,255,255,.3); overflow: hidden; margin-top: 12px; }
+.ratio i { display: block; height: 100%; background: #fff; border-radius: 7px; }
+.toast { position: absolute; left: 50%; top: 18px; translate: -50% 0; padding: 20px 30px; border-radius: 18px; background: #12233f; color: #fff; font-size: 21px; font-weight: 500;
+  display: flex; align-items: center; gap: 14px; white-space: nowrap; box-shadow: 0 30px 60px -20px rgba(0,0,0,.6); }
+.toast img { height: 32px; } .toast i { width: 30px; height: 30px; border-radius: 50%; background: #22a565; display: grid; place-items: center; font-style: normal; font-size: 18px; }
+.lst { font-size: 19px; line-height: 1.4; display: flex; flex-direction: column; gap: 10px; margin-top: 12px; }
+.lst div { display: flex; gap: 12px; } .lst b { color: #22a565; }
+
+/* 4 · Assistente */
+.as-h { background: linear-gradient(135deg, #0f2c5c, #1d4f9a); color: #fff; padding: 34px 34px 40px; }
+.as-h h3 { font-size: 34px; font-weight: 600; } .as-h p { font-size: 21px; opacity: .8; margin-top: 4px; }
+.as-b { position: absolute; left: 0; right: 0; top: 140px; bottom: 140px; padding: 30px; display: flex; flex-direction: column; gap: 18px; justify-content: flex-end; }
+.bal { max-width: 86%; font-size: 23px; line-height: 1.5; padding: 22px 26px; border-radius: 24px; }
+.bal.ia { background: #e9eef7; align-self: flex-start; } .bal.eu { background: linear-gradient(135deg, #0f2c5c, #1d4f9a); color: #fff; align-self: flex-end; }
+.bal .sc { display: inline-block; font-size: 17px; font-weight: 600; padding: 2px 10px; border-radius: 8px; background: #fff; color: #1c8a52; margin-left: 6px; }
+.dots { display: flex; gap: 8px; } .dots i { width: 12px; height: 12px; border-radius: 50%; background: #8a96ad; }
+.as-i { position: absolute; left: 0; right: 0; bottom: 0; height: 140px; background: #fff; border-top: 1px solid var(--line); display: flex; gap: 18px; align-items: center; padding: 0 28px; }
+.as-i .in { flex: 1; height: 84px; border-radius: 20px; border: 2px solid var(--line); display: flex; align-items: center; padding: 0 24px; font-size: 22px; color: #9aa3b5; }
+.as-i .in.on { border-color: #1d4f9a; color: var(--t1); }
+.as-i .env { width: 84px; height: 84px; border-radius: 20px; background: #8ba4cf; display: grid; place-items: center; }
+.as-i .env svg { width: 34px; height: 34px; fill: none; stroke: #fff; stroke-width: 2.2; stroke-linejoin: round; }
+.caret { display: inline-block; width: 2px; height: 26px; background: var(--t1); vertical-align: -4px; margin-left: 2px; }
+
+/* 5 · Gestor */
+.k4 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.k4 .kpi { min-height: 170px; }
+.graf { margin-top: 18px; padding: 24px 26px; }
+.graf h4, .ag h4 { font-size: 21px; font-weight: 600; }
+.graf svg { width: 100%; height: 280px; margin-top: 8px; }
+.leg { display: flex; flex-wrap: wrap; gap: 16px; font-size: 15px; color: var(--t2); } .leg i { display: inline-block; width: 12px; height: 12px; border-radius: 50%; margin-right: 6px; }
+.ag { margin-top: 18px; padding: 18px 26px; }
+.row { display: flex; align-items: center; gap: 16px; padding: 14px 0; border-top: 1px solid var(--line); }
+.row:first-of-type { border-top: 0; }
+.row .sco { width: 62px; height: 62px; border-radius: 16px; background: #e8f7ef; color: #1c8a52; font-weight: 600; font-size: 24px; display: grid; place-items: center; }
+.row .n { font-weight: 600; font-size: 19px; } .row .d { font-size: 15px; color: var(--t2); }
+.row .chip { margin-left: auto; }
+
+/* 6 · Conhecimento e integrações */
+.doc { display: flex; align-items: center; gap: 16px; padding: 20px 22px; border-radius: 18px; background: #fff; border: 1.5px solid var(--line); margin-top: 14px; }
+.doc .ic { width: 52px; height: 52px; border-radius: 14px; background: #eef2fa; display: grid; place-items: center; }
+.doc .ic svg { width: 26px; height: 26px; fill: none; stroke: var(--navy2); stroke-width: 2; }
+.doc .n { font-weight: 600; font-size: 20px; } .doc .d { font-size: 15px; color: var(--t2); }
+.doc .chip { margin-left: auto; }
+.up { height: 8px; border-radius: 4px; background: #edf0f5; margin-top: 8px; width: 300px; overflow: hidden; } .up i { display: block; height: 100%; background: var(--navy2); }
+.hub { position: absolute; inset: 0; }
+.hub .c { position: absolute; left: 50%; top: 50%; width: 200px; height: 200px; margin: -100px; border-radius: 50%; display: grid; place-items: center;
+  background: radial-gradient(circle at 30% 25%, #2a5fb0, #0f2c5c); box-shadow: 0 0 0 10px rgba(212,249,105,.12), 0 0 120px rgba(212,249,105,.35); }
+.hub .c img { width: 100px; }
+.hub .lg { position: absolute; width: 132px; height: 132px; margin: -66px; border-radius: 34px; background: #fff; display: grid; place-items: center; box-shadow: 0 24px 50px -20px rgba(0,0,0,.7); }
+.hub .lg img { width: 70px; height: 70px; object-fit: contain; }
+.hub svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.hub line { stroke: rgba(212,249,105,.35); stroke-width: 2; stroke-dasharray: 6 10; }
+
+/* Abertura e fecho */
+.centro { position: absolute; left: 80px; right: 80px; top: 0; bottom: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+.selo { width: 300px; height: 280px; }
+.centro h1 { font-size: 150px; margin-top: 40px; }
+.centro h2 { font-size: 112px; margin-top: 36px; }
+.centro p { font-size: 38px; color: var(--dim); margin-top: 24px; line-height: 1.35; }
+.cta { display: inline-block; margin-top: 60px; font-size: 36px; font-weight: 500; padding: 30px 56px; border-radius: 999px; background: var(--lime); color: #10110f; }
+
+/* Cursor */
+#cur { position: absolute; left: 0; top: 0; width: 54px; height: 54px; z-index: 30; transform-origin: 6px 4px; filter: drop-shadow(0 8px 14px rgba(0,0,0,.55)); }
+#cur path { fill: #fff; stroke: #10110f; stroke-width: 1.4; stroke-linejoin: round; }
+#rip { position: absolute; width: 120px; height: 120px; margin: -60px; border-radius: 50%; border: 5px solid var(--lime); z-index: 29; opacity: 0; }
+</style>
+</head>
+<body>
+<div id="stage">
+  <canvas class="fx" id="fundo" width="1080" height="1920"></canvas>
+
+  <div id="marca"><img src="img/mark-white.png" alt=""><span>Sales Coach</span><em>um produto NEXA</em></div>
+  <div id="prog"><i></i></div>
+  <div id="cap"><div class="mono k"></div><div class="disp t"></div></div>
+
+  <!-- 0 · abertura -->
+  <section class="cena" id="s0" style="left:0;top:0;width:1080px;height:1920px">
+    <div class="centro">
+      <svg class="selo" viewBox="0 0 512 478"><defs><linearGradient id="gS" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff"/><stop offset=".45" stop-color="#eef6d2"/><stop offset="1" stop-color="#d4f969"/></linearGradient><mask id="mS"><image href="img/mark-white.png" width="512" height="478"/></mask></defs><rect width="512" height="478" fill="url(#gS)" mask="url(#mS)"/></svg>
+      <div class="mono lime w" style="font-size:28px;margin-top:70px">Sales Coach</div>
+      <h2 class="disp"><span class="w">Cada</span> <span class="w">reunião</span><br><span class="w lime">vira método.</span></h2>
+    </div>
+  </section>
+
+  <!-- 1 · treino -->
+  <section class="cena app" id="s1">
+    <div class="janela">
+      <div class="barra"><i></i><i></i><i></i><span>Modo de treino</span><b><img src="img/mark-white.png" alt="">Sales Coach</b></div>
+      <div class="vista" id="v1a">
+        <h3 class="ttl">Com quem você quer treinar?</h3>
+        <div class="sub">A IA faz o papel do cliente, com as objeções das suas reuniões.</div>
+        <div class="pers" id="p-renata"><div class="av" style="background:linear-gradient(135deg,#1d4f9a,#0f2c5c)">RM</div><div><div class="n">Renata Mendes</div><div class="d">Gerente comercial · Bom Sucesso Consultoria</div></div><span class="chip c-med">Média</span></div>
+        <div class="pers"><div class="av" style="background:linear-gradient(135deg,#e2552a,#f2a23a)">CP</div><div><div class="n">Carlos Prado</div><div class="d">Diretor financeiro · Grupo Horizonte</div></div><span class="chip c-dif">Difícil</span></div>
+        <div class="pers"><div class="av" style="background:linear-gradient(135deg,#0f9f93,#23bfa6)">JR</div><div><div class="n">Júlia Rocha</div><div class="d">Compradora · Atacado Norte</div></div><span class="chip c-fac">Fácil</span></div>
+        <div class="pers"><div class="av" style="background:linear-gradient(135deg,#6b5bd6,#9b8cf0)">MV</div><div><div class="n">Marcos Vinícius</div><div class="d">Sócio · Bebidas Premium Sul</div></div><span class="chip c-med">Média</span></div>
+      </div>
+      <div class="vista" id="v1b" style="opacity:0">
+        <div class="cab"><div class="av" style="width:60px;height:60px;font-size:22px;background:linear-gradient(135deg,#1d4f9a,#0f2c5c)">RM</div>
+          <div style="flex:1"><div class="n">Renata Mendes · gerente comercial</div><div class="d">Bom Sucesso Consultoria — dor provável: entrega sem roteirização</div></div><span class="chip c-med">Média</span></div>
+        <div class="msgs">
+          <div class="m l" data-t="1.7">Olá, bom dia. A gente usa planilhas mesmo. A equipe registra tudo por lá.</div>
+          <div class="m r" data-t="2.75">Entendi. Quantas horas por semana isso consome — e o que deixa de ser fechado por causa disso?</div>
+          <div class="m l" data-t="3.45">Não paramos para calcular. Mas consome um tempo que poderia estar indo para visitas.</div>
+          <div class="m r" data-t="4.25">Quem assina essa decisão com você, e até quando querem estar rodando?</div>
+        </div>
+        <div class="pe1"><div style="display:flex;align-items:center;gap:26px"><div class="mic" id="mic"><i class="anel"></i><svg viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21"/></svg></div><div class="onda" id="onda"></div><span id="miclbl" style="font-size:21px;color:var(--t2)">Toque para falar</span></div>
+          <span class="btn btn-l" id="b-enc">Encerrar e avaliar</span></div>
+      </div>
+      <div class="vista" id="v1c" style="opacity:0">
+        <div class="kpis">
+          <div class="kpi g-n"><div class="l">Score do treino</div><div class="v" id="n55">0</div><div class="s">Boa descoberta; faltou tratar o orçamento.</div></div>
+          <div class="kpi g-o"><div class="l">Temperatura</div><div class="v" style="font-size:52px;margin-top:14px">morno</div><div class="s">2 de 4 critérios BANT atendidos.</div></div>
+          <div class="kpi g-t"><div class="l">Falas trocadas</div><div class="v" id="n8">0</div><div class="s">Vendedor + lead</div></div>
+        </div>
+        <div class="card crit"><h4>Critérios da metodologia</h4>
+          <div class="cr"><div class="h"><span>NEED</span><span>15/25</span></div><div class="tr"><i data-w="60"></i></div><div class="x">Dor identificada, mas o impacto não foi quantificado.</div></div>
+          <div class="cr"><div class="h"><span>BUDGET</span><span style="color:#d2491f">0/25</span></div><div class="tr"><i data-w="2" style="background:#ef6a5a"></i></div><div class="x">O orçamento não foi abordado.</div></div>
+          <div class="cr"><div class="h"><span>TIMELINE</span><span>10/25</span></div><div class="tr"><i data-w="40"></i></div><div class="x">Sem data-limite definida.</div></div>
+          <div class="cr"><div class="h"><span>AUTHORITY</span><span>25/25</span></div><div class="tr"><i data-w="100"></i></div><div class="x">Decisor identificado: o diretor comercial.</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2 · ao vivo -->
+  <section class="cena" id="s2">
+    <div class="meet">
+      <div class="topo"><img src="img/googlemeet.svg" alt="">Demo · Distribuidora Aliança</div>
+      <div class="tile" style="left:18px;top:84px;width:282px;height:500px"><div class="av" style="background:linear-gradient(135deg,#7a5c3e,#b0865a)">RA</div><i class="fala" id="fala"></i><span class="nm">Ricardo Almeida</span></div>
+      <div class="tile" style="left:18px;top:600px;width:282px;height:340px"><div class="av" style="width:110px;height:110px;font-size:40px;background:linear-gradient(135deg,#1d4f9a,#0f2c5c)">MB</div><span class="nm">Você</span></div>
+      <div class="ctrl"><i></i><i></i><i class="r"></i></div>
+      <div class="ext" id="ext">
+        <div class="hd"><img src="img/mark-white.png" alt="">Sales Coach<i></i></div>
+        <div class="rec"><div class="g"><i id="recdot"></i>Gravando <b>LIVE</b></div><div class="tm" id="tm">00:12:04</div><div class="src">Tela + áudio</div></div>
+        <div class="sec">DICAS AO VIVO</div>
+        <div class="dica alta" id="d1"><div class="h"><span>OBJEÇÃO</span><em>ALTA</em></div><div class="fa">FALE AGORA</div><div class="q">“O que fez o time parar: era complexo ou não mostrava resultado?”</div><div class="c">Objeção de adoção — devolva com uma pergunta.</div></div>
+        <div class="dica" id="d2"><div class="h"><span>BUDGET</span><em>MÉDIA</em></div><div class="fa">FALE AGORA</div><div class="q">“Quanto vocês investem hoje em treinamento do comercial?”</div><div class="c">Critério Budget ainda não coberto.</div></div>
+        <div class="sec">TRANSCRIÇÃO</div>
+        <div class="trans" id="trans"></div>
+        <span class="btn btn-r parar" id="b-parar">Parar e enviar</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3 · análise -->
+  <section class="cena app" id="s3">
+    <div class="janela">
+      <div class="barra"><i></i><i></i><i></i><span>Agendas › Demo · Distribuidora Aliança</span><b><img src="img/mark-white.png" alt="">Sales Coach</b></div>
+      <div class="vista" id="v3a">
+        <div class="card proc"><div class="spin" id="spin"></div><h3 class="ttl" style="font-size:28px">Analisando a reunião</h3>
+          <div class="passos"><div id="ps1"><i>✓</i>Transcrição completa</div><div id="ps2"><i>✓</i>Critérios BANT, MEDDIC e SPIN</div><div id="ps3"><i>✓</i>Insights e próximos passos</div></div></div>
+      </div>
+      <div class="vista" id="v3b" style="opacity:0">
+        <div class="big g-n" id="k91"><div class="l">◎ Score geral</div><div style="display:flex;align-items:baseline;gap:14px"><span class="v" id="n91">0</span><span style="font-size:24px;opacity:.8">de 100</span></div><div class="s">Demo guiada pelas dores; decisor e verba confirmados; próximo passo com data.</div></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px">
+          <div class="big g-o" id="kq"><div class="l">Temperatura</div><div style="font-size:38px;font-weight:600;margin-top:10px">🔥 Muito quente</div></div>
+          <div class="big g-t" id="kt"><div class="l">Talk ratio</div><div style="display:flex;justify-content:space-between;font-size:20px;margin-top:14px"><span>Vendedor 48%</span><span>Lead 52%</span></div><div class="ratio"><i id="ratio"></i></div></div>
+        </div>
+        <div class="card crit" id="bant" style="margin-top:16px;padding:20px 26px"><h4>BANT</h4>
+          <div class="cr"><div class="h"><span>BUDGET</span><span>24/25</span></div><div class="tr"><i data-w="96"></i></div><div class="x">Verba aprovada pela diretoria para digitalização do comercial.</div></div>
+          <div class="cr"><div class="h"><span>AUTHORITY</span><span>24/25</span></div><div class="tr"><i data-w="96"></i></div><div class="x">Sócio-proprietário presente na reunião.</div></div>
+          <div class="cr"><div class="h"><span>NEED</span><span>23/25</span></div><div class="tr"><i data-w="92"></i></div><div class="x">Vendedor externo sem visibilidade do estoque.</div></div>
+          <div class="cr"><div class="h"><span>TIMELINE</span><span>20/25</span></div><div class="tr"><i data-w="80"></i></div><div class="x">Implantação antes de dezembro.</div></div>
+        </div>
+        <div class="card" id="prox" style="margin-top:16px;padding:18px 26px;display:flex;align-items:center;gap:20px">
+          <div style="flex:1"><h4 style="font-size:21px;font-weight:600">Próximos passos</h4><div class="lst"><div><b>✓</b>Confirmar orçamento na próxima reunião</div><div><b>✓</b>Conversa com o financeiro na semana que vem</div></div></div>
+          <span class="btn btn-n" id="b-crm"><img src="img/hubspot.svg" style="height:26px;filter:brightness(0) invert(1)" alt="">Enviar ao CRM</span>
+        </div>
+        <div class="toast" id="toast"><i>✓</i>Oportunidade atualizada no HubSpot</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4 · assistente -->
+  <section class="cena app" id="s4">
+    <div class="janela" style="background:#f7f9fc">
+      <div class="as-h"><h3>Assistente de vendas</h3><p>Pergunte sobre suas agendas</p></div>
+      <div class="as-b" id="asb">
+        <div class="bal ia" id="a0">Oi, Mariana! Posso te ajudar com qualquer reunião do time.</div>
+        <div class="bal eu" id="a1" style="display:none">Quais são as agendas mais quentes?</div>
+        <div class="bal ia" id="a2" style="display:none"><div class="dots"><i></i><i></i><i></i></div></div>
+        <div class="bal ia" id="a3" style="display:none"></div>
+      </div>
+      <div class="as-i"><div class="in" id="inp">Pergunte algo…</div><div class="env" id="b-env"><svg viewBox="0 0 24 24"><path d="M21 3 10 14M21 3l-7 18-4-7-7-4z"/></svg></div></div>
+    </div>
+  </section>
+
+  <!-- 5 · gestor -->
+  <section class="cena app" id="s5">
+    <div class="k4">
+      <div class="kpi g-n"><div class="l">Total de agendas</div><div class="v" data-n="50">0</div><div class="s">47 analisadas</div></div>
+      <div class="kpi" style="background:linear-gradient(135deg,#1d4f9a,#3a7bd5)"><div class="l">Score médio</div><div class="v" data-n="70">0</div><div class="s">de 100 pontos</div></div>
+      <div class="kpi g-o"><div class="l">Reuniões quentes</div><div class="v"><span data-n="64">0</span>%</div><div class="s">Taxa de agendas quentes</div></div>
+      <div class="kpi g-t"><div class="l">Vendedores ativos</div><div class="v" data-n="6">0</div><div class="s">Com agendas analisadas</div></div>
+    </div>
+    <div class="card graf"><h4>Evolução dos scores</h4><svg id="graf" viewBox="0 0 860 280"></svg>
+      <div class="leg"><span><i style="background:#1d4f9a"></i>Mariana Barbosa</span><span><i style="background:#23bfa6"></i>Rafael Nunes</span><span><i style="background:#f2902f"></i>Patrícia Gomes</span><span><i style="background:#9b8cf0"></i>André Teixeira</span></div></div>
+    <div class="card ag" id="ag"><h4>Agendas recentes</h4>
+      <div class="row"><span class="sco">93</span><div><div class="n">Negociação · Distribuidora Aliança</div><div class="d">Ricardo Almeida · 17/09</div></div><span class="chip c-q">🔥 Muito quente</span></div>
+      <div class="row"><span class="sco">88</span><div><div class="n">Demo · Cooperativa Vale Verde</div><div class="d">André Teixeira · 16/09</div></div><span class="chip c-q">🔥 Muito quente</span></div>
+      <div class="row"><span class="sco" style="background:#fff1dc;color:#b36b12">62</span><div><div class="n">Descoberta · Frigorífico Pampa</div><div class="d">Tatiane Melo · 18/09</div></div><span class="chip c-cinza">Travado</span></div>
+    </div>
+  </section>
+
+  <!-- 6 · conhecimento + integrações -->
+  <section class="cena app" id="s6">
+    <div class="janela" id="v6a">
+      <div class="barra"><i></i><i></i><i></i><span>Base de conhecimento</span><b><img src="img/mark-white.png" alt="">Sales Coach</b></div>
+      <div class="vista">
+        <div style="display:flex;align-items:flex-start"><div><h3 class="ttl">Base de conhecimento</h3><div class="sub">A IA aprende com os materiais da empresa.</div></div></div>
+        <span class="btn btn-n" id="b-doc" style="margin-top:22px">＋ Adicionar documento</span>
+        <div class="doc" id="novo"><div class="ic"><svg viewBox="0 0 24 24"><path d="M6 3h8l4 4v14H6zM14 3v4h4"/></svg></div><div><div class="n">Playbook comercial 2026.pdf</div><div class="up"><i id="upb"></i></div></div><span class="chip c-cinza" id="upl">Enviando…</span></div>
+        <div class="doc"><div class="ic"><svg viewBox="0 0 24 24"><path d="M6 3h8l4 4v14H6zM14 3v4h4"/></svg></div><div><div class="n">Tabela de preços e planos</div><div class="d">DOC · comercial</div></div><span class="chip c-ok">Processado</span></div>
+        <div class="doc"><div class="ic"><svg viewBox="0 0 24 24"><path d="M10 14a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1M14 10a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1"/></svg></div><div><div class="n">Comparativo com concorrentes</div><div class="d">Link · comercial</div></div><span class="chip c-ok">Processado</span></div>
+        <div class="doc"><div class="ic"><svg viewBox="0 0 24 24"><path d="M6 3h8l4 4v14H6zM14 3v4h4"/></svg></div><div><div class="n">Cases de clientes</div><div class="d">PDF · produtos</div></div><span class="chip c-ok">Processado</span></div>
+      </div>
+    </div>
+    <div class="hub" id="hub"><svg id="hubl"></svg><div class="c"><img src="img/mark-white.png" alt=""></div></div>
+  </section>
+
+  <!-- 7 · fecho -->
+  <section class="cena" id="s7" style="left:0;top:0;width:1080px;height:1920px">
+    <div class="centro">
+      <svg class="selo" viewBox="0 0 512 478" style="width:240px;height:224px"><rect width="512" height="478" fill="url(#gS)" mask="url(#mS)"/></svg>
+      <h1 class="disp w">Sales Coach</h1>
+      <p class="w">Treina antes, orienta durante<br>e analisa depois de cada reunião.</p>
+      <div><span class="cta w">Agende uma demonstração</span></div>
+      <div class="mono w" style="font-size:26px;color:var(--dim2);margin-top:40px">nexatech.ia.br</div>
+      <div class="mono w" style="font-size:20px;color:var(--dim2);margin-top:70px">um produto NEXA</div>
+    </div>
+  </section>
+
+  <svg id="cur" viewBox="0 0 24 24"><path d="M4 2.5v17.2l4.6-4.4 3 6.6 3-1.4-3-6.4h6.4z"/></svg>
+  <i id="rip"></i>
+  <canvas class="fx" id="grao" width="540" height="960" style="z-index:60;opacity:.06;mix-blend-mode:overlay"></canvas>
+</div>
+
+<script>
+// ─── Linha do tempo ───────────────────────────────────────────────────────
+const DUR = 44.5;
+const CENAS = { s0: [0, 3.2], s1: [3.2, 10.4], s2: [10.4, 17.6], s3: [17.6, 25.4], s4: [25.4, 31.6], s5: [31.6, 37.0], s6: [37.0, 41.0], s7: [41.0, 44.5] };
+const LEGENDAS = [
+  [3.2, 10.4, '01 · Antes', 'Treine com <span class="lime">clientes simulados.</span>'],
+  [10.4, 17.6, '02 · Durante', 'Dica ao vivo, <span class="lime">na hora da objeção.</span>'],
+  [17.6, 25.4, '03 · Depois', 'Cada reunião vira <span class="lime">nota, com justificativa.</span>'],
+  [25.4, 31.6, '04 · Sempre', 'Pergunte sobre <span class="lime">suas agendas.</span>'],
+  [31.6, 37.0, '05 · Gestão', 'O time inteiro <span class="lime">numa tela.</span>'],
+  [37.0, 41.0, '06 · Integrado', 'Conhece sua empresa. <span class="lime">Fala com seu CRM.</span>'],
+];
+// Cursor: [tempo absoluto, alvo (seletor ou [x,y]), clique?]
+const CURSOR = [
+  [3.6, [900, 1500]], [4.25, '#p-renata', 1],
+  [4.9, [700, 1560]], [5.15, '#mic', 1], [6.6, '#mic', 1], [7.7, '#b-enc', 1],
+  [8.4, [960, 1400]],
+  [11.2, [860, 1500]], [16.7, '#b-parar', 1], [17.3, [900, 1700]],
+  [21.0, [900, 1400]], [23.75, '#b-crm', 1], [24.6, [940, 1660]],
+  [25.8, [700, 1700]], [26.15, '#inp', 1], [27.65, '#b-env', 1], [28.3, [960, 1500]],
+  [32.4, [950, 1600]], [35.9, '#ag .row:nth-of-type(1)', 1], [36.6, [960, 1700]],
+  [37.3, [800, 1300]], [37.6, '#b-doc', 1], [38.6, [960, 1650]],
+];
+const CLIQUES = CURSOR.filter(c => c[2]).map(c => c[0]);
+window.TEMPOS = { DUR, CENAS, CLIQUES };
+
+const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+const lin = (t, a, b) => clamp((t - a) / (b - a));
+const eo = x => 1 - Math.pow(1 - x, 3);
+const eio = x => x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
+const back = x => { const c = 1.7; return 1 + (c + 1) * Math.pow(x - 1, 3) + c * Math.pow(x - 1, 2); };
+const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
+const show = (el, k, dy = 30) => { el.style.opacity = k; el.style.transform = `translateY(${(1 - k) * dy}px)`; };
+const pop = (el, k) => { el.style.opacity = clamp(k * 1.4); el.style.transform = `scale(${.85 + .15 * back(k)})`; };
+const conta = (el, v, k) => { el.textContent = Math.round(v * eo(k)); };
+function digita(el, txt, k, caret) { const n = Math.round(txt.length * clamp(k)); el.innerHTML = txt.slice(0, n) + (caret ? '<span class="caret"></span>' : ''); }
+
+// Fundo: grade suave e poeira lima, com leve deriva.
+const fx = $('#fundo').getContext('2d');
+const PTS = []; { let s = 3; const r = () => (s = (s * 16807) % 2147483647) / 2147483647; for (let i = 0; i < 220; i++) PTS.push([r() * 1080, r() * 1920, r(), r() * 6.28]); }
+function fundo(t) {
+  const g = fx; g.fillStyle = '#0b0c0a'; g.fillRect(0, 0, 1080, 1920);
+  const gr = g.createRadialGradient(540, 1100, 0, 540, 1100, 1000);
+  gr.addColorStop(0, 'rgba(212,249,105,.10)'); gr.addColorStop(.45, 'rgba(29,79,154,.10)'); gr.addColorStop(1, 'rgba(11,12,10,0)');
+  g.fillStyle = gr; g.fillRect(0, 0, 1080, 1920);
+  g.strokeStyle = 'rgba(245,246,241,.035)'; g.lineWidth = 1; const off = (t * 12) % 90;
+  for (let x = -90 + off; x < 1080; x += 90) { g.beginPath(); g.moveTo(x, 0); g.lineTo(x, 1920); g.stroke(); }
+  for (let y = -90 + off; y < 1920; y += 90) { g.beginPath(); g.moveTo(0, y); g.lineTo(1080, y); g.stroke(); }
+  for (const [x, y, z, p] of PTS) { let yy = (y - t * (10 + 30 * z)) % 1920; if (yy < 0) yy += 1920;
+    g.globalAlpha = (.1 + .45 * z) * (.6 + .4 * Math.sin(t * 1.4 + p)); g.fillStyle = z > .8 ? '#d4f969' : '#f5f6f1';
+    g.beginPath(); g.arc(x + Math.sin(t * .5 + p) * 10, yy, .6 + 1.6 * z, 0, 6.283); g.fill(); }
+  g.globalAlpha = 1;
+}
+const graos = []; { let s = 9; const r = () => (s = (s * 16807) % 2147483647) / 2147483647;
+  for (let k = 0; k < 4; k++) { const c = document.createElement('canvas'); c.width = 540; c.height = 960; const g = c.getContext('2d'), im = g.createImageData(540, 960);
+    for (let i = 0; i < im.data.length; i += 4) { const v = r() * 255; im.data[i] = im.data[i + 1] = im.data[i + 2] = v; im.data[i + 3] = 255; } g.putImageData(im, 0, 0); graos.push(c); } }
+
+// Gráfico do gestor e linhas do hub.
+const SERIES = [['#1d4f9a', [62, 66, 70, 68, 75, 79, 84, 88]], ['#23bfa6', [55, 60, 58, 64, 69, 72, 74, 78]], ['#f2902f', [70, 65, 69, 72, 70, 76, 80, 82]], ['#9b8cf0', [48, 52, 57, 61, 60, 66, 70, 75]]];
+$('#graf').innerHTML = [0, 1, 2, 3].map(i => `<line x1="0" x2="860" y1="${30 + i * 70}" y2="${30 + i * 70}" stroke="#eef1f6"/>`).join('') +
+  SERIES.map(([c, v]) => `<polyline fill="none" stroke="${c}" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" points="${v.map((y, i) => `${20 + i * 117},${260 - (y - 40) * 4.6}`).join(' ')}"/>`).join('');
+$$('#graf polyline').forEach(p => { const L = p.getTotalLength(); p.style.strokeDasharray = L; p.dataset.L = L; });
+const LOGOS = ['googlemeet.svg', 'microsoftteams.svg', 'zoom.svg', 'hubspot.svg', 'salesforce.svg', 'pipedrive.png', 'rdstation.png', 'whatsapp.svg', 'slack.svg', 'gmail.svg', 'notion.svg', 'zoho.svg'];
+const hub = $('#hub'); const HUBP = LOGOS.map((f, i) => { const a = -Math.PI / 2 + i * Math.PI * 2 / LOGOS.length, r = i % 2 ? 330 : 400; return [460 + Math.cos(a) * r, 570 + Math.sin(a) * r * 1.12]; });
+$('#hubl').setAttribute('viewBox', '0 0 920 1140');
+$('#hubl').innerHTML = HUBP.map(([x, y]) => `<line x1="460" y1="570" x2="${x}" y2="${y}"/>`).join('');
+LOGOS.forEach((f, i) => { const d = document.createElement('div'); d.className = 'lg'; d.style.left = HUBP[i][0] + 'px'; d.style.top = HUBP[i][1] + 'px'; d.innerHTML = `<img src="img/${f}" alt="">`; hub.appendChild(d); });
+for (let i = 0; i < 16; i++) $('#onda').appendChild(document.createElement('i'));
+
+const RESPOSTA = 'As 3 agendas mais quentes agora são:<br><b>1. Negociação · Distribuidora Aliança</b><span class="sc">93</span><br><b>2. Demo · Cooperativa Vale Verde</b><span class="sc">88</span><br><b>3. Follow-up · Bebidas Premium Sul</b><span class="sc">75</span><br>Quer que eu prepare a próxima reunião com a Aliança?';
+const TRANS = 'Ricardo: …a gente já testou uma ferramenta assim e o time não usou.';
+
+function cena(id, t) { const [a, b] = CENAS[id]; return t - a; }
+function visCena(id, t) {
+  const [a, b] = CENAS[id], el = $('#' + id), X = .4;
+  if (t < a - X || t > b + X) { el.style.opacity = 0; return false; }
+  const ent = id === 's0' ? 1 : eo(lin(t, a - X, a + X)), sai = id === 's7' ? 1 : 1 - eio(lin(t, b - X * .3, b + X));
+  el.style.opacity = Math.min(ent, sai);
+  el.style.transform = `translateY(${(1 - ent) * 140 - (1 - sai) * 80}px) scale(${1 - (1 - ent) * .06 + (1 - sai) * .03})`;
+  el.style.filter = Math.min(ent, sai) < .99 ? `blur(${(1 - Math.min(ent, sai)) * 12}px)` : 'none';
+  return true;
+}
+function vista(el, k) { el.style.opacity = k; el.style.transform = `translateY(${(1 - k) * 40}px)`; el.style.pointerEvents = 'none'; }
+
+function legenda(t) {
+  const L = LEGENDAS.find(([a, b]) => t >= a - .4 && t < b + .4), cap = $('#cap');
+  if (!L) { cap.style.opacity = 0; return; }
+  const [a, b, k, txt] = L;
+  if (cap.dataset.a != a) { cap.dataset.a = a; cap.querySelector('.k').textContent = k; cap.querySelector('.t').innerHTML = txt; }
+  const e = eo(lin(t, a - .1, a + .5)), s = 1 - eio(lin(t, b - .25, b + .2)), o = Math.min(e, s);
+  cap.style.opacity = o; cap.style.transform = `translateY(${(1 - e) * 40}px)`; cap.style.filter = `blur(${(1 - o) * 10}px)`;
+}
+
+function cursor(t) {
+  const cur = $('#cur'), rip = $('#rip');
+  let i = CURSOR.findIndex(c => c[0] > t);
+  const vis = t > CURSOR[0][0] - .4 && t < CURSOR[CURSOR.length - 1][0] + .4 && !(t > 8.6 && t < 11.0) && !(t > 17.5 && t < 20.6) && !(t > 28.5 && t < 32.2);
+  cur.style.opacity = vis ? 1 : 0;
+  const pos = c => { if (Array.isArray(c[1])) return c[1]; const r = $(c[1]).getBoundingClientRect(); return [r.left + r.width * .5, r.top + r.height * .55]; };
+  let p;
+  if (i <= 0) p = pos(CURSOR[i === -1 ? CURSOR.length - 1 : 0]);
+  else { const A = CURSOR[i - 1], B = CURSOR[i], pa = pos(A), pb = pos(B), dur = Math.min(.7, B[0] - A[0]), k = eio(lin(t, B[0] - dur, B[0]));
+    p = [pa[0] + (pb[0] - pa[0]) * k, pa[1] + (pb[1] - pa[1]) * k - Math.sin(k * Math.PI) * 40]; }
+  let press = 0, rk = -1;
+  for (const c of CLIQUES) { const d = t - c; if (d > -.12 && d < .12) press = Math.max(press, 1 - Math.abs(d) / .12); if (d >= 0 && d < .5) rk = d / .5; }
+  cur.style.transform = `translate(${p[0] - 6}px, ${p[1] - 4}px) scale(${1 - .18 * press})`;
+  if (rk >= 0 && vis) { rip.style.opacity = 1 - rk; rip.style.left = p[0] + 'px'; rip.style.top = p[1] + 'px'; rip.style.transform = `scale(${.3 + 1.1 * eo(rk)})`; } else rip.style.opacity = 0;
+}
+
+window.renderAt = async function (t) {
+  fundo(t); legenda(t);
+  $('#prog i').style.width = (t / DUR * 100) + '%';
+  const mo = 1 - lin(t, 40.7, 41.1); $('#marca').style.opacity = Math.min(lin(t, 2.9, 3.4), mo);
+  $('#prog').style.opacity = 1;
+
+  // 0 · abertura
+  if (visCena('s0', t)) { const lt = cena('s0', t), s = $('#s0');
+    const k = eo(lin(lt, .1, 1.1)); const selo = s.querySelector('.selo');
+    selo.style.transform = `scale(${.6 + .4 * back(k)}) rotate(${(1 - k) * -12}deg)`; selo.style.opacity = k; selo.style.filter = `drop-shadow(0 0 ${30 + 20 * Math.sin(lt * 3)}px rgba(212,249,105,.45))`;
+    s.querySelectorAll('.w').forEach((w, i) => { const kk = eo(lin(lt, .6 + i * .14, 1.1 + i * .14)); w.style.opacity = kk; w.style.transform = `translateY(${(1 - kk) * 50}px)`; w.style.filter = `blur(${(1 - kk) * 12}px)`; }); }
+
+  // 1 · treino
+  if (visCena('s1', t)) { const lt = cena('s1', t);
+    const sel = lin(lt, 1.0, 1.2); $('#p-renata').style.boxShadow = `0 0 0 ${3 * sel}px #1d4f9a`; $('#p-renata').style.background = sel > 0 ? '#f1f5fc' : '#fff';
+    $$('#v1a .pers').forEach((p, i) => { const k = eo(lin(lt, .1 + i * .08, .5 + i * .08)); if (i) p.style.opacity = k; p.style.transform = `translateX(${(1 - k) * 60}px)`; });
+    vista($('#v1a'), 1 - lin(lt, 1.25, 1.5)); vista($('#v1b'), lin(lt, 1.4, 1.7) * (1 - lin(lt, 4.6, 4.85))); vista($('#v1c'), lin(lt, 4.75, 5.05));
+    $$('#v1b .m').forEach(m => show(m, eo(lin(lt, +m.dataset.t, +m.dataset.t + .35))));
+    const falando = (lt > 1.95 && lt < 2.75) || (lt > 3.55 && lt < 4.25);
+    $$('#onda i').forEach((b, i) => b.style.height = (falando ? 8 + 30 * Math.abs(Math.sin(lt * 14 + i * .9) * Math.sin(lt * 5 + i)) : 6) + 'px');
+    $('#miclbl').textContent = falando ? 'Ouvindo…' : 'Toque para falar';
+    const an = $('#mic .anel'), ph = (lt * 1.6) % 1; an.style.opacity = falando ? 1 - ph : 0; an.style.transform = `scale(${1 + ph * .8})`;
+    $('#mic').style.background = falando ? '#ef6a5a' : '#0f2c5c';
+    $('#b-enc').style.background = lt > 4.5 && lt < 4.75 ? '#eef2fa' : '#fff';
+    const kc = lin(lt, 5.0, 6.2); conta($('#n55'), 55, kc); conta($('#n8'), 8, kc);
+    $$('#v1c .kpi').forEach((c, i) => pop(c, eo(lin(lt, 4.9 + i * .1, 5.4 + i * .1))));
+    $$('#v1c .cr i').forEach((b, i) => b.style.width = (+b.dataset.w * eio(lin(lt, 5.6 + i * .15, 6.3 + i * .15))) + '%'); }
+
+  // 2 · ao vivo
+  if (visCena('s2', t)) { const lt = cena('s2', t);
+    const ke = eo(lin(lt, .5, 1.2)); $('#ext').style.transform = `translateX(${(1 - ke) * 620}px)`; $('#ext').style.opacity = ke;
+    const sec = 12 * 60 + 4 + Math.floor(lt); $('#tm').textContent = `00:${String(Math.floor(sec / 60)).padStart(2, '0')}:${String(sec % 60).padStart(2, '0')}`;
+    $('#recdot').style.opacity = .4 + .6 * (Math.sin(lt * 6) > 0);
+    const fala = lt > 1.4 && lt < 3.2; $('#fala').style.opacity = fala ? .6 + .4 * Math.abs(Math.sin(lt * 9)) : 0;
+    digita($('#trans'), TRANS, lin(lt, 1.4, 3.1), lt < 3.3);
+    const d1 = eo(lin(lt, 3.3, 3.8)), d2 = eo(lin(lt, 4.6, 5.1));
+    show($('#d1'), d1, 40); show($('#d2'), d2, 40);
+    const flash = lt > 3.3 ? Math.max(0, Math.sin((lt - 3.3) * 6)) * (1 - lin(lt, 3.3, 5.5)) : 0;
+    $('#d1').style.boxShadow = `0 0 ${50 * flash}px rgba(239,106,90,${.7 * flash})`;
+    const zk = eio(lin(lt, 3.2, 3.9)) * (1 - eio(lin(lt, 5.6, 6.2)));
+    $('#s2 .meet').style.transform = `scale(${1 + .16 * zk}) translate(${-120 * zk}px, ${30 * zk}px)`;
+    $('#b-parar').style.filter = lt > 6.2 && lt < 6.45 ? 'brightness(1.15)' : 'none'; }
+
+  // 3 · análise
+  if (visCena('s3', t)) { const lt = cena('s3', t);
+    vista($('#v3a'), 1 - lin(lt, 1.6, 1.9)); vista($('#v3b'), lin(lt, 1.8, 2.15));
+    $('#spin').style.transform = `rotate(${lt * 420}deg)`;
+    ['#ps1', '#ps2', '#ps3'].forEach((s, i) => $(s).classList.toggle('ok', lt > .45 + i * .4));
+    pop($('#k91'), eo(lin(lt, 1.9, 2.4))); conta($('#n91'), 91, lin(lt, 2.0, 3.2));
+    pop($('#kq'), eo(lin(lt, 2.2, 2.7))); pop($('#kt'), eo(lin(lt, 2.35, 2.85)));
+    $('#ratio').style.width = (48 * eio(lin(lt, 2.6, 3.4))) + '%';
+    show($('#bant'), eo(lin(lt, 2.6, 3.1))); show($('#prox'), eo(lin(lt, 3.0, 3.5)));
+    $$('#bant .cr i').forEach((b, i) => b.style.width = (+b.dataset.w * eio(lin(lt, 3.1 + i * .18, 3.9 + i * .18))) + '%');
+    const zk = eio(lin(lt, 3.5, 4.3)) * (1 - eio(lin(lt, 5.4, 6.0)));
+    $('#v3b').style.transform = `scale(${1 + .14 * zk}) translateY(${-150 * zk}px)`; $('#v3b').style.transformOrigin = '50% 60%';
+    const kt = eo(lin(lt, 6.35, 6.75)) * (1 - lin(lt, 7.6, 7.8)); $('#toast').style.opacity = kt; $('#toast').style.transform = `translateY(${(1 - kt) * 40}px)`; }
+
+  // 4 · assistente
+  if (visCena('s4', t)) { const lt = cena('s4', t);
+    const typing = lin(lt, .95, 2.05), sent = lt > 2.3;
+    const inp = $('#inp'); inp.classList.toggle('on', lt > .75 && !sent);
+    if (lt <= .75 || sent) inp.textContent = 'Pergunte algo…'; else digita(inp, 'Quais são as agendas mais quentes?', typing, Math.floor(lt * 3) % 2 === 0 || typing < 1);
+    $('#b-env').style.background = lt > 2.05 && !sent ? '#1d4f9a' : '#8ba4cf';
+    $('#a1').style.display = sent ? '' : 'none'; show($('#a1'), eo(lin(lt, 2.3, 2.6)));
+    $('#a2').style.display = lt > 2.6 && lt < 3.3 ? '' : 'none'; $$('#a2 .dots i').forEach((d, i) => d.style.transform = `translateY(${-8 * Math.max(0, Math.sin(lt * 9 - i))}px)`);
+    const a3 = $('#a3'); a3.style.display = lt >= 3.3 ? '' : 'none';
+    if (lt >= 3.3) { const parts = RESPOSTA.split(/(<[^>]+>| )/).filter(Boolean); let n = Math.round(parts.length * lin(lt, 3.3, 5.4)), out = '', c = 0;
+      for (const p of parts) { if (p.startsWith('<')) { out += p; continue; } if (c++ >= n) break; out += p; }
+      a3.innerHTML = out.replace(/<b>([^<]*)$/, '<b>$1</b>'); } }
+
+  // 5 · gestor
+  if (visCena('s5', t)) { const lt = cena('s5', t);
+    $$('#s5 .kpi').forEach((c, i) => pop(c, eo(lin(lt, .1 + i * .1, .6 + i * .1))));
+    $$('#s5 [data-n]').forEach(n => conta(n, +n.dataset.n, lin(lt, .3, 1.5)));
+    show($('#s5 .graf'), eo(lin(lt, .6, 1.1)));
+    $$('#graf polyline').forEach((p, i) => p.style.strokeDashoffset = p.dataset.L * (1 - eio(lin(lt, 1.0 + i * .12, 2.4 + i * .12))));
+    show($('#ag'), eo(lin(lt, 1.8, 2.3)));
+    $$('#ag .row').forEach((r, i) => { const k = eo(lin(lt, 2.1 + i * .15, 2.6 + i * .15)); r.style.opacity = k; r.style.transform = `translateX(${(1 - k) * 60}px)`; });
+    const hl = lin(lt, 4.25, 4.4); $('#ag .row').style.background = hl ? `rgba(29,79,154,${.08 * hl})` : 'transparent'; $('#ag .row').style.borderRadius = '14px'; }
+
+  // 6 · conhecimento + integrações
+  if (visCena('s6', t)) { const lt = cena('s6', t);
+    const sw = eio(lin(lt, 1.75, 2.15));
+    $('#v6a').style.opacity = 1 - sw; $('#v6a').style.transform = `scale(${1 - .1 * sw})`;
+    show($('#novo'), eo(lin(lt, .75, 1.0)));
+    const up = lin(lt, .85, 1.55); $('#upb').style.width = (up * 100) + '%';
+    $('#upl').textContent = up >= 1 ? 'Processado ✓' : 'Enviando…'; $('#upl').className = 'chip ' + (up >= 1 ? 'c-ok' : 'c-cinza');
+    const hb = $('#hub'); hb.style.opacity = sw;
+    const ch = eo(lin(lt, 2.0, 2.5)); hb.querySelector('.c').style.transform = `scale(${.5 + .5 * back(ch)})`;
+    hb.querySelectorAll('.lg').forEach((l, i) => { const k = eo(lin(lt, 2.2 + i * .06, 2.6 + i * .06)); l.style.opacity = k;
+      l.style.transform = `translate(${(460 - HUBP[i][0]) * (1 - k)}px, ${(570 - HUBP[i][1]) * (1 - k)}px) scale(${.4 + .6 * back(k)}) translateY(${Math.sin(lt * 2 + i) * 6}px)`; });
+    $('#hubl').style.opacity = lin(lt, 2.6, 3.0); $$('#hubl line').forEach(l => l.style.strokeDashoffset = -lt * 40); }
+
+  // 7 · fecho
+  if (visCena('s7', t)) { const lt = cena('s7', t), s = $('#s7');
+    const k = eo(lin(lt, .1, .9)), selo = s.querySelector('.selo');
+    selo.style.transform = `scale(${.7 + .3 * back(k)})`; selo.style.opacity = k; selo.style.filter = `drop-shadow(0 0 ${30 + 20 * Math.sin(lt * 3)}px rgba(212,249,105,.45))`;
+    s.querySelectorAll('.w').forEach((w, i) => { const kk = eo(lin(lt, .4 + i * .15, .9 + i * .15)); w.style.opacity = kk; w.style.transform = `translateY(${(1 - kk) * 40}px)`; w.style.filter = `blur(${(1 - kk) * 10}px)`; }); }
+
+  cursor(t);
+  $('#grao').getContext('2d').drawImage(graos[Math.floor(t * 24) % 4], 0, 0);
+};
+
+window.ready = (async () => {
+  await document.fonts.ready; await Promise.all([...document.images].map(i => i.decode().catch(() => {})));
+  await window.renderAt(0);
+  if (location.search.includes('play')) { const t0 = performance.now(); (function loop() { window.renderAt(((performance.now() - t0) / 1000) % DUR); requestAnimationFrame(loop); })(); }
+  return true;
+})();
+</script>
+</body>
+</html>
