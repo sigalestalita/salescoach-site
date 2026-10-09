@@ -176,6 +176,10 @@ td .inp.small{width:84px;text-align:right}
 .dots i.done{background:var(--accent-text);box-shadow:none}
 .dots i.late{background:var(--bad-bg);box-shadow:inset 0 0 0 1px var(--bad)}
 @media (max-width:620px){.touch{grid-template-columns:1fr}.touch .acts{justify-content:flex-start}}
+.notas{grid-column:1/-1;display:grid;gap:4px;font-size:13px;color:var(--soft)}
+.notas p{margin:0;line-height:1.45}.notas p b{font-weight:500;color:var(--fg);font-size:12px;font-family:var(--mono);margin-right:6px}
+.nota-ed{grid-column:1/-1;display:grid;gap:8px}.nota-ed textarea{width:100%}
+.row .notas,.row .nota-ed{margin-top:8px}
 
 /* drawer */
 .scrim{position:fixed;inset:0;background:rgba(10,11,8,.45);z-index:50}
@@ -354,7 +358,7 @@ const deep = (a, b) => { const o = Array.isArray(a) ? [...a] : { ...a }; for (co
 function toast(msg) { const t = $('#toast'); t.textContent = msg; t.hidden = false; clearTimeout(toast.t); toast.t = setTimeout(() => t.hidden = true, 2200); }
 
 /* ───────── estado ───────── */
-const S = { cfg: deep(DEFAULTS, {}), cfgExists: false, opps: [], contas: [], semanas: {}, tarefas: [], recursos: [], playbook: null, loaded: 0, ro: false, db: null, dl: null, noDb: false, showClosed: false, filtroProd: '', busca: '', contaFiltro: 'abertas', contaPrio: '', openMsg: null, prospects: [],
+const S = { cfg: deep(DEFAULTS, {}), cfgExists: false, opps: [], contas: [], semanas: {}, tarefas: [], recursos: [], playbook: null, loaded: 0, ro: false, db: null, dl: null, noDb: false, showClosed: false, filtroProd: '', busca: '', contaFiltro: 'abertas', contaPrio: '', openMsg: null, openNota: null, prospects: [],
   L: { res: null, pagina: 0, total: 0, sel: new Set(), f: { cargos: 'Diretor Comercial, Gerente Comercial, Head de Vendas', estados: '', setores: [], subsetores: [], tamanhos: [], senioridades: [], departamentos: [], porEmpresa: 2, comEmail: true }, uso: null, hist: null, cat: {}, busy: '', lista: '', ver: '', confirma: '', verHist: false } };
 let view = (location.hash || '#painel').slice(1);
 
@@ -390,6 +394,17 @@ function toques(c) {
   return cad().map(t => { const due = addDays(c.inicioCadencia, t.d - 1); return { ...t, due, done: feitos.includes(t.d), late: !feitos.includes(t.d) && due < h }; });
 }
 const proximoToque = c => toques(c).find(t => !t.done) || null;
+const lkPendentes = () => S.contas.filter(c => c.linkedinPend && !['descartada', 'oportunidade'].includes(c.status)).sort((a, b) => a.linkedinPend.desde.localeCompare(b.linkedinPend.desde));
+const textoNotas = c => (c.anotacoes || []).map(a => `${brShort(a.em)}${a.dia ? ' · dia ' + a.dia : ''}: ${a.texto}`).join('\n');
+/* Anotações da cadência: lista das mais recentes e editor aberto por conta. */
+function notasHtml(c, max = 3) {
+  const ns = (c.anotacoes || []).slice(-max).reverse();
+  return ns.length ? `<div class="notas">${ns.map(a => `<p><b>${brShort(a.em)}${a.dia ? ' · dia ' + a.dia : ''}</b>${esc(a.texto)}</p>`).join('')}${(c.anotacoes || []).length > max ? `<p class="mute">+ ${(c.anotacoes || []).length - max} anteriores na ficha da conta</p>` : ''}</div>` : '';
+}
+function notaEditor(c, dia) {
+  return S.openNota === c.id ? `<div class="nota-ed"><textarea class="inp" rows="3" id="nota-${c.id}-${dia || 0}" placeholder="O que aconteceu neste toque? Ex.: pediu para retomar em novembro, quem decide é o diretor financeiro."></textarea>
+    <div class="tools"><button class="btn sm pri" data-salvanota="${c.id}" data-dia="${dia || ''}">Salvar anotação</button><button class="btn sm" data-nota="${c.id}">Cancelar</button></div></div>` : '';
+}
 function funil(k) {
   const m = S.cfg.metas[k] || { dias: 20, sc: 0, atlas: 0, fabrica: 0 }, t = S.cfg.taxas, p = S.cfg.precos, md = S.cfg.medias;
   const contratos = (+m.sc || 0) + (+m.atlas || 0);
@@ -593,6 +608,7 @@ const VIEWS = {
       <section class="card"><header><h2>Para hoje</h2><span class="mono soft">${br(h)}</span></header>
         ${!th.length && !passos.length && !outros.length ? `<div class="empty"><b>Nada pendente.</b><span>Coloque contas A e B em cadência para gerar os toques do dia.</span><a class="btn" href="#contas">Ir para Contas-alvo</a></div>` : ''}
         ${th.length ? `<div class="list"><div class="row"><span class="dot acc"></span><div><div class="t">${th.length} ${th.length === 1 ? 'toque' : 'toques'} de cadência</div><div class="d">${esc(th.slice(0, 3).map(x => x.c.empresa).join(', '))}${th.length > 3 ? '…' : ''}</div></div><a class="btn sm" href="#cadencia">Abrir</a></div></div>` : ''}
+        ${lkPendentes().length ? `<div class="list"><div class="row"><span class="dot warn"></span><div><div class="t">${lkPendentes().length} ${lkPendentes().length === 1 ? 'conexão pendente' : 'conexões pendentes'} no LinkedIn</div><div class="d">Confira se aceitaram e mande a mensagem.</div></div><a class="btn sm" href="#cadencia">Abrir</a></div></div>` : ''}
         ${passos.length || outros.length ? `<div class="list">${[...passos, ...outros].slice(0, 8).map(o => { const a = alerta(o); return `<div class="row"><span class="dot ${a ? a.cls : 'acc'}"></span><div><div class="t">${esc(o.empresa)}</div><div class="d">${esc(o.proximoPasso || 'Definir próximo passo')}${o.dataProximo ? ' · ' + brShort(o.dataProximo) : ''}${a ? ' · ' + a.txt : ''}</div></div><button class="btn sm" data-open-opp="${o.id}">Abrir</button></div>`; }).join('')}</div>` : ''}
       </section>
       <section class="card"><header><h2>Metas de ${mesLabel(k)}</h2><a class="mono soft" href="#metas">Ajustar</a></header>
@@ -669,18 +685,26 @@ const VIEWS = {
     const dots = c => `<span class="dots" aria-label="${(c.toques || []).length} de ${cad().length} toques">${toques(c).map(t => `<i class="${t.done ? 'done' : t.late ? 'late' : ''}" title="Dia ${t.d} · ${t.canal}"></i>`).join('')}</span>`;
     const item = ({ c, t }) => { const key = c.id + ':' + t.d, open = S.openMsg === key;
       return `<div class="touch"><div><div class="who"><b>${esc(c.empresa)}</b> <span class="soft">· ${esc(c.decisor || 'sem decisor')}${c.cargo ? ', ' + esc(c.cargo) : ''}</span></div>
-        <div class="what"><span class="chip acc">Dia ${t.d} · ${t.canal}</span><span>${t.acao}</span>${t.due < hoje() ? `<span class="chip bad">atrasado ${diff(hoje(), t.due)}d</span>` : ''}<span class="chip">${esc(isAtlas(produtoConta(c)) ? 'Atlas' : 'Sales Coach')}</span>${dots(c)}</div></div>
+        <div class="what"><span class="chip acc">Dia ${t.d} · ${t.canal}</span><span>${t.acao}</span>${t.due < hoje() ? `<span class="chip bad">atrasado ${diff(hoje(), t.due)}d</span>` : ''}${c.linkedinPend ? `<span class="chip warn">conexão pendente no LinkedIn</span>` : ''}<span class="chip">${esc(isAtlas(produtoConta(c)) ? 'Atlas' : 'Sales Coach')}</span>${dots(c)}</div></div>
         <div class="acts"><button class="btn sm" data-msg="${key}">${open ? 'Fechar mensagem' : 'Ver mensagem'}</button>
           ${c.linkedin ? `<a class="btn sm" href="${esc(/^https?:\/\//.test(c.linkedin) ? c.linkedin : 'https://' + c.linkedin)}" target="_blank" rel="noopener">LinkedIn ↗</a>` : ''}
+          <button class="btn sm" data-nota="${c.id}" ${dis()}>Anotar</button>
+          ${/linkedin/i.test(t.canal) ? `<button class="btn sm" data-lkpend="${key}" ${dis()} title="A conexão foi pedida, mas o LinkedIn não deixou mandar mensagem. Cria um lembrete para voltar.">Conectei, sem mensagem</button>` : ''}
           <button class="btn sm pri" data-done="${key}" ${dis()}>Feito</button><button class="btn sm" data-resp="${c.id}" ${dis()}>Respondeu</button></div>
-        ${open ? `<div class="msg" id="msg-${esc(key)}">${tmpl(c, t)}</div><div><button class="btn sm" data-copy="${key}">Copiar mensagem</button></div>` : ''}</div>`; };
+        ${open ? `<div class="msg" id="msg-${esc(key)}">${tmpl(c, t)}</div><div><button class="btn sm" data-copy="${key}">Copiar mensagem</button></div>` : ''}
+        ${notaEditor(c, t.d)}${notasHtml(c)}</div>`; };
+    const lk = lkPendentes();
     return `
     <div class="top"><div><h1>Cadência</h1><p class="sub">${cad().length ? cad()[cad().length - 1].d : 0} dias, ${cad().length} toques. Edite a sequência e as mensagens em Ajustes. A mensagem já vem com o nome e a empresa; troque o que está destacado. Quando a pessoa responder em qualquer canal, clique em “Respondeu”.</p></div></div>
     <section class="card"><header><h2>Toques de hoje</h2><span class="mono soft">${th.length}</span></header>
       ${th.length ? `<div>${th.map(item).join('')}</div>` : `<div class="empty"><b>Nenhum toque para hoje.</b><span>${em.length ? 'Os próximos toques aparecem abaixo.' : 'Inicie a cadência de contas A ou B em Contas-alvo.'}</span></div>`}
     </section>
-    ${terminadas.length ? `<section class="card"><header><h2>Cadência concluída sem resposta</h2></header><div class="list">${terminadas.map(c => `<div class="row"><span class="dot warn"></span><div><div class="t">${esc(c.empresa)}</div><div class="d">Todos os toques feitos. Mova para Nutrir e volte em 60 dias com um motivo novo.</div></div><div class="tools"><button class="btn sm" data-resp="${c.id}" ${dis()}>Respondeu</button><button class="btn sm" data-nutrir="${c.id}" ${dis()}>Nutrir</button></div></div>`).join('')}</div></section>` : ''}
-    ${futuras.length ? `<section class="card"><header><h2>Próximos toques</h2><span class="mono soft">${futuras.length} em cadência</span></header><div class="list">${futuras.map(c => { const t = proximoToque(c); return `<div class="row"><span class="dot"></span><div><div class="t">${esc(c.empresa)}</div><div class="d">Dia ${t.d} · ${t.canal} · ${brShort(t.due)}</div></div><div class="tools">${dots(c)}<button class="btn sm" data-resp="${c.id}" ${dis()}>Respondeu</button></div></div>`; }).join('')}</div></section>` : ''}`;
+    ${lk.length ? `<section class="card"><header><h2>Conexões pendentes no LinkedIn</h2><span class="mono soft">${lk.length}</span></header>
+      <p class="mute" style="font-size:13px;margin:0 0 6px">Você pediu a conexão, mas o LinkedIn não deixou mandar mensagem. Volte aqui para conferir se aceitaram e mandar a mensagem.</p>
+      <div class="list">${lk.map(c => { const dd = diff(hoje(), c.linkedinPend.desde); return `<div class="row"><span class="dot ${dd >= 7 ? 'bad' : 'warn'}"></span><div style="min-width:0"><div class="t">${esc(c.empresa)} <span class="soft">· ${esc(c.decisor || 'sem decisor')}</span></div><div class="d">Conexão pedida em ${brShort(c.linkedinPend.desde)} · ${dd === 0 ? 'hoje' : dd === 1 ? 'há 1 dia' : 'há ' + dd + ' dias'}${dd >= 7 ? '. Se não aceitou até agora, siga pelos outros canais.' : ''}</div>${notaEditor(c)}${notasHtml(c, 2)}</div>
+        <div class="tools">${c.linkedin ? `<a class="btn sm" href="${esc(/^https?:\/\//.test(c.linkedin) ? c.linkedin : 'https://' + c.linkedin)}" target="_blank" rel="noopener">LinkedIn ↗</a>` : ''}<button class="btn sm" data-nota="${c.id}" ${dis()}>Anotar</button><button class="btn sm pri" data-lkok="${c.id}" ${dis()}>Aceitou, mensagem enviada</button><button class="btn sm" data-lkno="${c.id}" ${dis()}>Tirar lembrete</button></div></div>`; }).join('')}</div></section>` : ''}
+    ${terminadas.length ? `<section class="card"><header><h2>Cadência concluída sem resposta</h2></header><div class="list">${terminadas.map(c => `<div class="row"><span class="dot warn"></span><div><div class="t">${esc(c.empresa)}</div><div class="d">Todos os toques feitos. Mova para Nutrir e volte em 60 dias com um motivo novo.</div>${notaEditor(c)}${notasHtml(c, 2)}</div><div class="tools"><button class="btn sm" data-nota="${c.id}" ${dis()}>Anotar</button><button class="btn sm" data-resp="${c.id}" ${dis()}>Respondeu</button><button class="btn sm" data-nutrir="${c.id}" ${dis()}>Nutrir</button></div></div>`).join('')}</div></section>` : ''}
+    ${futuras.length ? `<section class="card"><header><h2>Próximos toques</h2><span class="mono soft">${futuras.length} em cadência</span></header><div class="list">${futuras.map(c => { const t = proximoToque(c); return `<div class="row"><span class="dot"></span><div><div class="t">${esc(c.empresa)}</div><div class="d">Dia ${t.d} · ${t.canal} · ${brShort(t.due)}${c.linkedinPend ? ' · conexão pendente no LinkedIn' : ''}</div>${notaEditor(c)}${notasHtml(c, 2)}</div><div class="tools">${dots(c)}<button class="btn sm" data-nota="${c.id}" ${dis()}>Anotar</button><button class="btn sm" data-resp="${c.id}" ${dis()}>Respondeu</button></div></div>`; }).join('')}</div></section>` : ''}`;
   },
 
   semana() {
@@ -930,6 +954,7 @@ function contaForm(c) {
     <label class="full">Observações<textarea class="inp" name="obs" id="c-obs" ${d}>${esc(c.obs)}</textarea></label>
     ${c.inicioCadencia ? `<p class="sect" style="grid-column:1/-1">Cadência</p>
     <label>Início da cadência<input class="inp" type="date" name="inicioCadencia" id="c-ini" value="${esc(c.inicioCadencia)}" ${d}></label>
+    ${(c.anotacoes || []).length ? `<div class="full" style="grid-column:1/-1;display:grid;gap:4px"><span style="font-size:12.5px;color:var(--soft)">Anotações da cadência${c.linkedinPend ? ' · conexão pendente no LinkedIn desde ' + brShort(c.linkedinPend.desde) : ''}</span>${notasHtml(c, 50)}</div>` : ''}
     <div class="full" style="grid-column:1/-1;display:grid;gap:4px">${cad().map(t => `<label class="check" style="height:auto"><input type="checkbox" name="tq" value="${t.d}" id="c-tq-${t.d}" ${(c.toques || []).includes(t.d) ? 'checked' : ''} ${d}> Dia ${t.d} · ${esc(t.canal)} · ${esc(t.acao)}</label>`).join('')}</div>` : ''}
   </form><div class="summary" id="cSum"></div>`;
 }
@@ -972,7 +997,7 @@ function openConta(id) {
 function respondeu(contaId) {
   const c = S.contas.find(x => x.id === contaId); if (!c) return;
   const prod = produtoConta(c), feitos = toques(c).filter(t => t.done), ult = feitos[feitos.length - 1];
-  openOpp(null, { contaId, empresa: c.empresa, segmento: c.segmento || '', produto: prod, contato: c.decisor || '', cargo: c.cargo || '', canal: ult ? ult.canal : 'LinkedIn', qtd: isAtlas(prod) ? (c.colaboradores || '') : prod === 'Sales Coach' ? (c.vendedores || '') : '', primeiroContato: c.inicioCadencia || hoje(), ultimaInteracao: hoje(), etapa: 2, proximoPasso: 'Marcar diagnóstico', dataProximo: addDays(hoje(), 1) });
+  openOpp(null, { contaId, empresa: c.empresa, segmento: c.segmento || '', produto: prod, contato: c.decisor || '', cargo: c.cargo || '', canal: ult ? ult.canal : 'LinkedIn', qtd: isAtlas(prod) ? (c.colaboradores || '') : prod === 'Sales Coach' ? (c.vendedores || '') : '', primeiroContato: c.inicioCadencia || hoje(), ultimaInteracao: hoje(), etapa: 2, proximoPasso: 'Marcar diagnóstico', dataProximo: addDays(hoje(), 1), obs: textoNotas(c) });
 }
 
 function openTask(id) {
@@ -1328,8 +1353,18 @@ document.addEventListener('click', e => {
   if (ds.copy) { const el = document.getElementById('msg-' + ds.copy); const txt = el.innerText;
     try { navigator.clipboard.writeText(txt).then(() => toast('Mensagem copiada'), () => { getSelection().selectAllChildren(el); toast('Selecionada: use Ctrl+C'); }); } catch (er) { getSelection().selectAllChildren(el); toast('Selecionada: use Ctrl+C'); } return; }
   if (ds.done) { const [cid, d] = ds.done.split(':'), c = S.contas.find(x => x.id === cid); if (S.openMsg === ds.done) S.openMsg = null;
-    return saveConta(cid, { ...strip(c), toques: [...new Set([...(c.toques || []), +d])].sort((a, b) => a - b) }).then(ok => ok && toast(`Dia ${d} feito`)); }
+    const tq = cad().find(x => x.d === +d), msgLk = c.linkedinPend && tq && /linkedin/i.test(tq.canal) && +d !== c.linkedinPend.dia;
+    return saveConta(cid, { ...strip(c), toques: [...new Set([...(c.toques || []), +d])].sort((a, b) => a - b), ...(msgLk ? { linkedinPend: null } : {}) }).then(ok => ok && toast(msgLk ? `Dia ${d} feito. Lembrete do LinkedIn concluído` : `Dia ${d} feito`)); }
   if (ds.resp) return respondeu(ds.resp);
+  if (ds.nota) { S.openNota = S.openNota === ds.nota ? null : ds.nota; render(); const b = document.querySelector(`[data-nota="${ds.nota}"]`), ta = b && b.closest('.touch,.row') && b.closest('.touch,.row').querySelector('.nota-ed textarea'); if (ta) ta.focus(); return; }
+  if (ds.salvanota) { const c = S.contas.find(x => x.id === ds.salvanota), ed = t.closest('.nota-ed'), ta = ed && ed.querySelector('textarea'), txt = ta ? ta.value.trim() : '';
+    if (!txt) return toast('Escreva a anotação.'); S.openNota = null;
+    return saveConta(c.id, { ...strip(c), anotacoes: [...(c.anotacoes || []), { em: hoje(), dia: ds.dia ? +ds.dia : null, texto: txt }] }).then(ok => ok && toast('Anotação salva')); }
+  if (ds.lkpend) { const [cid, d] = ds.lkpend.split(':'), c = S.contas.find(x => x.id === cid); if (S.openMsg === ds.lkpend) S.openMsg = null;
+    return saveConta(cid, { ...strip(c), toques: [...new Set([...(c.toques || []), +d])].sort((a, b) => a - b), linkedinPend: { desde: hoje(), dia: +d } }).then(ok => ok && toast('Lembrete criado: a conta aparece em “Conexões pendentes no LinkedIn”')); }
+  if (ds.lkok) { const c = S.contas.find(x => x.id === ds.lkok);
+    return saveConta(c.id, { ...strip(c), linkedinPend: null, anotacoes: [...(c.anotacoes || []), { em: hoje(), dia: null, texto: 'Aceitou a conexão no LinkedIn e a mensagem foi enviada.' }] }).then(ok => ok && toast('Lembrete concluído')); }
+  if (ds.lkno) { const c = S.contas.find(x => x.id === ds.lkno); return saveConta(c.id, { ...strip(c), linkedinPend: null }).then(ok => ok && toast('Lembrete removido')); }
   if (ds.nutrir) { const c = S.contas.find(x => x.id === ds.nutrir); return saveConta(c.id, { ...strip(c), status: 'nutrir', retomarEm: addDays(hoje(), 60) }).then(ok => ok && toast('Conta movida para Nutrir')); }
   if (ds.prio !== undefined && t.closest('.seg')) { S.contaPrio = ds.prio; return render(); }
   if (ds.delmes) { if (Object.keys(S.cfg.metas).length <= 1) return toast('Mantenha pelo menos um mês.'); const m = { ...S.cfg.metas }; delete m[ds.delmes]; return saveCfg({ ...S.cfg, metas: m }); }
