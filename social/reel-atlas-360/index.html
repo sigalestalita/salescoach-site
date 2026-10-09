@@ -1,0 +1,283 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Reel Atlas 360</title>
+<link rel="stylesheet" href="fonts.css">
+<link rel="stylesheet" href="poppins.css">
+<link rel="stylesheet" href="kit.css">
+<style>
+/* 1 · matriz */
+.inp { display: flex; gap: 10px; margin-top: 14px; } .inp .in { flex: 1; padding: 14px 18px; border-radius: 14px; border: 1.5px solid var(--line); background: #fff; font-size: 18px; color: #98a2b5; }
+.inp .in.on { border-color: var(--pri); color: var(--t1); }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; } .chips .chip { font-size: 16px; padding: 8px 14px; background: #eef3fb; color: var(--pri); }
+.mx { width: 100%; border-collapse: collapse; margin-top: 12px; font-size: 19px; }
+.mx th { font-weight: 600; font-size: 17px; padding: 8px 4px; border-bottom: 1px solid var(--line); text-align: center; }
+.mx th small { display: block; font-weight: 500; font-size: 13px; color: var(--pri); margin-top: 4px; }
+.mx th:first-child { text-align: left; color: var(--t2); font-weight: 500; }
+.mx td { padding: 15px 4px; border-bottom: 1px solid var(--line); text-align: center; } .mx td:first-child { text-align: left; font-weight: 500; }
+.mx tr:nth-child(even) td { background: #f7f9fc; }
+.ck { display: inline-grid; place-items: center; width: 34px; height: 34px; border-radius: 9px; border: 2px solid #b9c3d3; color: #fff; font-size: 16px; font-weight: 700; }
+.ck.on { background: var(--pri); border-color: var(--pri); }
+/* 2 · celular */
+.pill { display: inline-flex; align-items: center; gap: 8px; font-size: 15px; padding: 7px 14px; border-radius: 999px; background: #eef3fb; color: var(--pri); font-weight: 500; }
+.op { display: flex; align-items: center; gap: 16px; padding: 16px 18px; border-radius: 16px; border: 2px solid var(--line); margin-top: 12px; font-size: 18px; }
+.op b { width: 34px; height: 34px; border-radius: 50%; border: 2px solid #c7d0de; display: grid; place-items: center; font-size: 15px; color: var(--t2); }
+.op.on { border-color: var(--pri); background: #f2f6fd; } .op.on b { background: var(--pri); border-color: var(--pri); color: #fff; }
+.prog2 { height: 6px; border-radius: 3px; background: #edf1f6; margin-top: 10px; overflow: hidden; } .prog2 i { display: block; height: 100%; background: var(--pri); }
+.bt { position: absolute; left: 34px; right: 34px; bottom: 40px; text-align: center; padding: 20px; border-radius: 16px; background: var(--pri); color: #fff; font-size: 20px; font-weight: 600; }
+.area { margin-top: 18px; min-height: 260px; border-radius: 16px; border: 2px solid var(--pri); padding: 18px; font-size: 19px; line-height: 1.5; }
+.conf { position: absolute; left: 30px; right: 30px; top: 330px; padding: 28px; z-index: 4; text-align: center; }
+.veu { position: absolute; inset: 0; background: rgba(7,26,52,.45); z-index: 3; }
+/* 3 · painel 360 */
+.k4 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 16px; }
+.k4 .stat { min-height: 0; padding: 18px 20px; } .k4 .stat .v { font-size: 42px; }
+.pc { margin-top: 14px; padding: 24px 20px; display: flex; align-items: center; gap: 16px; }
+.pc .ch { color: var(--t2); font-size: 18px; transition: none; }
+.pc .nm2 { flex: 1; min-width: 0; } .pc .nm2 b { font-size: 21px; font-weight: 600; display: block; } .pc .nm2 span { font-size: 15px; color: var(--t2); }
+.pc .pr { width: 150px; } .pc .pr .h2 { display: flex; justify-content: space-between; align-items: baseline; font-size: 15px; color: var(--t2); } .pc .pr .h2 b { font-size: 23px; }
+.pc .pr .tr { height: 8px; border-radius: 4px; background: #edf1f6; margin-top: 4px; overflow: hidden; } .pc .pr .tr i { display: block; height: 100%; background: var(--pri); border-radius: 4px; }
+.pc .ce { text-align: center; width: 104px; } .pc .ce small { display: block; font-size: 14px; color: var(--t2); } .pc .ce b { font-size: 23px; }
+.pc .pdfb { font-size: 15px; font-weight: 500; padding: 9px 12px; border-radius: 12px; border: 1.5px solid var(--line); }
+.pend { font-size: 14px; padding: 7px 12px; border-radius: 999px; background: #eef1f6; color: var(--t2); }
+/* 4 · pessoa aberta */
+.sec { font-size: 14px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--t2); margin: 20px 0 10px; }
+.self { border-radius: 14px; background: #eef2f8; padding: 16px 18px; font-size: 17px; line-height: 1.5; }
+.self small { display: block; font-size: 13px; color: var(--t2); margin-bottom: 4px; }
+.bq { border-radius: 14px; border-left: 4px solid var(--pri); background: #fff; padding: 14px 18px; font-size: 17px; line-height: 1.5; margin-top: 10px; box-shadow: 0 4px 14px -8px rgba(7,26,52,.25); }
+/* 5 · pdf */
+.pdf { position: absolute; left: 110px; top: 110px; width: 700px; height: 940px; background: #fff; border-radius: 10px; padding: 56px; z-index: 6; box-shadow: 0 60px 120px -30px rgba(0,0,0,.8); font-family: 'Poppins'; color: #16161A; }
+.pdf .nums { display: grid; grid-template-columns: repeat(3, 1fr); background: #F6F7F9; border-radius: 10px; padding: 20px 22px; margin-top: 22px; }
+.pdf .nums b { font-size: 34px; } .pdf .nums small { display: block; font-size: 12.5px; color: #6B7280; }
+.pdf h5 { font-size: 18px; margin-top: 26px; } .pdf .qq { font-size: 13px; font-weight: 600; color: #6B7280; margin-top: 10px; } .pdf p { font-size: 15px; line-height: 1.5; margin-top: 4px; }
+.pdf .rod { position: absolute; left: 56px; right: 56px; bottom: 30px; display: flex; justify-content: space-between; font-size: 11px; color: #9CA3AF; }
+</style>
+</head>
+<body>
+<div id="stage">
+  <canvas class="fx" id="fundo" width="1080" height="1920"></canvas>
+  <div id="marca"><img src="img/atlas.svg" alt=""><span>Atlas 360</span><em>um produto NEXA</em></div>
+  <div id="prog"><i></i></div>
+  <div id="cap"><div class="mono k"></div><div class="disp t"></div></div>
+
+  <section class="cena cheia" id="s0"><div class="centro">
+    <svg class="selo" viewBox="0 0 98.59 100"><defs><linearGradient id="gA" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff"/><stop offset=".5" stop-color="#e8f0d0"/><stop offset="1" stop-color="#d4f969"/></linearGradient></defs><use href="#pA" fill="url(#gA)"/></svg>
+    <div class="txt"><div class="mono lime w" style="font-size:28px;margin-top:70px">Atlas 360</div>
+    <h2 class="disp"><span class="w">Amplie a visão</span><br><span class="w lime">sobre pessoas.</span></h2></div>
+  </div></section>
+
+  <!-- 1 · quem avalia quem -->
+  <section class="cena app" id="s1"><div class="janela">
+    <div class="barra"><span class="tile"><img src="img/atlas.svg" alt=""></span><span class="nm">Atlas<small>Avaliação 360</small></span><span class="pg">Quem avalia quem</span><span class="adm">ADMIN</span></div>
+    <div class="vista">
+      <div class="card" style="padding:22px"><div style="font-size:21px;font-weight:600">Avaliados</div><div class="sub" style="font-size:15px">Adicione as pessoas que serão avaliadas. Colaboradores e lideranças são importados automaticamente.</div>
+        <div class="inp"><div class="in" id="nome">Nome do avaliado...</div><span class="btn btn-p" id="b-add">Adicionar</span></div>
+        <div class="chips"><span class="chip">Fernanda Lima</span><span class="chip">Rafael Souza</span><span class="chip">Juliana Prates</span><span class="chip" id="chM">Marcos Teles</span></div></div>
+      <div class="card" style="padding:22px;margin-top:16px"><div style="font-size:21px;font-weight:600">Matriz de Avaliação</div>
+        <div class="sub" style="font-size:15px">6 avaliadores · <span id="nav">3</span> avaliados · <span id="nat">0</span> atribuições</div>
+        <table class="mx" id="mx"></table></div>
+    </div>
+  </div></section>
+
+  <!-- 2 · avaliador -->
+  <section class="cena" id="s2"><div class="fone"><div class="tela"><span class="ilha"></span>
+    <div class="pt" id="f1">
+      <div style="margin-top:20px"><span class="pill">Avaliando Fernanda Lima</span></div>
+      <div style="display:flex;justify-content:space-between;font-size:14px;color:var(--t2);margin-top:18px"><span id="pn">3/8</span><span>~2 min</span></div><div class="prog2"><i id="pb"></i></div>
+      <div id="q1"><div class="mono" style="font-size:13px;color:var(--t2);margin-top:30px;letter-spacing:.14em">Liderança</div>
+        <div style="font-size:25px;font-weight:600;line-height:1.3;margin-top:10px">Dá retorno claro e frequente sobre o meu trabalho.</div>
+        <div><div class="op"><b>1</b>Discordo totalmente</div><div class="op"><b>2</b>Discordo em parte</div><div class="op"><b>3</b>Neutro</div><div class="op"><b>4</b>Concordo em parte</div><div class="op" id="o5"><b>5</b>Concordo totalmente</div></div></div>
+      <div id="q2" style="position:absolute;left:34px;right:34px;top:150px"><div class="mono" style="font-size:13px;color:var(--t2);letter-spacing:.14em">Liderança</div>
+        <div style="font-size:25px;font-weight:600;line-height:1.3;margin-top:10px">O que a Fernanda faz de melhor como liderança?</div>
+        <div class="area" id="txt"></div><div class="sub" style="font-size:15px;margin-top:10px">Escreva com suas palavras.</div></div>
+      <div class="bt" id="b-prox">Próxima →</div>
+      <div class="veu" id="veu"></div>
+      <div class="card conf" id="conf"><div style="font-size:24px;font-weight:600">Enviar suas respostas?</div><div class="sub" style="font-size:16px">Depois do envio não é possível alterar.</div>
+        <div style="display:flex;gap:10px;margin-top:20px"><span class="btn btn-o" style="flex:1">Voltar</span><span class="btn btn-p" style="flex:1" id="b-env">Enviar</span></div></div>
+    </div>
+    <div class="pt" id="f3" style="text-align:center">
+      <div style="width:120px;height:120px;border-radius:50%;background:#e3f4ea;margin:280px auto 0;display:grid;place-items:center;font-size:60px;color:var(--c-good)" id="ok">✓</div>
+      <div style="font-size:34px;font-weight:600;margin-top:28px">Pronto. Obrigado!</div>
+      <div class="sub" style="font-size:18px;margin-top:14px">Sua avaliação foi enviada.</div>
+    </div>
+  </div></div></section>
+
+  <!-- 3 · painel 360 -->
+  <section class="cena app" id="s3"><div class="janela">
+    <div class="barra"><span class="tile"><img src="img/atlas.svg" alt=""></span><span class="nm">Atlas<small>Avaliação 360</small></span><span class="pg">Avaliação 360</span><span class="adm">ADMIN</span></div>
+    <div class="vista">
+      <div style="display:flex;align-items:flex-start;gap:12px"><div style="flex:1"><h3 class="ttl" style="font-size:27px">Avaliação 360 · Diretoria 2026</h3><div class="sub" style="font-size:15px">12 de 14 concluíram · rodada 2026.1</div></div><span class="btn btn-p" style="font-size:16px;padding:12px 16px">⤓ Baixar todos os PDFs</span></div>
+      <div class="k4">
+        <div class="stat tn-navy"><div class="l">Participação</div><div class="v"><span id="n86">0</span>%</div><div class="h">12 de 14 concluíram todas as etapas</div><div class="bar"><i id="pbar"></i></div></div>
+        <div class="stat tn-teal"><div class="l">Pessoas avaliadas</div><div class="v" id="n4">0</div><div class="h">3 com resultado liberado</div></div>
+        <div class="stat tn-sky"><div class="l">Média da diretoria</div><div class="v" id="n41">0</div><div class="h">numa escala de 1 a 5</div></div>
+        <div class="stat tn-amber"><div class="l">Maior distância</div><div class="v">+1,40</div><div class="h">entre como a pessoa se vê e como os pares a veem</div></div>
+      </div>
+      <div id="pcs"></div>
+    </div>
+  </div></section>
+
+  <!-- 4 · pessoa aberta -->
+  <section class="cena app" id="s4"><div class="janela">
+    <div class="barra"><span class="tile"><img src="img/atlas.svg" alt=""></span><span class="nm">Atlas<small>Avaliação 360</small></span><span class="pg">Avaliação 360</span><span class="adm">ADMIN</span></div>
+    <div class="vista">
+      <div class="card" id="exp" style="overflow:hidden">
+        <div class="pc" style="margin:0;border-bottom:1px solid var(--line)" id="hdF"></div>
+        <div style="padding:6px 22px 22px" id="corpo">
+          <div class="sec">Como Fernanda se vê</div>
+          <div class="self"><small>Quais são as suas maiores fortalezas nesta função?</small>Organizo bem as prioridades do time, mas sinto que ainda delego pouco.</div>
+          <div class="sec">O que a Fernanda faz de melhor como liderança?</div>
+          <div class="bq">Escuta o time antes de decidir e dá contexto para as prioridades.</div>
+          <div class="bq">Cobra resultado sem perder a mão. Dá para errar e aprender com ela.</div>
+          <div class="bq">Defende a equipe nas reuniões com a diretoria.</div>
+          <div class="sec">Onde a Fernanda pode crescer?</div>
+          <div class="bq">Poderia delegar mais. Às vezes ela mesma resolve o que o time daria conta.</div>
+          <div class="bq">Retornos mais frequentes, não só no fechamento do trimestre.</div>
+        </div>
+      </div>
+      <div class="sub" id="nota" style="font-size:15px;text-align:center;margin-top:16px">O resultado só aparece a partir de 3 avaliações de pares: abaixo disso ficaria fácil demais deduzir quem escreveu o quê.</div>
+    </div>
+  </div></section>
+
+  <!-- 5 · pdf -->
+  <section class="cena app" id="s5"><div class="janela">
+    <div class="barra"><span class="tile"><img src="img/atlas.svg" alt=""></span><span class="nm">Atlas<small>Avaliação 360</small></span><span class="pg">Avaliação 360</span><span class="adm">ADMIN</span></div>
+    <div class="vista"><div class="card" style="padding:0" id="hdF2"><div class="pc" style="margin:0"></div></div><div class="card" style="height:600px;margin-top:14px"></div></div>
+    <div class="veu" id="veu5"></div>
+    <div class="pdf" id="pdf">
+      <div style="font-size:13px;color:#6B7280">Sua empresa</div>
+      <div style="font-size:28px;font-weight:700;margin-top:2px">Avaliação 360 · Diretoria 2026</div>
+      <div style="font-size:22px;font-weight:700;margin-top:14px">Fernanda Lima</div><div style="font-size:15px;color:#6B7280">Diretora Comercial</div>
+      <div class="nums"><div><b>4,45</b><small>média dos pares (5 avaliações)</small></div><div><b>4</b><small>autoavaliação</small></div><div><b>−0,45</b><small>diferença</small></div></div>
+      <div style="font-size:11.5px;color:#9CA3AF;margin-top:10px">Escala de 1 a 5. Discordo totalmente · Discordo em parte · Neutro · Concordo em parte · Concordo totalmente</div>
+      <h5>Autoavaliação</h5><div class="qq">Quais são as suas maiores fortalezas nesta função?</div><p>Organizo bem as prioridades do time, mas sinto que ainda delego pouco.</p>
+      <h5>O que a Fernanda faz de melhor como liderança?</h5><p>1. Escuta o time antes de decidir e dá contexto para as prioridades.</p><p>2. Cobra resultado sem perder a mão. Dá para errar e aprender com ela.</p><p>3. Defende a equipe nas reuniões com a diretoria.</p>
+      <h5>Onde a Fernanda pode crescer?</h5><p>1. Poderia delegar mais. Às vezes ela mesma resolve o que o time daria conta.</p>
+      <div class="rod"><span>As avaliações dos pares são apresentadas sem identificação de quem as escreveu.</span><span>1/2</span></div>
+    </div>
+    <div class="toast" id="toast"><i>✓</i>PDF gerado · um arquivo por pessoa avaliada</div>
+  </div></section>
+
+  <section class="cena cheia" id="s6"><div class="centro">
+    <svg class="selo" viewBox="0 0 98.59 100" style="width:220px;height:224px"><use href="#pA" fill="url(#gA)"/></svg>
+    <h1 class="disp w">Atlas 360</h1>
+    <p class="w">Feedback que vira caminho.</p>
+    <div><span class="cta w">Agende uma demonstração</span></div>
+    <div class="mono w" style="font-size:26px;color:var(--dim2);margin-top:40px">nexatech.ia.br</div>
+    <div class="mono w" style="font-size:20px;color:var(--dim2);margin-top:70px">um produto NEXA</div>
+  </div></section>
+
+  <svg width="0" height="0" style="position:absolute"><defs><path id="pA" d=""/></defs></svg>
+  <svg id="cur" viewBox="0 0 24 24"><path d="M4 2.5v17.2l4.6-4.4 3 6.6 3-1.4-3-6.4h6.4z"/></svg>
+  <i id="toque"></i><i id="rip"></i>
+  <canvas class="fx" id="grao" width="540" height="960" style="z-index:60;opacity:.06;mix-blend-mode:overlay"></canvas>
+</div>
+
+<script>
+const AVALIADORES = ['Fernanda Lima', 'Rafael Souza', 'Juliana Prates', 'Marcos Teles', 'Beatriz Nunes', 'Thiago Rocha'];
+const AVALIADOS = ['Fernanda', 'Rafael', 'Juliana', 'Marcos'];
+// Atribuições iniciais (linha × coluna); a coluna Marcos e duas casas da Juliana entram nos cliques.
+const INI = [[0, 1, 1, 0], [1, 0, 1, 0], [1, 1, 0, 0], [1, 1, 0, 0], [1, 1, 1, 0], [1, 1, 0, 0]];
+const PESSOAS = [
+  { n: 'Fernanda Lima', c: 'Diretora Comercial', p: 4.45, s: 4, g: -0.45 },
+  { n: 'Rafael Souza', c: 'Diretor de Operações', p: 3.60, s: 5, g: 1.40 },
+  { n: 'Juliana Prates', c: 'Diretora de Pessoas', p: 4.20, s: 4, g: -0.20 },
+  { n: 'Marcos Teles', c: 'Diretor Financeiro', pend: '2 de 5 avaliações — falta 1 para liberar' },
+];
+const corNota = pct => pct >= 85 ? 'hsl(158 60% 32%)' : pct >= 70 ? 'hsl(150 52% 38%)' : pct >= 55 ? 'hsl(34 90% 44%)' : 'hsl(18 82% 48%)';
+function gapHtml(g) { const lbl = Math.abs(g) < .25 ? 'leitura alinhada' : g > 0 ? 'se vê acima' : 'se vê abaixo';
+  const cor = Math.abs(g) < 1 ? 'hsl(150 52% 38%)' : g > 0 ? 'hsl(18 82% 48%)' : 'hsl(34 90% 44%)';
+  return `<div class="ce"><small>${lbl}</small><b style="color:${cor}">${g > 0 ? '+' : g < 0 ? '−' : ''}${Math.abs(g).toFixed(2).replace('.', ',')}</b></div>`; }
+function linha(P, i, aberto) {
+  if (P.pend) return `<span class="ch">›</span><div class="nm2"><b>${P.n}</b><span>${P.c}</span></div><span class="pend">${P.pend}</span><span class="pdfb" style="opacity:.4">⤓ PDF</span>`;
+  const pct = (P.p - 1) / 4 * 100;
+  return `<span class="ch" style="display:inline-block;transform:rotate(${aberto ? 90 : 0}deg)">›</span><div class="nm2"><b>${P.n}</b><span>${P.c}</span></div>
+    <div class="pr"><div class="h2"><span>pares</span><b style="color:${corNota(pct)}">${P.p.toFixed(2).replace('.', ',')}</b></div><div class="tr"><i data-w="${pct}"></i></div></div>
+    <div class="ce"><small>autoavaliação</small><b>${P.s}</b></div>${gapHtml(P.g)}<span class="pdfb" id="${i === 0 && aberto ? 'b-pdf' : ''}">⤓ PDF</span>`;
+}
+window.REEL = {
+  DUR: 41.0,
+  CENAS: { s0: [0, 3.0], s1: [3.0, 9.4], s2: [9.4, 16.4], s3: [16.4, 24.4], s4: [24.4, 31.6], s5: [31.6, 37.0], s6: [37.0, 41.0] },
+  LEGENDAS: [
+    [3.0, 9.4, '01 · Monte', 'Defina <span class="lime">quem avalia quem.</span>'],
+    [9.4, 16.4, '02 · Avalie', 'Cada pessoa avalia <span class="lime">pelo celular.</span>'],
+    [16.4, 24.4, '03 · Compare', 'Como se vê × <span class="lime">como é vista.</span>'],
+    [24.4, 31.6, '04 · Entenda', 'O que os pares dizem, <span class="lime">sem assinatura.</span>'],
+    [31.6, 37.0, '05 · Devolva', 'Um PDF por pessoa, <span class="lime">pronto para a conversa.</span>'],
+  ],
+  SONS: {"ping": [4.7, 15.4, 33.2], "tecla": [[3.75, 4.4], [11.8, 14.0]], "pulso": [17.6, 18.2]},
+  PONTEIRO: [[3.3, 9.2, 'mouse'], [9.7, 15.5, 'toque'], [21.6, 24.2, 'mouse'], [24.6, 25.4, 'mouse'], [31.8, 33.0, 'mouse']],
+  CURSOR: [
+    [3.3, [700, 1100]], [3.6, '#nome', 1], [4.65, '#b-add', 1], [5.5, '#tdM', 1], [6.4, '#c42', 1], [7.0, '#c52', 1], [8.2, [900, 1600]],
+    [9.7, [560, 1500]], [10.8, '#o5', 1], [11.2, '#b-prox', 1], [12.4, [560, 1300]], [14.4, '#b-prox', 1], [15.0, '#b-env', 1],
+    [21.6, [760, 1500]], [23.4, '#pc0', 0], [24.9, '#hdF', 1], [25.4, [940, 1650]],
+    [31.8, [760, 1300]], [32.2, '#b-pdf', 1], [33.0, [960, 1650]],
+  ],
+  INIT() {
+    document.getElementById('pA').setAttribute('d', ATLAS_D);
+    $('#mx').innerHTML = '<tr><th>Avaliador ↓ / Avaliado →</th>' + AVALIADOS.map((a, j) => `<th ${j === 3 ? 'id="thM"' : ''}>${a}<small ${j === 3 ? 'id="tdM"' : ''}>Todos | Nenhum</small></th>`).join('') + '</tr>' +
+      AVALIADORES.map((a, i) => `<tr><td>${a}</td>` + AVALIADOS.map((_, j) => `<td><span class="ck" id="c${i}${j}">✓</span></td>`).join('') + '</tr>').join('');
+    $('#pcs').innerHTML = PESSOAS.map((P, i) => `<div class="card pc" id="pc${i}">${linha(P, i, false)}</div>`).join('');
+    $('#hdF').innerHTML = linha(PESSOAS[0], 0, true); $('#hdF2 .pc').innerHTML = linha(PESSOAS[0], 0, true);
+    $('#hdF .pdfb').removeAttribute('id'); $$('#hdF .tr i, #hdF2 .tr i').forEach(i => i.style.width = i.dataset.w + '%');
+  },
+  CENA: {
+    s0(lt) { const s = $('#s0'), k = eo(lin(lt, .1, 1.1)), selo = s.querySelector('.selo');
+      selo.style.transform = `scale(${.6 + .4 * back(k)}) rotate(${(1 - k) * -10}deg)`; selo.style.opacity = k; selo.style.filter = `drop-shadow(0 0 ${30 + 20 * Math.sin(lt * 3)}px rgba(212,249,105,.45))`;
+      palavras(s.querySelector('.txt'), lt, .55); },
+    s1(lt) {
+      const on = lt > .6 && lt < 1.65; $('#nome').classList.toggle('on', on);
+      if (on) digita($('#nome'), 'Marcos Teles', lin(lt, .75, 1.4), true); else $('#nome').textContent = 'Nome do avaliado...';
+      const ad = eo(lin(lt, 1.7, 2.0)); $('#chM').style.opacity = ad; $('#chM').style.transform = `scale(${.6 + .4 * back(ad)})`;
+      $('#nav').textContent = lt > 1.7 ? 4 : 3;
+      const colM = lt > 1.75; $('#thM').style.opacity = colM ? 1 : .15;
+      let n = 0;
+      for (let i = 0; i < 6; i++) for (let j = 0; j < 4; j++) {
+        let v = INI[i][j]; const el = $(`#c${i}${j}`);
+        if (j === 3) { el.style.opacity = colM ? 1 : .15; if (lt > 2.5 + i * .07 && i !== 3) v = 1; }
+        if ((i === 4 && j === 2 && lt > 3.4) || (i === 5 && j === 2 && lt > 4.0)) v = 1;
+        el.classList.toggle('on', !!v); n += v;
+        const pk = j === 3 && i !== 3 ? lin(lt, 2.5 + i * .07, 2.75 + i * .07) : (i === 4 && j === 2) ? lin(lt, 3.4, 3.65) : (i === 5 && j === 2) ? lin(lt, 4.0, 4.25) : 1;
+        el.style.transform = `scale(${pk < 1 ? .7 + .3 * back(pk) : 1})`;
+      }
+      $('#nat').textContent = n;
+    },
+    s2(lt) {
+      $('#o5').classList.toggle('on', lt > 1.4);
+      const q2 = lt > 1.95; $('#q1').style.opacity = 1 - lin(lt, 1.8, 2.0); $('#q1').style.transform = `translateX(${-lin(lt, 1.8, 2.0) * 60}px)`;
+      $('#q2').style.opacity = lin(lt, 1.95, 2.2); $('#q2').style.transform = `translateX(${(1 - lin(lt, 1.95, 2.2)) * 60}px)`;
+      $('#pn').textContent = q2 ? '8/8' : '3/8'; $('#pb').style.width = (q2 ? 100 : 37.5) * eo(lin(lt, .2, .6)) + '%';
+      digita($('#txt'), 'Escuta o time antes de decidir e dá contexto para as prioridades. Dá para errar e aprender com ela.', lin(lt, 2.4, 4.6), lt > 2.2 && lt < 5.0);
+      $('#b-prox').textContent = q2 ? 'Revisar e enviar' : 'Próxima →';
+      const c = eo(lin(lt, 5.1, 5.35)) * (1 - lin(lt, 5.75, 5.9)); $('#conf').style.opacity = c; $('#veu').style.opacity = c; $('#conf').style.transform = `scale(${.94 + .06 * c})`;
+      vista($('#f1'), 1 - lin(lt, 5.85, 6.0)); vista($('#f3'), lin(lt, 5.95, 6.2));
+      const ok = eo(lin(lt, 6.0, 6.5)); $('#ok').style.transform = `scale(${.4 + .6 * back(ok)})`;
+    },
+    s3(lt) {
+      $$('#s3 .stat').forEach((c, i) => pop(c, eo(lin(lt, .1 + i * .12, .6 + i * .12))));
+      conta($('#n86'), 86, lin(lt, .3, 1.5)); $('#pbar').style.width = 86 * eo(lin(lt, .3, 1.5)) + '%'; conta($('#n4'), 4, lin(lt, .4, 1.2)); conta($('#n41'), 4.1, lin(lt, .5, 1.6), 1);
+      $$('#pcs .pc').forEach((c, i) => { const k = eo(lin(lt, 1.4 + i * .2, 1.9 + i * .2)); c.style.opacity = k; c.style.transform = `translateX(${(1 - k) * 60}px)`; });
+      $$('#pcs .tr i').forEach((b, i) => b.style.width = +b.dataset.w * eio(lin(lt, 1.8 + i * .2, 2.6 + i * .2)) + '%');
+      const hl = lin(lt, 6.9, 7.1); $('#pc0').style.background = hl ? `rgba(21,73,141,${.06 * hl})` : '#fff';
+      const g = lin(lt, 4.0, 4.3) * (1 - lin(lt, 5.6, 5.9)); $$('#pc1 .ce')[1].style.transform = `scale(${1 + .25 * eo(g)})`;
+    },
+    s4(lt) {
+      const k = eo(lin(lt, .55, 1.0)); $('#hdF .ch').style.transform = `rotate(${90 * k}deg)`;
+      $$('#corpo > *').forEach((c, i) => show(c, eo(lin(lt, .8 + i * .3, 1.3 + i * .3)), 30));
+      show($('#nota'), eo(lin(lt, 4.6, 5.1)));
+    },
+    s5(lt) {
+      $('#b-pdf') && ($('#b-pdf').style.background = lt > .5 && lt < .75 ? '#eef3fb' : '#fff');
+      const p = eo(lin(lt, .8, 1.5)); $('#pdf').style.opacity = p; $('#pdf').style.transform = `translateY(${(1 - p) * 360}px) rotate(${(1 - p) * 6 - 1.5}deg) scale(${.82 + .18 * p})`; $('#veu5').style.opacity = p * .9;
+      const tt = eo(lin(lt, 1.6, 1.9)); $('#toast').style.opacity = tt; $('#toast').style.transform = `translateY(${(1 - tt) * -30}px)`;
+    },
+    s6(lt) { const s = $('#s6'), k = eo(lin(lt, .1, .9)), selo = s.querySelector('.selo');
+      selo.style.transform = `scale(${.7 + .3 * back(k)})`; selo.style.opacity = k; selo.style.filter = `drop-shadow(0 0 ${30 + 20 * Math.sin(lt * 3)}px rgba(212,249,105,.45))`;
+      palavras(s, lt, .4, .15); },
+  },
+};
+</script>
+<script src="atlasmark.js"></script>
+<script src="motor.js"></script>
+</body>
+</html>

@@ -1,0 +1,355 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Reel Atlas Clima</title>
+<link rel="stylesheet" href="fonts.css">
+<link rel="stylesheet" href="poppins.css">
+<link rel="stylesheet" href="kit.css">
+<style>
+/* 1 · montar */
+.tpl { position: absolute; left: 28px; top: 196px; width: 470px; padding: 10px; z-index: 4; }
+.tpl div { padding: 14px 16px; border-radius: 12px; font-size: 18px; }
+.tpl div.on { background: #eef3fb; color: var(--pri); font-weight: 600; }
+.cat { margin-top: 14px; padding: 18px 22px; }
+.cat .h { display: flex; align-items: center; gap: 12px; }
+.cat .h b { font-size: 21px; font-weight: 600; } .cat .h .chip { margin-left: auto; }
+.cat .q { font-size: 16px; color: var(--t2); margin-top: 8px; padding-left: 14px; border-left: 2px solid var(--line); }
+.tog { display: flex; align-items: center; gap: 12px; margin-top: 12px; font-size: 16px; color: var(--t1); }
+.sw { width: 54px; height: 30px; border-radius: 15px; background: #d5dbe5; position: relative; }
+.sw i { position: absolute; left: 3px; top: 3px; width: 24px; height: 24px; border-radius: 50%; background: #fff; box-shadow: 0 2px 6px rgba(0,0,0,.2); }
+.campo { display: flex; gap: 14px; margin-top: 14px; }
+.campo > div { flex: 1; padding: 14px 18px; } .campo label { font-size: 14px; color: var(--t2); display: block; } .campo span { font-size: 21px; font-weight: 500; }
+/* 2 · links */
+.lk { padding: 26px; margin-top: 20px; }
+.url { display: flex; gap: 12px; margin-top: 16px; } .url .u { flex: 1; padding: 16px 18px; border-radius: 14px; background: #f1f4f9; font-size: 19px; color: var(--t1); font-family: 'JetBrains Mono'; }
+.qr { width: 400px; height: 400px; margin: 26px auto 0; display: grid; grid-template-columns: repeat(25, 1fr); gap: 1px; padding: 14px; background: #fff; border-radius: 18px; border: 1px solid var(--line); }
+.qr i { background: var(--navy); border-radius: 1px; }
+/* 3 · celular */
+.pill { display: inline-flex; align-items: center; gap: 8px; font-size: 15px; padding: 7px 14px; border-radius: 999px; background: #eef3fb; color: var(--pri); font-weight: 500; }
+.op { display: flex; align-items: center; gap: 16px; padding: 16px 18px; border-radius: 16px; border: 2px solid var(--line); margin-top: 12px; font-size: 18px; }
+.op b { width: 34px; height: 34px; border-radius: 50%; border: 2px solid #c7d0de; display: grid; place-items: center; font-size: 15px; color: var(--t2); }
+.op.on { border-color: var(--pri); background: #f2f6fd; } .op.on b { background: var(--pri); border-color: var(--pri); color: #fff; }
+.enps { display: grid; grid-template-columns: repeat(6, 1fr); gap: 10px; margin-top: 22px; }
+.enps b { height: 62px; border-radius: 14px; display: grid; place-items: center; font-size: 21px; font-weight: 600; border: 2px solid transparent; }
+.prog2 { height: 6px; border-radius: 3px; background: #edf1f6; margin-top: 10px; overflow: hidden; } .prog2 i { display: block; height: 100%; background: var(--pri); }
+.bt { position: absolute; left: 34px; right: 34px; bottom: 40px; text-align: center; padding: 20px; border-radius: 16px; background: var(--pri); color: #fff; font-size: 20px; font-weight: 600; }
+/* 4 · painel */
+.hero { display: flex; gap: 18px; margin-top: 16px; }
+.anel { width: 330px; padding: 22px; text-align: center; }
+.anel svg { width: 230px; height: 230px; }
+.band { display: inline-block; margin-top: 6px; font-size: 16px; font-weight: 600; padding: 6px 14px; border-radius: 999px; background: #e3f4ea; color: var(--c-good); }
+.k4 { flex: 1; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.k4 .stat { min-height: 0; padding: 18px; } .k4 .stat .v { font-size: 38px; } .k4 .stat .h { font-size: 13px; }
+.tabs { display: flex; gap: 6px; margin-top: 18px; padding: 6px; background: #e9edf4; border-radius: 14px; width: max-content; }
+.tabs span { font-size: 16px; padding: 9px 16px; border-radius: 10px; color: var(--t2); } .tabs span.on { background: #fff; color: var(--t1); font-weight: 600; box-shadow: 0 2px 8px rgba(7,26,52,.08); }
+.lista { padding: 20px 24px; margin-top: 14px; } .lista h4, .bars h4, .heat h4, .radar h4 { font-size: 20px; font-weight: 600; }
+.it { display: flex; gap: 16px; align-items: center; padding: 12px 0; border-top: 1px solid var(--line); font-size: 17px; }
+.it:first-of-type { border-top: 0; } .it b { font-size: 24px; width: 56px; }
+.bars { padding: 20px 24px; margin-top: 14px; }
+.br { display: grid; grid-template-columns: 150px 1fr 60px; gap: 14px; align-items: center; margin-top: 14px; font-size: 17px; }
+.br .t { height: 26px; border-radius: 8px; background: #eef1f6; overflow: hidden; } .br .t i { display: block; height: 100%; border-radius: 8px; }
+.br b { text-align: right; }
+/* 5 · lideranças */
+.heat { padding: 20px 22px; margin-top: 16px; }
+.hm { display: grid; grid-template-columns: 210px repeat(4, 1fr); gap: 8px; margin-top: 14px; align-items: center; }
+.hm .c { font-size: 15px; color: var(--t2); } .hm .l { font-size: 15px; font-weight: 600; text-align: center; }
+.hm i { height: 62px; border-radius: 12px; display: grid; place-items: center; font-style: normal; color: #fff; font-weight: 600; font-size: 19px; }
+.radar { padding: 20px 22px; margin-top: 16px; } .radar svg { width: 100%; height: 360px; }
+/* 6 · comentários */
+.busca { display: flex; gap: 10px; margin-top: 18px; } .busca .in { flex: 1; padding: 15px 18px; border-radius: 14px; background: #fff; border: 1.5px solid var(--line); font-size: 18px; color: #98a2b5; }
+.busca .in.on { border-color: var(--pri); color: var(--t1); }
+.fl { display: flex; gap: 8px; margin-top: 12px; } .fl span { font-size: 15px; padding: 8px 14px; border-radius: 999px; border: 1.5px solid var(--line); background: #fff; color: var(--t2); }
+.fl span.on { background: var(--pri); border-color: var(--pri); color: #fff; }
+.cm { padding: 20px 22px; margin-top: 14px; } .cm p { font-size: 18px; line-height: 1.5; } .cm .ft { display: flex; gap: 8px; margin-top: 12px; }
+.nota { background: #fde7e1 !important; color: var(--c-low) !important; font-weight: 600 !important; }
+mark { background: #fff1b8; color: inherit; border-radius: 4px; padding: 0 2px; }
+/* 7 · exportar */
+.dlg { position: absolute; left: 90px; right: 90px; top: 330px; padding: 30px; z-index: 4; }
+.dlg .op2 { display: flex; gap: 16px; align-items: center; padding: 18px; border-radius: 16px; border: 1.5px solid var(--line); margin-top: 14px; font-size: 19px; font-weight: 500; }
+.dlg .op2 i { width: 48px; height: 48px; border-radius: 12px; display: grid; place-items: center; font-style: normal; font-weight: 700; font-size: 14px; color: #fff; }
+.veu { position: absolute; inset: 0; background: rgba(7,26,52,.45); z-index: 3; }
+.pdf { position: absolute; left: 160px; top: 140px; width: 600px; height: 820px; background: #fff; border-radius: 12px; padding: 40px; z-index: 6; box-shadow: 0 60px 120px -30px rgba(0,0,0,.8); }
+.pdf .hd { height: 120px; margin: -40px -40px 26px; border-radius: 12px 12px 0 0; background: linear-gradient(135deg, #071A34, #15498D); color: #fff; padding: 28px 40px; }
+.pdf .hd b { display: block; font-size: 26px; } .pdf .hd span { font-size: 15px; opacity: .75; }
+.pdf .ln { height: 12px; border-radius: 6px; background: #eef1f6; margin-top: 12px; }
+</style>
+</head>
+<body>
+<div id="stage">
+  <canvas class="fx" id="fundo" width="1080" height="1920"></canvas>
+  <div id="marca"><img src="img/atlas.svg" alt=""><span>Atlas Clima</span><em>um produto NEXA</em></div>
+  <div id="prog"><i></i></div>
+  <div id="cap"><div class="mono k"></div><div class="disp t"></div></div>
+
+  <!-- 0 · abertura -->
+  <section class="cena cheia" id="s0"><div class="centro">
+    <svg class="selo" viewBox="0 0 98.59 100"><defs><linearGradient id="gA" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff"/><stop offset=".5" stop-color="#e8f0d0"/><stop offset="1" stop-color="#d4f969"/></linearGradient></defs><use href="#pA" fill="url(#gA)"/></svg>
+    <div class="txt"><div class="mono lime w" style="font-size:28px;margin-top:70px">Atlas Clima</div>
+    <h2 class="disp"><span class="w">O clima</span> <span class="w">da sua empresa,</span><br><span class="w lime">medido sem ruído.</span></h2></div>
+  </div></section>
+
+  <!-- 1 · montar -->
+  <section class="cena app" id="s1"><div class="janela">
+    <div class="barra"><span class="tile"><img src="img/atlas.svg" alt=""></span><span class="nm">Atlas<small>Pesquisa de clima</small></span><span class="pg">Pesquisa</span><span class="adm">ADMIN</span></div>
+    <div class="vista">
+      <h3 class="ttl">Pesquisa</h3><div class="sub">Monte o questionário, defina as lideranças avaliadas e controle o prazo.</div>
+      <span class="btn btn-o" id="b-tpl" style="margin-top:16px">＋ Nova a partir de template…</span>
+      <div class="card tpl" id="tpl"><div class="on" id="t1">Pesquisa de Clima 2026</div><div>Clima + Lideranças</div><div>Pulso trimestral</div></div>
+      <div id="cats">
+        <div class="card cat"><div class="h"><b>Liderança e Gestão</b><span class="chip">6 perguntas</span></div>
+          <div class="q">Minha liderança dá retorno claro sobre o meu trabalho.</div>
+          <div class="tog"><span class="sw" id="sw"><i></i></span>Repetir esta categoria para cada líder avaliado</div></div>
+        <div class="card cat"><div class="h"><b>Comunicação</b><span class="chip">4 perguntas</span></div><div class="q">Recebo as informações de que preciso para fazer bem o meu trabalho.</div></div>
+        <div class="card cat"><div class="h"><b>Reconhecimento</b><span class="chip">3 perguntas</span></div><div class="q">Meu esforço é reconhecido quando faço um bom trabalho.</div></div>
+        <div class="card cat"><div class="h"><b>Bem-estar</b><span class="chip">4 perguntas</span></div><div class="q">Consigo equilibrar o trabalho e a vida pessoal.</div></div>
+        <div class="campo"><div class="card"><label>Rodada</label><span id="rod"></span></div><div class="card"><label>Prazo</label><span>30/10/2026</span></div></div>
+      </div>
+    </div>
+  </div></section>
+
+  <!-- 2 · links -->
+  <section class="cena app" id="s2"><div class="janela">
+    <div class="barra"><span class="tile"><img src="img/atlas.svg" alt=""></span><span class="nm">Atlas<small>Pesquisa de clima</small></span><span class="pg">Links</span><span class="adm">ADMIN</span></div>
+    <div class="vista">
+      <h3 class="ttl">Links</h3><div class="sub">É por aqui que a pesquisa chega nas pessoas.</div>
+      <div class="card lk" id="lk"><div style="font-size:22px;font-weight:600">Link aberto</div>
+        <div class="sub">Um endereço só para toda a empresa: cada pessoa responde de forma anônima, sem cadastro.</div>
+        <div class="url"><span class="u">atlas.app/s/clima-2026</span><span class="btn btn-p" id="b-cop" style="min-width:150px">Copiar</span></div>
+        <div class="qr" id="qr"></div>
+        <div class="sub" style="text-align:center;margin-top:12px">Abrir o QR code para imprimir ou projetar</div></div>
+    </div>
+  </div></section>
+
+  <!-- 3 · celular -->
+  <section class="cena" id="s3"><div class="fone"><div class="tela"><span class="ilha"></span>
+    <div class="pt" id="f1">
+      <div style="margin-top:60px;font-size:15px;color:var(--t2)">Sua empresa</div>
+      <div style="font-size:34px;font-weight:600;line-height:1.15;margin-top:6px">Pesquisa de Clima 2026</div>
+      <div style="display:flex;gap:8px;margin-top:18px"><span class="pill">◷ cerca de 4 min</span><span class="pill">⛨ Respostas anônimas</span></div>
+      <div class="card" style="margin-top:28px;padding:24px"><div style="font-size:14px;color:var(--t2)">Vamos começar por</div><div style="font-size:24px;font-weight:600">A organização</div>
+        <div class="sub" style="font-size:16px">Responda pensando na empresa como um todo, não numa pessoa específica.</div><div style="font-size:14px;color:var(--t2);margin-top:12px">12 perguntas · cerca de 4 min</div></div>
+      <div class="bt" id="b-com">Começar</div>
+    </div>
+    <div class="pt" id="f2">
+      <div style="margin-top:20px"><span class="pill">A organização</span></div>
+      <div style="display:flex;justify-content:space-between;font-size:14px;color:var(--t2);margin-top:18px"><span id="pn">5/12</span><span>~3 min</span></div><div class="prog2"><i id="pb"></i></div>
+      <div id="q1"><div class="mono" style="font-size:13px;color:var(--t2);margin-top:30px;letter-spacing:.14em">Comunicação</div>
+        <div style="font-size:25px;font-weight:600;line-height:1.3;margin-top:10px">Recebo as informações de que preciso para fazer bem o meu trabalho.</div>
+        <div id="ops"><div class="op"><b>1</b>Discordo totalmente</div><div class="op"><b>2</b>Discordo em parte</div><div class="op"><b>3</b>Neutro</div><div class="op" id="o4"><b>4</b>Concordo em parte</div><div class="op"><b>5</b>Concordo totalmente</div></div></div>
+      <div id="q2" style="position:absolute;left:34px;right:34px;top:150px"><div class="mono" style="font-size:13px;color:var(--t2);letter-spacing:.14em">eNPS</div>
+        <div style="font-size:25px;font-weight:600;line-height:1.3;margin-top:10px">De 0 a 10, o quanto você recomendaria a empresa como um bom lugar para trabalhar?</div>
+        <div class="enps" id="enps"></div>
+        <div style="display:flex;justify-content:space-between;font-size:14px;color:var(--t2);margin-top:12px"><span>Nada provável</span><span>Extremamente provável</span></div></div>
+      <div class="bt" id="b-prox">Próxima →</div>
+    </div>
+    <div class="pt" id="f3" style="text-align:center">
+      <div style="width:120px;height:120px;border-radius:50%;background:#e3f4ea;margin:250px auto 0;display:grid;place-items:center;font-size:60px;color:var(--c-good)" id="ok">✓</div>
+      <div style="font-size:34px;font-weight:600;margin-top:28px">Pronto. Obrigado!</div>
+      <div class="sub" style="font-size:18px;margin-top:14px">Sua resposta foi enviada. O que você escreveu chega ao RH sem o seu nome: o que é lido é o conjunto, nunca a resposta de uma pessoa.</div>
+    </div>
+  </div></div></section>
+
+  <!-- 4 · painel -->
+  <section class="cena app" id="s4"><div class="janela">
+    <div class="barra"><span class="tile"><img src="img/atlas.svg" alt=""></span><span class="nm">Atlas<small>Pesquisa de clima</small></span><span class="pg">Resultado</span><span class="adm">ADMIN</span></div>
+    <div class="vista">
+      <h3 class="ttl" style="font-size:28px">Pesquisa de Clima 2026</h3><div class="sub" style="font-size:16px">18 pessoas responderam de 23 convidadas · rodada 2026.1</div>
+      <div class="hero">
+        <div class="card anel" id="anel"><svg viewBox="0 0 230 230"><circle cx="115" cy="115" r="96" fill="none" stroke="#edf1f6" stroke-width="18"/><circle id="arc" cx="115" cy="115" r="96" fill="none" stroke="hsl(150 52% 38%)" stroke-width="18" stroke-linecap="round" transform="rotate(-90 115 115)" stroke-dasharray="603" stroke-dashoffset="603"/>
+          <text x="115" y="122" text-anchor="middle" font-family="Poppins" font-weight="700" font-size="64" fill="#071A34" id="n74">0</text><text x="115" y="156" text-anchor="middle" font-family="Poppins" font-size="17" fill="#64708a">de 100</text></svg>
+          <div class="band" id="band">Saudável</div><div class="sub" style="font-size:14px">Média 3,8 numa escala de 1 a 5</div></div>
+        <div class="k4">
+          <div class="stat tn-navy"><div class="l">Participação</div><div class="v"><span id="n78">0</span>%</div><div class="h">18 de 23 · 5 pendentes</div><div class="bar"><i id="pbar"></i></div></div>
+          <div class="stat tn-teal"><div class="l">eNPS</div><div class="v" id="nenps">0</div><div class="h">Bom · 45% promotores, 13% detratores</div></div>
+          <div class="stat tn-sky"><div class="l">🏆 Melhor resultado</div><div class="v">4,6</div><div class="h">Relação com a liderança direta</div></div>
+          <div class="stat tn-coral"><div class="l">⚠ Ponto de atenção</div><div class="v">2,9</div><div class="h">Reconhecimento pelo trabalho</div></div>
+        </div>
+      </div>
+      <div class="tabs"><span class="on" id="tb1">Visão geral</span><span>Perguntas</span><span id="tb3">Áreas</span><span>Lideranças</span><span>Comentários</span></div>
+      <div class="card lista" id="agir"><h4>Onde agir primeiro</h4>
+        <div class="it"><b style="color:var(--c-low)">2,9</b>Meu esforço é reconhecido quando faço um bom trabalho.</div>
+        <div class="it"><b style="color:var(--c-mid)">3,1</b>A carga de trabalho da minha equipe é adequada.</div>
+        <div class="it"><b style="color:var(--c-mid)">3,3</b>As áreas trocam informação quando precisam.</div></div>
+      <div class="card bars" id="areas"><h4>Clima por área</h4>
+        <div class="br"><span>Produto</span><div class="t"><i data-w="84" style="background:var(--c-high)"></i></div><b>84</b></div>
+        <div class="br"><span>Comercial</span><div class="t"><i data-w="76" style="background:var(--c-good)"></i></div><b>76</b></div>
+        <div class="br"><span>Pessoas</span><div class="t"><i data-w="72" style="background:var(--c-good)"></i></div><b>72</b></div>
+        <div class="br"><span>Financeiro</span><div class="t"><i data-w="61" style="background:var(--c-mid)"></i></div><b>61</b></div>
+        <div class="br"><span>Operações</span><div class="t"><i data-w="52" style="background:var(--c-low)"></i></div><b>52</b></div>
+        <div class="sub" style="font-size:14px;margin-top:14px">Cada área com pelo menos 3 pessoas.</div></div>
+    </div>
+  </div></section>
+
+  <!-- 5 · lideranças -->
+  <section class="cena app" id="s5"><div class="janela">
+    <div class="barra"><span class="tile"><img src="img/atlas.svg" alt=""></span><span class="nm">Atlas<small>Pesquisa de clima</small></span><span class="pg">Lideranças</span><span class="adm">ADMIN</span></div>
+    <div class="vista">
+      <div class="tabs" style="margin-top:0"><span>Visão geral</span><span>Perguntas</span><span>Áreas</span><span class="on">Lideranças</span><span>Comentários</span></div>
+      <div class="card heat"><h4>Mapa de calor por categoria</h4><div class="hm" id="hm"></div></div>
+      <div class="card radar"><h4>Perfil comparado</h4><svg id="rad" viewBox="0 0 860 360"></svg>
+        <div style="display:flex;gap:18px;font-size:14px;color:var(--t2)"><span><i style="display:inline-block;width:12px;height:12px;border-radius:50%;background:hsl(214 74% 38%);margin-right:6px"></i>Ana Ribeiro</span><span><i style="display:inline-block;width:12px;height:12px;border-radius:50%;background:hsl(28 82% 46%);margin-right:6px"></i>Diego Alves</span></div></div>
+    </div>
+  </div></section>
+
+  <!-- 6 · comentários -->
+  <section class="cena app" id="s6"><div class="janela">
+    <div class="barra"><span class="tile"><img src="img/atlas.svg" alt=""></span><span class="nm">Atlas<small>Pesquisa de clima</small></span><span class="pg">Comentários</span><span class="adm">ADMIN</span></div>
+    <div class="vista">
+      <h3 class="ttl" style="font-size:28px">O que as pessoas escreveram</h3>
+      <div class="busca"><div class="in" id="bus">Buscar no texto…</div></div>
+      <div class="fl"><span>Todas as notas</span><span id="f-baixa">Notas baixas</span><span>Notas altas</span></div>
+      <div id="cms">
+        <div class="card cm"><p>Falta <mark>reconhecimento</mark> quando a equipe entrega acima do esperado. Só aparece quando algo dá errado.</p><div class="ft"><span class="chip nota">nota 2</span><span class="chip">Operações</span></div></div>
+        <div class="card cm"><p>Gostaria de mais <mark>reconhecimento</mark> e de entender como funciona o crescimento aqui dentro.</p><div class="ft"><span class="chip nota">nota 2</span><span class="chip">Financeiro</span></div></div>
+        <div class="card cm"><p>O <mark>reconhecimento</mark> existe, mas depende muito de cada liderança. Na minha área quase não acontece.</p><div class="ft"><span class="chip nota">nota 1</span><span class="chip">Operações</span></div></div>
+      </div>
+    </div>
+  </div></section>
+
+  <!-- 7 · exportar -->
+  <section class="cena app" id="s7"><div class="janela">
+    <div class="barra"><span class="tile"><img src="img/atlas.svg" alt=""></span><span class="nm">Atlas<small>Pesquisa de clima</small></span><span class="pg">Resultado</span><span class="adm">ADMIN</span></div>
+    <div class="vista">
+      <div style="display:flex;align-items:flex-start"><div><h3 class="ttl" style="font-size:28px">Pesquisa de Clima 2026</h3><div class="sub" style="font-size:16px">rodada 2026.1</div></div>
+        <span class="btn btn-o" id="b-exp" style="margin-left:auto">⤓ Exportar</span></div>
+      <div class="card" style="margin-top:20px;height:300px;padding:24px"><div class="pdf-mini" style="display:flex;gap:16px"><div class="stat tn-navy" style="flex:1;min-height:200px"></div><div class="stat tn-teal" style="flex:1;min-height:200px"></div></div></div>
+      <div class="card" style="margin-top:16px;height:420px"></div>
+    </div>
+    <div class="veu" id="veu"></div>
+    <div class="card dlg" id="dlg"><div style="font-size:26px;font-weight:600">Exportar Relatório</div><div class="sub">Escolha o formato.</div>
+      <div class="op2" id="b-pdf"><i style="background:#c2412c">PDF</i>Exportar PDF</div>
+      <div class="op2"><i style="background:#17A398">CSV</i>Exportar CSV</div></div>
+    <div class="pdf" id="pdf"><div class="hd"><b>Pesquisa de Clima 2026</b><span>Relatório · rodada 2026.1</span></div>
+      <div style="display:flex;gap:14px"><div class="stat tn-navy" style="flex:1;min-height:120px;padding:16px"><div class="l" style="font-size:12px">Clima geral</div><div class="v" style="font-size:36px">74</div></div><div class="stat tn-teal" style="flex:1;min-height:120px;padding:16px"><div class="l" style="font-size:12px">eNPS</div><div class="v" style="font-size:36px">+32</div></div></div>
+      <div style="font-size:16px;font-weight:600;margin-top:24px">Onde agir primeiro</div><div class="ln" style="width:90%"></div><div class="ln" style="width:75%"></div><div class="ln" style="width:82%"></div>
+      <div style="font-size:16px;font-weight:600;margin-top:24px">Clima por área</div><div class="ln" style="width:84%;background:hsl(158 60% 32% / .5)"></div><div class="ln" style="width:76%;background:hsl(150 52% 38% / .5)"></div><div class="ln" style="width:61%;background:hsl(34 90% 44% / .5)"></div><div class="ln" style="width:52%;background:hsl(18 82% 48% / .5)"></div></div>
+    <div class="toast" id="toast"><i>✓</i>Relatório gerado</div>
+  </div></section>
+
+  <!-- 8 · fecho -->
+  <section class="cena cheia" id="s8"><div class="centro">
+    <svg class="selo" viewBox="0 0 98.59 100" style="width:220px;height:224px"><use href="#pA" fill="url(#gA)"/></svg>
+    <h1 class="disp w">Atlas Clima</h1>
+    <p class="w">Escute. Entenda. Aja.</p>
+    <div><span class="cta w">Agende uma demonstração</span></div>
+    <div class="mono w" style="font-size:26px;color:var(--dim2);margin-top:40px">nexatech.ia.br</div>
+    <div class="mono w" style="font-size:20px;color:var(--dim2);margin-top:70px">um produto NEXA</div>
+  </div></section>
+
+  <svg width="0" height="0" style="position:absolute"><defs><path id="pA" d=""/></defs></svg>
+  <svg id="cur" viewBox="0 0 24 24"><path d="M4 2.5v17.2l4.6-4.4 3 6.6 3-1.4-3-6.4h6.4z"/></svg>
+  <i id="toque"></i><i id="rip"></i>
+  <canvas class="fx" id="grao" width="540" height="960" style="z-index:60;opacity:.06;mix-blend-mode:overlay"></canvas>
+</div>
+
+<script>
+const HM = [['Liderança e Gestão', [88, 79, 72, 58]], ['Comunicação', [82, 70, 66, 49]], ['Reconhecimento', [64, 55, 47, 38]], ['Bem-estar', [80, 74, 69, 61]], ['Carga de trabalho', [71, 62, 58, 44]]];
+const corBanda = v => v >= 85 ? 'hsl(158 60% 32%)' : v >= 70 ? 'hsl(150 52% 38%)' : v >= 55 ? 'hsl(34 90% 44%)' : v >= 40 ? 'hsl(18 82% 48%)' : 'hsl(0 68% 46%)';
+window.REEL = {
+  DUR: 44.5,
+  CENAS: { s0: [0, 3.0], s1: [3.0, 8.6], s2: [8.6, 12.8], s3: [12.8, 19.4], s4: [19.4, 27.4], s5: [27.4, 33.2], s6: [33.2, 37.8], s7: [37.8, 41.0], s8: [41.0, 44.5] },
+  LEGENDAS: [
+    [3.0, 8.6, '01 · Monte', 'Questionário pronto <span class="lime">em minutos.</span>'],
+    [8.6, 12.8, '02 · Envie', 'Um link. <span class="lime">Respostas anônimas.</span>'],
+    [12.8, 19.4, '03 · Responda', 'Quatro minutos, <span class="lime">sem cadastro.</span>'],
+    [19.4, 27.4, '04 · Leia', 'O clima inteiro <span class="lime">num painel.</span>'],
+    [27.4, 33.2, '05 · Lideranças', 'Cada liderança, <span class="lime">em perspectiva.</span>'],
+    [33.2, 37.8, '06 · Comentários', 'O que as pessoas <span class="lime">escreveram.</span>'],
+    [37.8, 41.0, '07 · Exporte', 'Relatório pronto <span class="lime">para a diretoria.</span>'],
+  ],
+  SONS: {"ping": [9.8, 17.4, 21.0, 39.8], "tecla": [[7.2, 7.8], [34.1, 35.1]], "pulso": [20.6, 28.5]},
+  PONTEIRO: [[3.3, 8.5, 'mouse'], [8.9, 12.6, 'mouse'], [13.3, 18.0, 'toque'], [24.4, 27.2, 'mouse'], [29.8, 31.6, 'mouse'], [33.5, 37.6, 'mouse'], [38.0, 40.6, 'mouse']],
+  CURSOR: [
+    [3.3, [820, 1400]], [3.9, '#b-tpl', 1], [4.6, '#t1', 1], [5.6, [800, 1300]], [6.6, '#sw', 1], [7.6, [700, 1600]],
+    [8.9, [800, 1500]], [9.8, '#b-cop', 1], [11.2, [860, 1450]],
+    [13.3, [560, 1500]], [13.6, '#b-com', 1], [14.4, [560, 1300]], [15.0, '#o4', 1], [15.4, '#b-prox', 1], [16.6, '#e9', 1], [17.1, '#b-prox', 1],
+    [24.4, [700, 1300]], [25.2, '#tb3', 1], [26.6, [900, 1600]],
+    [29.8, [760, 1500]], [30.6, '#hmx', 1], [31.4, [900, 1640]],
+    [33.5, [700, 1100]], [33.9, '#bus', 1], [35.3, '#f-baixa', 1], [36.6, [900, 1640]],
+    [38.0, [700, 1100]], [38.4, '#b-exp', 1], [39.0, '#b-pdf', 1], [40.4, [940, 1640]],
+  ],
+  INIT() {
+    document.getElementById('pA').setAttribute('d', ATLAS_D);
+    const qr = $('#qr'); let s = 77; const r = () => (s = (s * 16807) % 2147483647) / 2147483647;
+    for (let y = 0; y < 25; y++) for (let x = 0; x < 25; x++) { const fin = (a, b) => x >= a && x < a + 7 && y >= b && y < b + 7;
+      const f = [[0, 0], [18, 0], [0, 18]].find(([a, b]) => fin(a, b)); let on;
+      if (f) { const dx = x - f[0], dy = y - f[1]; on = dx === 0 || dy === 0 || dx === 6 || dy === 6 || (dx >= 2 && dx <= 4 && dy >= 2 && dy <= 4); } else on = r() > .52;
+      const i = document.createElement('i'); if (!on) i.style.background = 'transparent'; i.dataset.k = r(); qr.appendChild(i); }
+    const en = $('#enps'); for (let n = 0; n <= 10; n++) { const b = document.createElement('b'); b.textContent = n; b.id = 'e' + n;
+      b.style.background = n <= 6 ? '#fdecea' : n <= 8 ? '#fff4dd' : '#e3f4ea'; b.style.color = n <= 6 ? '#c2412c' : n <= 8 ? '#a65a00' : '#1f7a4c'; en.appendChild(b); }
+    const hm = $('#hm'); hm.innerHTML = '<span></span>' + ['Ana', 'Bruno', 'Carla', 'Diego'].map(n => `<span class="l">${n}</span>`).join('') +
+      HM.map(([c, v], i) => `<span class="c">${c}</span>` + v.map((x, j) => `<i ${i === 2 && j === 3 ? 'id="hmx"' : ''} style="background:${corBanda(x)}">${x}</i>`).join('')).join('');
+    const rad = $('#rad'), cx = 430, cy = 180, R0 = 150, eixos = ['Liderança', 'Comunicação', 'Reconhecimento', 'Bem-estar', 'Carga', 'Desenvolvimento'];
+    const pt = (i, v) => { const a = -Math.PI / 2 + i * Math.PI * 2 / 6; return [cx + Math.cos(a) * R0 * v, cy + Math.sin(a) * R0 * v]; };
+    let h = ''; for (const k of [.25, .5, .75, 1]) h += `<polygon points="${eixos.map((_, i) => pt(i, k).join(',')).join(' ')}" fill="none" stroke="#e3e8f0"/>`;
+    eixos.forEach((e, i) => { const [x, y] = pt(i, 1.18); h += `<text x="${x}" y="${y + 5}" text-anchor="middle" font-family="Poppins" font-size="15" fill="#64708a">${e}</text>`; });
+    h += `<polygon id="ra" points="" fill="hsl(214 74% 38% / .22)" stroke="hsl(214 74% 38%)" stroke-width="3"/><polygon id="rb" points="" fill="hsl(28 82% 46% / .2)" stroke="hsl(28 82% 46%)" stroke-width="3"/>`;
+    rad.innerHTML = h; window._pt = pt;
+  },
+  CENA: {
+    s0(lt) { const s = $('#s0'), k = eo(lin(lt, .1, 1.1)), selo = s.querySelector('.selo');
+      selo.style.transform = `scale(${.6 + .4 * back(k)}) rotate(${(1 - k) * -10}deg)`; selo.style.opacity = k; selo.style.filter = `drop-shadow(0 0 ${30 + 20 * Math.sin(lt * 3)}px rgba(212,249,105,.45))`;
+      palavras(s.querySelector('.txt'), lt, .55); },
+    s1(lt) {
+      const kt = eo(lin(lt, .95, 1.2)) * (1 - lin(lt, 1.7, 1.9)); $('#tpl').style.opacity = kt; $('#tpl').style.transform = `translateY(${(1 - kt) * -14}px)`;
+      $('#t1').classList.toggle('on', lt > 1.35);
+      $$('#cats > *').forEach((c, i) => show(c, eo(lin(lt, 1.9 + i * .18, 2.4 + i * .18)), 50));
+      const on = eio(lin(lt, 3.6, 3.85)); $('#sw').style.background = on > .5 ? 'var(--pri)' : '#d5dbe5'; $('#sw i').style.transform = `translateX(${24 * on}px)`;
+      digita($('#rod'), '2026.1', lin(lt, 4.2, 4.8), lt > 4.1 && lt < 5.2);
+    },
+    s2(lt) {
+      show($('#lk'), eo(lin(lt, .1, .6)));
+      const cop = lt > 1.2; $('#b-cop').textContent = cop ? 'Copiado ✓' : 'Copiar'; $('#b-cop').style.background = cop ? 'var(--c-good)' : '';
+      $$('#qr i').forEach(i => { const k = eo(lin(lt, 1.6 + +i.dataset.k * 1.2, 1.9 + +i.dataset.k * 1.2)); i.style.opacity = k; i.style.transform = `scale(${k})`; });
+    },
+    s3(lt) {
+      vista($('#f1'), 1 - lin(lt, .95, 1.15)); vista($('#f2'), lin(lt, 1.1, 1.35) * (1 - lin(lt, 4.4, 4.6))); vista($('#f3'), lin(lt, 4.55, 4.85));
+      const q2 = lt > 2.75; $('#q1').style.opacity = 1 - lin(lt, 2.6, 2.8); $('#q2').style.opacity = lin(lt, 2.75, 3.0); $('#q2').style.transform = `translateX(${(1 - lin(lt, 2.75, 3.0)) * 60}px)`;
+      $('#q1').style.transform = `translateX(${-lin(lt, 2.6, 2.8) * 60}px)`;
+      $('#o4').classList.toggle('on', lt > 2.2); $('#pn').textContent = q2 ? '12/12' : '5/12'; $('#pb').style.width = (q2 ? 100 : 41.6) * eo(lin(lt, 1.2, 1.6)) + '%';
+      $('#e9').style.borderColor = lt > 3.8 ? '#1f7a4c' : 'transparent'; $('#e9').style.background = lt > 3.8 ? '#1f9a5c' : '#e3f4ea'; $('#e9').style.color = lt > 3.8 ? '#fff' : '#1f7a4c';
+      $('#b-prox').textContent = q2 ? 'Revisar e enviar' : 'Próxima →';
+      const ok = eo(lin(lt, 4.7, 5.2)); $('#ok').style.transform = `scale(${.4 + .6 * back(ok)})`;
+    },
+    s4(lt) {
+      pop($('#anel'), eo(lin(lt, .1, .6))); const k = lin(lt, .3, 1.8);
+      $('#arc').setAttribute('stroke-dashoffset', 603 * (1 - .74 * eo(k))); conta($('#n74'), 74, k);
+      $('#band').style.opacity = lin(lt, 1.6, 1.9);
+      $$('#s4 .k4 .stat').forEach((c, i) => pop(c, eo(lin(lt, .5 + i * .12, 1.0 + i * .12))));
+      conta($('#n78'), 78, lin(lt, .7, 1.9)); $('#pbar').style.width = 78 * eo(lin(lt, .7, 1.9)) + '%'; conta($('#nenps'), 32, lin(lt, .8, 2.0), 0, '+');
+      const ar = lin(lt, 5.85, 6.05); $('#tb1').classList.toggle('on', ar < .5); $('#tb3').classList.toggle('on', ar >= .5);
+      vista($('#agir'), eo(lin(lt, 2.3, 2.8)) * (1 - ar)); $$('#agir .it').forEach((r, i) => { const k = eo(lin(lt, 2.6 + i * .2, 3.1 + i * .2)); r.style.opacity = k; r.style.transform = `translateX(${(1 - k) * 40}px)`; });
+      const ka = lin(lt, 5.95, 6.2); $('#areas').style.display = ka > 0 ? '' : 'none'; $('#agir').style.display = ka > 0 ? 'none' : ''; vista($('#areas'), eo(ka));
+      $$('#areas .t i').forEach((b, i) => b.style.width = +b.dataset.w * eio(lin(lt, 6.2 + i * .12, 6.9 + i * .12)) + '%');
+    },
+    s5(lt) {
+      $$('#hm i').forEach((c, i) => { const k = eo(lin(lt, .3 + (i % 4) * .08 + Math.floor(i / 4) * .12, .7 + (i % 4) * .08 + Math.floor(i / 4) * .12)); c.style.opacity = k; c.style.transform = `scale(${.6 + .4 * back(k)})`; });
+      const hx = lin(lt, 3.2, 3.4) * (1 - lin(lt, 4.6, 4.9)); $('#hmx').style.boxShadow = `0 0 0 ${4 * hx}px #fff, 0 0 0 ${7 * hx}px hsl(18 82% 48%)`;
+      const A = [.88, .82, .64, .8, .71, .76], B = [.58, .49, .38, .61, .44, .52];
+      $('#ra').setAttribute('points', A.map((v, i) => _pt(i, v * eo(lin(lt, 1.6, 2.6))).join(',')).join(' '));
+      $('#rb').setAttribute('points', B.map((v, i) => _pt(i, v * eo(lin(lt, 2.0, 3.0))).join(',')).join(' '));
+      show($('#s5 .radar'), eo(lin(lt, 1.3, 1.8)));
+    },
+    s6(lt) {
+      const ty = lin(lt, .9, 1.9), on = lt > .7; $('#bus').classList.toggle('on', on);
+      if (on) digita($('#bus'), 'reconhecimento', ty, true); else $('#bus').textContent = 'Buscar no texto…';
+      $('#f-baixa').classList.toggle('on', lt > 2.1);
+      $$('#cms .cm').forEach((c, i) => show(c, eo(lin(lt, 2.3 + i * .2, 2.8 + i * .2)), 50));
+    },
+    s7(lt) {
+      const d = eo(lin(lt, .65, .95)) * (1 - lin(lt, 1.35, 1.6)); $('#dlg').style.opacity = d; $('#dlg').style.transform = `scale(${.94 + .06 * d})`; $('#veu').style.opacity = d;
+      $('#b-pdf').style.background = lt > 1.15 && lt < 1.4 ? '#f2f6fd' : '#fff';
+      const p = eo(lin(lt, 1.5, 2.1)); $('#pdf').style.opacity = p; $('#pdf').style.transform = `translateY(${(1 - p) * 300}px) rotate(${(1 - p) * 6 - 2}deg) scale(${.8 + .2 * p})`;
+      const tt = eo(lin(lt, 2.0, 2.3)); $('#toast').style.opacity = tt; $('#toast').style.transform = `translateY(${(1 - tt) * -30}px)`;
+    },
+    s8(lt) { const s = $('#s8'), k = eo(lin(lt, .1, .9)), selo = s.querySelector('.selo');
+      selo.style.transform = `scale(${.7 + .3 * back(k)})`; selo.style.opacity = k; selo.style.filter = `drop-shadow(0 0 ${30 + 20 * Math.sin(lt * 3)}px rgba(212,249,105,.45))`;
+      palavras(s, lt, .4, .15); },
+  },
+};
+</script>
+<script src="atlasmark.js"></script>
+<script src="motor.js"></script>
+</body>
+</html>

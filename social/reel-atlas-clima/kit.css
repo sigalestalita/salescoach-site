@@ -1,0 +1,74 @@
+/* Base comum dos reels de produto do Atlas: moldura NEXA (escura, lima) por
+   fora e a interface do Atlas (Poppins, navy, cartões brancos) por dentro.
+   As cores da interface vêm do tema real do app (src/index.css do atlas-grou). */
+:root { --lime: #d4f969; --ink: #0b0c0a; --txt: #f5f6f1; --dim: #b9bcb0; --dim2: #7d8173;
+  --navy: #071A34; --pri: #15498D; --glow: #4F8BF0; --app: #f4f6fa; --line: #e3e8f0; --t1: #071A34; --t2: #64708a;
+  --c-crit: hsl(0 68% 46%); --c-low: hsl(18 82% 48%); --c-mid: hsl(34 90% 44%); --c-good: hsl(150 52% 38%); --c-high: hsl(158 60% 32%); }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { width: 1080px; height: 1920px; background: var(--ink); overflow: hidden; }
+body { font-family: 'DM Sans', sans-serif; color: var(--txt); -webkit-font-smoothing: antialiased; }
+#stage { position: absolute; inset: 0; overflow: hidden; }
+canvas.fx { position: absolute; inset: 0; width: 1080px; height: 1920px; }
+.disp { font-family: 'Space Grotesk', sans-serif; font-weight: 400; letter-spacing: -.045em; line-height: 1.04; }
+.mono { font-family: 'JetBrains Mono', monospace; letter-spacing: .22em; text-transform: uppercase; }
+.lime { color: var(--lime); }
+.w { display: inline-block; }
+
+#cap { position: absolute; left: 80px; right: 80px; top: 236px; height: 250px; }
+#cap .k { font-size: 28px; color: var(--lime); }
+#cap .t { font-size: 76px; margin-top: 20px; }
+#marca { position: absolute; left: 80px; top: 126px; display: flex; align-items: center; gap: 16px; z-index: 40; }
+#marca img { height: 34px; } #marca span { font-family: 'Space Grotesk'; font-size: 26px; }
+#marca em { font-style: normal; margin-left: 10px; font-family: 'JetBrains Mono'; font-size: 16px; letter-spacing: .2em; color: var(--dim2); text-transform: uppercase; }
+#prog { position: absolute; left: 60px; right: 60px; top: 74px; height: 4px; border-radius: 2px; background: rgba(245,246,241,.14); z-index: 40; }
+#prog i { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 2px; background: var(--lime); }
+
+.cena { position: absolute; left: 80px; top: 540px; width: 920px; height: 1140px; opacity: 0; transform-origin: 50% 30%; }
+.cena.cheia { left: 0; top: 0; width: 1080px; height: 1920px; }
+.app { font-family: 'Poppins', sans-serif; color: var(--t1); }
+.janela { position: absolute; inset: 0; background: var(--app); border-radius: 36px; overflow: hidden;
+  box-shadow: 0 70px 160px -50px rgba(0,0,0,.95), 0 0 140px -40px rgba(79,139,240,.28); }
+.barra { height: 70px; display: flex; align-items: center; gap: 14px; padding: 0 26px; background: var(--navy); color: #fff; }
+.barra .tile { width: 42px; height: 42px; border-radius: 12px; background: rgba(255,255,255,.12); display: grid; place-items: center; }
+.barra .tile img { width: 24px; }
+.barra .nm { font-weight: 600; font-size: 20px; line-height: 1.1; } .barra .nm small { display: block; font-weight: 400; font-size: 14px; opacity: .6; }
+.barra .pg { margin-left: 18px; padding-left: 18px; border-left: 1px solid rgba(255,255,255,.18); font-size: 18px; opacity: .85; }
+.barra .adm { margin-left: auto; font-size: 13px; font-weight: 600; letter-spacing: .14em; padding: 6px 12px; border-radius: 999px; background: rgba(255,255,255,.12); }
+.vista { position: absolute; left: 0; right: 0; top: 70px; bottom: 0; padding: 28px; }
+h3.ttl { font-size: 32px; font-weight: 600; letter-spacing: -.01em; }
+.sub { font-size: 18px; color: var(--t2); margin-top: 4px; line-height: 1.4; }
+.card { background: #fff; border-radius: 22px; border: 1px solid var(--line); box-shadow: 0 10px 30px -18px rgba(7,26,52,.25); }
+.chip { display: inline-flex; align-items: center; gap: 6px; font-size: 15px; font-weight: 500; padding: 5px 12px; border-radius: 999px; background: #eef2f8; color: var(--t2); }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; font-size: 19px; font-weight: 600; border-radius: 14px; padding: 15px 24px; }
+.btn-p { background: var(--pri); color: #fff; } .btn-o { background: #fff; color: var(--t1); border: 1.5px solid var(--line); }
+.stat { border-radius: 22px; padding: 22px 24px; color: #fff; min-height: 170px; }
+.stat .l { font-size: 16px; opacity: .85; } .stat .v { font-size: 52px; font-weight: 700; line-height: 1.1; margin-top: 6px; letter-spacing: -.02em; }
+.stat .h { font-size: 14px; opacity: .8; margin-top: 4px; line-height: 1.35; }
+.stat .bar { height: 8px; border-radius: 4px; background: rgba(255,255,255,.2); margin-top: 12px; overflow: hidden; } .stat .bar i { display: block; height: 100%; background: rgba(255,255,255,.9); border-radius: 4px; }
+.tn-navy { background: linear-gradient(135deg, #071A34, #15498D); } .tn-teal { background: linear-gradient(135deg, #0B6E62, #17A398); }
+.tn-coral { background: linear-gradient(135deg, #B8362E, #F0793F); } .tn-amber { background: linear-gradient(135deg, #A65A00, #E8A03A); }
+.tn-sky { background: linear-gradient(135deg, #0B5C8E, #3FA9E0); } .tn-slate { background: linear-gradient(135deg, #3B4A60, #6B7A93); }
+.toast { position: absolute; left: 50%; top: 18px; translate: -50% 0; padding: 18px 28px; border-radius: 18px; background: var(--navy); color: #fff; font-size: 20px; font-weight: 500;
+  display: flex; align-items: center; gap: 14px; white-space: nowrap; box-shadow: 0 30px 60px -20px rgba(0,0,0,.6); z-index: 5; }
+.toast i { width: 30px; height: 30px; border-radius: 50%; background: var(--c-good); display: grid; place-items: center; font-style: normal; font-size: 18px; }
+.caret { display: inline-block; width: 2px; height: 1em; background: currentColor; vertical-align: -3px; margin-left: 2px; }
+
+/* Celular (tela do colaborador, white-label) */
+.fone { position: absolute; left: 50%; top: 0; width: 560px; height: 1140px; margin-left: -280px; border-radius: 64px; background: #0f1115; padding: 16px;
+  box-shadow: 0 70px 160px -50px rgba(0,0,0,.95), 0 0 0 2px #2a2d33, 0 0 140px -40px rgba(79,139,240,.3); }
+.fone .tela { position: absolute; inset: 16px; border-radius: 50px; background: #fff; overflow: hidden; font-family: 'Poppins'; color: var(--t1); }
+.fone .ilha { position: absolute; left: 50%; top: 30px; width: 150px; height: 40px; margin-left: -75px; border-radius: 20px; background: #0f1115; z-index: 3; }
+.fone .pt { position: absolute; left: 0; right: 0; top: 90px; bottom: 0; padding: 0 34px; }
+
+/* Abertura e fecho */
+.centro { position: absolute; left: 80px; right: 80px; top: 0; bottom: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+.selo { width: 260px; height: 264px; }
+.centro h1 { font-size: 140px; margin-top: 40px; }
+.centro h2 { font-size: 104px; margin-top: 36px; }
+.centro p { font-size: 38px; color: var(--dim); margin-top: 24px; line-height: 1.35; }
+.cta { display: inline-block; margin-top: 60px; font-size: 36px; font-weight: 500; padding: 30px 56px; border-radius: 999px; background: var(--lime); color: #10110f; }
+
+#cur { position: absolute; left: 0; top: 0; width: 54px; height: 54px; z-index: 30; transform-origin: 6px 4px; filter: drop-shadow(0 8px 14px rgba(0,0,0,.55)); }
+#cur path { fill: #fff; stroke: #10110f; stroke-width: 1.4; stroke-linejoin: round; }
+#toque { position: absolute; width: 90px; height: 90px; margin: -45px; border-radius: 50%; background: rgba(255,255,255,.35); border: 3px solid rgba(255,255,255,.8); z-index: 30; opacity: 0; }
+#rip { position: absolute; width: 120px; height: 120px; margin: -60px; border-radius: 50%; border: 5px solid var(--lime); z-index: 29; opacity: 0; }
