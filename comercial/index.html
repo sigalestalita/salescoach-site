@@ -97,6 +97,15 @@ textarea.inp{height:auto;min-height:72px;padding:8px 10px;resize:vertical;width:
 
 /* metas */
 .meters{display:grid;gap:12px}
+.cred-bar{height:10px;border-radius:5px;background:var(--surface-2);overflow:hidden;display:flex}
+.cred-bar i{display:block;height:100%}
+.cred-dias{display:flex;align-items:flex-end;gap:3px;height:120px;padding-top:8px}
+.cred-dias div{flex:1;min-width:0;display:flex;flex-direction:column;align-items:center;gap:4px;height:100%;justify-content:flex-end}
+.cred-dias i{display:block;width:100%;max-width:22px;border-radius:4px 4px 0 0;background:var(--accent);min-height:2px}
+.cred-dias i.zero{background:var(--surface-2)}
+.cred-dias span{font-size:10.5px;color:var(--mute);font-variant-numeric:tabular-nums}
+.cred-leg{display:flex;flex-wrap:wrap;gap:14px;font-size:12.5px;color:var(--soft)}
+.cred-leg i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px;vertical-align:-1px}
 .meter{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 12px;align-items:baseline}
 .meter .v{font-variant-numeric:tabular-nums;font-size:13.5px}
 .meter .v b{font-weight:500}
@@ -343,7 +352,7 @@ function toast(msg) { const t = $('#toast'); t.textContent = msg; t.hidden = fal
 
 /* ───────── estado ───────── */
 const S = { cfg: deep(DEFAULTS, {}), cfgExists: false, opps: [], contas: [], semanas: {}, tarefas: [], recursos: [], playbook: null, loaded: 0, ro: false, db: null, dl: null, noDb: false, showClosed: false, filtroProd: '', busca: '', contaFiltro: 'abertas', contaPrio: '', openMsg: null, prospects: [],
-  L: { res: null, pagina: 0, total: 0, sel: new Set(), f: { cargos: 'Diretor Comercial, Gerente Comercial, Head de Vendas', estados: '', setores: [], tamanhos: [], senioridades: [], departamentos: [], porEmpresa: 2, comEmail: true }, uso: null, cat: {}, busy: '', lista: '', ver: '', confirma: '' } };
+  L: { res: null, pagina: 0, total: 0, sel: new Set(), f: { cargos: 'Diretor Comercial, Gerente Comercial, Head de Vendas', estados: '', setores: [], tamanhos: [], senioridades: [], departamentos: [], porEmpresa: 2, comEmail: true }, uso: null, hist: null, cat: {}, busy: '', lista: '', ver: '', confirma: '', verHist: false } };
 let view = (location.hash || '#painel').slice(1);
 
 /* ───────── cálculos ───────── */
@@ -515,7 +524,8 @@ const VIEWS = {
     const doLista = L.ver ? S.prospects.filter(p => p.lista === L.ver) : [];
     return `
     <div class="top"><div><h1>Listas de prospecção</h1><p class="sub">Busque decisores no Lusha, salve numa lista, revele e-mail ou telefone só de quem vale a pena e mande para Contas-alvo. Buscar custa cerca de 1 crédito a cada 25 resultados; revelar custa 1 crédito por e-mail e 5 por telefone.</p></div>
-      <div class="tools">${u ? `<span class="chip ${u.gastoNoMes >= u.limiteMensal ? 'bad' : 'acc'}">${u.gastoNoMes} de ${u.limiteMensal} créditos no mês</span>${u.conta && u.conta.credits ? `<span class="chip">Lusha: ${u.conta.credits.remaining} restantes</span>` : ''}` : ''}<button class="btn" id="lUso">${u ? 'Atualizar créditos' : 'Ver créditos'}</button></div></div>
+      <div class="tools"><button class="btn" id="lUso" ${L.busy === 'uso' ? 'disabled' : ''}>${L.busy === 'uso' ? 'Atualizando…' : 'Atualizar créditos'}</button></div></div>
+    ${painelCreditos()}
     ${u && u.semChave ? `<p class="banner">A chave do Lusha ainda não foi configurada. Um admin precisa cadastrá-la no Supabase, em Edge Functions → Secrets, com o nome LUSHA_API_KEY.</p>` : ''}
     ${u && u.erroConta ? `<p class="banner">${esc(u.erroConta)}</p>` : ''}
     <section class="card"><header><h2>Buscar decisores</h2><span class="mono soft">Brasil</span></header>
@@ -1126,9 +1136,71 @@ function lFiltros() {
 async function lBuscar(pagina) {
   const filtros = lFiltros(); S.L.busy = 'buscar'; render();
   try { const d = await lushaApi('buscar', { filtros, pagina, tamanho: 25 }); S.L.res = d.results || []; S.L.total = (d.pagination && d.pagination.total) || S.L.res.length; S.L.pagina = pagina; S.L.sel = new Set(); lUsoDe(d);
-    toast(`${S.L.res.length} decisores · ${d.billing ? d.billing.creditsCharged : '?'} crédito(s)`); }
+    toast(`${S.L.res.length} decisores · ${d.billing ? d.billing.creditsCharged : '?'} crédito(s)`); setTimeout(lCarregarUso, 300); }
   catch (e) { toast(e.message); if (e.dados && e.dados.semChave) S.L.uso = { ...(S.L.uso || {}), semChave: true }; }
   S.L.busy = ''; render();
+}
+
+/* Painel de créditos: saldo da conta do Lusha, limite do mês no CRM, quanto ainda dá
+   para fazer e o histórico de gasto (tabela lusha_uso, gravada só pela função). */
+function painelCreditos() {
+  const L = S.L, u = L.uso || {}, h = L.hist;
+  if (!L.uso && !h) return `<section class="card"><header><h2>Créditos do Lusha</h2></header><div class="empty"><b>Carregando o saldo…</b><span>Se não aparecer, clique em “Atualizar créditos”.</span></div></section>`;
+  const conta = u.conta && u.conta.credits, preco = (u.conta && u.conta.pricing) || {};
+  const pB = preco.contactSearch || { credits: 1, perQuantity: 25 }, pE = (preco.revealEmail || { credits: 1 }).credits, pT = (preco.revealPhone || { credits: 5 }).credits;
+  const limite = +u.limiteMensal || 0, gasto = +u.gastoNoMes || 0, livreCrm = Math.max(0, limite - gasto);
+  const livre = conta ? Math.min(livreCrm, conta.remaining) : livreCrm;
+  const quem = conta && conta.remaining < livreCrm ? 'o saldo da conta do Lusha' : 'o limite do mês no CRM';
+  const lim = u.conta && u.conta.rateLimits && u.conta.rateLimits.daily;
+  const regs = h || [], somaA = a => regs.filter(r => r.acao === a).reduce((s, r) => s + Number(r.creditos || 0), 0), qtdA = a => regs.filter(r => r.acao === a).reduce((s, r) => s + (r.quantidade || 0), 0);
+  const gB = somaA('buscar'), gR = somaA('revelar'), qB = qtdA('buscar'), qR = qtdA('revelar');
+  const pessoas = {}; regs.forEach(r => { const k = r.usuario || '—'; pessoas[k] = (pessoas[k] || 0) + Number(r.creditos || 0); });
+  const hj = new Date(), nd = new Date(hj.getFullYear(), hj.getMonth() + 1, 0).getDate(), diaHoje = hj.getDate();
+  const porDia = Array.from({ length: nd }, (_, i) => regs.filter(r => new Date(r.criado_em).getDate() === i + 1).reduce((s, r) => s + Number(r.creditos || 0), 0));
+  const maxD = Math.max(1, ...porDia), previsao = Math.round(gasto / Math.max(1, diaHoje) * nd);
+  const pct = (v, t) => t ? Math.min(100, v / t * 100) : 0, sx = n => n === 1 ? '' : 's';
+  const emBusca = Math.floor(livre * .2), admin = S.papel === 'admin';
+  const fmtD = d => new Date(d).toLocaleString('pt-BR', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' });
+  return `<section class="card"><header><h2>Créditos do Lusha</h2><span class="mono soft">${mesLabel(hoje().slice(0, 7))}</span></header>
+    <div class="kpis">
+      <div><b>${livre}</b><span>créditos que ainda dá para usar (o que limita: ${quem})</span></div>
+      <div><b>${gasto} <small style="font-size:15px;color:var(--soft)">de ${limite}</small></b><span>gastos neste mês, pelo limite do CRM</span></div>
+      <div><b>${conta ? conta.remaining : '—'} <small style="font-size:15px;color:var(--soft)">de ${conta ? conta.total : '—'}</small></b><span>saldo da conta do Lusha${u.conta && u.conta.plan ? ' · plano ' + esc(u.conta.plan.category) : ''}</span></div>
+      <div><b>${previsao}</b><span>créditos previstos até o fim do mês, no ritmo atual</span></div>
+    </div>
+    <div style="display:grid;gap:8px;margin-top:16px">
+      <div class="cred-bar" title="Limite do mês"><i style="width:${pct(gB, limite)}%;background:var(--soft)"></i><i style="width:${pct(gR, limite)}%;background:var(--accent)"></i></div>
+      <div class="cred-leg"><span><i style="background:var(--soft)"></i>Buscas · ${gB} crédito${sx(gB)} (${qB} decisores vistos)</span><span><i style="background:var(--accent)"></i>Revelações · ${gR} crédito${sx(gR)} (${qR} contatos)</span><span><i style="background:var(--surface-2);border:1px solid var(--line)"></i>Livre no limite · ${livreCrm}</span></div>
+    </div>
+    <div class="grid2" style="margin-top:18px">
+      <div><p class="sect" style="margin:0 0 8px">Com o que sobra dá para</p>
+        <div class="meters">
+          <div class="meter"><span>Buscar decisores</span><span class="v"><b>${Math.floor(livre / pB.credits) * pB.perQuantity}</b> · ${Math.floor(livre / pB.credits)} busca${sx(Math.floor(livre / pB.credits))} de ${pB.perQuantity}</span></div>
+          <div class="meter"><span>Revelar e-mails</span><span class="v"><b>${Math.floor(livre / pE)}</b> · ${pE} crédito cada</span></div>
+          <div class="meter"><span>Revelar telefones</span><span class="v"><b>${Math.floor(livre / pT)}</b> · ${pT} créditos cada</span></div>
+          ${lim ? `<div class="meter"><span>Consultas ao Lusha hoje</span><span class="v"><b>${lim.remaining}</b> de ${lim.limit} restantes</span></div>` : ''}
+        </div>
+        ${livre ? `<p class="mute" style="font-size:12.5px;margin-top:8px">Sugestão de uso: ${emBusca} crédito${sx(emBusca)} em buscas (${emBusca * pB.perQuantity} decisores) e ${livre - emBusca} em e-mails dos melhores.</p>` : `<p class="mute" style="font-size:12.5px;margin-top:8px">Sem créditos livres. ${admin ? 'Aumente o limite abaixo ou contrate mais créditos no Lusha.' : 'Fale com um admin.'}</p>`}
+        ${admin ? `<div class="tools" style="margin-top:10px"><label class="mono soft" for="lLimite">Limite mensal no CRM</label><input class="inp small" type="number" min="0" step="1" id="lLimite" value="${limite}"><button class="btn sm" id="lSalvaLimite">Salvar limite</button></div>` : ''}
+      </div>
+      <div><p class="sect" style="margin:0 0 8px">Gasto por dia</p>
+        <div class="cred-dias" role="img" aria-label="Créditos gastos por dia no mês">${porDia.map((v, i) => `<div title="Dia ${i + 1}: ${v} crédito${sx(v)}"><i class="${v ? '' : 'zero'}" style="height:${v ? Math.max(6, v / maxD * 100) : 2}%"></i><span>${(i + 1) % 5 === 1 || i + 1 === diaHoje ? i + 1 : ''}</span></div>`).join('')}</div>
+        ${Object.keys(pessoas).length ? `<p class="sect" style="margin:14px 0 6px">Por pessoa</p><div class="meters">${Object.entries(pessoas).sort((a, b) => b[1] - a[1]).map(([k, v]) => `<div class="meter"><span>${esc(k)}</span><span class="v"><b>${v}</b> crédito${sx(v)}</span><span class="bar"><i style="width:${pct(v, Math.max(gasto, 1))}%"></i></span></div>`).join('')}</div>` : ''}
+      </div>
+    </div>
+    <div style="margin-top:14px"><button class="btn sm" id="lHist">${L.verHist ? 'Ocultar histórico' : `Ver histórico do mês (${regs.length})`}</button></div>
+    ${L.verHist ? `<div class="tw" style="margin-top:10px"><table><thead><tr><th>Quando</th><th>Quem</th><th>O quê</th><th class="n">Quantidade</th><th class="n">Créditos</th></tr></thead><tbody>
+      ${regs.map(r => `<tr><td>${fmtD(r.criado_em)}</td><td>${esc(r.usuario || '—')}</td><td>${r.acao === 'buscar' ? 'Busca de decisores' : 'Revelação de ' + (((r.detalhe && r.detalhe.campos) || []).map(c => c === 'emails' ? 'e-mail' : 'telefone').join(' e ') || 'contato')}</td><td class="n">${r.quantidade}</td><td class="n">${Number(r.creditos)}</td></tr>`).join('') || '<tr><td colspan="5" class="mute">Nenhum gasto neste mês.</td></tr>'}
+    </tbody></table></div>` : ''}
+  </section>`;
+}
+async function lCarregarUso() {
+  const L = S.L; L.busy = 'uso'; render();
+  const ini = new Date(); ini.setDate(1); ini.setHours(0, 0, 0, 0);
+  const [api, hist] = await Promise.allSettled([lushaApi('uso'), sb.from('lusha_uso').select('criado_em,usuario,acao,quantidade,creditos,detalhe').gte('criado_em', ini.toISOString()).order('criado_em', { ascending: false }).limit(1000)]);
+  if (api.status === 'fulfilled') L.uso = api.value; else { toast(api.reason.message); if (api.reason.dados && api.reason.dados.semChave) L.uso = { ...(L.uso || {}), semChave: true }; }
+  if (hist.status === 'fulfilled' && !hist.value.error) L.hist = hist.value.data || [];
+  L.usoEm = Date.now(); L.busy = ''; render();
 }
 async function lCatalogo() {
   S.L.busy = 'cat'; render();
@@ -1149,7 +1221,7 @@ async function lRevelar(campo) {
       const email = (r.emails || []).find(e => e.type === 'work') || (r.emails || [])[0], tel = (r.phones || []).find(t => !t.doNotCall) || (r.phones || [])[0];
       const up = { ...strip(p), ...(email ? { email: email.email } : {}), ...(tel ? { telefone: tel.number, naoLigar: !!tel.doNotCall } : {}), reveladoEm: new Date().toISOString() };
       if (email || tel) { n++; const ref = S.db.collection('prospects').doc(p.id); await write(ref.path, () => ref.set(up)); } }
-    toast(`${n} de ${ids.length} com ${campo === 'emails' ? 'e-mail' : 'telefone'} · ${d.billing ? d.billing.creditsCharged : '?'} crédito(s)`); }
+    toast(`${n} de ${ids.length} com ${campo === 'emails' ? 'e-mail' : 'telefone'} · ${d.billing ? d.billing.creditsCharged : '?'} crédito(s)`); setTimeout(lCarregarUso, 300); }
   catch (e) { toast(e.message); }
   S.L.busy = ''; render();
 }
@@ -1160,7 +1232,10 @@ document.addEventListener('click', async e => {
   if (t.dataset.lsel !== undefined) { t.checked ? L.sel.add(t.dataset.lsel) : L.sel.delete(t.dataset.lsel); L.confirma = ''; return render(); }
   if (t.dataset.lver !== undefined) { L.ver = L.ver === t.dataset.lver ? '' : t.dataset.lver; L.sel = new Set(); L.confirma = ''; return render(); }
   switch (t.id) {
-    case 'lUso': try { const d = await lushaApi('uso'); L.uso = d; } catch (er) { toast(er.message); if (er.dados && er.dados.semChave) L.uso = { semChave: true }; } return render();
+    case 'lUso': return lCarregarUso();
+    case 'lHist': L.verHist = !L.verHist; return render();
+    case 'lSalvaLimite': { const v = Math.max(0, Math.round(+$('#lLimite').value || 0)); const { error } = await sb.from('lusha_config').update({ limite_mensal: v, atualizado_em: new Date().toISOString() }).eq('id', 1);
+      if (error) return toast('Não foi possível salvar o limite.'); L.uso = { ...(L.uso || {}), limiteMensal: v }; toast('Limite salvo'); return render(); }
     case 'lCat': return lCatalogo();
     case 'lBuscar': return lBuscar(0);
     case 'lProx': return lBuscar(L.pagina + 1);
@@ -1189,7 +1264,7 @@ document.addEventListener('click', async e => {
 });
 
 /* ───────── eventos ───────── */
-addEventListener('hashchange', () => { view = location.hash.slice(1) || 'painel'; S.busca = ''; render(); scrollTo(0, 0); });
+addEventListener('hashchange', () => { view = location.hash.slice(1) || 'painel'; S.busca = ''; render(); scrollTo(0, 0); if (view === 'listas' && sb && (!S.L.usoEm || Date.now() - S.L.usoEm > 60000)) lCarregarUso(); });
 document.addEventListener('keydown', e => { if (e.key === 'Escape' && $('#drawerRoot').innerHTML) closeDrawer(); });
 document.addEventListener('click', e => {
   const et = e.target.closest('[data-edit-task]'); if (et) return openTask(et.dataset.editTask);
@@ -1371,6 +1446,7 @@ async function iniciar(session) {
   S.papel = mb.papel; S.ro = mb.papel === 'leitura'; $('#navEquipe').hidden = mb.papel !== 'admin';
   S.dl = { save: ({ filename, data }) => { const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([data], { type: 'text/csv;charset=utf-8' })); a.download = filename; document.body.appendChild(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 500); return Promise.resolve(); } };
   const db = criarDb(sb); S.db = db; $('#auth').hidden = true; render();
+  if (view === 'listas') lCarregarUso();
   const tentarCarregar = async () => { try { await db.carregar(); if (S.noDb) { S.noDb = false; render(); } } catch (er) { S.noDb = true; render(); setTimeout(tentarCarregar, 5000); } };
   await tentarCarregar();
   const done = () => { S.loaded++; schedule(); };
