@@ -78,3 +78,29 @@ begin
     execute 'alter publication supabase_realtime add table public.docs';
   end if;
 end $$;
+
+-- Lusha: registro de créditos gastos (só a função "lusha" grava) e limite mensal (só admin muda).
+create table if not exists public.lusha_uso (
+  id bigint generated always as identity primary key,
+  criado_em timestamptz not null default now(),
+  usuario text, acao text not null, quantidade int not null default 0,
+  creditos numeric not null default 0, detalhe jsonb
+);
+create index if not exists lusha_uso_mes_idx on public.lusha_uso (criado_em);
+alter table public.lusha_uso enable row level security;
+create table if not exists public.lusha_config (
+  id int primary key default 1 check (id = 1),
+  limite_mensal int not null default 300 check (limite_mensal >= 0),
+  atualizado_em timestamptz not null default now()
+);
+alter table public.lusha_config enable row level security;
+insert into public.lusha_config (id) values (1) on conflict (id) do nothing;
+revoke all on public.lusha_uso, public.lusha_config from anon;
+grant select on public.lusha_uso to authenticated;
+grant select, update on public.lusha_config to authenticated;
+drop policy if exists lusha_uso_ler on public.lusha_uso;
+drop policy if exists lusha_config_ler on public.lusha_config;
+drop policy if exists lusha_config_admin on public.lusha_config;
+create policy lusha_uso_ler on public.lusha_uso for select to authenticated using (public.pode_ler());
+create policy lusha_config_ler on public.lusha_config for select to authenticated using (public.pode_ler());
+create policy lusha_config_admin on public.lusha_config for update to authenticated using (public.e_admin()) with check (public.e_admin());
