@@ -99,7 +99,7 @@ Deno.serve(async (req) => {
         if (lista(f.empresas).length) empresas.names = lista(f.empresas, 50);
         if (lista(f.dominios).length) empresas.domains = lista(f.dominios, 50);
         if (Array.isArray(f.tamanhos) && f.tamanhos.length) empresas.sizes = f.tamanhos.slice(0, 10).map((t: any) => ({ min: Number(t.min) || 1, ...(t.max ? { max: Number(t.max) } : {}) }));
-        if (lista(f.setores).length) empresas.industriesLabels = lista(f.setores);
+        if (Array.isArray(f.setores) && f.setores.length) empresas.mainIndustriesIds = f.setores.map(Number).filter(Number.isFinite).slice(0, 20);
         const pedido: any = {
           pagination: { page: pagina, size: tamanho },
           filters: { contacts: { include: contatos } },

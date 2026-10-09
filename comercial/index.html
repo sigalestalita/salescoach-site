@@ -343,7 +343,7 @@ function toast(msg) { const t = $('#toast'); t.textContent = msg; t.hidden = fal
 
 /* ───────── estado ───────── */
 const S = { cfg: deep(DEFAULTS, {}), cfgExists: false, opps: [], contas: [], semanas: {}, tarefas: [], recursos: [], playbook: null, loaded: 0, ro: false, db: null, dl: null, noDb: false, showClosed: false, filtroProd: '', busca: '', contaFiltro: 'abertas', contaPrio: '', openMsg: null, prospects: [],
-  L: { res: null, pagina: 0, total: 0, sel: new Set(), f: { cargos: 'Diretor Comercial, Gerente Comercial, Head de Vendas', estados: '', setores: [], tamanhos: [], senioridades: [], porEmpresa: 2, comEmail: true }, uso: null, cat: {}, busy: '', lista: '', ver: '', confirma: '' } };
+  L: { res: null, pagina: 0, total: 0, sel: new Set(), f: { cargos: 'Diretor Comercial, Gerente Comercial, Head de Vendas', estados: '', setores: [], tamanhos: [], senioridades: [], departamentos: [], porEmpresa: 2, comEmail: true }, uso: null, cat: {}, busy: '', lista: '', ver: '', confirma: '' } };
 let view = (location.hash || '#painel').slice(1);
 
 /* ───────── cálculos ───────── */
@@ -525,7 +525,8 @@ const VIEWS = {
         <label>Contatos por empresa<input class="inp" type="number" min="1" max="10" id="lPorEmp" value="${esc(f.porEmpresa)}"></label>
         <label>Senioridade<select class="inp" id="lSen" multiple size="4">${opt('seniority', f.senioridades)}</select></label>
         <label>Setor<select class="inp" id="lSet" multiple size="4">${opt('industriesLabels', f.setores)}</select></label>
-        <label>Tamanho da empresa<select class="inp" id="lTam" multiple size="4">${(L.cat.sizes || []).map((v, i) => `<option value="${i}" ${f.tamanhos.some(t => JSON.stringify(t) === JSON.stringify(tamanhoDe(v))) ? 'selected' : ''}>${esc(v.label || v.name || ((v.min || '') + '–' + (v.max || '+')))}</option>`).join('')}</select></label>
+        <label>Área<select class="inp" id="lDep" multiple size="4">${opt('departments', f.departamentos)}</select></label>
+        <label>Tamanho da empresa (pessoas)<select class="inp" id="lTam" multiple size="4">${(L.cat.sizes || []).map((v, i) => `<option value="${i}" ${f.tamanhos.some(t => JSON.stringify(t) === JSON.stringify(tamanhoDe(v))) ? 'selected' : ''}>${esc(v.label || v.name || ((v.min || '') + '–' + (v.max || '+')))}</option>`).join('')}</select></label>
         <label><span>Só quem tem e-mail corporativo</span><span class="check"><input type="checkbox" id="lComEmail" ${f.comEmail ? 'checked' : ''}> Sim</span></label>
       </form>
       ${!L.cat.seniority ? `<p class="mute" style="font-size:12.5px">As opções de senioridade, setor e tamanho vêm do Lusha. <button class="btn sm" id="lCat">Carregar opções</button></p>` : ''}
@@ -1103,6 +1104,8 @@ async function importar() {
 
 
 /* ───────── listas de prospecção (Lusha) ───────── */
+const SENIOR_PT = { founder: 'Fundador', partner: 'Sócio', 'c-suite': 'C-level', 'vice president': 'Vice-presidente', director: 'Diretor', manager: 'Gerente', senior: 'Sênior', entry: 'Júnior', intern: 'Estagiário', 'non-manager': 'Não gestor' };
+const DEPTO_PT = { 'Business Development': 'Novos negócios', Consulting: 'Consultoria', 'Customer Service': 'Atendimento', 'Engineering & Technical': 'Engenharia', Finance: 'Financeiro', 'General Management': 'Diretoria geral', 'Health Care & Medical': 'Saúde', 'Human Resources': 'Recursos humanos', 'Information Technology': 'TI', Legal: 'Jurídico', Marketing: 'Marketing', Operations: 'Operações', Other: 'Outros', Product: 'Produto', 'Research & Analytics': 'Pesquisa e dados', Sales: 'Vendas' };
 const tamanhoDe = v => ({ min: v.min ?? v.from ?? 1, ...(v.max ?? v.to ? { max: v.max ?? v.to } : {}) });
 async function lushaApi(acao, extra = {}) {
   const { data: { session } } = await sb.auth.getSession();
@@ -1115,10 +1118,10 @@ const lUsoDe = d => { if (d && d.limiteMensal !== undefined) S.L.uso = { ...(S.L
 function lFiltros() {
   const f = S.L.f, sel = id => [...($(id) ? $(id).selectedOptions : [])].map(o => o.value);
   f.cargos = $('#lCargos').value; f.estados = $('#lEstados').value; f.porEmpresa = +$('#lPorEmp').value || 2; f.comEmail = $('#lComEmail').checked;
-  if ($('#lSen')) f.senioridades = sel('#lSen'); if ($('#lSet')) f.setores = sel('#lSet');
+  if ($('#lSen')) f.senioridades = sel('#lSen'); if ($('#lSet')) f.setores = sel('#lSet'); if ($('#lDep')) f.departamentos = sel('#lDep');
   if ($('#lTam')) f.tamanhos = sel('#lTam').map(i => tamanhoDe(S.L.cat.sizes[+i]));
   const sp = v => v.split(',').map(x => x.trim()).filter(Boolean);
-  return { cargos: sp(f.cargos), estados: sp(f.estados), porEmpresa: f.porEmpresa, comEmail: f.comEmail, senioridades: f.senioridades, setores: f.setores, tamanhos: f.tamanhos };
+  return { cargos: sp(f.cargos), estados: sp(f.estados), porEmpresa: f.porEmpresa, comEmail: f.comEmail, senioridades: f.senioridades, setores: f.setores, departamentos: f.departamentos, tamanhos: f.tamanhos };
 }
 async function lBuscar(pagina) {
   const filtros = lFiltros(); S.L.busy = 'buscar'; render();
@@ -1129,8 +1132,13 @@ async function lBuscar(pagina) {
 }
 async function lCatalogo() {
   S.L.busy = 'cat'; render();
-  for (const tipo of ['seniority', 'industriesLabels', 'sizes']) {
-    try { const d = await lushaApi('filtros', { tipo }); S.L.cat[tipo] = Array.isArray(d) ? d : (d.values || d.data || []); } catch (e) { toast(e.message); if (e.dados && e.dados.semChave) { S.L.uso = { ...(S.L.uso || {}), semChave: true }; break; } }
+  for (const tipo of ['seniority', 'industriesLabels', 'sizes', 'departments']) {
+    try { const d = await lushaApi('filtros', { tipo }); let v = Array.isArray(d) ? d : (d.values || d.data || []);
+      if (tipo === 'seniority') v = v.map(x => ({ id: x.id, name: SENIOR_PT[x.name] || x.name }));
+      if (tipo === 'industriesLabels') v = v.map(x => ({ id: x.main_industry_id, name: x.main_industry })).sort((a, b) => a.name.localeCompare(b.name));
+      if (tipo === 'departments') v = v.map(x => ({ id: x, name: DEPTO_PT[x] || x }));
+      if (tipo === 'sizes') v = v.map(x => ({ ...x, label: x.max ? `${x.min.toLocaleString('pt-BR')} a ${x.max.toLocaleString('pt-BR')}` : `${x.min.toLocaleString('pt-BR')} ou mais` }));
+      S.L.cat[tipo] = v; } catch (e) { toast(e.message); if (e.dados && e.dados.semChave) { S.L.uso = { ...(S.L.uso || {}), semChave: true }; break; } }
   }
   S.L.busy = ''; render();
 }
