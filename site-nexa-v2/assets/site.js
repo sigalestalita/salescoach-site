@@ -9,6 +9,14 @@
   const temG = typeof window.gsap !== 'undefined' && typeof window.ScrollTrigger !== 'undefined';
   if (temG) gsap.registerPlugin(ScrollTrigger);
 
+  // Tema claro/escuro (a escolha fica no navegador; sem escolha, segue o sistema)
+  $$('.tema-bt').forEach(b => b.addEventListener('click', () => {
+    const claro = doc.getAttribute('data-tema') !== 'claro';
+    if (claro) doc.setAttribute('data-tema', 'claro'); else doc.removeAttribute('data-tema');
+    try { localStorage.setItem('nexa-tema', claro ? 'claro' : 'escuro'); } catch (e) {}
+    $('meta[name="theme-color"]')?.setAttribute('content', claro ? '#f3f4ee' : '#08090a');
+  }));
+
   // Rolagem suave
   let lenis = null;
   if (window.Lenis && !reduzido) {

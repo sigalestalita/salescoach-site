@@ -15,6 +15,7 @@ def head(titulo, desc, base):
 <title>{titulo}</title>
 <meta name="description" content="{desc}">
 <meta name="theme-color" content="#08090a">
+<script>(function(){{var t;try{{t=localStorage.getItem('nexa-tema')}}catch(e){{}}if(!t)t=matchMedia('(prefers-color-scheme: light)').matches?'claro':'escuro';if(t==='claro')document.documentElement.setAttribute('data-tema','claro')}})()</script>
 <meta property="og:title" content="{titulo}"><meta property="og:description" content="{desc}"><meta property="og:image" content="https://nexatech.ia.br/og.jpg">
 <link rel="icon" href="{base}favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -33,7 +34,7 @@ def topo(base, ativo=''):
 <header class="topo"><div class="wrap">
   <a class="logo" href="{base}index.html" aria-label="NEXA, início"><svg viewBox="0 0 800 150"><path d="{NEXA_D}"/></svg><i></i></a>
   <nav class="nav">{a('sales-coach/index.html', 'Sales Coach', 'sc')}{a('atlas/index.html', 'Atlas', 'atlas')}{a('index.html#fabrica', 'Fábrica', 'f')}{a('index.html#metodo', 'Método', 'm')}{a('index.html#contato', 'Contato', 'c')}</nav>
-  <div class="acoes"><a class="pill sm lime" href="{base}index.html#contato">Fale com a NEXA {SETA}</a><button class="menu-bt" aria-label="Abrir menu"><i></i></button></div>
+  <div class="acoes"><button class="tema-bt" aria-label="Alternar tema claro ou escuro"><svg class="lua" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg><svg class="sol" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></button><a class="pill sm lime" href="{base}index.html#contato">Fale com a NEXA {SETA}</a><button class="menu-bt" aria-label="Abrir menu"><i></i></button></div>
 </div></header>
 <nav class="gaveta">{a('index.html', 'Início', '')}{a('sales-coach/index.html', 'Sales Coach', '')}{a('atlas/index.html', 'Atlas', '')}{a('index.html#fabrica', 'Fábrica', '')}{a('index.html#contato', 'Contato', '')}</nav>'''
 
