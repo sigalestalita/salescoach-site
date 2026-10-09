@@ -89,6 +89,7 @@ window.renderAt = async function (t) {
 window.ready = (async () => {
   await document.fonts.ready; await Promise.all([...document.images].map(i => i.decode().catch(() => {})));
   if (R().INIT) R().INIT();
+  if (location.search.includes('limpo')) document.head.insertAdjacentHTML('beforeend', '<style>#cur,#toque,#rip{display:none!important}</style>');
   await window.renderAt(0);
   if (location.search.includes('play')) { const t0 = performance.now(); (function loop() { window.renderAt(((performance.now() - t0) / 1000) % R().DUR); requestAnimationFrame(loop); })(); }
   return true;
