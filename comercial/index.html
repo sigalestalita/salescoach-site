@@ -234,6 +234,7 @@ td .inp.small{width:84px;text-align:right}
       <a href="#cadencia" data-v="cadencia"><span class="lbl">Cadência</span><span class="badge" id="bCad" hidden></span></a>
       <a href="#pipeline" data-v="pipeline"><span class="lbl">Pipeline</span><span class="badge bad" id="bPipe" hidden></span></a>
       <a href="#contas" data-v="contas"><span class="lbl">Contas-alvo</span></a>
+      <a href="#listas" data-v="listas"><span class="lbl">Listas</span></a>
       <a href="#semana" data-v="semana"><span class="lbl">Semana</span></a>
       <a href="#metas" data-v="metas"><span class="lbl">Metas e preços</span></a>
       <a href="#plano" data-v="plano"><span class="lbl">Plano 90 dias</span></a>
@@ -341,7 +342,8 @@ const deep = (a, b) => { const o = Array.isArray(a) ? [...a] : { ...a }; for (co
 function toast(msg) { const t = $('#toast'); t.textContent = msg; t.hidden = false; clearTimeout(toast.t); toast.t = setTimeout(() => t.hidden = true, 2200); }
 
 /* ───────── estado ───────── */
-const S = { cfg: deep(DEFAULTS, {}), cfgExists: false, opps: [], contas: [], semanas: {}, tarefas: [], recursos: [], playbook: null, loaded: 0, ro: false, db: null, dl: null, noDb: false, showClosed: false, filtroProd: '', busca: '', contaFiltro: 'abertas', contaPrio: '', openMsg: null };
+const S = { cfg: deep(DEFAULTS, {}), cfgExists: false, opps: [], contas: [], semanas: {}, tarefas: [], recursos: [], playbook: null, loaded: 0, ro: false, db: null, dl: null, noDb: false, showClosed: false, filtroProd: '', busca: '', contaFiltro: 'abertas', contaPrio: '', openMsg: null, prospects: [],
+  L: { res: null, pagina: 0, total: 0, sel: new Set(), f: { cargos: 'Diretor Comercial, Gerente Comercial, Head de Vendas', estados: '', setores: [], tamanhos: [], senioridades: [], porEmpresa: 2, comEmail: true }, uso: null, cat: {}, busy: '', lista: '', ver: '', confirma: '' } };
 let view = (location.hash || '#painel').slice(1);
 
 /* ───────── cálculos ───────── */
@@ -403,7 +405,7 @@ function realizado(a, b) {
 const fimMes = k => { const [y, m] = k.split('-').map(Number); return iso(new Date(y, m, 0)); };
 function mesAtual() { const ks = Object.keys(S.cfg.metas).sort(), k = hoje().slice(0, 7); return ks.includes(k) ? k : (ks.find(x => x > k) || ks[ks.length - 1] || k); }
 const abertas = () => S.opps.filter(o => o.etapa && o.etapa <= 6);
-const toquesHoje = () => S.contas.filter(c => c.status === 'cadencia').map(c => ({ c, t: proximoToque(c) })).filter(x => x.t && x.t.due <= hoje()).sort((a, b) => a.t.due.localeCompare(b.t.due));
+const toquesHoje = () => S.contas.filter(c => c.status === 'cadencia' && !c.naoContatar).map(c => ({ c, t: proximoToque(c) })).filter(x => x.t && x.t.due <= hoje()).sort((a, b) => a.t.due.localeCompare(b.t.due));
 
 /* ───────── gravação ───────── */
 const chains = {};
@@ -499,6 +501,57 @@ function playbookEl() {
 }
 
 const VIEWS = {
+  listas() {
+    const L = S.L, f = L.f, u = L.uso, listas = [...new Set(S.prospects.map(p => p.lista).filter(Boolean))].sort();
+    const custoSel = campo => [...L.sel].reduce((s, id) => { const r = (L.res || []).find(x => x.id === id) || S.prospects.find(x => x.lushaId === id); const cr = r && (r.canReveal || []).find(c => c.field === campo); return s + (cr ? Number(cr.credits) : (campo === 'phones' ? 5 : 1)); }, 0);
+    const opt = (tipo, val, multi) => (L.cat[tipo] || []).map(v => { const id = v.id ?? v.value ?? v.name ?? v, nm = v.name ?? v.label ?? v.value ?? v; return `<option value="${esc(String(id))}" ${[].concat(val).map(String).includes(String(id)) ? 'selected' : ''}>${esc(String(nm))}</option>`; }).join('');
+    const conf = L.confirma;
+    const linhaR = r => { const ja = S.prospects.some(p => p.lushaId === r.id); return `<tr><td><input type="checkbox" data-lsel="${esc(r.id)}" ${L.sel.has(r.id) ? 'checked' : ''} aria-label="Selecionar"></td>
+      <td><b style="font-weight:500">${esc([r.firstName, r.lastName].filter(Boolean).join(' ') || '—')}</b>${r.socialLinks && r.socialLinks.linkedin ? ` <a class="mute" href="${esc(r.socialLinks.linkedin)}" target="_blank" rel="noopener">LinkedIn ↗</a>` : ''}</td>
+      <td>${esc(r.jobTitle && r.jobTitle.title || '')}</td><td>${esc(r.company && r.company.name || '')}<div class="mute" style="font-size:12px">${esc(r.company && r.company.domain || '')}</div></td>
+      <td>${esc([r.location && r.location.city, r.location && r.location.state].filter(Boolean).join(', '))}</td>
+      <td>${(r.canReveal || []).map(c => `<span class="chip">${c.field === 'emails' ? 'e-mail' : 'telefone'} · ${c.credits}</span>`).join(' ')}${r.error ? `<span class="chip warn">${esc(r.error.code || 'indisponível')}</span>` : ''}</td>
+      <td>${ja ? '<span class="chip acc">na lista</span>' : ''}</td></tr>`; };
+    const doLista = L.ver ? S.prospects.filter(p => p.lista === L.ver) : [];
+    return `
+    <div class="top"><div><h1>Listas de prospecção</h1><p class="sub">Busque decisores no Lusha, salve numa lista, revele e-mail ou telefone só de quem vale a pena e mande para Contas-alvo. Buscar custa cerca de 1 crédito a cada 25 resultados; revelar custa 1 crédito por e-mail e 5 por telefone.</p></div>
+      <div class="tools">${u ? `<span class="chip ${u.gastoNoMes >= u.limiteMensal ? 'bad' : 'acc'}">${u.gastoNoMes} de ${u.limiteMensal} créditos no mês</span>${u.conta && u.conta.credits ? `<span class="chip">Lusha: ${u.conta.credits.remaining} restantes</span>` : ''}` : ''}<button class="btn" id="lUso">${u ? 'Atualizar créditos' : 'Ver créditos'}</button></div></div>
+    ${u && u.semChave ? `<p class="banner">A chave do Lusha ainda não foi configurada. Um admin precisa cadastrá-la no Supabase, em Edge Functions → Secrets, com o nome LUSHA_API_KEY.</p>` : ''}
+    ${u && u.erroConta ? `<p class="banner">${esc(u.erroConta)}</p>` : ''}
+    <section class="card"><header><h2>Buscar decisores</h2><span class="mono soft">Brasil</span></header>
+      <form class="fields" id="lForm">
+        <label class="full">Cargos (separe por vírgula)<input class="inp" id="lCargos" value="${esc(f.cargos)}" placeholder="Diretor Comercial, Gerente de Vendas"></label>
+        <label>Estados (vírgula, opcional)<input class="inp" id="lEstados" value="${esc(f.estados)}" placeholder="Rio Grande do Sul, São Paulo"></label>
+        <label>Contatos por empresa<input class="inp" type="number" min="1" max="10" id="lPorEmp" value="${esc(f.porEmpresa)}"></label>
+        <label>Senioridade<select class="inp" id="lSen" multiple size="4">${opt('seniority', f.senioridades)}</select></label>
+        <label>Setor<select class="inp" id="lSet" multiple size="4">${opt('industriesLabels', f.setores)}</select></label>
+        <label>Tamanho da empresa<select class="inp" id="lTam" multiple size="4">${(L.cat.sizes || []).map((v, i) => `<option value="${i}" ${f.tamanhos.some(t => JSON.stringify(t) === JSON.stringify(tamanhoDe(v))) ? 'selected' : ''}>${esc(v.label || v.name || ((v.min || '') + '–' + (v.max || '+')))}</option>`).join('')}</select></label>
+        <label><span>Só quem tem e-mail corporativo</span><span class="check"><input type="checkbox" id="lComEmail" ${f.comEmail ? 'checked' : ''}> Sim</span></label>
+      </form>
+      ${!L.cat.seniority ? `<p class="mute" style="font-size:12.5px">As opções de senioridade, setor e tamanho vêm do Lusha. <button class="btn sm" id="lCat">Carregar opções</button></p>` : ''}
+      <div class="tools" style="justify-content:flex-end"><button class="btn pri" id="lBuscar" ${L.busy ? 'disabled' : ''}>${L.busy === 'buscar' ? 'Buscando…' : 'Buscar 25 decisores'}</button></div>
+    </section>
+    ${L.res ? `<section class="card"><header><h2>Resultados</h2><span class="mono soft">${L.total.toLocaleString('pt-BR')} encontrados · página ${L.pagina + 1}</span></header>
+      ${L.res.length ? `<div class="tw"><table><thead><tr><th><input type="checkbox" id="lTodos" aria-label="Selecionar todos"></th><th>Nome</th><th>Cargo</th><th>Empresa</th><th>Local</th><th>Dá para revelar (créditos)</th><th></th></tr></thead><tbody>${L.res.map(linhaR).join('')}</tbody></table></div>` : `<div class="empty"><b>Nenhum decisor com esses filtros.</b><span>Tente mais cargos ou menos filtros.</span></div>`}
+      <div class="tools" style="justify-content:space-between;margin-top:12px">
+        <div class="tools"><button class="btn" id="lAnt" ${L.pagina ? '' : 'disabled'}>← Anterior</button><button class="btn" id="lProx" ${L.busy ? 'disabled' : ''}>Próxima página →</button></div>
+        <div class="tools"><input class="inp" id="lNomeLista" list="lListas" placeholder="Nome da lista" value="${esc(L.lista)}"><datalist id="lListas">${listas.map(l => `<option value="${esc(l)}">`).join('')}</datalist>
+          <button class="btn pri" id="lSalvar" ${L.sel.size ? '' : 'disabled'}>Salvar ${L.sel.size || ''} na lista</button></div></div>
+    </section>` : ''}
+    <section class="card"><header><h2>Suas listas</h2><span class="mono soft">${S.prospects.length} contatos</span></header>
+      ${listas.length ? `<div class="list">${listas.map(l => { const ps = S.prospects.filter(p => p.lista === l), env = ps.filter(p => p.contaId).length, rev = ps.filter(p => p.email || p.telefone).length;
+        return `<div class="row"><span class="dot ${L.ver === l ? 'acc' : ''}"></span><div><div class="t">${esc(l)}</div><div class="d">${ps.length} contatos · ${rev} com contato revelado · ${env} em Contas-alvo</div></div><button class="btn sm" data-lver="${esc(l)}">${L.ver === l ? 'Fechar' : 'Abrir'}</button></div>`; }).join('')}</div>` : `<div class="empty"><b>Nenhuma lista ainda.</b><span>Busque decisores acima, marque os que interessam e salve numa lista.</span></div>`}
+      ${L.ver ? `<div class="tw" style="margin-top:12px"><table><thead><tr><th><input type="checkbox" id="lTodosL" aria-label="Selecionar todos"></th><th>Nome</th><th>Cargo · empresa</th><th>E-mail</th><th>Telefone</th><th>Situação</th></tr></thead><tbody>
+        ${doLista.map(p => `<tr><td><input type="checkbox" data-lsel="${esc(p.lushaId)}" ${L.sel.has(p.lushaId) ? 'checked' : ''} aria-label="Selecionar"></td><td><b style="font-weight:500">${esc(p.nome)}</b>${p.linkedin ? ` <a class="mute" href="${esc(p.linkedin)}" target="_blank" rel="noopener">LinkedIn ↗</a>` : ''}</td>
+          <td>${esc(p.cargo)}<div class="mute" style="font-size:12px">${esc(p.empresa)}</div></td><td>${p.email ? `<span data-copyval="${esc(p.email)}" style="cursor:copy">${esc(p.email)}</span>` : '<span class="mute">—</span>'}</td><td>${esc(p.telefone || '—')}</td>
+          <td>${p.contaId ? '<span class="chip acc">em Contas-alvo</span>' : '<span class="chip">na lista</span>'}</td></tr>`).join('')}</tbody></table></div>
+        <div class="tools" style="justify-content:flex-end;margin-top:12px;flex-wrap:wrap">
+          ${conf ? `<span class="chip warn">${esc(conf.txt)}</span><button class="btn" id="lCancela">Cancelar</button><button class="btn pri" id="lConfirma">Confirmar</button>` :
+          `<button class="btn" id="lRevEmail" ${L.sel.size && !L.busy ? '' : 'disabled'}>Revelar e-mail (até ${custoSel('emails')} créditos)</button><button class="btn" id="lRevTel" ${L.sel.size && !L.busy ? '' : 'disabled'}>Revelar telefone (até ${custoSel('phones')} créditos)</button><button class="btn pri" id="lEnviar" ${L.sel.size && !dis() ? '' : 'disabled'}>Mandar ${L.sel.size || ''} para Contas-alvo</button><button class="btn danger" id="lRemover" ${L.sel.size && !dis() ? '' : 'disabled'}>Tirar da lista</button>`}
+        </div>` : ''}
+    </section>
+    <p class="mute" style="font-size:12.5px">Prospecção B2B com base no legítimo interesse (LGPD): use só dados profissionais, registre a origem e respeite quem pedir para não ser contatado. Contas marcadas com "não contatar" saem da cadência.</p>`;
+  },
   painel() {
     const k = S.painelMes || mesAtual(), f = funil(k), r = realizado(k + '-01', fimMes(k));
     const ab = abertas(), pip = ab.reduce((s, o) => s + valores(o).ano, 0), pond = ab.reduce((s, o) => s + valores(o).pond, 0);
@@ -851,6 +904,10 @@ function contaForm(c) {
     <label>Nome<input class="inp" name="decisor" id="c-dec" value="${esc(c.decisor)}" ${d}></label>
     <label>Cargo<input class="inp" name="cargo" id="c-cargo" value="${esc(c.cargo)}" ${d}></label>
     <label class="full">LinkedIn do decisor<input class="inp" name="linkedin" id="c-li" value="${esc(c.linkedin)}" ${d}></label>
+    <label>E-mail do decisor<input class="inp" type="email" name="email" id="c-email" value="${esc(c.email)}" ${d}></label>
+    <label>Telefone do decisor<input class="inp" name="telefone" id="c-tel" value="${esc(c.telefone)}" ${d}></label>
+    <label>Origem do contato<input class="inp" name="origem" id="c-origem" value="${esc(c.origem)}" placeholder="Ex.: Lusha · lista Indústria RS" ${d}></label>
+    ${yn('naoContatar', c.naoContatar, 'Pediu para não ser contatado?')}
     <label>Produto da abordagem<select class="inp" name="produto" id="c-prod" ${d}><option value="">Automático pela nota</option>${opts(PRODUTOS, c.produto)}</select></label>
     <label>Situação<select class="inp" name="status" id="c-status" ${d}>${Object.entries(CSTATUS).map(([k, v]) => `<option value="${k}" ${(c.status || 'fila') === k ? 'selected' : ''}>${v}</option>`).join('')}</select></label>
     <label class="full">Observações<textarea class="inp" name="obs" id="c-obs" ${d}>${esc(c.obs)}</textarea></label>
@@ -862,7 +919,7 @@ function contaForm(c) {
 function readConta() {
   const f = $('#fConta'), fd = new FormData(f), o = {};
   for (const [k, v] of fd) o[k] = typeof v === 'string' ? v.trim() : v;
-  ['online', 'crm', 'rh'].forEach(k => o[k] = f.elements[k].checked);
+  ['online', 'crm', 'rh', 'naoContatar'].forEach(k => o[k] = f.elements[k].checked);
   if (f.elements.inicioCadencia) { o.toques = fd.getAll('tq').map(Number); }
   delete o.tq;
   ['vendedores', 'colaboradores'].forEach(k => o[k] = o[k] === '' ? '' : +o[k]);
@@ -1043,6 +1100,85 @@ async function importar() {
   }
   S.imp = null; S.importando = false; render(); toast(`Importação concluída: ${n} registros`);
 }
+
+
+/* ───────── listas de prospecção (Lusha) ───────── */
+const tamanhoDe = v => ({ min: v.min ?? v.from ?? 1, ...(v.max ?? v.to ? { max: v.max ?? v.to } : {}) });
+async function lushaApi(acao, extra = {}) {
+  const { data: { session } } = await sb.auth.getSession();
+  const r = await fetch(CFG.url + '/functions/v1/lusha', { method: 'POST', headers: { Authorization: 'Bearer ' + (session ? session.access_token : ''), apikey: CFG.anonKey, 'Content-Type': 'application/json' }, body: JSON.stringify({ acao, ...extra }) });
+  let d = {}; try { d = await r.json(); } catch (e) {}
+  if (!r.ok) { const er = new Error(d.erro || 'Não foi possível falar com o Lusha.'); er.dados = d; throw er; }
+  return d;
+}
+const lUsoDe = d => { if (d && d.limiteMensal !== undefined) S.L.uso = { ...(S.L.uso || {}), gastoNoMes: d.gastoNoMes, limiteMensal: d.limiteMensal }; };
+function lFiltros() {
+  const f = S.L.f, sel = id => [...($(id) ? $(id).selectedOptions : [])].map(o => o.value);
+  f.cargos = $('#lCargos').value; f.estados = $('#lEstados').value; f.porEmpresa = +$('#lPorEmp').value || 2; f.comEmail = $('#lComEmail').checked;
+  if ($('#lSen')) f.senioridades = sel('#lSen'); if ($('#lSet')) f.setores = sel('#lSet');
+  if ($('#lTam')) f.tamanhos = sel('#lTam').map(i => tamanhoDe(S.L.cat.sizes[+i]));
+  const sp = v => v.split(',').map(x => x.trim()).filter(Boolean);
+  return { cargos: sp(f.cargos), estados: sp(f.estados), porEmpresa: f.porEmpresa, comEmail: f.comEmail, senioridades: f.senioridades, setores: f.setores, tamanhos: f.tamanhos };
+}
+async function lBuscar(pagina) {
+  const filtros = lFiltros(); S.L.busy = 'buscar'; render();
+  try { const d = await lushaApi('buscar', { filtros, pagina, tamanho: 25 }); S.L.res = d.results || []; S.L.total = (d.pagination && d.pagination.total) || S.L.res.length; S.L.pagina = pagina; S.L.sel = new Set(); lUsoDe(d);
+    toast(`${S.L.res.length} decisores · ${d.billing ? d.billing.creditsCharged : '?'} crédito(s)`); }
+  catch (e) { toast(e.message); if (e.dados && e.dados.semChave) S.L.uso = { ...(S.L.uso || {}), semChave: true }; }
+  S.L.busy = ''; render();
+}
+async function lCatalogo() {
+  S.L.busy = 'cat'; render();
+  for (const tipo of ['seniority', 'industriesLabels', 'sizes']) {
+    try { const d = await lushaApi('filtros', { tipo }); S.L.cat[tipo] = Array.isArray(d) ? d : (d.values || d.data || []); } catch (e) { toast(e.message); if (e.dados && e.dados.semChave) { S.L.uso = { ...(S.L.uso || {}), semChave: true }; break; } }
+  }
+  S.L.busy = ''; render();
+}
+async function lRevelar(campo) {
+  const ids = [...S.L.sel].slice(0, 25); S.L.busy = 'rev'; S.L.confirma = ''; render();
+  try { const d = await lushaApi('revelar', { ids, campos: [campo] }); lUsoDe(d); let n = 0;
+    for (const r of d.results || []) { const p = S.prospects.find(x => x.lushaId === String(r.id)); if (!p) continue;
+      const email = (r.emails || []).find(e => e.type === 'work') || (r.emails || [])[0], tel = (r.phones || []).find(t => !t.doNotCall) || (r.phones || [])[0];
+      const up = { ...strip(p), ...(email ? { email: email.email } : {}), ...(tel ? { telefone: tel.number, naoLigar: !!tel.doNotCall } : {}), reveladoEm: new Date().toISOString() };
+      if (email || tel) { n++; const ref = S.db.collection('prospects').doc(p.id); await write(ref.path, () => ref.set(up)); } }
+    toast(`${n} de ${ids.length} com ${campo === 'emails' ? 'e-mail' : 'telefone'} · ${d.billing ? d.billing.creditsCharged : '?'} crédito(s)`); }
+  catch (e) { toast(e.message); }
+  S.L.busy = ''; render();
+}
+document.addEventListener('click', async e => {
+  if (view !== 'listas') return;
+  const t = e.target.closest('button,input[type=checkbox]'); if (!t) return;
+  const L = S.L;
+  if (t.dataset.lsel !== undefined) { t.checked ? L.sel.add(t.dataset.lsel) : L.sel.delete(t.dataset.lsel); L.confirma = ''; return render(); }
+  if (t.dataset.lver !== undefined) { L.ver = L.ver === t.dataset.lver ? '' : t.dataset.lver; L.sel = new Set(); L.confirma = ''; return render(); }
+  switch (t.id) {
+    case 'lUso': try { const d = await lushaApi('uso'); L.uso = d; } catch (er) { toast(er.message); if (er.dados && er.dados.semChave) L.uso = { semChave: true }; } return render();
+    case 'lCat': return lCatalogo();
+    case 'lBuscar': return lBuscar(0);
+    case 'lProx': return lBuscar(L.pagina + 1);
+    case 'lAnt': return lBuscar(Math.max(0, L.pagina - 1));
+    case 'lTodos': (L.res || []).forEach(r => t.checked ? L.sel.add(r.id) : L.sel.delete(r.id)); return render();
+    case 'lTodosL': S.prospects.filter(p => p.lista === L.ver).forEach(p => t.checked ? L.sel.add(p.lushaId) : L.sel.delete(p.lushaId)); return render();
+    case 'lSalvar': { const nome = ($('#lNomeLista').value || '').trim(); if (!nome) { toast('Dê um nome para a lista.'); return $('#lNomeLista').focus(); } L.lista = nome; let n = 0;
+      for (const id of L.sel) { const r = L.res.find(x => x.id === id); if (!r || S.prospects.some(p => p.lushaId === id)) continue;
+        const ref = S.db.collection('prospects').doc(); const ag = new Date().toISOString();
+        if (await write(ref.path, () => ref.set({ lushaId: String(r.id), lista: nome, nome: [r.firstName, r.lastName].filter(Boolean).join(' '), cargo: (r.jobTitle && r.jobTitle.title) || '', empresa: (r.company && r.company.name) || '', dominio: (r.company && r.company.domain) || '',
+          cidade: [r.location && r.location.city, r.location && r.location.state].filter(Boolean).join(', '), linkedin: (r.socialLinks && r.socialLinks.linkedin) || '', canReveal: r.canReveal || [], origem: 'Lusha', criadoEm: ag, atualizadoEm: ag }))) n++; }
+      L.sel = new Set(); L.ver = nome; toast(`${n} salvos em "${nome}"`); return render(); }
+    case 'lRevEmail': case 'lRevTel': { const campo = t.id === 'lRevEmail' ? 'emails' : 'phones'; const n = Math.min(25, L.sel.size);
+      L.confirma = { campo, txt: `Revelar ${campo === 'emails' ? 'e-mail' : 'telefone'} de ${n} contato${n > 1 ? 's' : ''}? Pode custar até ${n * (campo === 'emails' ? 1 : 5)} créditos.` }; return render(); }
+    case 'lCancela': L.confirma = ''; return render();
+    case 'lConfirma': return lRevelar(L.confirma.campo);
+    case 'lEnviar': { let n = 0;
+      for (const id of L.sel) { const p = S.prospects.find(x => x.lushaId === id && x.lista === L.ver); if (!p || p.contaId) continue;
+        const cid = await saveConta(null, { empresa: p.empresa, site: p.dominio, cidade: p.cidade, decisor: p.nome, cargo: p.cargo, linkedin: p.linkedin, email: p.email || '', telefone: p.telefone || '', origem: `Lusha · lista ${p.lista}`, status: 'fila', naoContatar: false });
+        if (cid) { n++; const ref = S.db.collection('prospects').doc(p.id); await write(ref.path, () => ref.set({ ...strip(p), contaId: cid })); } }
+      L.sel = new Set(); toast(`${n} contas criadas. Complete a nota de encaixe em Contas-alvo antes de iniciar a cadência.`); return render(); }
+    case 'lRemover': { if (!t.dataset.c) { t.dataset.c = 1; t.textContent = 'Confirmar'; return; }
+      for (const id of L.sel) { const p = S.prospects.find(x => x.lushaId === id && x.lista === L.ver); if (p) await write('prospects/' + p.id, () => S.db.collection('prospects').doc(p.id).delete()); }
+      L.sel = new Set(); toast('Removidos da lista'); return render(); }
+  }
+});
 
 /* ───────── eventos ───────── */
 addEventListener('hashchange', () => { view = location.hash.slice(1) || 'painel'; S.busca = ''; render(); scrollTo(0, 0); });
@@ -1237,6 +1373,7 @@ async function iniciar(session) {
   db.collection('semanas').onSnapshot(s => { const o = {}; s.docs.forEach(d => o[d.id] = d.data()); S.semanas = o; if (!f4++) done(); else schedule(); });
   db.collection('tarefas').onSnapshot(s => { S.tarefas = s.docs.map(d => ({ ...d.data(), id: d.id })); if (!f5++) done(); else schedule(); });
   db.collection('recursos').onSnapshot(s => { S.recursos = s.docs.map(d => ({ ...d.data(), id: d.id })); schedule(); });
+  db.collection('prospects').onSnapshot(s => { S.prospects = s.docs.map(d => ({ ...d.data(), id: d.id })); schedule(); });
   db.doc('conteudo/playbook').onSnapshot(s => { S.playbook = s.exists ? s.data() : null; schedule(); });
   carregarMembros();
 }
