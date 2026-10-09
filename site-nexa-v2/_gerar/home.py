@@ -5,34 +5,9 @@ from partes import head, topo, contato, rodape, fim, SETA, GRADE, STAR
 RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 B = ''
 
-CAPAS = [
-    ('sc-analise', 'Sales Coach', 'análise', 'sales-coach/index.html#depois'),
-    ('pessoa-1', 'Atlas Clima', 'escuta', 'atlas/index.html'),
-    ('plate-sc', 'Sales Coach', 'em ação', 'sales-coach/index.html'),
-    ('ac-painel', 'Atlas Clima', 'painel', 'atlas/index.html#clima'),
-    ('sc-aovivo', 'Sales Coach', 'ao vivo', 'sales-coach/index.html#durante'),
-    ('plate-neural', 'Fábrica', 'IA aplicada', '#fabrica'),
-    ('a3-painel', 'Atlas 360', 'comparar', 'atlas/index.html#atlas-360'),
-    ('pessoa-4', 'Pessoas', 'no centro', 'atlas/index.html'),
-    ('sc-treino', 'Sales Coach', 'treino', 'sales-coach/index.html#antes'),
-    ('ac-liderancas', 'Atlas Clima', 'lideranças', 'atlas/index.html#clima'),
-    ('plate-fabrica', 'Fábrica', 'de soluções', '#fabrica'),
-    ('sc-gestor', 'Sales Coach', 'gestão', 'sales-coach/index.html#gestao'),
-    ('pessoa-3', 'Atlas 360', 'conversa', 'atlas/index.html#atlas-360'),
-    ('ac-links', 'Atlas Clima', 'link anônimo', 'atlas/index.html#clima'),
-    ('plate-orbitas', 'NEXA', 'ecossistema', '#motores'),
-    ('sc-integracoes', 'Sales Coach', 'integrações', 'sales-coach/index.html#integracoes'),
-    ('a3-matriz', 'Atlas 360', 'matriz', 'atlas/index.html#atlas-360'),
-    ('pessoa-2', 'Atlas Clima', 'sinais', 'atlas/index.html'),
-    ('app-extensao', 'Sales Coach', 'extensão', 'sales-coach/index.html#durante'),
-    ('plate-clima', 'Atlas Clima', 'mapa', 'atlas/index.html#clima'),
-    ('ac-comentarios', 'Atlas Clima', 'comentários', 'atlas/index.html#clima'),
-    ('plate-360', 'Atlas 360', 'perspectivas', 'atlas/index.html#atlas-360'),
-]
-capas = '\n'.join(
-    f'<div class="capa" data-href="{h}" role="link" tabindex="0" aria-label="{a} · {b}"><img src="assets/capas/{f}.webp" alt="" loading="{"eager" if i < 12 else "lazy"}" decoding="async">'
-    f'<span class="rot"><i></i><b>{a}</b><em>{b}</em></span><svg class="seta" viewBox="0 0 24 24"><path d="M7 17 17 7M9 7h8v8"/></svg></div>'
-    for i, (f, a, b, h) in enumerate(CAPAS))
+# Cartões do anel: desenhados em HTML (ver cartoes.py). Opção escolhida por CAPAS=A|B|C.
+from cartoes import OPCOES
+capas = '\n'.join(OPCOES[os.environ.get('CAPAS', 'A')]())
 
 def prod(nome, kick, titulo, texto, itens, video, href, flut):
     lis = ''.join(f'<li>{i}</li>' for i in itens)
@@ -142,5 +117,5 @@ html = head('NEXA · Inteligência que vira solução',
 </div></section>
 ''' + contato(B) + '</main>' + rodape(B) + fim(B)
 
-open(os.path.join(RAIZ, 'index.html'), 'w', encoding='utf-8').write(html)
+open(os.path.join(RAIZ, os.environ.get('SAIDA', 'index.html')), 'w', encoding='utf-8').write(html)
 print('index.html', len(html))
