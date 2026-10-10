@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Post Sales Coach · coach em cada reunião</title>
+<link rel="stylesheet" href="fonts.css">
+<link rel="stylesheet" href="poppins.css">
+<style>
+/* Post de feed 4:5 (1080×1350) do Sales Coach, identidade light da NEXA.
+   Estrutura de anúncio: marca, promessa, selo, benefícios, preço, produto e chamada. */
+:root { --osso: #f3f4ee; --tinta: #10120e; --dim: #5d6355; --lima: #d4f969; --oliva: #587406; --navy: #0f2c5c; --azul: #1d4f9a; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { width: 1080px; height: 1350px; overflow: hidden; }
+body { position: relative; font-family: 'DM Sans', sans-serif; color: var(--tinta); -webkit-font-smoothing: antialiased;
+  background:
+    radial-gradient(60% 40% at 88% 4%, rgba(212,249,105,.55), transparent 70%),
+    radial-gradient(55% 38% at 6% 30%, rgba(196,214,245,.75), transparent 70%),
+    radial-gradient(70% 45% at 50% 100%, rgba(212,249,105,.7), transparent 70%),
+    radial-gradient(50% 35% at 100% 70%, rgba(220,212,245,.6), transparent 70%),
+    #f6f7f2; }
+body::after { content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: radial-gradient(rgba(16,18,14,.07) 1.2px, transparent 1.6px) 0 0 / 26px 26px;
+  -webkit-mask: linear-gradient(180deg, #000, transparent 30%, transparent 70%, #000); }
+.abs { position: absolute; }
+
+/* Marca */
+#marca { position: absolute; left: 0; right: 0; top: 70px; display: flex; justify-content: center; align-items: center; gap: 16px; }
+#marca img { height: 54px; }
+#marca .w { font-family: 'Poppins'; font-size: 40px; letter-spacing: -.01em; color: var(--tinta); }
+#marca .w b { font-weight: 700; } #marca .w span { font-weight: 300; }
+#marca small { display: block; font-family: 'DM Sans'; font-size: 16px; color: var(--dim); margin-top: -4px; letter-spacing: 0; }
+
+/* Promessa */
+h1 { position: absolute; left: 0; right: 0; top: 162px; text-align: center; font-family: 'Space Grotesk'; font-weight: 300;
+  font-size: 104px; line-height: .98; letter-spacing: -.055em; color: var(--tinta); }
+h1 em { font-style: normal; color: var(--azul); font-weight: 400; }
+#selo { position: absolute; left: 50%; top: 392px; translate: -50% 0; white-space: nowrap; font-size: 31px; color: var(--tinta);
+  padding: 14px 34px; border-radius: 18px; background: rgba(255,255,255,.7); box-shadow: inset 0 0 0 1.5px rgba(29,79,154,.18), 0 18px 40px -26px rgba(15,44,92,.45); backdrop-filter: blur(6px); }
+#selo b { font-weight: 600; }
+
+/* Benefícios */
+#lista { position: absolute; left: 92px; top: 512px; display: grid; gap: 17px; }
+#lista li { list-style: none; display: flex; align-items: center; gap: 16px; font-size: 27px; color: var(--tinta); letter-spacing: -.01em; }
+#lista i { width: 30px; height: 30px; border-radius: 9px; background: var(--tinta); display: grid; place-items: center; flex: 0 0 auto; }
+#lista i svg { width: 17px; height: 17px; stroke: var(--lima); stroke-width: 3; fill: none; }
+
+/* Preço */
+#preco { position: absolute; right: 72px; top: 492px; width: 352px; height: 232px; border-radius: 34px; padding: 24px 28px;
+  background: linear-gradient(160deg, #ffffff, #f2f6e2); box-shadow: inset 0 0 0 1.5px rgba(16,18,14,.07), 0 30px 60px -34px rgba(30,40,20,.45); }
+#preco .k { font-family: 'JetBrains Mono'; font-size: 14px; letter-spacing: .18em; color: var(--oliva); }
+#preco .v { display: flex; align-items: flex-start; margin-top: 4px; font-family: 'Space Grotesk'; color: var(--tinta); letter-spacing: -.05em; }
+#preco .v span { font-size: 30px; margin-top: 18px; margin-right: 6px; letter-spacing: 0; }
+#preco .v b { font-weight: 500; font-size: 112px; line-height: 1; }
+#preco .v small { font-size: 46px; margin-top: 12px; font-weight: 500; }
+#preco .s { font-size: 19px; color: var(--dim); margin-top: 4px; line-height: 1.3; }
+#preco .s b { color: var(--tinta); font-weight: 500; }
+
+/* Produto */
+#lap { position: absolute; left: 70px; top: 782px; width: 780px; }
+#lap .tela { width: 780px; height: 488px; border-radius: 24px; background: #1b1d1f; padding: 14px; box-shadow: 0 0 0 2px #2b2e31, 0 50px 80px -40px rgba(20,30,10,.55); }
+#lap .tela div { width: 100%; height: 100%; border-radius: 12px; background: url(img/tela.jpg) 0 0 / cover; }
+#lap .base { width: 880px; height: 22px; margin-left: -50px; border-radius: 0 0 22px 22px; background: linear-gradient(180deg, #ecede9, #c9ccc5 60%, #a6a9a2); box-shadow: 0 24px 40px -18px rgba(20,30,10,.5); position: relative; }
+#lap .base::before { content: ""; position: absolute; left: 50%; top: 0; width: 150px; height: 9px; margin-left: -75px; border-radius: 0 0 10px 10px; background: #bfc2bb; }
+#etq { position: absolute; left: 40px; top: 742px; display: flex; align-items: center; gap: 10px; font-family: 'Poppins'; font-weight: 600; font-size: 17px; letter-spacing: .08em;
+  padding: 11px 18px; border-radius: 12px; background: var(--lima); color: var(--tinta); box-shadow: 0 14px 30px -16px rgba(30,40,20,.6); transform: rotate(-3deg); }
+#etq i { width: 9px; height: 9px; border-radius: 50%; background: #e5533d; box-shadow: 0 0 0 4px rgba(229,83,61,.2); }
+
+#fone { position: absolute; right: 74px; top: 752px; width: 296px; height: 528px; border-radius: 52px; background: #1b1d1f; padding: 12px;
+  box-shadow: 0 0 0 2px #2f3235, 0 50px 80px -30px rgba(20,30,10,.6); transform: rotate(4deg); }
+#fone .t { position: relative; width: 100%; height: 100%; border-radius: 41px; background: #fbfbf8; overflow: hidden; font-family: 'Poppins'; color: #16213a; padding: 46px 18px 18px; }
+#fone .ilha { position: absolute; left: 50%; top: 12px; width: 92px; height: 26px; margin-left: -46px; border-radius: 14px; background: #111; }
+.hd { display: flex; align-items: center; gap: 9px; font-weight: 600; font-size: 16px; }
+.hd img { height: 22px; } .hd em { margin-left: auto; font-style: normal; display: flex; align-items: center; gap: 6px; font-size: 11.5px; font-weight: 500; color: #2f8a3b; }
+.hd em i { width: 7px; height: 7px; border-radius: 50%; background: #3fbf5a; }
+.sec { font-family: 'JetBrains Mono'; font-size: 10px; letter-spacing: .16em; color: #8b9080; margin: 16px 0 8px; }
+.onda { display: flex; align-items: center; gap: 3px; height: 30px; }
+.onda i { width: 4px; border-radius: 2px; background: var(--azul); opacity: .85; }
+.fala { font-family: 'DM Sans'; font-size: 13.5px; line-height: 1.45; background: #fff; border-radius: 12px; padding: 10px 12px; box-shadow: 0 0 0 1px #eceee6; }
+.fala b { font-family: 'JetBrains Mono'; font-weight: 400; font-size: 10px; letter-spacing: .12em; color: #8b9080; display: block; margin-bottom: 2px; }
+.fala mark { background: var(--lima); border-radius: 4px; padding: 0 2px; color: inherit; }
+.dica { margin-top: 10px; border-radius: 16px; background: #fff; padding: 14px; box-shadow: 0 18px 30px -20px rgba(15,44,92,.5), 0 0 0 1px #eceee6; }
+.tags { display: flex; gap: 6px; } .tag { font-family: 'JetBrains Mono'; font-size: 9.5px; letter-spacing: .1em; padding: 4px 8px; border-radius: 99px; }
+.tag.v { background: #ffe7e1; color: #c2412c; } .tag.l { background: var(--lima); color: var(--tinta); }
+.dica p { font-size: 14px; font-weight: 500; line-height: 1.4; margin-top: 10px; }
+.dica .bt { margin-top: 12px; height: 38px; border-radius: 10px; background: var(--navy); color: #fff; font-weight: 600; font-size: 13px; display: grid; place-items: center; }
+.nota { margin-top: 10px; display: flex; align-items: center; justify-content: space-between; border-radius: 14px; background: #fff; padding: 10px 14px; box-shadow: 0 0 0 1px #eceee6; font-size: 12px; color: #6a7287; }
+.nota b { font-family: 'Space Grotesk'; font-weight: 400; font-size: 30px; color: var(--tinta); letter-spacing: -.04em; }
+
+/* Chamada */
+#cta { position: absolute; left: 50%; bottom: 72px; translate: -50% 0; display: flex; align-items: center; gap: 16px; white-space: nowrap;
+  font-size: 30px; font-weight: 500; color: #fff; background: var(--tinta); padding: 20px 36px 20px 30px; border-radius: 999px; box-shadow: 0 24px 50px -24px rgba(16,18,14,.8); z-index: 5; }
+#cta i { width: 36px; height: 36px; border-radius: 50%; background: var(--lima); display: grid; place-items: center; }
+#cta i svg { width: 20px; height: 20px; stroke: var(--tinta); stroke-width: 2.4; fill: none; }
+#nexa { position: absolute; left: 0; right: 0; justify-content: center; bottom: 24px; display: flex; align-items: center; gap: 10px; font-size: 14px; color: var(--dim); z-index: 6; }
+#nexa img { height: 13px; }
+</style>
+</head>
+<body>
+<div id="marca"><img src="img/mark.png" alt=""><div><div class="w"><b>Sales</b> <span>Coach</span></div></div></div>
+
+<h1>Um coach de vendas<br><em>em cada reunião</em></h1>
+<div id="selo">Coach de vendas com IA, <b>em português</b></div>
+
+<ul id="lista">
+  <li><i><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></i>Treino com cliente simulado</li>
+  <li><i><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></i>Dica ao vivo na objeção</li>
+  <li><i><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></i>Nota com BANT, MEDDIC e SPIN</li>
+  <li><i><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></i>CRM preenchido sozinho</li>
+</ul>
+
+<div id="preco"><div class="k">A PARTIR DE</div>
+  <div class="v"><span>R$</span><b>19</b><small>,90</small></div>
+  <div class="s"><b>por usuário/mês.</b> Você paga só por quem usa.</div></div>
+
+<div id="etq"><i></i>NO MEET E NO TEAMS</div>
+<div id="lap"><div class="tela"><div></div></div><div class="base"></div></div>
+
+<div id="fone"><div class="t"><div class="ilha"></div>
+  <div class="hd"><img src="img/mark.png" alt="">Sales Coach<em><i></i>ao vivo</em></div>
+  <div class="sec">OUVINDO A REUNIÃO</div>
+  <div class="onda" id="onda"></div>
+  <div class="fala" style="margin-top:10px"><b>RICARDO · LEAD</b>Gostei, mas achei <mark>caro para o momento</mark>.</div>
+  <div class="dica"><div class="tags"><span class="tag v">OBJEÇÃO · PREÇO</span><span class="tag l">FALE AGORA</span></div>
+    <p>Pergunte quanto custa, por mês, não saber o que acontece nas reuniões.</p><div class="bt">Usar a dica</div></div>
+  <div class="nota"><span>Nota da reunião</span><b>86</b></div>
+</div></div>
+
+<div id="cta"><i><svg viewBox="0 0 24 24"><path d="M5 12h13M13 6l6 6-6 6"/></svg></i>Agende uma demonstração</div>
+<div id="nexa"><span>um produto</span><img src="img/nexa.svg" alt="NEXA"></div>
+<script>
+const o = document.getElementById('onda'); [8,16,24,12,28,20,10,26,18,30,14,22,9,25,17,28,11,21,15,27,13,23,19,10,24,16].forEach(h => { const i = document.createElement('i'); i.style.height = h + 'px'; o.appendChild(i); });
+</script>
+</body>
+</html>
