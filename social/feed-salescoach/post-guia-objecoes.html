@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Post Sales Coach · guia de objeções</title>
+<link rel="stylesheet" href="fonts.css">
+<link rel="stylesheet" href="poppins.css">
+<style>
+/* Post de feed 4:5 (1080×1350), formato "material rico": marca, selo, título,
+   o material aberto num notebook sobre um pedestal, molduras de linha ao fundo. */
+:root { --osso: #f3f4ee; --tinta: #10120e; --dim: #5d6355; --lima: #d4f969; --oliva: #587406; --navy: #0f2c5c; --azul: #1d4f9a; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { width: 1080px; height: 1350px; overflow: hidden; }
+body { position: relative; font-family: 'DM Sans', sans-serif; color: var(--tinta); -webkit-font-smoothing: antialiased;
+  background:
+    radial-gradient(45% 35% at 0% 0%, rgba(212,249,105,.75), transparent 70%),
+    radial-gradient(50% 40% at 100% 62%, rgba(196,214,245,.8), transparent 70%),
+    radial-gradient(60% 30% at 50% 100%, rgba(212,249,105,.45), transparent 70%),
+    linear-gradient(180deg, #f7f8f3, #eef0e8); }
+body::before { content: ""; position: absolute; inset: 0; pointer-events: none; opacity: .5;
+  background: radial-gradient(rgba(16,18,14,.08) 1.2px, transparent 1.6px) 0 0 / 26px 26px;
+  -webkit-mask: radial-gradient(60% 50% at 50% 30%, transparent 30%, #000 100%); }
+
+#marca { position: absolute; left: 0; right: 0; top: 74px; display: flex; justify-content: center; align-items: center; gap: 14px; }
+#marca img { height: 48px; } #marca .w { font-family: 'Poppins'; font-size: 36px; } #marca b { font-weight: 700; } #marca span { font-weight: 300; }
+#selo { position: absolute; left: 50%; top: 158px; translate: -50% 0; font-size: 22px; font-weight: 500; color: var(--oliva);
+  padding: 8px 22px; border-radius: 99px; background: rgba(212,249,105,.35); box-shadow: inset 0 0 0 1.5px rgba(88,116,6,.45); }
+h1 { position: absolute; left: 0; right: 0; top: 214px; text-align: center; font-family: 'Space Grotesk'; font-weight: 300;
+  font-size: 92px; line-height: 1.02; letter-spacing: -.05em; }
+h1 em { font-style: normal; font-weight: 400; color: var(--azul); }
+
+/* Molduras de linha atrás do notebook */
+.moldura { position: absolute; border: 4px solid rgba(29,79,154,.55); border-bottom: 0; }
+#m1 { left: 64px; top: 520px; width: 400px; height: 900px; border-radius: 140px 140px 0 0; }
+#m2 { left: 620px; top: 470px; width: 400px; height: 950px; border-radius: 180px 180px 0 0; border-color: rgba(88,116,6,.55); }
+
+/* Pedestal */
+#ped { position: absolute; left: 90px; right: 90px; top: 1074px; height: 260px; border-radius: 26px;
+  background: linear-gradient(180deg, #e7e9e1 0%, #d9dcd2 18%, #cfd2c7 100%);
+  box-shadow: inset 0 3px 0 rgba(255,255,255,.8), 0 -30px 60px -30px rgba(30,40,20,.25); }
+#ped::before { content: ""; position: absolute; inset: 0; border-radius: 26px; opacity: .35;
+  background: radial-gradient(rgba(16,18,14,.18) 1px, transparent 1.4px) 0 0 / 7px 7px; }
+
+/* Notebook em perspectiva */
+#cena { position: absolute; left: 0; right: 0; top: 548px; height: 560px; perspective: 2400px; }
+#lap { position: absolute; left: 150px; top: 0; width: 780px; transform: rotateY(-10deg) rotateX(3deg); transform-origin: 50% 100%; }
+.tela { width: 780px; height: 490px; border-radius: 26px; background: #1b1d1f; padding: 16px; box-shadow: 0 0 0 2px #2f3235, 0 60px 90px -40px rgba(20,30,10,.6); position: relative; }
+.tela::after { content: ""; position: absolute; left: 50%; top: 0; width: 120px; height: 18px; margin-left: -60px; border-radius: 0 0 12px 12px; background: #1b1d1f; }
+.doc { position: relative; width: 860px; height: 529px; zoom: .87; border-radius: 13px; overflow: hidden; background: #fbfbf8; font-family: 'Poppins'; color: var(--t1, #16213a); }
+.base { position: relative; margin: 0 -70px; height: 40px; clip-path: polygon(5% 0, 95% 0, 100% 72%, 99% 100%, 1% 100%, 0 72%);
+  background: linear-gradient(180deg, #f2f3ef 0%, #dfe1db 45%, #c3c6bf 72%, #9fa29b 100%); }
+.base::before { content: ""; position: absolute; left: 50%; top: 0; width: 160px; height: 8px; margin-left: -80px; border-radius: 0 0 10px 10px; background: #bfc2bb; }
+
+/* Página do guia */
+.capa { position: absolute; left: 0; top: 0; width: 330px; height: 250px; background: var(--navy); border-radius: 0 0 60px 0; padding: 34px 30px; color: #fff; }
+.capa h2 { font-weight: 700; font-size: 31px; line-height: 1.02; letter-spacing: -.01em; text-transform: uppercase; }
+.capa h2 em { font-style: normal; color: var(--lima); }
+.capa .sc { display: flex; align-items: center; gap: 7px; margin-top: 18px; font-size: 12px; font-weight: 600; opacity: .9; }
+.capa .sc img { height: 16px; filter: brightness(0) invert(1); }
+.intro { position: absolute; left: 360px; top: 30px; right: 30px; font-size: 13.5px; line-height: 1.45; color: #2a3550; }
+.intro b { color: var(--navy); }
+.intro small { display: block; margin-top: 10px; font-size: 10.5px; color: #6a7287; line-height: 1.5; }
+.chip { position: absolute; right: 30px; top: 138px; width: 150px; padding: 12px; border-radius: 14px; background: #fff; box-shadow: 0 0 0 1px #e6e8e0, 0 14px 24px -16px rgba(15,44,92,.4); font-size: 10.5px; color: #6a7287; }
+.chip b { display: block; font-family: 'Space Grotesk'; font-weight: 400; font-size: 34px; color: var(--tinta); letter-spacing: -.04em; line-height: 1; }
+.sec { position: absolute; left: 30px; top: 280px; display: flex; align-items: center; gap: 10px; }
+.sec i { width: 34px; height: 34px; border-radius: 9px; background: var(--lima); display: grid; place-items: center; font-style: normal; font-weight: 700; color: var(--tinta); }
+.sec span { font-weight: 700; font-size: 15px; letter-spacing: .04em; }
+.obj { position: absolute; left: 30px; top: 330px; width: 250px; font-size: 11px; line-height: 1.5; color: #6a7287; }
+.obj q { display: block; font-family: 'Space Grotesk'; font-size: 22px; color: var(--tinta); letter-spacing: -.02em; margin-bottom: 8px; quotes: "“" "”"; }
+.chk { position: absolute; left: 300px; top: 290px; width: 260px; }
+.chk h4 { font-size: 13px; font-weight: 700; margin-bottom: 8px; }
+.chk li { list-style: none; display: flex; gap: 7px; font-size: 10.5px; line-height: 1.35; color: #2a3550; margin-bottom: 7px; }
+.chk li i { flex: 0 0 auto; width: 13px; height: 13px; border-radius: 4px; background: var(--azul); display: grid; place-items: center; }
+.chk li i svg { width: 9px; height: 9px; stroke: #fff; stroke-width: 3.2; fill: none; }
+.dica { position: absolute; right: 30px; top: 290px; width: 220px; border-radius: 14px; border: 1.5px dashed rgba(29,79,154,.4); padding: 14px; font-size: 10.5px; line-height: 1.45; color: #2a3550; }
+.dica b { display: inline-flex; align-items: center; gap: 6px; font-size: 12.5px; margin-bottom: 6px; color: var(--navy); }
+.dica b i { width: 18px; height: 18px; border-radius: 50%; background: var(--lima); }
+.linha { position: absolute; left: 30px; right: 30px; top: 470px; border-top: 1px solid #e6e8e0; }
+.prox { position: absolute; left: 30px; top: 482px; display: flex; gap: 10px; }
+.prox span { font-size: 10.5px; padding: 4px 10px; border-radius: 99px; background: #eef1f6; color: #3a4766; }
+
+#cta { position: absolute; left: 50%; bottom: 60px; translate: -50% 0; display: flex; align-items: center; gap: 14px; white-space: nowrap; z-index: 5;
+  font-size: 27px; font-weight: 500; color: #fff; background: var(--tinta); padding: 18px 32px 18px 26px; border-radius: 999px; box-shadow: 0 24px 50px -24px rgba(16,18,14,.8); }
+#cta i { width: 32px; height: 32px; border-radius: 50%; background: var(--lima); display: grid; place-items: center; }
+#cta i svg { width: 18px; height: 18px; stroke: var(--tinta); stroke-width: 2.4; fill: none; }
+</style>
+</head>
+<body>
+<div id="marca"><img src="img/mark.png" alt=""><div class="w"><b>Sales</b> <span>Coach</span></div></div>
+<div id="selo">Material gratuito</div>
+<h1>Guia das objeções<br><em>em vendas B2B</em></h1>
+
+<div class="moldura" id="m1"></div><div class="moldura" id="m2"></div>
+<div id="ped"></div>
+
+<div id="cena"><div id="lap">
+  <div class="tela"><div class="doc">
+    <div class="capa"><h2>Guia das<br><em>objeções</em><br>em vendas B2B</h2><div class="sc"><img src="img/mark.png" alt="">Sales Coach</div></div>
+    <div class="intro">Toda objeção é uma pergunta que o lead ainda não fez. <b>Este guia reúne as mais comuns em reuniões B2B</b> e o que responder em cada uma, com perguntas para retomar a conversa.
+      <small>Para usar antes da reunião, no treino do time e durante a conversa.</small></div>
+    <div class="chip">Objeções no guia<b>12</b></div>
+    <div class="sec"><i>1</i><span>PREÇO</span></div>
+    <div class="obj"><q>Achei caro para o momento.</q>Antes de defender o valor, entenda com o que o lead está comparando e quanto custa não resolver.</div>
+    <div class="chk"><h4>O que fazer</h4><ul>
+      <li><i><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></i>Pergunte qual é a referência de preço</li>
+      <li><i><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></i>Retome a dor dita na própria reunião</li>
+      <li><i><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></i>Calcule o custo de um mês sem resolver</li>
+      <li><i><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></i>Combine o próximo passo com data</li></ul></div>
+    <div class="dica"><b><i></i>Dica</b><br>Evite dar desconto na primeira objeção: ele confirma que o preço era o problema.</div>
+    <div class="linha"></div>
+    <div class="prox"><span>2 · Já temos um fornecedor</span><span>3 · Não é o momento</span><span>4 · Preciso falar com o sócio</span></div>
+  </div></div>
+  <div class="base"></div>
+</div></div>
+
+<div id="cta"><i><svg viewBox="0 0 24 24"><path d="M12 4v12M6 11l6 6 6-6M5 20h14"/></svg></i>Comente “GUIA” e receba</div>
+</body>
+</html>
