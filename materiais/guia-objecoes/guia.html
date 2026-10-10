@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Guia das objeções em vendas B2B · Sales Coach</title>
+<link rel="stylesheet" href="fonts.css">
+<link rel="stylesheet" href="poppins.css">
+<style>
+/* Guia em PDF, A4 retrato (794×1123 px a 96 dpi). Identidade light da NEXA com
+   o azul-marinho do Sales Coach. Gerado com: node gerar-pdf.mjs */
+@page { size: A4; margin: 0; }
+:root { --osso: #f4f5ef; --tinta: #10120e; --dim: #5d6355; --dim2: #8b9080; --lima: #d4f969; --oliva: #587406;
+  --navy: #0f2c5c; --azul: #1d4f9a; --linha: #e3e5dc; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+body { font-family: 'DM Sans', sans-serif; color: var(--tinta); -webkit-font-smoothing: antialiased; background: #ddd; }
+.pag { position: relative; width: 794px; height: 1123px; overflow: hidden; background: var(--osso); page-break-after: always; break-after: page; margin: 0 auto; }
+.pag + .pag { margin-top: 0; }
+.disp { font-family: 'Space Grotesk', sans-serif; font-weight: 300; letter-spacing: -.04em; }
+.mono { font-family: 'JetBrains Mono', monospace; letter-spacing: .16em; text-transform: uppercase; }
+.rodape { position: absolute; left: 64px; right: 64px; bottom: 36px; display: flex; justify-content: space-between; align-items: center; font-size: 10.5px; color: var(--dim2); }
+.rodape .sc { display: flex; align-items: center; gap: 6px; font-family: 'Poppins'; font-size: 11px; color: var(--dim); }
+.rodape .sc img { height: 13px; } .rodape .sc b { font-weight: 700; } .rodape .sc span { font-weight: 300; }
+.cab { position: absolute; left: 64px; right: 64px; top: 46px; display: flex; justify-content: space-between; font-size: 10.5px; color: var(--dim2); }
+
+/* Capa */
+.capa { background: radial-gradient(60% 40% at 100% 0%, rgba(212,249,105,.55), transparent 70%), radial-gradient(60% 40% at 0% 100%, rgba(196,214,245,.7), transparent 70%), var(--osso); }
+.capa .bloco { position: absolute; left: 0; top: 0; width: 560px; height: 640px; background: var(--navy); border-radius: 0 0 120px 0; padding: 92px 64px; color: #fff; }
+.capa .bloco .k { font-size: 12px; color: var(--lima); }
+.capa .bloco h1 { font-family: 'Poppins'; font-weight: 700; font-size: 66px; line-height: .98; text-transform: uppercase; margin-top: 30px; letter-spacing: -.015em; }
+.capa .bloco h1 em { font-style: normal; color: var(--lima); }
+.capa .bloco p { margin-top: 30px; font-size: 19px; line-height: 1.45; color: rgba(255,255,255,.78); max-width: 400px; }
+.capa .num { position: absolute; right: 64px; top: 560px; width: 210px; height: 210px; border-radius: 40px; background: #fff; box-shadow: 0 30px 60px -30px rgba(15,44,92,.45), 0 0 0 1px var(--linha); padding: 26px; }
+.capa .num b { display: block; font-family: 'Space Grotesk'; font-weight: 400; font-size: 110px; line-height: .9; letter-spacing: -.06em; }
+.capa .num span { font-size: 15px; color: var(--dim); line-height: 1.3; display: block; margin-top: 10px; }
+.capa .lista { position: absolute; left: 64px; top: 720px; display: grid; gap: 12px; }
+.capa .lista li { list-style: none; display: flex; gap: 12px; align-items: center; font-size: 17px; }
+.capa .lista i { width: 22px; height: 22px; border-radius: 7px; background: var(--tinta); display: grid; place-items: center; }
+.capa .lista i svg { width: 13px; height: 13px; stroke: var(--lima); stroke-width: 3; fill: none; }
+.capa .marca { position: absolute; left: 64px; bottom: 64px; display: flex; align-items: center; gap: 12px; font-family: 'Poppins'; font-size: 26px; }
+.capa .marca img { height: 36px; } .capa .marca b { font-weight: 700; } .capa .marca span { font-weight: 300; }
+.capa .nexa { position: absolute; right: 64px; bottom: 72px; display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--dim); }
+.capa .nexa img { height: 12px; }
+
+/* Texto corrido */
+.corpo { position: absolute; left: 64px; right: 64px; top: 110px; }
+.k2 { font-size: 11px; color: var(--oliva); }
+h2 { font-family: 'Space Grotesk'; font-weight: 300; font-size: 50px; line-height: 1.02; letter-spacing: -.045em; margin-top: 14px; }
+h2 em { font-style: normal; color: var(--azul); font-weight: 400; }
+.lead { font-size: 17px; line-height: 1.6; color: #2a2e25; margin-top: 22px; max-width: 600px; }
+.lead + .lead { margin-top: 14px; }
+.cards3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 40px; }
+.card { background: #fff; border-radius: 20px; padding: 22px; box-shadow: 0 0 0 1px var(--linha), 0 18px 34px -26px rgba(30,40,20,.35); }
+.card .k { font-size: 10.5px; color: var(--azul); }
+.card h4 { font-family: 'Space Grotesk'; font-weight: 400; font-size: 22px; letter-spacing: -.03em; margin-top: 8px; }
+.card p { font-size: 13.5px; line-height: 1.5; color: var(--dim); margin-top: 8px; }
+
+/* Método */
+.passos { display: grid; gap: 14px; margin-top: 36px; }
+.passo { display: grid; grid-template-columns: 70px 1fr 250px; gap: 20px; align-items: start; background: #fff; border-radius: 20px; padding: 22px 24px; box-shadow: 0 0 0 1px var(--linha); }
+.passo .n { font-family: 'Space Grotesk'; font-size: 44px; line-height: .9; letter-spacing: -.05em; color: var(--azul); }
+.passo h4 { font-family: 'Space Grotesk'; font-weight: 400; font-size: 24px; letter-spacing: -.03em; }
+.passo p { font-size: 13.5px; line-height: 1.5; color: var(--dim); margin-top: 6px; }
+.passo .ex { font-size: 13px; line-height: 1.45; color: #2a2e25; background: var(--osso); border-radius: 12px; padding: 12px 14px; font-style: italic; }
+.passo .ex b { display: block; font-style: normal; font-family: 'JetBrains Mono'; font-weight: 400; font-size: 9.5px; letter-spacing: .14em; color: var(--dim2); margin-bottom: 4px; }
+
+/* Sumário */
+.sum { margin-top: 36px; display: grid; grid-template-columns: 1fr 1fr; gap: 0 28px; }
+.sum li { list-style: none; display: grid; grid-template-columns: 34px 1fr auto; gap: 10px; align-items: baseline; padding: 15px 0; border-bottom: 1px solid var(--linha); }
+.sum .n { font-family: 'JetBrains Mono'; font-size: 12px; color: var(--azul); }
+.sum .t { font-size: 10px; color: var(--dim2); display: block; }
+.sum .f { font-size: 16px; line-height: 1.3; }
+.sum .p { font-family: 'JetBrains Mono'; font-size: 11px; color: var(--dim2); }
+
+/* Página de objeção */
+.obj .topo { position: absolute; left: 0; right: 0; top: 0; height: 360px; background: var(--navy); color: #fff; padding: 82px 64px 0; border-radius: 0 0 70px 0; }
+.obj .topo .k { display: flex; align-items: center; gap: 12px; font-size: 11px; color: var(--lima); }
+.obj .topo .k i { width: 30px; height: 30px; border-radius: 9px; background: var(--lima); color: var(--tinta); display: grid; place-items: center; font-style: normal; font-family: 'Space Grotesk'; font-weight: 500; font-size: 15px; letter-spacing: 0; }
+.obj .topo q { display: block; font-family: 'Space Grotesk'; font-weight: 300; font-size: 54px; line-height: 1.04; letter-spacing: -.045em; margin-top: 26px; max-width: 620px; quotes: "“" "”"; }
+.obj .tras { position: absolute; left: 64px; right: 64px; top: 400px; }
+.obj .tras p { font-size: 16.5px; line-height: 1.6; color: #2a2e25; margin-top: 10px; }
+.obj .grid { position: absolute; left: 64px; right: 64px; top: 560px; display: grid; grid-template-columns: 1.15fr 1fr; gap: 18px; }
+.obj .fazer li { list-style: none; display: flex; gap: 12px; font-size: 14.5px; line-height: 1.5; padding: 9px 0; border-bottom: 1px solid var(--linha); }
+.obj .fazer li:last-child { border-bottom: 0; }
+.obj .fazer li i { flex: 0 0 auto; width: 20px; height: 20px; border-radius: 6px; background: var(--azul); display: grid; place-items: center; margin-top: 1px; }
+.obj .fazer li i svg { width: 12px; height: 12px; stroke: #fff; stroke-width: 3; fill: none; }
+.obj .perg { display: grid; gap: 10px; }
+.obj .perg div { background: #fff; border-radius: 16px; padding: 16px 18px; font-family: 'Space Grotesk'; font-size: 17px; line-height: 1.35; letter-spacing: -.02em; box-shadow: 0 0 0 1px var(--linha), 0 14px 26px -22px rgba(30,40,20,.4); }
+.obj .perg div::before { content: "Pergunte"; display: block; font-family: 'JetBrains Mono'; font-size: 9.5px; letter-spacing: .16em; text-transform: uppercase; color: var(--oliva); margin-bottom: 6px; }
+.obj h5 { font-size: 10.5px; color: var(--dim2); margin-bottom: 8px; }
+.obj .dica { position: absolute; left: 64px; right: 64px; bottom: 82px; display: flex; gap: 16px; align-items: flex-start; border-radius: 18px; background: var(--lima); padding: 18px 22px; }
+.obj .dica b { flex: 0 0 auto; font-family: 'JetBrains Mono'; font-weight: 500; font-size: 10.5px; letter-spacing: .16em; padding-top: 3px; }
+.obj .dica p { font-size: 15px; line-height: 1.45; }
+
+/* Checklist de bolso */
+.bolso { margin-top: 30px; display: grid; gap: 0; }
+.bolso li { list-style: none; display: grid; grid-template-columns: 30px 230px 1fr; gap: 14px; align-items: baseline; padding: 11px 0; border-bottom: 1px solid var(--linha); font-size: 13.5px; line-height: 1.4; }
+.bolso .n { font-family: 'JetBrains Mono'; font-size: 11px; color: var(--azul); }
+.bolso .f { font-family: 'Space Grotesk'; font-size: 15px; letter-spacing: -.02em; }
+.bolso .q { color: #2a2e25; }
+
+/* Fechamento */
+.fim { background: radial-gradient(60% 40% at 100% 100%, rgba(212,249,105,.6), transparent 70%), var(--osso); }
+.fim .cards3 .card .k { color: var(--oliva); }
+.cta { margin-top: 40px; display: flex; align-items: center; justify-content: space-between; gap: 20px; border-radius: 26px; background: var(--tinta); color: #fff; padding: 30px 34px; }
+.cta h4 { font-family: 'Space Grotesk'; font-weight: 300; font-size: 30px; letter-spacing: -.035em; line-height: 1.1; }
+.cta p { font-size: 14px; color: rgba(255,255,255,.7); margin-top: 8px; }
+.cta a { flex: 0 0 auto; display: inline-flex; align-items: center; gap: 10px; background: var(--lima); color: var(--tinta); text-decoration: none; font-weight: 500; font-size: 16px; padding: 14px 22px; border-radius: 99px; }
+</style>
+</head>
+<body>
+
+<!-- 1 · Capa -->
+<section class="pag capa">
+  <div class="bloco"><div class="k mono">Material gratuito · Sales Coach</div>
+    <h1>Guia das<br><em>objeções</em><br>em vendas<br>B2B</h1>
+    <p>As objeções mais comuns em reuniões comerciais e o que fazer, perguntar e evitar em cada uma.</p></div>
+  <div class="num"><b>12</b><span>objeções com o que responder</span></div>
+  <ul class="lista">
+    <li><i><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></i>O que está por trás de cada objeção</li>
+    <li><i><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></i>O que fazer na hora, passo a passo</li>
+    <li><i><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></i>Perguntas prontas para retomar a conversa</li>
+    <li><i><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></i>Checklist de bolso para treinar o time</li>
+  </ul>
+  <div class="marca"><img src="img/mark.png" alt=""><b>Sales</b><span>Coach</span></div>
+  <div class="nexa">um produto <img src="img/nexa.svg" alt="NEXA"></div>
+</section>
+
+<!-- 2 · Antes de começar -->
+<section class="pag">
+  <div class="corpo">
+    <div class="k2 mono">Antes de começar</div>
+    <h2>Toda objeção é uma pergunta<br><em>que o lead ainda não fez.</em></h2>
+    <p class="lead">“Tá caro” quase nunca quer dizer que está caro. Quer dizer “ainda não entendi por que vale isso”. “Vou pensar” quer dizer “ficou uma dúvida que eu não falei”. A objeção é o momento em que o lead mostra o que falta para ele dizer sim.</p>
+    <p class="lead">Quem rebate a objeção ganha a discussão e perde a venda. Quem entende o que está por trás dela transforma a resistência em próximo passo.</p>
+    <p class="lead">Este guia reúne as 12 objeções que mais aparecem em reuniões de vendas B2B. Para cada uma, você encontra o que costuma estar por trás, o que fazer na hora, perguntas para retomar a conversa e um cuidado para não errar.</p>
+    <div class="cards3">
+      <div class="card"><div class="k mono">Antes</div><h4>Na preparação</h4><p>Leia as objeções que mais aparecem no seu mercado e treine as perguntas em voz alta, antes da reunião de verdade.</p></div>
+      <div class="card"><div class="k mono">Durante</div><h4>Na reunião</h4><p>Use o método de quatro passos da próxima página. Ele funciona para qualquer objeção, inclusive as que não estão aqui.</p></div>
+      <div class="card"><div class="k mono">Depois</div><h4>No time</h4><p>Use o checklist de bolso no fim do guia para treinar o time e alinhar a mesma resposta para todo mundo.</p></div>
+    </div>
+  </div>
+  <div class="rodape"><div class="sc"><img src="img/mark.png" alt=""><b>Sales</b><span>Coach</span></div><span>Guia das objeções em vendas B2B · 2</span></div>
+</section>
+
+<!-- 3 · Método -->
+<section class="pag">
+  <div class="corpo">
+    <div class="k2 mono">O método</div>
+    <h2>Quatro passos<br><em>para qualquer objeção.</em></h2>
+    <p class="lead">Antes das respostas específicas, a estrutura. Ela evita os dois erros mais comuns: rebater na hora e aceitar a objeção calado.</p>
+    <div class="passos">
+      <div class="passo"><div class="n">01</div><div><h4>Acolha</h4><p>Mostre que ouviu, sem concordar nem discordar. A objeção é legítima do ponto de vista do lead.</p></div><div class="ex"><b>EXEMPLO</b>“Faz sentido olhar com cuidado para o investimento.”</div></div>
+      <div class="passo"><div class="n">02</div><div><h4>Pergunte</h4><p>Descubra o que está por trás antes de responder. Uma pergunta boa vale mais que três argumentos.</p></div><div class="ex"><b>EXEMPLO</b>“Caro em relação a quê? Você tem uma referência?”</div></div>
+      <div class="passo"><div class="n">03</div><div><h4>Reposicione</h4><p>Conecte a resposta à dor que o próprio lead disse na reunião, com as palavras dele, não com o seu discurso.</p></div><div class="ex"><b>EXEMPLO</b>“Você comentou que perde duas vendas por mês por falta de follow-up…”</div></div>
+      <div class="passo"><div class="n">04</div><div><h4>Avance</h4><p>Termine com um próximo passo concreto, com data. Objeção bem tratada sem próximo passo é oportunidade perdida.</p></div><div class="ex"><b>EXEMPLO</b>“Que tal 20 minutos na quinta com o seu sócio?”</div></div>
+    </div>
+  </div>
+  <div class="rodape"><div class="sc"><img src="img/mark.png" alt=""><b>Sales</b><span>Coach</span></div><span>Guia das objeções em vendas B2B · 3</span></div>
+</section>
+
+<!-- 4 · Sumário -->
+<section class="pag">
+  <div class="corpo">
+    <div class="k2 mono">Sumário</div>
+    <h2>As 12 objeções<br><em>deste guia.</em></h2>
+    <ul class="sum" id="sumario"></ul>
+  </div>
+  <div class="rodape"><div class="sc"><img src="img/mark.png" alt=""><b>Sales</b><span>Coach</span></div><span>Guia das objeções em vendas B2B · 4</span></div>
+</section>
+
+<div id="objecoes"></div>
+
+<!-- Checklist de bolso -->
+<section class="pag">
+  <div class="corpo" style="top:96px">
+    <div class="k2 mono">Checklist de bolso</div>
+    <h2>Uma pergunta<br><em>para cada objeção.</em></h2>
+    <p class="lead" style="font-size:15px;margin-top:14px">Imprima, cole ao lado do monitor ou use no treino semanal do time: leia a objeção em voz alta e responda com a pergunta.</p>
+    <ul class="bolso" id="bolso"></ul>
+  </div>
+  <div class="rodape"><div class="sc"><img src="img/mark.png" alt=""><b>Sales</b><span>Coach</span></div><span id="pg-bolso"></span></div>
+</section>
+
+<!-- Fechamento -->
+<section class="pag fim">
+  <div class="corpo">
+    <div class="k2 mono">Para ir além do guia</div>
+    <h2>Saber a resposta é metade.<br><em>A outra metade é treino.</em></h2>
+    <p class="lead">Objeção bem respondida é hábito, e hábito se constrói com repetição. É para isso que existe o Sales Coach, coach de vendas com IA da NEXA, que acompanha o time antes, durante e depois de cada reunião.</p>
+    <div class="cards3">
+      <div class="card"><div class="k mono">Antes</div><h4>Treino com cliente simulado</h4><p>A IA faz o papel do cliente, com as objeções que já apareceram nas suas reuniões. O vendedor erra no treino, não no lead.</p></div>
+      <div class="card"><div class="k mono">Durante</div><h4>Dica ao vivo na objeção</h4><p>No Meet e no Teams, a dica “fale agora” aparece na hora em que o lead trava. Só o vendedor vê.</p></div>
+      <div class="card"><div class="k mono">Depois</div><h4>Nota de cada reunião</h4><p>Cada conversa ganha nota com BANT, MEDDIC e SPIN, as objeções que apareceram e o próximo passo, direto no CRM.</p></div>
+    </div>
+    <div class="cta"><div><h4>Veja o Sales Coach<br>numa reunião de verdade.</h4><p>Demonstração de 20 minutos com o time da NEXA.</p></div>
+      <a href="https://nexatech.ia.br/sales-coach/?utm_source=guia-objecoes&amp;utm_medium=pdf&amp;utm_campaign=guia-objecoes">Agendar demonstração →</a></div>
+  </div>
+  <div class="rodape"><div class="sc"><img src="img/mark.png" alt=""><b>Sales</b><span>Coach</span></div><span>nexatech.ia.br/sales-coach</span></div>
+</section>
+
+<script src="conteudo.js"></script>
+<script>
+const CHK = '<svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
+const esc = s => s.replace(/&/g, '&amp;').replace(/</g, '&lt;');
+const PRIMEIRA = 5; // página da objeção 1
+document.getElementById('objecoes').outerHTML = OBJECOES.map((o, i) => `
+<section class="pag obj">
+  <div class="topo"><div class="k mono"><i>${i + 1}</i>${esc(o.tema)}</div><q>${esc(o.frase)}</q></div>
+  <div class="tras"><h5 class="mono">O que está por trás</h5><p>${esc(o.porTras)}</p></div>
+  <div class="grid">
+    <div><h5 class="mono">O que fazer</h5><ul class="fazer">${o.fazer.map(f => `<li><i>${CHK}</i><span>${esc(f)}</span></li>`).join('')}</ul></div>
+    <div><h5 class="mono">Para retomar a conversa</h5><div class="perg">${o.perguntas.map(p => `<div>${esc(p)}</div>`).join('')}</div></div>
+  </div>
+  <div class="dica"><b>EVITE</b><p>${esc(o.dica)}</p></div>
+  <div class="rodape"><div class="sc"><img src="img/mark.png" alt=""><b>Sales</b><span>Coach</span></div><span>Guia das objeções em vendas B2B · ${PRIMEIRA + i}</span></div>
+</section>`).join('');
+document.getElementById('sumario').innerHTML = OBJECOES.map((o, i) => `<li><span class="n">${String(i + 1).padStart(2, '0')}</span><span><span class="t mono">${esc(o.tema)}</span><span class="f">${esc(o.frase)}</span></span><span class="p">${PRIMEIRA + i}</span></li>`).join('');
+document.getElementById('bolso').innerHTML = OBJECOES.map((o, i) => `<li><span class="n">${String(i + 1).padStart(2, '0')}</span><span class="f">${esc(o.frase)}</span><span class="q">${esc(o.perguntas[0])}</span></li>`).join('');
+document.getElementById('pg-bolso').textContent = `Guia das objeções em vendas B2B · ${PRIMEIRA + OBJECOES.length}`;
+</script>
+</body>
+</html>
