@@ -1,0 +1,483 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Sales Coach · vídeo light</title>
+<link rel="stylesheet" href="fonts.css">
+<link rel="stylesheet" href="poppins.css">
+<style>
+/* Vídeo 16:9 do Sales Coach na identidade light da NEXA (22s).
+   Clean e minimalista: osso, tinta e lima da NEXA; azul-marinho só no produto.
+   Determinístico: o render chama window.renderAt(t) quadro a quadro. ?play toca em tempo real. */
+:root { --osso: #f3f4ee; --tinta: #10120e; --dim: #5d6355; --dim2: #8b9080; --lima: #d4f969; --oliva: #587406;
+  --navy: #0f2c5c; --azul: #1d4f9a; --linha: #e6e8e0; --t1: #16213a; --t2: #6a7287; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { width: 1920px; height: 1080px; overflow: hidden; background: var(--osso); }
+body { font-family: 'DM Sans', sans-serif; color: var(--tinta); -webkit-font-smoothing: antialiased; }
+.abs { position: absolute; }
+.disp { font-family: 'Space Grotesk', sans-serif; font-weight: 400; letter-spacing: -.04em; }
+.mono { font-family: 'JetBrains Mono', monospace; letter-spacing: .2em; text-transform: uppercase; }
+.app { font-family: 'Poppins', sans-serif; color: var(--t1); }
+
+/* Fundos */
+#osso { position: absolute; inset: 0; background: radial-gradient(60% 70% at 50% 50%, #fbfcf7, var(--osso) 70%); }
+#osso::after { content: ""; position: absolute; inset: 0; background: radial-gradient(rgba(16,18,14,.09) 1.2px, transparent 1.6px) 0 0 / 30px 30px;
+  -webkit-mask: radial-gradient(55% 60% at 50% 50%, transparent 20%, #000 90%); }
+#liq { position: absolute; inset: 0; width: 1920px; height: 1080px; opacity: 0; }
+#grao { position: absolute; inset: 0; width: 1920px; height: 1080px; opacity: .045; mix-blend-mode: multiply; pointer-events: none; z-index: 90; }
+.cena { position: absolute; inset: 0; opacity: 0; }
+
+/* Cartão branco padrão */
+.cartao { position: absolute; background: #fff; border-radius: 28px;
+  box-shadow: 0 1px 0 rgba(255,255,255,.9) inset, 0 40px 90px -40px rgba(30,40,20,.35), 0 12px 30px -18px rgba(30,40,20,.18), 0 0 0 1px rgba(16,18,14,.05); }
+
+/* 0 · Integrações em órbita */
+.lg { position: absolute; width: 96px; height: 96px; margin: -48px 0 0 -48px; border-radius: 50%; background: #fff; display: grid; place-items: center;
+  box-shadow: 0 18px 40px -18px rgba(30,40,20,.35), 0 0 0 1px rgba(16,18,14,.05); }
+.lg img { width: 46px; height: 46px; object-fit: contain; }
+#nucleo { position: absolute; left: 960px; top: 540px; width: 190px; height: 190px; margin: -95px 0 0 -95px; border-radius: 50%; background: #fff; display: grid; place-items: center;
+  box-shadow: 0 30px 70px -26px rgba(15,44,92,.45), 0 0 0 1px rgba(16,18,14,.05); }
+#nucleo img { width: 96px; }
+#nucleo .halo { position: absolute; inset: -40px; border-radius: 50%; background: radial-gradient(circle, rgba(212,249,105,.75), rgba(212,249,105,0) 62%); z-index: -1; }
+#nucleo .aro { position: absolute; inset: -14px; border-radius: 50%; border: 1.5px solid rgba(88,116,6,.35); }
+#orb-linhas { position: absolute; inset: 0; }
+#orb-linhas circle { fill: none; stroke: rgba(16,18,14,.08); stroke-width: 1.2; stroke-dasharray: 3 7; }
+
+/* 1 · Notebook */
+#lap { position: absolute; left: 960px; top: 590px; width: 0; height: 0; transform-style: preserve-3d; }
+#lap .tela { position: absolute; left: -600px; top: -430px; width: 1200px; height: 760px; border-radius: 30px; background: #1b1d1f; padding: 18px;
+  box-shadow: 0 0 0 2px #2b2e31, 0 60px 120px -50px rgba(20,30,10,.55); }
+#lap .tela .vid { position: absolute; left: 18px; top: 18px; right: 18px; bottom: 18px; border-radius: 14px; overflow: hidden; background: #f7f8fb; }
+#lap .tela .cam { position: absolute; left: 50%; top: 7px; width: 6px; height: 6px; margin-left: -3px; border-radius: 50%; background: #3a3d40; }
+#lap .base { position: absolute; left: -700px; top: 330px; width: 1400px; height: 30px; border-radius: 0 0 26px 26px;
+  background: linear-gradient(180deg, #e9eae6 0%, #cfd1cb 55%, #a9aca5 100%); box-shadow: 0 30px 60px -20px rgba(20,30,10,.45); }
+#lap .base::before { content: ""; position: absolute; left: 50%; top: 0; width: 220px; height: 12px; margin-left: -110px; border-radius: 0 0 14px 14px; background: #bfc2bb; }
+#lap .sombra { position: absolute; left: -760px; top: 350px; width: 1520px; height: 60px; border-radius: 50%; background: radial-gradient(closest-side, rgba(20,30,10,.28), transparent); filter: blur(10px); }
+.nav { height: 64px; display: flex; align-items: center; gap: 14px; padding: 0 36px; border-bottom: 1px solid #edf0f5; background: #fff; }
+.nav img { height: 30px; } .nav b { font-weight: 600; font-size: 19px; color: var(--navy); }
+.nav span { margin-left: 26px; font-size: 15px; color: var(--t2); }
+.nav .cta { margin-left: auto; font-size: 14px; font-weight: 600; padding: 10px 18px; border-radius: 10px; background: var(--navy); color: #fff; }
+.hero { position: absolute; left: 60px; top: 150px; width: 560px; }
+.hero .k { font-family: 'JetBrains Mono'; font-size: 13px; letter-spacing: .2em; color: var(--azul); }
+.hero h1 { font-weight: 600; font-size: 58px; line-height: 1.04; letter-spacing: -.03em; margin-top: 18px; color: var(--t1); }
+.hero p { font-size: 18px; line-height: 1.55; color: var(--t2); margin-top: 18px; }
+.hero .bts { display: flex; gap: 12px; margin-top: 30px; }
+.bt { display: inline-flex; align-items: center; gap: 10px; font-size: 16px; font-weight: 600; padding: 15px 22px; border-radius: 12px; }
+.bt.n { background: var(--navy); color: #fff; } .bt.l { background: #fff; color: var(--t1); box-shadow: inset 0 0 0 1.5px #dfe3ea; }
+.mini { position: absolute; background: #fff; border-radius: 20px; box-shadow: 0 30px 60px -30px rgba(15,44,92,.35), 0 0 0 1px #edf0f5; padding: 22px; }
+.mini .l { font-size: 13px; color: var(--t2); } .mini .v { font-size: 44px; font-weight: 600; color: var(--navy); line-height: 1.1; }
+
+/* 2 · Ao vivo */
+#jan { position: absolute; left: 300px; top: 230px; width: 1320px; height: 580px; overflow: hidden; }
+.jtopo { height: 58px; display: flex; align-items: center; gap: 10px; padding: 0 24px; border-bottom: 1px solid var(--linha); }
+.jtopo i { width: 12px; height: 12px; border-radius: 50%; background: #e3e5de; }
+.jtopo span { margin-left: 14px; font-size: 16px; color: var(--dim); }
+.jtopo .rec { margin-left: auto; display: flex; align-items: center; gap: 8px; font-family: 'JetBrains Mono'; font-size: 14px; color: var(--dim); }
+.jtopo .rec em { width: 9px; height: 9px; border-radius: 50%; background: #e5533d; }
+.tile { position: absolute; width: 400px; height: 270px; border-radius: 22px; overflow: hidden; display: grid; place-items: center; }
+.tile .av { width: 104px; height: 104px; border-radius: 50%; display: grid; place-items: center; font-family: 'Poppins'; font-weight: 600; font-size: 36px; color: #fff; }
+.tile .nm { position: absolute; left: 16px; bottom: 14px; font-size: 15px; padding: 5px 12px; border-radius: 99px; background: rgba(255,255,255,.75); }
+.tile .fala { position: absolute; inset: 0; border-radius: 22px; box-shadow: inset 0 0 0 3px var(--azul); opacity: 0; }
+.trans { position: absolute; left: 36px; top: 380px; width: 820px; display: grid; gap: 14px; }
+.ln { display: flex; gap: 14px; align-items: flex-start; font-size: 21px; line-height: 1.45; }
+.ln b { flex: 0 0 auto; font-family: 'JetBrains Mono'; font-weight: 400; font-size: 13px; letter-spacing: .12em; text-transform: uppercase; color: var(--dim2); padding-top: 6px; width: 118px; }
+.ln mark { position: relative; background: none; color: inherit; }
+.ln mark::before { content: ""; position: absolute; left: -4px; right: -4px; top: 8%; bottom: 4%; border-radius: 6px; background: var(--lima); z-index: -1; transform-origin: left; transform: scaleX(var(--m, 0)); }
+.ln span { position: relative; z-index: 0; }
+.ext { position: absolute; right: 0; top: 58px; bottom: 0; width: 420px; border-left: 1px solid var(--linha); background: #fbfbf8; padding: 26px; font-family: 'Poppins'; color: var(--t1); }
+.ext .hd { display: flex; align-items: center; gap: 12px; font-weight: 600; font-size: 19px; }
+.ext .hd img { height: 26px; } .ext .hd em { margin-left: auto; font-style: normal; display: flex; align-items: center; gap: 7px; font-size: 13px; font-weight: 500; color: #2f8a3b; }
+.ext .hd em i { width: 8px; height: 8px; border-radius: 50%; background: #3fbf5a; }
+.sec { font-family: 'JetBrains Mono'; font-size: 12px; letter-spacing: .18em; color: var(--dim2); margin: 26px 0 12px; }
+.ondas { display: flex; align-items: center; gap: 4px; height: 44px; }
+.ondas i { width: 5px; border-radius: 3px; background: var(--azul); opacity: .8; }
+.dica { position: relative; border-radius: 20px; background: #fff; padding: 20px; box-shadow: 0 24px 50px -28px rgba(15,44,92,.45), 0 0 0 1px #eceee6; }
+.dica .tags { display: flex; gap: 8px; align-items: center; }
+.tag { font-family: 'JetBrains Mono'; font-size: 11.5px; letter-spacing: .12em; padding: 5px 10px; border-radius: 99px; }
+.tag.v { background: #ffe7e1; color: #c2412c; } .tag.l { background: var(--lima); color: var(--tinta); }
+.dica .q { font-size: 19px; font-weight: 500; line-height: 1.42; margin-top: 14px; }
+.dica .usar { margin-top: 16px; display: flex; align-items: center; justify-content: center; gap: 8px; height: 46px; border-radius: 12px; background: var(--navy); color: #fff; font-weight: 600; font-size: 15px; }
+.dica .usar.ok { background: var(--lima); color: var(--tinta); }
+
+/* 3 · Análise */
+#nota { left: 250px; top: 220px; width: 520px; height: 600px; padding: 40px; }
+.kk { font-family: 'JetBrains Mono'; font-size: 13px; letter-spacing: .2em; text-transform: uppercase; color: var(--dim2); }
+.anel { position: relative; width: 300px; height: 300px; margin: 30px auto 0; }
+.anel svg { position: absolute; inset: 0; transform: rotate(-90deg); }
+.anel .tr { fill: none; stroke: #eef0ea; stroke-width: 16; } .anel .vl { fill: none; stroke: var(--navy); stroke-width: 16; stroke-linecap: round; }
+.anel .n { position: absolute; inset: 0; display: grid; place-items: center; align-content: center; }
+.anel .n b { font-family: 'Space Grotesk'; font-weight: 300; font-size: 120px; letter-spacing: -.05em; line-height: .9; }
+.anel .n span { font-family: 'JetBrains Mono'; font-size: 14px; color: var(--dim2); letter-spacing: .14em; }
+.crits { display: flex; gap: 8px; justify-content: center; margin-top: 34px; }
+.crit { display: flex; align-items: center; gap: 8px; font-size: 16px; padding: 9px 14px 9px 10px; border-radius: 99px; background: #f3f4ee; }
+.crit i { width: 22px; height: 22px; border-radius: 50%; background: var(--tinta); color: var(--lima); display: grid; place-items: center; font-style: normal; font-size: 12px; }
+#evol { left: 810px; top: 220px; width: 860px; height: 600px; padding: 40px; }
+#evol h3 { font-family: 'Space Grotesk'; font-weight: 400; font-size: 36px; letter-spacing: -.03em; margin-top: 10px; }
+#graf { position: absolute; left: 40px; top: 170px; width: 780px; height: 380px; overflow: visible; }
+#graf .gl { stroke: #eef0ea; stroke-width: 1.5; } #graf .meta { stroke: var(--oliva); stroke-width: 2; stroke-dasharray: 8 8; }
+#graf .linha { fill: none; stroke: var(--navy); stroke-width: 4.5; stroke-linecap: round; stroke-linejoin: round; }
+#graf .area { fill: url(#gArea); }
+#graf text { font-family: 'JetBrains Mono'; font-size: 13px; fill: var(--dim2); letter-spacing: .12em; }
+#graf .metaT { fill: var(--oliva); }
+#cab { position: absolute; width: 22px; height: 22px; margin: -11px 0 0 -11px; border-radius: 50%; background: var(--navy); box-shadow: 0 0 0 6px rgba(29,79,154,.15); }
+#cab.ok { background: var(--lima); box-shadow: 0 0 0 7px rgba(212,249,105,.45), 0 0 30px rgba(212,249,105,.9); }
+#batida { position: absolute; display: flex; align-items: center; gap: 8px; font-size: 16px; font-weight: 500; padding: 10px 16px; border-radius: 99px; background: var(--tinta); color: #fff; white-space: nowrap; }
+#batida i { width: 20px; height: 20px; border-radius: 50%; background: var(--lima); color: var(--tinta); display: grid; place-items: center; font-style: normal; font-size: 11px; }
+
+/* 4 · Camadas */
+#pilha { position: absolute; left: 960px; top: 560px; width: 0; height: 0; perspective: 2600px; }
+#iso { position: absolute; transform-style: preserve-3d; }
+.cam3 { position: absolute; left: -440px; top: -270px; width: 880px; height: 540px; border-radius: 26px; background: rgba(255,255,255,.96);
+  box-shadow: 0 0 0 1px rgba(16,18,14,.06), 0 40px 80px -30px rgba(30,40,20,.3); padding: 30px; overflow: hidden; }
+.cam3 .rot { position: absolute; left: 30px; top: 24px; display: flex; align-items: center; gap: 12px; font-family: 'JetBrains Mono'; font-size: 20px; color: var(--tinta) !important; letter-spacing: .16em; color: var(--dim); }
+.cam3 .rot b { width: 38px; height: 38px; border-radius: 9px; background: var(--tinta); color: var(--lima); display: grid; place-items: center; font-weight: 500; font-size: 13px; letter-spacing: 0; }
+.cam3 .corpo { position: absolute; left: 30px; right: 30px; top: 86px; bottom: 30px; }
+.bol { position: absolute; padding: 16px 20px; border-radius: 18px; font-size: 22px; max-width: 70%; }
+.bol.a { background: #f1f2ec; } .bol.b { background: var(--navy); color: #fff; right: 0; }
+.barra3 { height: 14px; border-radius: 8px; background: #eef0ea; overflow: hidden; margin-top: 10px; } .barra3 i { display: block; height: 100%; border-radius: 8px; background: var(--navy); }
+.campo { display: flex; justify-content: space-between; padding: 14px 0; border-bottom: 1px solid #e6e8e0; font-size: 22px; } .campo span { color: var(--dim); }
+.enviar { position: absolute; left: 0; bottom: 0; height: 54px; padding: 0 22px; display: flex; align-items: center; gap: 10px; border-radius: 14px; background: var(--navy); color: #fff; font-weight: 600; font-size: 17px; font-family: 'Poppins'; }
+.enviar img { height: 24px; } .enviar.ok { background: var(--lima); color: var(--tinta); }
+.logos3 { position: absolute; right: 0; bottom: 6px; display: flex; gap: 10px; } .logos3 i { width: 46px; height: 46px; border-radius: 50%; background: #fff; box-shadow: 0 0 0 1px #eceee6; display: grid; place-items: center; }
+.logos3 img { width: 24px; height: 24px; object-fit: contain; }
+
+/* 5 · Fecho */
+#fim-glow { position: absolute; left: 960px; top: 470px; width: 1100px; height: 520px; margin: -260px 0 0 -550px; border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(212,249,105,.85), rgba(212,249,105,.25) 55%, transparent), radial-gradient(40% 60% at 70% 60%, rgba(29,79,154,.18), transparent 70%); filter: blur(30px); }
+#fim-marca { position: absolute; left: 0; right: 0; top: 330px; display: flex; justify-content: center; align-items: center; gap: 34px; }
+#fim-marca img { height: 150px; }
+#fim-marca .w { font-family: 'Poppins'; font-size: 132px; letter-spacing: -.02em; color: var(--tinta); display: flex; }
+#fim-marca .w b { font-weight: 700; } #fim-marca .w span { font-weight: 300; margin-left: 30px; }
+#fim-marca .w em { font-style: normal; display: inline-block; }
+#fim-tag { position: absolute; left: 0; right: 0; top: 560px; text-align: center; font-size: 46px; color: var(--dim); }
+#fim-rod { position: absolute; left: 0; right: 0; bottom: 110px; display: flex; justify-content: center; align-items: center; gap: 18px; font-size: 22px; color: var(--dim); }
+#fim-rod img { height: 22px; } #fim-rod i { width: 5px; height: 5px; border-radius: 50%; background: var(--dim2); }
+
+/* Legenda e marca */
+#leg { position: absolute; left: 96px; bottom: 74px; z-index: 50; }
+#leg .k { font-size: 14px; color: var(--oliva); display: flex; align-items: center; gap: 12px; }
+#leg .k::before { content: ""; width: 26px; height: 1.5px; background: var(--oliva); }
+#leg .t { font-size: 40px; margin-top: 10px; }
+#selo { position: absolute; left: 96px; top: 70px; z-index: 50; display: flex; align-items: center; gap: 14px; font-family: 'Poppins'; font-size: 22px; }
+#selo img { height: 34px; } #selo b { font-weight: 700; } #selo span { font-weight: 300; }
+#selo2 { position: absolute; right: 96px; top: 78px; z-index: 50; display: flex; align-items: center; gap: 12px; font-size: 15px; color: var(--dim); }
+#selo2 img { height: 16px; }
+
+/* Cursores */
+.cur { position: absolute; left: 0; top: 0; z-index: 80; pointer-events: none; opacity: 0; }
+.cur svg { width: 34px; height: 34px; display: block; filter: drop-shadow(0 6px 10px rgba(20,30,10,.3)); }
+.cur .et { position: absolute; left: 28px; top: 28px; white-space: nowrap; font-size: 16px; font-weight: 500; padding: 7px 14px; border-radius: 4px 14px 14px 14px; box-shadow: 0 10px 20px -10px rgba(20,30,10,.4); }
+.cur .onda { position: absolute; left: -26px; top: -26px; width: 52px; height: 52px; border-radius: 50%; border: 2px solid; opacity: 0; }
+</style>
+</head>
+<body>
+<div id="osso"></div>
+<canvas id="liq" width="960" height="540"></canvas>
+
+<!-- 0 · Integrações -->
+<div class="cena" id="s0">
+  <svg id="orb-linhas" viewBox="0 0 1920 1080"><ellipse cx="960" cy="540" rx="400" ry="296" fill="none"/><ellipse cx="960" cy="540" rx="600" ry="420" fill="none"/></svg>
+  <div id="orb"></div>
+  <div id="s0-t" class="mono abs" style="left:0;right:0;top:668px;text-align:center;font-size:16px;color:var(--dim)">Integra com o que o time já usa</div>
+  <div id="nucleo"><div class="halo"></div><div class="aro"></div><img src="img/mark.png" alt=""></div>
+</div>
+
+<!-- 1 · Notebook -->
+<div class="cena" id="s1">
+  <div id="lap"><div class="sombra"></div><div class="base"></div>
+    <div class="tela"><i class="cam"></i><div class="vid app">
+      <div class="nav"><img src="img/mark.png" alt=""><b>Sales Coach</b><span>Produto</span><span>Planos</span><span>Integrações</span><span class="cta">Entrar</span></div>
+      <div class="hero"><div class="k" id="h-k">COACH DE VENDAS COM IA</div>
+        <h1 id="h-t"><span class="w">Cada</span> <span class="w">reunião</span> <span class="w">vira</span> <span class="w">método.</span></h1>
+        <p id="h-p">Treina antes, orienta durante e analisa depois. Em português, no Meet e no Teams.</p>
+        <div class="bts" id="h-b"><span class="bt n">Agendar demonstração</span><span class="bt l" id="h-ver">Ver uma reunião →</span></div></div>
+      <div class="mini" id="h-m1" style="left:700px;top:140px;width:300px"><div class="l">Nota da reunião</div><div class="v">86</div><div class="barra3"><i style="width:86%"></i></div></div>
+      <div class="mini" id="h-m2" style="left:640px;top:340px;width:380px"><span class="tag l">FALE AGORA</span><div style="font-size:16px;font-weight:500;margin-top:12px;line-height:1.4">Pergunte quanto custa um mês sem ver as reuniões.</div></div>
+      <div class="mini" id="h-m3" style="left:760px;top:520px;width:260px;display:flex;align-items:center;gap:12px"><img src="img/hubspot.svg" style="height:30px" alt=""><div><div class="l">CRM</div><div style="font-weight:600;font-size:16px">Preenchido ✓</div></div></div>
+    </div></div>
+  </div>
+</div>
+
+<!-- 2 · Ao vivo -->
+<div class="cena" id="s2">
+  <div class="cartao" id="jan">
+    <div class="jtopo"><i></i><i></i><i></i><span>Reunião · Distribuidora Aliança</span><div class="rec"><em></em><span id="rec-t">12:48</span></div></div>
+    <div class="tile" id="tl1" style="left:36px;top:88px;background:linear-gradient(135deg,#e9ecf5,#dfe6f3)"><div class="av" style="background:#7d8fb3">RS</div><span class="nm">Ricardo · lead</span><i class="fala"></i></div>
+    <div class="tile" id="tl2" style="left:456px;top:88px;background:linear-gradient(135deg,#eef3dc,#e6edd0)"><div class="av" style="background:#8a9b55">VC</div><span class="nm">Você</span><i class="fala"></i></div>
+    <div class="trans app">
+      <div class="ln" id="ln1"><b>Você</b><span>Faz sentido ver isso funcionando com o seu time?</span></div>
+      <div class="ln" id="ln2"><b>Ricardo</b><span>Gostei. Mas achei <mark id="mk">caro para o momento</mark>.</span></div>
+    </div>
+    <div class="ext">
+      <div class="hd"><img src="img/mark.png" alt="">Sales Coach<em><i></i>ao vivo</em></div>
+      <div class="sec">OUVINDO A REUNIÃO</div>
+      <div class="ondas" id="ondas"></div>
+      <div class="sec">DICA</div>
+      <div class="dica" id="dica"><div class="tags"><span class="tag v">OBJEÇÃO · PREÇO</span><span class="tag l">FALE AGORA</span></div>
+        <div class="q">Pergunte quanto custa, por mês, não saber o que acontece nas reuniões do time.</div>
+        <div class="usar" id="usar">Usar a dica</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- 3 · Análise -->
+<div class="cena" id="s3">
+  <div class="cartao" id="nota"><div class="kk">Nota da reunião</div>
+    <div class="anel"><svg viewBox="0 0 300 300"><circle class="tr" cx="150" cy="150" r="128"/><circle class="vl" id="arco" cx="150" cy="150" r="128"/></svg>
+      <div class="n"><b id="num">0</b><span>DE 100</span></div></div>
+    <div class="crits" id="crits"><span class="crit"><i>✓</i>Budget</span><span class="crit"><i>✓</i>Authority</span><span class="crit"><i>✓</i>Need</span><span class="crit"><i>✓</i>Timing</span></div>
+  </div>
+  <div class="cartao" id="evol"><div class="kk">Gestão · time comercial</div><h3>Nota média por semana</h3>
+    <svg id="graf" viewBox="0 0 780 380"><defs><linearGradient id="gArea" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1d4f9a" stop-opacity=".16"/><stop offset="1" stop-color="#1d4f9a" stop-opacity="0"/></linearGradient>
+      <clipPath id="clip"><rect id="clipr" x="0" y="0" width="0" height="380"/></clipPath></defs>
+      <g id="gls"></g><line class="meta" x1="0" x2="780" id="metaL"/><text class="metaT" id="metaT" x="780" text-anchor="end">META 80</text>
+      <path class="area" id="area" clip-path="url(#clip)"/><path class="linha" id="linha"/></svg>
+    <div id="cab"></div><div id="batida"><i>✓</i>Meta batida na semana 7</div>
+  </div>
+</div>
+
+<!-- 4 · Camadas -->
+<div class="cena" id="s4"><div id="pilha"><div id="iso">
+  <div class="cam3" id="L0"><div class="rot"><b>01</b>TREINO</div><div class="corpo">
+    <div class="bol a" style="top:0">Já usamos uma ferramenta assim e ninguém usou.</div>
+    <div class="bol b" style="top:84px">Entendo. O que fez o time parar?</div>
+    <div class="bol a" style="top:168px;width:260px">Nota do treino · <b>78</b></div></div></div>
+  <div class="cam3" id="L1"><div class="rot"><b>02</b>AO VIVO</div><div class="corpo">
+    <div style="display:flex;gap:14px"><div style="flex:1;height:170px;border-radius:16px;background:linear-gradient(135deg,#e9ecf5,#dfe6f3)"></div><div style="flex:1;height:170px;border-radius:16px;background:linear-gradient(135deg,#eef3dc,#e6edd0)"></div></div>
+    <div style="margin-top:22px;display:flex;gap:10px;align-items:center"><span class="tag l">FALE AGORA</span><span style="font-size:18px">Pergunte o custo de não resolver.</span></div></div></div>
+  <div class="cam3" id="L2"><div class="rot"><b>03</b>ANÁLISE</div><div class="corpo">
+    <div style="display:flex;gap:30px;align-items:center"><div style="font-family:'Space Grotesk';font-weight:300;font-size:110px;letter-spacing:-.05em;line-height:1">86</div>
+      <div style="flex:1"><div class="kk">BANT</div><div class="barra3"><i style="width:92%"></i></div><div class="barra3"><i style="width:84%"></i></div><div class="barra3"><i style="width:88%"></i></div><div class="barra3"><i style="width:70%"></i></div></div></div></div></div>
+  <div class="cam3" id="L3"><div class="rot"><b>04</b>CRM</div><div class="corpo">
+    <div class="campo"><span>Próximo passo</span><b>Proposta até sexta</b></div><div class="campo"><span>Temperatura</span><b style="color:#d2491f">Quente</b></div><div class="campo"><span>Resumo</span><b>Decisor e verba confirmados</b></div>
+    <div class="enviar" id="enviar"><img src="img/hubspot.svg" alt="" style="filter:brightness(0) invert(1)" id="env-img"><span id="env-t">Enviar ao CRM</span></div>
+    <div class="logos3"><i><img src="img/salesforce.svg" alt=""></i><i><img src="img/pipedrive.png" alt=""></i><i><img src="img/rdstation.png" alt=""></i></div></div></div>
+</div></div></div>
+
+<!-- 5 · Fecho -->
+<div class="cena" id="s5">
+  <div id="fim-glow"></div>
+  <div id="fim-marca"><img src="img/mark.png" alt="" id="fim-mk"><div class="w" id="fim-w"></div></div>
+  <div id="fim-tag" class="disp">Cada reunião vira método.</div>
+  <div id="fim-rod"><span>um produto</span><img src="img/nexa.svg" alt="NEXA"><i></i><span>nexatech.ia.br</span></div>
+</div>
+
+<div id="selo"><img src="img/mark.png" alt=""><b>Sales</b><span>Coach</span></div>
+<div id="selo2"><span>um produto</span><img src="img/nexa.svg" alt=""></div>
+<div id="leg"><div class="k mono" id="leg-k"></div><div class="t disp" id="leg-t"></div></div>
+
+<div class="cur" id="cV"><svg viewBox="0 0 24 24"><path d="M3 2l17 8.5-7.2 1.9L9.6 20z" fill="#10120e" stroke="#fff" stroke-width="1.6" stroke-linejoin="round"/></svg><span class="et" style="background:#d4f969;color:#10120e">Você</span><i class="onda" style="border-color:#10120e"></i></div>
+<div class="cur" id="cI"><svg viewBox="0 0 24 24"><path d="M3 2l17 8.5-7.2 1.9L9.6 20z" fill="#1d4f9a" stroke="#fff" stroke-width="1.6" stroke-linejoin="round"/></svg><span class="et" style="background:#1d4f9a;color:#fff">Coach IA</span><i class="onda" style="border-color:#1d4f9a"></i></div>
+<div class="cur" id="cG"><svg viewBox="0 0 24 24"><path d="M3 2l17 8.5-7.2 1.9L9.6 20z" fill="#587406" stroke="#fff" stroke-width="1.6" stroke-linejoin="round"/></svg><span class="et" style="background:#10120e;color:#fff">Gestor</span><i class="onda" style="border-color:#587406"></i></div>
+<canvas id="grao" width="960" height="540"></canvas>
+
+<script>
+// ─── Linha do tempo ───────────────────────────────────────────────────────
+const DUR = 22;
+const CENAS = { s0: [0, 3.5], s1: [3.1, 7.1], s2: [6.7, 11.4], s3: [11.0, 15.4], s4: [15.0, 19.2], s5: [18.8, 22] };
+const LEGENDAS = [
+  [7.0, 11.2, 'Durante a reunião', 'A dica chega com a objeção ainda no ar.'],
+  [11.3, 15.2, 'Depois da reunião', 'Cada conversa vira nota. O time, evolução.'],
+  [15.3, 18.9, 'Do treino ao CRM', 'Uma régua só, do começo ao fim.'],
+];
+// Cursores: [tempo, alvo (seletor ou [x,y]), clique?]. Entre os pontos, movimento suave.
+const CURSORES = {
+  cV: [[5.0, [1500, 980]], [5.75, '#h-ver'], [6.1, '#h-ver', 1], [6.5, [1180, 820]],
+       [9.6, [1300, 1000]], [10.25, '#usar'], [10.55, '#usar', 1], [11.2, [1500, 980]],
+       [16.3, [1450, 1020]], [17.15, '#enviar'], [17.45, '#enviar', 1], [18.4, [1560, 960]]],
+  cI: [[7.7, [1760, 330]], [8.35, '#mk'], [8.5, '#mk', 1], [9.0, '#mk'], [9.5, '#dica'], [9.75, '#dica', 1], [10.4, [1800, 260]]],
+  cG: [[11.6, [1200, 1000]], [12.15, 'CAB'], [14.0, 'CAB'], [14.5, '#batida'], [14.7, '#batida', 1], [15.3, [1500, 980]]],
+};
+const SONS = { cortes: [3.2, 6.8, 11.05, 15.05, 18.85], pops: [0.35, 0.6, 0.85, 1.1, 1.35, 1.6, 1.85, 2.1, 2.35, 2.6], dica: 9.6, nota: 12.8, meta: 13.5, crm: 17.55, fim: 19.2 };
+const CLIQUES = Object.values(CURSORES).flatMap(l => l.filter(c => c[2]).map(c => c[0])).sort((a, b) => a - b);
+window.TEMPOS = { DUR, CENAS, CLIQUES, SONS };
+
+const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+const lin = (t, a, b) => clamp((t - a) / (b - a));
+const eo = x => 1 - Math.pow(1 - x, 3), eo5 = x => 1 - Math.pow(1 - x, 5);
+const eio = x => x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
+const back = x => { const c = 1.5; return 1 + (c + 1) * Math.pow(x - 1, 3) + c * Math.pow(x - 1, 2); };
+const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
+const sobe = (el, k, dy = 24, blur = 8) => { el.style.opacity = k; el.style.transform = `translateY(${(1 - k) * dy}px)`; el.style.filter = k < 1 ? `blur(${(1 - k) * blur}px)` : ''; };
+
+// ─── Fundo líquido (WebGL): mármore claro em osso, branco, lima e névoa azul ───
+const gl = $('#liq').getContext('webgl', { preserveDrawingBuffer: true });
+const VS = 'attribute vec2 p;void main(){gl_Position=vec4(p,0.,1.);}';
+const FS = `precision highp float;uniform float t;uniform vec2 r;
+float h(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);}
+float n(vec2 p){vec2 i=floor(p),f=fract(p);f=f*f*(3.-2.*f);return mix(mix(h(i),h(i+vec2(1,0)),f.x),mix(h(i+vec2(0,1)),h(i+vec2(1,1)),f.x),f.y);}
+float fbm(vec2 p){float v=0.,a=.5;mat2 m=mat2(1.6,1.2,-1.2,1.6);for(int i=0;i<5;i++){v+=a*n(p);p=m*p;a*=.5;}return v;}
+void main(){vec2 uv=gl_FragCoord.xy/r;vec2 p=uv*vec2(r.x/r.y,1.)*1.35;
+ vec2 q=vec2(fbm(p+vec2(0.,t*.05)),fbm(p+vec2(5.2,1.3)-t*.04));
+ vec2 w=vec2(fbm(p+3.2*q+vec2(1.7,9.2)+t*.07),fbm(p+3.2*q+vec2(8.3,2.8)-t*.05));
+ float f=fbm(p+3.6*w);
+ float s=.5+.5*sin(f*11.+w.x*5.+t*.35);
+ vec3 osso=vec3(.965,.969,.948),bra=vec3(1.),lim=vec3(.91,.98,.70),lim2=vec3(.84,.98,.42),nev=vec3(.90,.94,.99),lil=vec3(.955,.94,.995);
+ vec3 c=mix(osso,bra,smoothstep(.15,.7,s));
+ c=mix(c,lim,smoothstep(.55,.95,w.y)*.75);
+ c=mix(c,nev,smoothstep(.45,.9,q.x)*.55);
+ c=mix(c,lil,smoothstep(.6,.95,f)*.35);
+ c=mix(c,lim2,smoothstep(.82,.98,w.y*s)*.45);
+ c+=pow(s,18.)*.05;
+ gl_FragColor=vec4(c,1.);}`;
+function sh(tp, src) { const s = gl.createShader(tp); gl.shaderSource(s, src); gl.compileShader(s); if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) console.error(gl.getShaderInfoLog(s)); return s; }
+const prog = gl.createProgram(); gl.attachShader(prog, sh(gl.VERTEX_SHADER, VS)); gl.attachShader(prog, sh(gl.FRAGMENT_SHADER, FS)); gl.linkProgram(prog); gl.useProgram(prog);
+gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer()); gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]), gl.STATIC_DRAW);
+const ap = gl.getAttribLocation(prog, 'p'); gl.enableVertexAttribArray(ap); gl.vertexAttribPointer(ap, 2, gl.FLOAT, false, 0, 0);
+const uT = gl.getUniformLocation(prog, 't'), uR = gl.getUniformLocation(prog, 'r'); gl.uniform2f(uR, 960, 540); gl.viewport(0, 0, 960, 540);
+const liquido = t => { gl.uniform1f(uT, t + 4); gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4); };
+
+// Grão fixo (4 variações).
+const graos = []; { let s = 9; const r = () => (s = (s * 16807) % 2147483647) / 2147483647;
+  for (let k = 0; k < 4; k++) { const c = document.createElement('canvas'); c.width = 960; c.height = 540; const g = c.getContext('2d'), im = g.createImageData(960, 540);
+    for (let i = 0; i < im.data.length; i += 4) { const v = 90 + r() * 165; im.data[i] = im.data[i + 1] = im.data[i + 2] = v; im.data[i + 3] = 255; } g.putImageData(im, 0, 0); graos.push(c); } }
+const gx = $('#grao').getContext('2d');
+
+// ─── Montagem ───
+const LOGOS = ['googlemeet.svg', 'hubspot.svg', 'microsoftteams.svg', 'salesforce.svg', 'zoom.svg', 'pipedrive.png', 'slack.svg', 'rdstation.png', 'whatsapp.svg', 'gmail.svg'];
+LOGOS.forEach(f => { const d = document.createElement('div'); d.className = 'lg'; d.innerHTML = `<img src="img/${f}" alt="">`; $('#orb').appendChild(d); });
+for (let i = 0; i < 30; i++) $('#ondas').appendChild(document.createElement('i'));
+$('#fim-w').innerHTML = '<b>' + [...'Sales'].map(c => `<em>${c}</em>`).join('') + '</b><span>' + [...'Coach'].map(c => `<em>${c}</em>`).join('') + '</span>';
+// Gráfico
+const VAL = [62, 66, 64, 71, 74, 77, 83, 86];
+const GX = i => 20 + i * 105, GY = v => 360 - (v - 50) * 8.4;
+$('#gls').innerHTML = [60, 70, 80, 90].map(v => `<line class="gl" x1="0" x2="780" y1="${GY(v)}" y2="${GY(v)}"/>`).join('');
+$('#metaL').setAttribute('y1', GY(80)); $('#metaL').setAttribute('y2', GY(80)); $('#metaT').setAttribute('y', GY(80) - 12);
+const pts = VAL.map((v, i) => [GX(i), GY(v)]);
+const curva = pts.map((p, i) => { if (!i) return `M${p[0]},${p[1]}`; const a = pts[i - 1], dx = (p[0] - a[0]) / 2; return `C${a[0] + dx},${a[1]} ${p[0] - dx},${p[1]} ${p[0]},${p[1]}`; }).join(' ');
+$('#linha').setAttribute('d', curva); $('#area').setAttribute('d', curva + ` L${GX(7)},380 L${GX(0)},380 Z`);
+const LL = $('#linha').getTotalLength(); $('#linha').style.strokeDasharray = LL;
+const ARC = 2 * Math.PI * 128; $('#arco').style.strokeDasharray = ARC;
+
+// ─── Cursores ───
+function alvoXY(a) {
+  if (Array.isArray(a)) return a;
+  if (a === 'CAB') { const r = $('#cab').getBoundingClientRect(); return [r.left + r.width / 2 + 4, r.top + r.height / 2 + 4]; }
+  const r = $(a).getBoundingClientRect(); return [r.left + r.width * .55, r.top + r.height * .55];
+}
+function cursores(t) {
+  for (const [id, kf] of Object.entries(CURSORES)) {
+    const el = $('#' + id), ini = kf[0][0], fim = kf[kf.length - 1][0];
+    let vis = clamp(lin(t, ini - .25, ini + .15)) * (1 - lin(t, fim - .2, fim + .2));
+    // Entre dois pontos muito distantes no tempo, o cursor sai de cena em vez de ficar parado.
+    for (let j = 1; j < kf.length; j++) if (kf[j][0] - kf[j - 1][0] > 2 && t > kf[j - 1][0] && t < kf[j][0]) vis *= 1 - Math.min(lin(t, kf[j - 1][0], kf[j - 1][0] + .35), 1 - lin(t, kf[j][0] - .6, kf[j][0] - .25));
+    el.style.opacity = vis; if (vis <= 0) continue;
+    let i = kf.findIndex(k => k[0] > t); if (i < 0) i = kf.length; const a = kf[Math.max(0, i - 1)], b = kf[Math.min(kf.length - 1, i)];
+    const pa = alvoXY(a[1]), pb = alvoXY(b[1]), k = b === a ? 1 : eio(lin(t, a[0], b[0]));
+    const x = pa[0] + (pb[0] - pa[0]) * k, y = pa[1] + (pb[1] - pa[1]) * k + Math.sin(k * Math.PI) * -18 * (b !== a);
+    let sc = 1, onda = 0, ok = 0;
+    for (const c of kf) if (c[2]) { const d = t - c[0]; if (d > -.12 && d < .12) sc = Math.min(sc, .82 + Math.abs(d) * 1.5); if (d >= 0 && d < .6) { onda = d / .6; ok = 1; } }
+    el.style.transform = `translate(${x - 4}px, ${y - 4}px) scale(${sc})`;
+    const o = el.querySelector('.onda'); o.style.opacity = ok ? (1 - onda) * .8 : 0; o.style.transform = `scale(${.4 + onda * 1.4})`;
+  }
+}
+
+// ─── Render ───
+const vis = (t, [a, b], fi = .4, fo = .4) => clamp(lin(t, a, a + fi)) * (1 - lin(t, b - fo, b));
+function renderAt(t) {
+  // Fundos: osso nas pontas, líquido no meio.
+  const liqK = clamp(lin(t, 2.8, 3.8)) * (1 - lin(t, 18.7, 19.5));
+  $('#liq').style.opacity = liqK; if (liqK > 0) liquido(t);
+
+  // 0 · órbita
+  const s0 = $('#s0'), k0 = vis(t, CENAS.s0, .01, .5); s0.style.opacity = k0;
+  if (k0 > 0) {
+    const zoom = eio(lin(t, 2.85, 3.5));
+    s0.style.transform = `scale(${1 + zoom * 1.6})`; s0.style.filter = zoom ? `blur(${zoom * 10}px)` : '';
+    $$('.lg').forEach((el, i) => {
+      const ap = lin(t, SONS.pops[i] - .05, SONS.pops[i] + .5), k = back(ap);
+      const anel = i % 2, rx = anel ? 600 : 400, ry = anel ? 420 : 296;
+      const ang = -Math.PI / 2 + i * (Math.PI * 2 / LOGOS.length) + t * (anel ? .09 : -.12);
+      const r0 = .55 + .45 * eo(ap);
+      el.style.left = (960 + Math.cos(ang) * rx * r0) + 'px'; el.style.top = (540 + Math.sin(ang) * ry * r0) + 'px';
+      el.style.opacity = clamp(ap * 2); el.style.transform = `scale(${Math.max(0, k)})`; el.style.filter = ap < 1 ? `blur(${(1 - ap) * 6}px)` : '';
+    });
+    const kn = lin(t, .1, .9); $('#nucleo').style.transform = `scale(${.6 + .4 * back(kn)})`; $('#nucleo').style.opacity = clamp(kn * 2);
+    $('#nucleo .halo').style.opacity = .55 + .35 * Math.sin(t * 3); $('#nucleo .aro').style.transform = `scale(${1 + .06 * Math.sin(t * 3)})`;
+    sobe($('#s0-t'), eo(lin(t, 1.0, 1.6)), 14, 6); $('#orb-linhas').style.opacity = lin(t, .3, 1.4); $('#orb-linhas').style.transform = `rotate(${t * 2}deg)`;
+  }
+
+  // 1 · notebook
+  const s1 = $('#s1'), k1 = vis(t, CENAS.s1, .5, .5); s1.style.opacity = k1;
+  if (k1 > 0) {
+    const ent = eo5(lin(t, 3.1, 4.3)), mergulho = eio(lin(t, 6.15, 7.0));
+    const push = 1 + (t - 3.1) * .018;
+    const lap = $('#lap'); lap.style.transform = `translateY(${(1 - ent) * 260}px) scale(${(.86 + .14 * ent) * push * (1 + mergulho * 2.2)}) rotateX(${(1 - ent) * 18}deg)`;
+    lap.style.transformOrigin = '0 0'; s1.style.filter = mergulho ? `blur(${mergulho * 6}px)` : '';
+    sobe($('#h-k'), eo(lin(t, 3.7, 4.2)));
+    $$('#h-t .w').forEach((w, i) => sobe(w, eo(lin(t, 3.85 + i * .12, 4.45 + i * .12)), 30, 10));
+    sobe($('#h-p'), eo(lin(t, 4.4, 4.9))); sobe($('#h-b'), eo(lin(t, 4.6, 5.1)));
+    ['#h-m1', '#h-m2', '#h-m3'].forEach((s, i) => { const k = eo(lin(t, 4.5 + i * .22, 5.2 + i * .22)); const el = $(s); el.style.opacity = k;
+      el.style.transform = `translateY(${(1 - k) * 40 + Math.sin(t * 1.3 + i) * 6}px)`; });
+    $('#h-ver').style.background = t > 6.1 ? '#f1f2ec' : '';
+  }
+
+  // 2 · ao vivo
+  const s2 = $('#s2'), k2 = vis(t, CENAS.s2, .5, .45); s2.style.opacity = k2;
+  if (k2 > 0) {
+    const ent = eo5(lin(t, 6.7, 7.5)), sai = eio(lin(t, 11.0, 11.4));
+    $('#jan').style.transform = `translateY(${(1 - ent) * 60 - sai * 40}px) scale(${.94 + .06 * ent - sai * .04})`;
+    const seg = Math.floor(768 + (t - 6.7)); $('#rec-t').textContent = `${String(Math.floor(seg / 60)).padStart(2, '0')}:${String(seg % 60).padStart(2, '0')}`;
+    sobe($('#ln1'), eo(lin(t, 7.2, 7.6))); sobe($('#ln2'), eo(lin(t, 7.85, 8.25)));
+    $('#tl2 .fala').style.opacity = t > 7.1 && t < 7.8 ? 1 : 0; $('#tl1 .fala').style.opacity = t > 7.8 && t < 8.8 ? 1 : 0;
+    $('#mk').style.setProperty('--m', eio(lin(t, 8.45, 8.95)));
+    $$('#ondas i').forEach((el, i) => { const fala = (t > 7.1 && t < 8.8) ? 1 : .25; el.style.height = (6 + fala * 36 * Math.abs(Math.sin(t * 7 + i * .7) * Math.cos(t * 3.1 + i * 1.3))) + 'px'; });
+    const kd = lin(t, 9.55, 10.1); const dica = $('#dica'); dica.style.opacity = clamp(kd * 1.6); dica.style.transform = `translateY(${(1 - eo5(kd)) * 40}px) scale(${.96 + .04 * back(kd)})`;
+    dica.style.boxShadow = t > 9.6 && t < 10.6 ? `0 24px 50px -28px rgba(15,44,92,.45), 0 0 0 ${2 + 6 * (1 - lin(t, 9.6, 10.6))}px rgba(212,249,105,${.9 - .9 * lin(t, 9.6, 10.6)})` : '';
+    const u = $('#usar'), ok = t >= 10.55; u.classList.toggle('ok', ok); u.textContent = ok ? '✓ Dica usada' : 'Usar a dica';
+  }
+
+  // 3 · análise
+  const s3 = $('#s3'), k3 = vis(t, CENAS.s3, .45, .45); s3.style.opacity = k3;
+  if (k3 > 0) {
+    const e1 = eo5(lin(t, 11.0, 11.8)), e2 = eo5(lin(t, 11.2, 12.0)), sai = eio(lin(t, 15.0, 15.4));
+    $('#nota').style.transform = `translateY(${(1 - e1) * 70 - sai * 30}px)`; $('#nota').style.opacity = e1;
+    $('#evol').style.transform = `translateY(${(1 - e2) * 70 - sai * 30}px)`; $('#evol').style.opacity = e2;
+    const kn = eo(lin(t, 11.7, 13.0)); $('#arco').style.strokeDashoffset = ARC * (1 - .86 * kn); $('#num').textContent = Math.round(86 * kn);
+    $$('#crits .crit').forEach((c, i) => { const k = lin(t, 12.6 + i * .15, 13.0 + i * .15); c.style.opacity = k; c.style.transform = `scale(${.8 + .2 * back(k)})`; });
+    const kl = eio(lin(t, 12.15, 14.0)); $('#linha').style.strokeDashoffset = LL * (1 - kl);
+    const P = $('#linha').getPointAtLength(LL * kl); $('#clipr').setAttribute('width', P.x);
+    const g = $('#graf').getBoundingClientRect(), ex = $('#evol').getBoundingClientRect();
+    const sx = g.width / 780; $('#cab').style.left = (g.left - ex.left + P.x * sx) + 'px'; $('#cab').style.top = (g.top - ex.top + P.y * sx) + 'px';
+    $('#cab').style.opacity = lin(t, 12.1, 12.3); $('#cab').classList.toggle('ok', P.y <= GY(80) && kl > .5);
+    const kb = lin(t, 13.5, 13.95), b = $('#batida'); b.style.opacity = kb; b.style.left = (g.left - ex.left + GX(6) * sx - 250) + 'px'; b.style.top = (g.top - ex.top + GY(83) * sx - 76) + 'px';
+    b.style.transform = `scale(${.7 + .3 * back(kb)})`; b.style.transformOrigin = '80% 100%';
+  }
+
+  // 4 · camadas
+  const s4 = $('#s4'), k4 = vis(t, CENAS.s4, .45, .45); s4.style.opacity = k4;
+  if (k4 > 0) {
+    const ent = eo5(lin(t, 15.0, 16.0)), abre = eio(lin(t, 15.4, 16.6)), sai = eio(lin(t, 18.8, 19.2));
+    const rz = -32 + (t - 15) * 1.4, rx = 48 - (1 - ent) * 16;
+    $('#iso').style.transform = `translateY(${(1 - ent) * 120}px) rotateX(${rx}deg) rotateZ(${rz}deg) scale(${.88 + .1 * ent - sai * .06})`;
+    ['L0', 'L1', 'L2', 'L3'].forEach((id, i) => { const el = $('#' + id); const z = (i - 1.5) * (30 + 150 * abre) + Math.sin(t * 1.2 + i) * 6 * abre;
+      const foco = id === 'L3' ? eio(lin(t, 16.9, 17.3)) * (1 - eio(lin(t, 18.3, 18.8))) : 0;
+      el.style.transform = `translateZ(${z + foco * 70}px)`; el.style.opacity = clamp(lin(t, 15.0 + i * .1, 15.5 + i * .1));
+      el.style.boxShadow = foco ? `0 0 0 ${3 * foco}px rgba(212,249,105,.95), 0 50px 90px -30px rgba(30,40,20,.35)` : ''; });
+    const ok = t >= 17.45; $('#enviar').classList.toggle('ok', ok); $('#env-t').textContent = ok ? 'Enviado ao HubSpot ✓' : 'Enviar ao CRM';
+    $('#env-img').style.filter = ok ? 'none' : 'brightness(0) invert(1)';
+  }
+
+  // 5 · fecho
+  const s5 = $('#s5'), k5 = vis(t, CENAS.s5, .5, .01); s5.style.opacity = k5;
+  if (k5 > 0) {
+    const km = lin(t, 19.0, 19.8); $('#fim-mk').style.opacity = km; $('#fim-mk').style.transform = `scale(${.6 + .4 * back(km)}) rotate(${(1 - eo(km)) * -20}deg)`; $('#fim-mk').style.filter = km < 1 ? `blur(${(1 - km) * 12}px)` : '';
+    $$('#fim-w em').forEach((e, i) => sobe(e, eo(lin(t, 19.25 + i * .05, 19.85 + i * .05)), 40, 16));
+    sobe($('#fim-tag'), eo(lin(t, 20.0, 20.6)), 20, 10); sobe($('#fim-rod'), eo(lin(t, 20.4, 21.0)), 14, 6);
+    const kg = lin(t, 19.0, 20.2); $('#fim-glow').style.opacity = eo(kg) * (.75 + .25 * Math.sin(t * 2.2)); $('#fim-glow').style.transform = `scale(${.6 + .4 * eo(kg) + .03 * Math.sin(t * 1.7)})`;
+  }
+
+  // Selos e legenda
+  const ks = clamp(lin(t, 6.9, 7.4)) * (1 - lin(t, 18.6, 19.0)); $('#selo').style.opacity = ks; $('#selo2').style.opacity = ks;
+  const L = LEGENDAS.find(l => t >= l[0] && t < l[1]);
+  if (L) { const k = eo(lin(t, L[0], L[0] + .5)) * (1 - lin(t, L[1] - .35, L[1])); $('#leg-k').textContent = L[2]; $('#leg-t').textContent = L[3]; sobe($('#leg'), k, 16, 6); } else $('#leg').style.opacity = 0;
+
+  cursores(t);
+  gx.drawImage(graos[Math.floor(t * 30) % 4], 0, 0);
+}
+window.renderAt = renderAt;
+window.ready = document.fonts.ready.then(() => Promise.all([...document.images].map(i => i.decode().catch(() => {})))).then(() => { renderAt(0); return true; });
+if (location.search.includes('play')) window.ready.then(() => { const t0 = performance.now(); (function f() { const t = ((performance.now() - t0) / 1000) % DUR; renderAt(t); requestAnimationFrame(f); })(); });
+</script>
+</body>
+</html>
