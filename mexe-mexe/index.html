@@ -122,6 +122,7 @@ button{font:inherit;color:inherit}
 .ibtn{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;background:var(--panel);border:1px solid var(--line);cursor:pointer;padding:0}
 .ibtn svg{width:18px;height:18px}
 .ibtn:hover{border-color:var(--accent)}
+.ibtn[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink);border-color:transparent}
 #dock{position:absolute;left:16px;right:16px;bottom:calc(env(safe-area-inset-bottom,0px) + 12px);display:flex;justify-content:center;flex-wrap:wrap;gap:8px;pointer-events:none}
 #dock .btn{pointer-events:auto}
 .btn{font-weight:700;font-size:15px;padding:11px 16px;border-radius:999px;border:1px solid var(--line);background:var(--panel);color:var(--ink);cursor:pointer;display:inline-flex;align-items:center;gap:8px;white-space:nowrap;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
@@ -205,6 +206,12 @@ button{font:inherit;color:inherit}
   .btn .long{display:none}
   .btn .short{display:inline}
   #toasts{top:calc(env(safe-area-inset-top,0px) + 54px)}
+}
+@media (max-width:440px){
+  .tools{gap:5px}
+  #btnRules{display:none}
+  #deckChip .lbl{display:none}
+  #deckChip::before{content:"";width:11px;height:15px;border-radius:2px;background:linear-gradient(160deg,var(--back-1),var(--back-2));border:1.5px solid var(--card)}
   #status{display:none}
   #me{display:none}
   .btn{font-size:14px;padding:10px 13px}
@@ -246,7 +253,8 @@ button{font:inherit;color:inherit}
     <div class="brand">Mexe-Mexe</div>
     <div id="status" aria-live="polite"></div>
     <div class="tools">
-      <span class="chip" id="deckChip" title="Cartas no monte">Monte <b id="deckCount">0</b></span>
+      <span class="chip" id="deckChip" title="Cartas no monte"><span class="lbl">Monte</span> <b id="deckCount">0</b></span>
+      <button class="ibtn" id="btnZoom" aria-pressed="false" aria-label="Aproximar a mesa" title="Aproximar a mesa"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5 21 21M7.5 10.5h6"/><path class="zin" d="M10.5 7.5v6"/></svg></button>
       <button class="ibtn" id="btnRules" aria-label="Como jogar" title="Como jogar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="12" r="9.5"/><path d="M9.5 9.3a2.6 2.6 0 0 1 5 .9c0 1.8-2.5 2.2-2.5 3.8"/><circle cx="12" cy="17.2" r=".6" fill="currentColor"/></svg></button>
       <button class="ibtn" id="btnSound" aria-label="Som ligado" title="Som"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z"/><path class="wave" d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/><path class="mute" d="M16 9.5l5 5M21 9.5l-5 5" style="display:none"/></svg></button>
       <button class="ibtn" id="btnMenu" aria-label="Menu" title="Menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M5 7h14M5 12h14M5 17h14"/></svg></button>
@@ -559,7 +567,7 @@ function setMood(svg, mood){
 const G = {
   me:'caio', seats:[], deck:[], melds:[], turn:0, phase:'idle', token:0, round:0,
   snap:null, sel:new Set(), sortMode:'suit', drag:null, press:null, hint:null, reveal:false,
-  wins: store('mm-wins') || {}, muted: !!store('mm-muted'),
+  wins: store('mm-wins') || {}, muted: !!store('mm-muted'), autoZoom: store('mm-autozoom') !== false,
 };
 const myTurn = () => G.phase === 'play' && G.turn === 0;
 const seatName = i => i === 0 ? 'Você' : CHARS[G.seats[i].char].name;
@@ -628,19 +636,107 @@ function fit(){
   };
   let lo = 0.05, hi = 3, best = test(lo).c;
   for (let i = 0; i < 26; i++){ const mid = (lo + hi)/2, r = test(mid); if (r.ok){ lo = mid; best = r.c; } else hi = mid; }
-  Object.assign(CAM, { s:best.s, P:best.P, dy:best.dy });
-  stage.style.perspective = CAM.P + 'px';
-  stage.style.perspectiveOrigin = `${CAM.ox}px ${CAM.oy}px`;
+  BASE = { s:best.s, P:best.P, dx:CAM.dx, dy:best.dy, ar:CAM.ar, ox:CAM.ox, oy:CAM.oy };
+  VB = { top, bottom, R, side };
   table.style.width = L.W + 'px'; table.style.height = L.H + 'px';
   table.style.margin = `${-L.H/2}px 0 0 ${-L.W/2}px`;
-  table.style.transform = `translate3d(${CAM.dx}px, ${CAM.dy}px, ${CAM.tz}px) rotateX(${L.a}deg) scale3d(${CAM.s}, ${CAM.s}, ${CAM.s})`;
+  if (camAnim){ camAnim.stop(); camAnim = null; }
+  TCAM = viewTarget();
+  Object.assign(CAM, TCAM); writeCam();
   const db = $('#deckBase'), dl = $('#deckLabel');
   db.style.left = (L.W/2 + L.deck.x - 48) + 'px'; db.style.top = (L.H/2 + L.deck.y - 66) + 'px';
   dl.style.left = (L.W/2 + L.deck.x - 70) + 'px'; dl.style.top = (L.H/2 + L.deck.y + 74) + 'px';
   dl.hidden = !!L.tall;
   table.classList.toggle('tall', !!L.tall);
-  placeSeats();
   return changed;
+}
+
+/* ================= zoom da mesa ================= */
+let BASE = null, VB = { top:64, bottom:74, R:0, side:4 }, TCAM = null, camAnim = null;
+const CAMKEYS = ['s','P','dx','dy','ar','ox','oy'];
+const Z = { on:false, src:null, mul:1, px:0, py:0, gesture:null, sig:'' };
+function writeCam(){
+  stage.style.perspective = CAM.P + 'px';
+  stage.style.perspectiveOrigin = `${CAM.ox}px ${CAM.oy}px`;
+  table.style.transform = `translate3d(${CAM.dx}px, ${CAM.dy}px, 0px) rotateX(${CAM.ar*180/Math.PI}deg) scale3d(${CAM.s}, ${CAM.s}, ${CAM.s})`;
+  placeSeats();
+}
+const handHeight = () => CAM.vw < 760 || CAM.vh < 520 ? clamp(CAM.vh*.2, 104, 160) : clamp(CAM.vh*.2, 140, 190);
+function handTopLimit(){ return CAM.vh - VB.bottom - handHeight() - 10; }
+/* enquadra os pontos (u, v) da mesa dentro de um retângulo da tela */
+function frame(pts, ar, box, sFixed){
+  const run = s => {
+    const c = { ...CAM, s, ar, P: s*L.W*1.6, dx:0, dy:0, ox:(box.x0 + box.x1)/2, oy:(box.y0 + box.y1)/2 };
+    let ps;
+    for (let it = 0; it < 10; it++){
+      ps = pts.map(p => proj(p[0], p[1], 0, c));
+      const xs = ps.map(p => p.x), ys = ps.map(p => p.y);
+      c.dx += ((box.x0 + box.x1)/2 - (Math.min(...xs) + Math.max(...xs))/2)*.9;
+      c.dy += ((box.y0 + box.y1)/2 - (Math.min(...ys) + Math.max(...ys))/2)*.9;
+    }
+    ps = pts.map(p => proj(p[0], p[1], 0, c));
+    const xs = ps.map(p => p.x), ys = ps.map(p => p.y);
+    return { ok: Math.max(...xs) - Math.min(...xs) <= box.x1 - box.x0 && Math.max(...ys) - Math.min(...ys) <= box.y1 - box.y0, c };
+  };
+  if (sFixed) return run(sFixed).c;
+  let lo = .05, hi = 6, best = run(lo).c;
+  for (let i = 0; i < 24; i++){ const mid = (lo + hi)/2, r = run(mid); if (r.ok){ lo = mid; best = r.c; } else hi = mid; }
+  return best;
+}
+function zoomRegion(){
+  const t = tableLayout(true).trays;
+  let x0 = Math.min(...t.map(r => r.x - r.w/2)), x1 = Math.max(...t.map(r => r.x + r.w/2));
+  let y0 = Math.min(...t.map(r => r.y - r.h/2)), y1 = Math.max(...t.map(r => r.y + r.h/2));
+  const minW = L.tall ? 520 : 560, minH = L.tall ? 380 : 360, cx = (x0 + x1)/2, cy = (y0 + y1)/2;
+  if (x1 - x0 < minW){ x0 = cx - minW/2; x1 = cx + minW/2; }
+  if (y1 - y0 < minH){ y0 = cy - minH/2; y1 = cy + minH/2; }
+  const m = 36;
+  return [[x0 - m, y0 - m], [x1 + m, y0 - m], [x0 - m, y1 + m], [x1 + m, y1 + m]];
+}
+function viewTarget(){
+  if (!Z.on || !BASE) return { ...CAM, ...BASE };
+  const box = { x0: VB.side + 4, x1: CAM.vw - VB.side - 4 - VB.R, y0: VB.top + 6, y1: handTopLimit() };
+  const ar = (L.tall ? 16 : 20)*Math.PI/180, pts = zoomRegion();
+  const fit1 = frame(pts, ar, box);
+  const c = Z.mul > 1.001 ? frame(pts, ar, box, fit1.s*Z.mul) : fit1;
+  const lim = (CAM.vw + CAM.vh)*.5*Z.mul;
+  Z.px = clamp(Z.px, -lim, lim); Z.py = clamp(Z.py, -lim, lim);
+  return { ...CAM, s:c.s, P:c.P, dx:c.dx + Z.px, dy:c.dy + Z.py, ar, ox:c.ox, oy:c.oy };
+}
+function moveCam(t, dur = .65){
+  if (camAnim){ camAnim.stop(); camAnim = null; }
+  CAM.tox = t.ox; CAM.toy = t.oy;
+  if (RM || !dur){ CAMKEYS.forEach(k => CAM[k] = t[k]); writeCam(); return; }
+  const from = {}; CAMKEYS.forEach(k => from[k] = CAM[k]);
+  camAnim = animate(0, 1, { duration:dur, ease:[.3, .8, .25, 1], onUpdate: v => { CAMKEYS.forEach(k => CAM[k] = from[k] + (t[k] - from[k])*v); writeCam(); }, onComplete: () => { camAnim = null; } });
+}
+/* chamado a cada render: reenquadra a câmera quando a mesa muda */
+function syncView(instant){
+  const t = viewTarget();
+  const sig = CAMKEYS.map(k => t[k].toFixed(3)).join('|');
+  TCAM = t;
+  if (sig === Z.sig) return;
+  Z.sig = sig;
+  moveCam(t, instant ? 0 : .65);
+}
+function paintZoom(){
+  const b = $('#btnZoom');
+  b.setAttribute('aria-pressed', Z.on);
+  b.setAttribute('aria-label', Z.on ? 'Afastar a mesa' : 'Aproximar a mesa');
+  b.title = Z.on ? 'Afastar a mesa' : 'Aproximar a mesa';
+  b.querySelector('.zin').style.display = Z.on ? 'none' : '';
+}
+function zoomOn(src){ if (Z.on) return; Z.on = true; Z.src = src; Z.mul = 1; Z.px = Z.py = 0; paintZoom(); render(); }
+function zoomOff(){ if (!Z.on) return; Z.on = false; Z.src = null; Z.mul = 1; Z.px = Z.py = 0; paintZoom(); render(); }
+function toggleZoom(){
+  audio(); sfx('tick');
+  if (Z.on){
+    zoomOff();
+    if (myTurn() && G.autoZoom){ G.autoZoom = false; store('mm-autozoom', false); toast('Zoom automático desligado. A lupa aproxima quando você quiser.', { ms:3200 }); }
+  } else {
+    zoomOn('manual');
+    if (myTurn() && !G.autoZoom){ G.autoZoom = true; store('mm-autozoom', true); toast('A mesa vai aproximar sozinha na sua vez.', { ms:2600 }); }
+  }
 }
 
 /* ================= assentos ================= */
@@ -661,7 +757,7 @@ function buildSeats(){
 function placeSeats(){
   for (let i = 1; i < seatEls.length; i++){
     const p = L.seats[i];
-    seatEls[i].style.transform = `translate3d(${p.x}px, ${p.y}px, 0px) rotateX(${-L.a}deg) scale(${L.seatScale})`;
+    seatEls[i].style.transform = `translate3d(${p.x}px, ${p.y}px, 0px) rotateX(${-CAM.ar*180/Math.PI}deg) scale(${L.seatScale})`;
   }
 }
 const seatSVG = i => i === 0 ? $('#me svg') : seatEls[i] && seatEls[i].querySelector('svg');
@@ -744,12 +840,27 @@ function computePoses(){
     });
   }
   const me = G.seats[0].hand.filter(id => !(G.drag && G.drag.ids.includes(id))), n = me.length;
+  if (Z.on && TCAM){
+    /* com zoom, a mão fica presa ao pé da tela, sempre do mesmo tamanho */
+    const c = TCAM, Hs = handHeight(), cwS = Hs*CW/CH, deg = c.ar*180/Math.PI;
+    const avail = Math.min(CAM.vw - 40 - VB.R, cwS + (n - 1)*cwS*.72);
+    const spS = n > 1 ? Math.min(cwS*.72, (avail - cwS)/(n - 1)) : 0, fanZ = Math.min(2.5, 24/Math.max(n, 1));
+    const cxS = (CAM.vw - VB.R)/2, cyS = CAM.vh - VB.bottom - Hs/2 - 4;
+    me.forEach((id, i) => {
+      const k = i - (n - 1)/2, w = 30 + i*2;
+      const sy = cyS + k*k*.5 - (G.sel.has(id) ? Hs*.2 : 0);
+      const q = unproj(cxS + k*spS, sy, w, c);
+      const Zd = c.s*(q.v*Math.sin(c.ar) + w*Math.cos(c.ar)), kf = c.P/(c.P - Zd);
+      poses[id] = { x:q.u, y:q.v, z:w, rotate:0, rotateX:-deg, rotateY:0, rotateZ:k*fanZ, scale: Hs/(CH*c.s*kf), zone:'h0' };
+    });
+  } else {
   const sp = Math.min(74, (L.handMaxW - CW*L.handScale)/Math.max(n - 1, 1)), fan = Math.min(3, 30/Math.max(n, 1));
   const ar = a*Math.PI/180;
   me.forEach((id, i) => {
     const k = i - (n - 1)/2, d = k*k*1.1 - (G.sel.has(id) ? 34 : 0);
     poses[id] = { x: k*sp, y: L.handY + d*Math.cos(ar), z: L.handZ + i*1.4 - d*Math.sin(ar), rotate:0, rotateX:-a, rotateY:0, rotateZ:k*fan, scale:L.handScale, zone:'h0' };
   });
+  }
   const showSlot = myTurn() && (G.sel.size > 0 || !!G.drag);
   const tl = tableLayout(showSlot);
   for (const id in tl.poses){
@@ -814,6 +925,7 @@ function renderTrays(trays){
   }
 }
 function render(opt = {}){
+  syncView(opt.instant || opt.camInstant);
   const { poses, trays } = computePoses();
   applyPoses(poses, opt);
   renderTrays(trays);
@@ -965,11 +1077,14 @@ async function startTurn(){
   G.sel.clear(); G.hint = null;
   lookAt(i);
   if (i === 0){
+    if (G.autoZoom && !Z.on){ Z.on = true; Z.src = 'auto'; Z.mul = 1; Z.px = Z.py = 0; paintZoom(); }
+    if (Z.on && !store('mm-zoomtip')){ store('mm-zoomtip', true); setTimeout(() => toast('Na sua vez a mesa chega mais perto. Use a lupa, a pinça ou arraste a mesa para ajustar.', { ms:4200 }), 1400); }
     G.phase = 'play';
     G.snap = { hand:[...G.seats[0].hand], melds:turnSnap(), meldObjs:cloneMelds(G.melds) };
     render(); sfx('turn');
     await banner('Sua vez!');
   } else {
+    if (Z.src === 'auto'){ Z.on = false; Z.src = null; Z.mul = 1; Z.px = Z.py = 0; paintZoom(); }
     G.phase = 'bot'; G.snap = null;
     render();
     banner(`Vez ${CHARS[G.seats[i].char].art} ${CHARS[G.seats[i].char].name}`);
@@ -1030,6 +1145,7 @@ async function botTurn(i, tok){
 }
 function endRound(winner){
   G.phase = 'over'; G.sel.clear(); G.hint = null; G.snap = null; G.reveal = true;
+  if (Z.on){ Z.on = false; Z.src = null; Z.mul = 1; Z.px = Z.py = 0; paintZoom(); }
   const ch = G.seats[winner].char;
   G.wins[ch] = (G.wins[ch] || 0) + 1; store('mm-wins', G.wins);
   render();
@@ -1167,17 +1283,69 @@ stage.addEventListener('pointerdown', e => {
   const slot = e.target.closest('.newslot'), plus = e.target.closest('.plus');
   if (slot){ doMeld(); return; }
   if (plus){ const m = plus.closest('.tray').dataset.meld; if (myTurn() && G.sel.size) moveCards([...G.sel], m); return; }
+  PTR.set(e.pointerId, { x:e.clientX, y:e.clientY });
+  if (PTR.size === 2){ startPinch(); return; }
   const cardEl = e.target.closest('.card');
-  if (!cardEl) return;
+  if (!cardEl){
+    if (Z.on) PAN = { x:e.clientX, y:e.clientY, px:Z.px, py:Z.py, moved:false };
+    return;
+  }
   e.preventDefault();
   G.press = { id:cardEl.dataset.id, sx:e.clientX, sy:e.clientY };
 });
+/* gestos: pinça para zoom, arrastar a mesa para mover, roda do mouse */
+const PTR = new Map();
+let PAN = null;
+function startPinch(){
+  if (G.drag){ G.drag = null; }
+  G.press = null; PAN = null;
+  if (!Z.on){ Z.on = true; Z.src = 'manual'; Z.mul = 1; Z.px = Z.py = 0; paintZoom(); }
+  const [a, b] = [...PTR.values()];
+  Z.gesture = { d0: Math.hypot(a.x - b.x, a.y - b.y) || 1, mul0: Z.mul, mx: (a.x + b.x)/2, my: (a.y + b.y)/2, px0: Z.px, py0: Z.py, startedOn: Z.mul };
+  render();
+}
+function gestureView(){
+  if (camAnim){ camAnim.stop(); camAnim = null; }
+  render({ instant:true });
+}
+addEventListener('pointermove', e => {
+  if (PTR.has(e.pointerId)) PTR.set(e.pointerId, { x:e.clientX, y:e.clientY });
+  if (Z.gesture && PTR.size >= 2){
+    const [a, b] = [...PTR.values()], g = Z.gesture;
+    Z.mul = clamp(g.mul0*Math.hypot(a.x - b.x, a.y - b.y)/g.d0, .7, 3.2);
+    Z.px = g.px0 + (a.x + b.x)/2 - g.mx; Z.py = g.py0 + (a.y + b.y)/2 - g.my;
+    const keep = Z.mul; Z.mul = Math.max(1, Z.mul); gestureView(); Z.mul = keep;
+  } else if (PAN && !G.press){
+    if (!PAN.moved && Math.hypot(e.clientX - PAN.x, e.clientY - PAN.y) > 6) PAN.moved = true;
+    if (PAN.moved){ Z.px = PAN.px + e.clientX - PAN.x; Z.py = PAN.py + e.clientY - PAN.y; gestureView(); }
+  }
+});
+function endPointer(e){
+  PTR.delete(e.pointerId);
+  if (Z.gesture && PTR.size < 2){
+    const out = Z.mul < .85;
+    Z.gesture = null; Z.mul = Math.max(1, Z.mul);
+    if (out) zoomOff(); else render();
+  }
+  if (PTR.size === 0) PAN = null;
+}
+addEventListener('pointerup', endPointer);
+addEventListener('pointercancel', endPointer);
+stage.addEventListener('wheel', e => {
+  if (G.phase === 'idle') return;
+  e.preventDefault();
+  if (!Z.on){ if (e.deltaY < 0) zoomOn('manual'); return; }
+  if (e.deltaY > 0 && Z.mul <= 1.001){ zoomOff(); return; }
+  Z.mul = clamp(Z.mul*Math.exp(-e.deltaY*.0015), 1, 3.2);
+  gestureView();
+}, { passive:false });
+stage.addEventListener('dblclick', e => { if (!e.target.closest('.card') && G.phase !== 'idle') toggleZoom(); });
 addEventListener('pointermove', e => {
   if (G.press && !G.drag){
     if (Math.hypot(e.clientX - G.press.sx, e.clientY - G.press.sy) > 8 && canTouch(G.press.id)) startDrag(G.press.id);
   }
   if (G.drag) dragMove(e.clientX, e.clientY);
-  else if (!RM && e.pointerType === 'mouse'){ CAM.tox = CAM.vw/2 + CAM.dx + (e.clientX/CAM.vw - .5)*-60; CAM.toy = CAM.vh*.3 + (e.clientY/CAM.vh - .5)*-30; }
+  else if (!RM && e.pointerType === 'mouse' && !Z.on && !camAnim){ CAM.tox = CAM.vw/2 + CAM.dx + (e.clientX/CAM.vw - .5)*-60; CAM.toy = CAM.vh*.3 + (e.clientY/CAM.vh - .5)*-30; }
 });
 addEventListener('pointerup', e => {
   if (!G.press) return;
@@ -1203,7 +1371,7 @@ function startDrag(id){
   render();
 }
 function dragMove(x, y){
-  const p = unproj(x, y, LIFT), a = L.a;
+  const p = unproj(x, y, LIFT), a = CAM.ar*180/Math.PI;
   G.drag.ids.forEach((id, k) => {
     const pose = { x:p.u + k*26, y:p.v + k*3, z:LIFT + k*1.2, rotate:0, rotateX:-a*.35, rotateY:0, rotateZ:(k - (G.drag.ids.length - 1)/2)*3, scale:1.02, zone:'drag' };
     animate(C[id].el, { x:pose.x, y:pose.y, z:pose.z, rotate:0, rotateX:pose.rotateX, rotateY:0, rotateZ:pose.rotateZ, scale:pose.scale }, RM ? { duration:0 } : { type:'spring', stiffness:900, damping:48 });
@@ -1216,7 +1384,11 @@ function dragMove(x, y){
     if (over && trayEls[over]) trayEls[over].classList.add('over');
     G.drag.over = over;
   }
-  G.drag.toHand = q.v > L.H/2 - 10 && !t;
+  G.drag.toHand = y > handTopScreen() && !t;
+}
+function handTopScreen(){
+  const ys = G.seats[0].hand.filter(id => !(G.drag && G.drag.ids.includes(id))).map(id => C[id].el.querySelector('.front').getBoundingClientRect().top);
+  return (ys.length ? Math.min(...ys) : CAM.vh - 150) - 12;
 }
 function drop(x, y){
   const d = G.drag; G.drag = null;
@@ -1242,7 +1414,7 @@ stage.addEventListener('pointerout', e => {
 });
 /* paralaxe suave da câmera */
 (function loop(){
-  if (!G.drag){
+  if (!G.drag && !camAnim){
     const nx = CAM.ox + (CAM.tox - CAM.ox)*.06, ny = CAM.oy + (CAM.toy - CAM.oy)*.06;
     if (Math.abs(nx - CAM.ox) > .05 || Math.abs(ny - CAM.oy) > .05){ CAM.ox = nx; CAM.oy = ny; stage.style.perspectiveOrigin = `${nx}px ${ny}px`; }
   }
@@ -1251,6 +1423,7 @@ stage.addEventListener('pointerout', e => {
 
 /* ================= botões e teclado ================= */
 $('#btnHint').onclick = doHint;
+$('#btnZoom').onclick = toggleZoom;
 $('#btnSort').onclick = doSort;
 $('#btnUndo').onclick = () => undoTurn();
 $('#btnMeld').onclick = doMeld;
@@ -1261,7 +1434,7 @@ addEventListener('keydown', e => {
   if (!$('#rules').hidden){ if (e.key === 'Escape') closeRules(); return; }
   if (e.target.closest && e.target.closest('button')) return;
   const k = e.key.toLowerCase();
-  if (k === 'd') doHint(); else if (k === 'o') doSort(); else if (k === 'z') undoTurn(); else if (k === 'b') doMeld();
+  if (k === 'd') doHint(); else if (k === 'x' || k === '+' || k === '-') toggleZoom(); else if (k === 'o') doSort(); else if (k === 'z') undoTurn(); else if (k === 'b') doMeld();
   else if (k === 'c') doDraw(); else if (k === 'enter') doEnd(); else if (k === 'escape'){ G.sel.clear(); render(); }
 });
 function openRules(){ const r = $('#rules'); r.hidden = false; animate(r.firstElementChild, { opacity:[0, 1], y:[30, 0], scale:[.96, 1] }, RM ? { duration:.01 } : { type:'spring', stiffness:300, damping:26 }); }
