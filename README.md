@@ -34,3 +34,7 @@ Alguns arquivos em `assets/` não são usados pelo `index.html` atual e ficaram
 como reserva: `hero.mp4`, `hero-poster.jpg`, `logo.png`, `mark.png` e as
 capturas `agendas`, `insights`, `treino-conversa` e `treino-nota`. Somam cerca
 de 1,4 MB e podem ser apagados sem afetar o site.
+
+## Mexe-Mexe (jogo)
+
+`mexe-mexe/index.html` é um jogo de cartas independente do site: mexe-mexe para 4 jogadores (você e 3 bots) numa mesa em 3D, feito em CSS 3D com a biblioteca [Motion](https://motion.dev) via CDN. Abra o arquivo no navegador ou acesse `/mexe-mexe/` no site publicado.
