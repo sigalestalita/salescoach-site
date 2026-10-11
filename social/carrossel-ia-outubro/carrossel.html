@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Carrossel · IA em outubro</title>
+<link rel="stylesheet" href="fonts.css">
+<style>
+/* Carrossel 4:5 (1080×1350), identidade escura da NEXA: grafite, osso e lima.
+   Cada <section class="s"> vira uma imagem. Gerar: node render.mjs */
+:root { --bg: #08090a; --bg2: #111310; --card: #15170f; --txt: #f3f4ef; --dim: #a6a99d; --dim2: #6f7368; --lima: #d4f969; --linha: rgba(243,244,239,.1); }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: #222; font-family: 'DM Sans', sans-serif; color: var(--txt); -webkit-font-smoothing: antialiased; }
+.s { position: relative; width: 1080px; height: 1350px; overflow: hidden; background: var(--bg); margin-bottom: 20px; }
+.s::before { content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: radial-gradient(rgba(243,244,239,.06) 1.3px, transparent 1.7px) 0 0 / 32px 32px;
+  -webkit-mask: radial-gradient(80% 60% at 50% 40%, transparent 30%, #000 100%); }
+.brilho { position: absolute; width: 900px; height: 900px; border-radius: 50%; background: radial-gradient(closest-side, rgba(212,249,105,.16), transparent); pointer-events: none; }
+.mono { font-family: 'JetBrains Mono', monospace; letter-spacing: .16em; text-transform: uppercase; }
+.disp { font-family: 'Space Grotesk', sans-serif; font-weight: 300; letter-spacing: -.045em; }
+.lima { color: var(--lima); }
+
+/* Moldura comum */
+.topo { position: absolute; left: 72px; right: 72px; top: 64px; display: flex; justify-content: space-between; align-items: center; font-size: 17px; color: var(--dim); }
+.topo .nx { display: flex; align-items: center; gap: 14px; } .topo .nx img { height: 18px; }
+.topo b { font-weight: 400; color: var(--txt); }
+.pe { position: absolute; left: 72px; right: 72px; bottom: 60px; display: flex; justify-content: space-between; align-items: center; font-size: 16px; color: var(--dim2); }
+.pe .arr { display: flex; align-items: center; gap: 10px; color: var(--lima); }
+.pe .arr svg { width: 26px; height: 26px; stroke: currentColor; stroke-width: 1.8; fill: none; }
+.pe .barras { display: flex; gap: 6px; } .pe .barras i { width: 22px; height: 3px; border-radius: 2px; background: rgba(243,244,239,.15); } .pe .barras i.on { background: var(--lima); }
+
+/* Capa */
+.capa h1 { position: absolute; left: 72px; right: 72px; top: 300px; font-size: 136px; line-height: .95; }
+.capa h1 em { font-style: normal; color: var(--lima); font-weight: 400; }
+.capa .sub { position: absolute; left: 72px; top: 650px; font-size: 32px; line-height: 1.35; color: var(--dim); max-width: 760px; }
+.capa .sub b { color: var(--txt); font-weight: 500; }
+.capa .selo { position: absolute; left: 72px; top: 220px; font-size: 18px; padding: 10px 18px; border-radius: 99px; border: 1px solid rgba(212,249,105,.4); color: var(--lima); }
+.capa .temas { position: absolute; left: 72px; right: 72px; top: 830px; display: flex; flex-wrap: wrap; gap: 12px; }
+.capa .temas span { font-size: 22px; padding: 12px 20px; border-radius: 99px; background: var(--card); box-shadow: inset 0 0 0 1px var(--linha); color: var(--txt); }
+
+/* Notícia */
+.tag { position: absolute; left: 72px; top: 170px; display: flex; align-items: center; gap: 14px; font-size: 17px; color: var(--lima); }
+.tag i { font-style: normal; display: grid; place-items: center; width: 44px; height: 44px; border-radius: 12px; background: var(--lima); color: var(--bg); font-family: 'Space Grotesk'; font-weight: 500; font-size: 22px; letter-spacing: 0; }
+.not h2 { position: absolute; left: 72px; right: 72px; top: 240px; font-size: 84px; line-height: 1; }
+.not h2 em { font-style: normal; color: var(--lima); font-weight: 400; }
+.txt { position: absolute; left: 72px; right: 72px; font-size: 29px; line-height: 1.45; color: #d9dbd2; }
+.txt b { color: var(--txt); font-weight: 500; }
+.pratica { position: absolute; left: 72px; right: 72px; bottom: 140px; border-radius: 26px; padding: 30px 34px; background: var(--lima); color: var(--bg); }
+.pratica .k { font-size: 15px; letter-spacing: .16em; }
+.pratica p { font-size: 28px; line-height: 1.38; margin-top: 10px; letter-spacing: -.01em; }
+.fonte { position: absolute; right: 72px; bottom: 104px; font-size: 14px; color: var(--dim2); }
+
+/* Ilustrações */
+.ui { position: absolute; border-radius: 26px; background: var(--card); box-shadow: inset 0 0 0 1px var(--linha), 0 40px 80px -40px rgba(0,0,0,.8); }
+.chatq { font-size: 21px; padding: 14px 18px; border-radius: 18px 18px 4px 18px; background: #262a20; justify-self: end; }
+.calc { margin-top: 14px; border-radius: 18px; background: #0d0f0b; box-shadow: inset 0 0 0 1px var(--linha); padding: 18px; }
+.calc .lin { display: flex; justify-content: space-between; font-size: 19px; color: var(--dim); padding: 6px 0; }
+.calc .lin b { color: var(--txt); font-weight: 400; font-family: 'Space Grotesk'; }
+.calc .tot { display: flex; justify-content: space-between; align-items: center; margin-top: 10px; padding-top: 12px; border-top: 1px solid var(--linha); }
+.calc .tot b { font-family: 'Space Grotesk'; font-weight: 400; font-size: 44px; color: var(--lima); letter-spacing: -.03em; }
+.calc .bt { display: flex; gap: 8px; margin-top: 12px; } .calc .bt span { flex: 1; text-align: center; font-size: 17px; padding: 10px 0; border-radius: 10px; background: #1d2018; }
+.calc .bt span.on { background: var(--lima); color: var(--bg); }
+.dossie .pessoa { display: flex; align-items: center; gap: 14px; }
+.dossie .av { width: 54px; height: 54px; border-radius: 50%; background: #2a2e24; display: grid; place-items: center; font-family: 'Space Grotesk'; font-size: 22px; color: var(--dim); }
+.dossie .campo { display: flex; justify-content: space-between; font-size: 19px; padding: 10px 0; border-bottom: 1px solid var(--linha); color: var(--dim); }
+.dossie .campo b { color: var(--txt); font-weight: 400; }
+.dossie .tempo { display: inline-flex; align-items: center; gap: 8px; font-size: 15px; color: #ff9a7a; margin-top: 12px; }
+.dossie .tempo i { width: 8px; height: 8px; border-radius: 50%; background: #ff7a59; box-shadow: 0 0 12px #ff7a59; }
+.preco { display: flex; align-items: baseline; gap: 4px; font-family: 'Space Grotesk'; letter-spacing: -.06em; color: var(--lima); }
+.chips { display: flex; flex-wrap: wrap; gap: 10px; }
+.chips span { font-size: 20px; padding: 10px 16px; border-radius: 12px; background: #1d2018; box-shadow: inset 0 0 0 1px var(--linha); }
+.chips span.ok { background: rgba(212,249,105,.12); color: var(--lima); box-shadow: inset 0 0 0 1px rgba(212,249,105,.35); }
+
+/* Lado B */
+.ladob { position: absolute; left: 72px; right: 72px; top: 440px; display: grid; gap: 18px; }
+.ladob .c { border-radius: 24px; background: var(--card); box-shadow: inset 0 0 0 1px var(--linha); padding: 34px 34px; }
+.ladob .c .k { font-size: 14px; color: #ff9a7a; }
+.ladob .c h4 { font-family: 'Space Grotesk'; font-weight: 400; font-size: 34px; letter-spacing: -.03em; line-height: 1.1; margin-top: 10px; }
+.ladob .c p { font-size: 25px; line-height: 1.42; color: var(--dim); margin-top: 10px; }
+
+/* Fecho */
+.fim h2 { position: absolute; left: 72px; right: 72px; top: 230px; font-size: 96px; line-height: 1; }
+.fim h2 em { font-style: normal; color: var(--lima); font-weight: 400; }
+.fim .resumo { position: absolute; left: 72px; right: 72px; top: 650px; display: grid; gap: 0; }
+.fim .resumo div { display: grid; grid-template-columns: 60px 1fr; gap: 16px; padding: 22px 0; border-bottom: 1px solid var(--linha); font-size: 28px; line-height: 1.35; }
+.fim .resumo div span { font-family: 'JetBrains Mono'; font-size: 16px; color: var(--lima); padding-top: 8px; }
+.fim .cta { position: absolute; left: 72px; right: 72px; bottom: 140px; display: flex; align-items: center; justify-content: space-between; gap: 20px; border-radius: 26px; padding: 30px 34px; background: var(--card); box-shadow: inset 0 0 0 1px rgba(212,249,105,.35); }
+.fim .cta p { font-size: 27px; line-height: 1.35; } .fim .cta p b { color: var(--lima); font-weight: 500; }
+.fim .cta .ic { display: flex; gap: 12px; }
+.fim .cta .ic i { width: 58px; height: 58px; border-radius: 16px; background: #1d2018; display: grid; place-items: center; }
+.fim .cta .ic svg { width: 28px; height: 28px; stroke: var(--lima); stroke-width: 1.8; fill: none; }
+</style>
+</head>
+<body>
+
+<!-- 1 · Capa -->
+<section class="s capa">
+  <div class="brilho" style="right:-300px;top:-300px"></div>
+  <div class="topo"><span class="nx"><img src="img/nexa-branco.svg" alt="NEXA"></span><span>IA sem tecniquês</span></div>
+  <div class="selo mono">Outubro · 1ª quinzena</div>
+  <h1 class="disp">O que rolou na IA <em>em outubro</em></h1>
+  <p class="sub">As notícias que importam, <b>explicadas para quem não é da área</b>, e o que cada uma muda no seu dia a dia.</p>
+  <div class="temas"><span>GPT-6</span><span>Seus dados</span><span>IA que faz matemática</span><span>IA mais barata</span><span>Agentes</span><span>O lado B</span></div>
+  <div class="pe"><span>@nexatech_ia</span><span class="arr">Arrasta para o lado<svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></div>
+</section>
+
+<!-- 2 · GPT-6 -->
+<section class="s not">
+  <div class="brilho" style="right:-420px;top:380px"></div>
+  <div class="topo"><span class="nx"><img src="img/nexa-branco.svg" alt="NEXA"></span><span><b>02</b> / 08</span></div>
+  <div class="tag mono"><i>1</i>OpenAI · 7 de outubro</div>
+  <h2 class="disp">O ChatGPT ganhou o <em>GPT-6</em></h2>
+  <p class="txt" style="top:440px;width:520px">A resposta deixou de ser só texto. Agora ela pode vir com <b>botões, calculadoras e gráficos</b> que você mexe ali mesmo. E chegou também para quem usa a <b>versão grátis</b>.</p>
+  <div class="ui" style="left:640px;top:430px;width:368px;padding:22px;display:grid">
+    <div class="chatq">Divide a conta do jantar pra 4?</div>
+    <div class="calc"><div class="lin"><span>Total</span><b>R$ 348,00</b></div><div class="lin"><span>Gorjeta</span><b>10%</b></div>
+      <div class="bt"><span>3</span><span class="on">4</span><span>5</span></div>
+      <div class="tot"><span style="font-size:17px;color:var(--dim)">cada um</span><b>R$ 95,70</b></div></div>
+  </div>
+  <div class="pratica"><div class="k mono">Na prática</div><p>Peça coisas que você usaria: “compara esses 3 planos de celular” ou “monta um simulador de financiamento”. A ferramenta já vem pronta na resposta.</p></div>
+  <div class="pe"><span>Fonte: OpenAI</span><span class="barras"><i></i><i class="on"></i><i></i><i></i><i></i><i></i><i></i><i></i></span></div>
+</section>
+
+<!-- 3 · Meta Muse -->
+<section class="s not">
+  <div class="brilho" style="left:-420px;top:500px;background:radial-gradient(closest-side,rgba(255,122,89,.12),transparent)"></div>
+  <div class="topo"><span class="nx"><img src="img/nexa-branco.svg" alt="NEXA"></span><span><b>03</b> / 08</span></div>
+  <div class="tag mono"><i>2</i>Meta · seus dados</div>
+  <h2 class="disp">O assistente da Meta <em>anotava tudo</em> sobre seus contatos</h2>
+  <p class="txt" style="top:560px;width:540px">Instruções internas do <b>Muse</b>, assistente da Meta, mostram que ele monta uma ficha de cada pessoa da sua vida, <b>atualizada de hora em hora</b>. Inclui quem nunca usou o app. A Meta diz que os dados não vão para anúncios.</p>
+  <div class="ui dossie" style="left:660px;top:560px;width:350px;padding:24px">
+    <div class="pessoa"><div class="av">M</div><div><div style="font-size:21px">Mariana</div><div style="font-size:16px;color:var(--dim)">irmã</div></div></div>
+    <div style="margin-top:14px"><div class="campo"><span>Aniversário</span><b>12/03</b></div><div class="campo"><span>Assuntos</span><b>mudança, trabalho</b></div><div class="campo"><span>Relação</span><b>tensa</b></div></div>
+    <div class="tempo"><i></i>atualizado há 12 min</div>
+  </div>
+  <div class="pratica"><div class="k mono">Na prática</div><p>Antes de dar acesso às suas mensagens e e-mails a um assistente de IA, veja o que ele guarda e como apagar.</p></div>
+  <div class="pe"><span>Fontes: TIME, WIRED, Malwarebytes</span><span class="barras"><i></i><i></i><i class="on"></i><i></i><i></i><i></i><i></i><i></i></span></div>
+</section>
+
+<!-- 4 · Matemática -->
+<section class="s not">
+  <div class="brilho" style="right:-380px;top:-200px"></div>
+  <div class="topo"><span class="nx"><img src="img/nexa-branco.svg" alt="NEXA"></span><span><b>04</b> / 08</span></div>
+  <div class="tag mono"><i>3</i>OpenAI · ciência</div>
+  <h2 class="disp">A IA começou a <em>resolver problemas</em> de matemática em aberto</h2>
+  <p class="txt" style="top:580px">A OpenAI publicou <b>centenas de provas matemáticas</b> feitas por um modelo que ainda nem foi lançado. Uma delas pode resolver um problema famoso, em aberto <b>desde 2002</b>. Os matemáticos ainda estão conferindo: nem eles entenderam tudo ainda.</p>
+  <div style="position:absolute;left:72px;right:72px;top:830px;display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:26px">
+    <div><div class="disp" style="font-size:88px;line-height:1;color:var(--dim)">2002</div><div style="font-size:20px;color:var(--dim2);margin-top:8px">o problema é proposto</div></div>
+    <div style="height:2px;background:repeating-linear-gradient(90deg,rgba(212,249,105,.6) 0 8px,transparent 8px 16px)"></div>
+    <div style="text-align:right"><div class="disp lima" style="font-size:88px;line-height:1">2026</div><div style="font-size:20px;color:var(--dim2);margin-top:8px">a IA propõe a prova</div></div>
+  </div>
+  <div class="pratica"><div class="k mono">Na prática</div><p>Não muda seu dia agora, mas mostra para onde vai: IA ajudando a descobrir coisas novas, não só a repetir o que já existe.</p></div>
+  <div class="pe"><span>Fontes: OpenAI, Scott Aaronson</span><span class="barras"><i></i><i></i><i></i><i class="on"></i><i></i><i></i><i></i><i></i></span></div>
+</section>
+
+<!-- 5 · Mais barata -->
+<section class="s not">
+  <div class="brilho" style="left:-300px;top:300px"></div>
+  <div class="topo"><span class="nx"><img src="img/nexa-branco.svg" alt="NEXA"></span><span><b>05</b> / 08</span></div>
+  <div class="tag mono"><i>4</i>Anthropic e Google · preços</div>
+  <h2 class="disp">A IA ficou <em>bem mais barata</em></h2>
+  <div class="preco" style="position:absolute;left:66px;top:400px"><span style="font-size:250px;font-weight:300;line-height:1">−75%</span></div>
+  <p class="txt" style="top:690px">O <b>Claude Haiku 5.5</b>, da Anthropic, chegou custando cerca de 75% menos que a versão anterior. E o Google <b>cortou pela metade</b> o preço de gerar imagens no Gemini.</p>
+  <div class="pratica"><div class="k mono">Na prática</div><p>Quando a IA fica mais barata para as empresas, os apps que você usa ganham mais recursos com IA, e mais coisa fica de graça.</p></div>
+  <div class="pe"><span>Fontes: Anthropic, Google</span><span class="barras"><i></i><i></i><i></i><i></i><i class="on"></i><i></i><i></i><i></i></span></div>
+</section>
+
+<!-- 6 · Agentes -->
+<section class="s not">
+  <div class="brilho" style="right:-400px;top:420px"></div>
+  <div class="topo"><span class="nx"><img src="img/nexa-branco.svg" alt="NEXA"></span><span><b>06</b> / 08</span></div>
+  <div class="tag mono"><i>5</i>Google, Meta e Sierra · agentes</div>
+  <h2 class="disp">A IA está deixando de só responder e <em>começando a fazer</em></h2>
+  <p class="txt" style="top:580px">O Google lançou um <b>agente do Gemini para o trabalho</b>, que cria documentos e executa tarefas sozinho. E Meta e Sierra criaram um padrão para o seu agente de IA <b>se identificar em lojas</b> como Walmart e Shopify.</p>
+  <div class="chips" style="position:absolute;left:72px;right:72px;top:830px"><span class="ok">✓ agendou a reunião</span><span class="ok">✓ montou a planilha</span><span>… comprando o presente</span></div>
+  <div class="pratica"><div class="k mono">Na prática</div><p>Em breve você vai pedir “compra isso” ou “marca aquilo” e a IA faz em seu nome. Vai valer decidir o que ela pode fazer sem perguntar.</p></div>
+  <div class="pe"><span>Fontes: Google, TheNextWeb</span><span class="barras"><i></i><i></i><i></i><i></i><i></i><i class="on"></i><i></i><i></i></span></div>
+</section>
+
+<!-- 7 · Lado B -->
+<section class="s not">
+  <div class="brilho" style="left:-400px;top:-200px;background:radial-gradient(closest-side,rgba(255,122,89,.12),transparent)"></div>
+  <div class="topo"><span class="nx"><img src="img/nexa-branco.svg" alt="NEXA"></span><span><b>07</b> / 08</span></div>
+  <div class="tag mono" style="color:#ff9a7a"><i style="background:#ff9a7a">6</i>O lado B</div>
+  <h2 class="disp">Nem tudo foi <em>boa notícia</em></h2>
+  <div class="ladob">
+    <div class="c"><div class="k mono">Wikipédia × OpenAI</div><h4>Robôs da OpenAI sobrecarregaram a Wikipédia</h4><p>A fundação que mantém a Wikipédia diz que agentes da OpenAI fizeram milhões de acessos automáticos e edições sem permissão. A OpenAI diz que está investigando.</p></div>
+    <div class="c"><div class="k mono">Adolescentes</div><h4>ChatGPT para adolescentes foi reprovado</h4><p>A Common Sense Media, referência em segurança digital para famílias, classificou a versão do ChatGPT para adolescentes como de “risco inaceitável”.</p></div>
+  </div>
+  <div class="pe"><span>Fontes: Wikimedia, Common Sense Media</span><span class="barras"><i></i><i></i><i></i><i></i><i></i><i></i><i class="on"></i><i></i></span></div>
+</section>
+
+<!-- 8 · Fecho -->
+<section class="s fim">
+  <div class="brilho" style="right:-300px;bottom:-400px"></div>
+  <div class="topo"><span class="nx"><img src="img/nexa-branco.svg" alt="NEXA"></span><span><b>08</b> / 08</span></div>
+  <h2 class="disp">Resumo da quinzena <em>em uma linha:</em></h2>
+  <p class="txt" style="top:480px;font-size:34px;color:var(--txt)">A IA ficou mais útil, mais barata e mais presente. A pergunta agora é <span class="lima">quem cuida dos seus dados</span>.</p>
+  <div class="resumo">
+    <div><span>01</span>Respostas que viram ferramentas</div>
+    <div><span>02</span>Assistentes que sabem demais</div>
+    <div><span>03</span>Agentes que fazem por você</div>
+  </div>
+  <div class="cta"><p>Salve para consultar e mande para quem vive perguntando <b>“o que é esse tal de GPT-6?”</b></p>
+    <div class="ic"><i><svg viewBox="0 0 24 24"><path d="M6 3h12v18l-6-4-6 4z"/></svg></i><i><svg viewBox="0 0 24 24"><path d="M22 3 11 14M22 3l-7 19-4-8-8-4z"/></svg></i></div></div>
+  <div class="pe"><span>@nexatech_ia · IA acelera. Pessoas dão direção.</span><span class="barras"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i class="on"></i></span></div>
+</section>
+
+</body>
+</html>
