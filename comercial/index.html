@@ -156,6 +156,16 @@ td{padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:middle}
 tr:last-child td{border-bottom:0}
 td.n,th.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
 tbody tr.click{cursor:pointer}
+.inb-det td{background:var(--surface-2)}
+.inb-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;padding:6px 2px}
+.inb-grid h3{font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--soft);margin:0 0 8px}
+.inb-grid dl{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;margin:0;font-size:13px}
+.inb-grid dt{color:var(--soft)} .inb-grid dd{margin:0;word-break:break-all}
+.inb-barras{display:grid;gap:8px}
+.inb-barras div{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 10px;font-size:13px;align-items:center}
+.inb-barras i{grid-column:1/-1;height:6px;border-radius:99px;background:var(--surface-2);overflow:hidden;display:block}
+.inb-barras i b{display:block;height:100%;background:var(--accent);border-radius:99px}
+@media (max-width:860px){.inb-grid{grid-template-columns:1fr}}
 tbody tr.click:hover td{background:var(--surface-2)}
 td .inp{height:32px;width:100%}
 td .inp.small{width:84px;text-align:right}
@@ -249,6 +259,7 @@ td .inp.small{width:84px;text-align:right}
       <a href="#playbook" data-v="playbook"><span class="lbl">Playbook</span></a>
       <a href="#cadencia" data-v="cadencia"><span class="lbl">Cadência</span><span class="badge" id="bCad" hidden></span></a>
       <a href="#pipeline" data-v="pipeline"><span class="lbl">Pipeline</span><span class="badge bad" id="bPipe" hidden></span></a>
+      <a href="#inbound" data-v="inbound"><span class="lbl">Inbound</span><span class="badge" id="bInb" hidden></span></a>
       <a href="#contas" data-v="contas"><span class="lbl">Contas-alvo</span></a>
       <a href="#listas" data-v="listas"><span class="lbl">Listas</span></a>
       <a href="#semana" data-v="semana"><span class="lbl">Semana</span></a>
@@ -358,7 +369,7 @@ const deep = (a, b) => { const o = Array.isArray(a) ? [...a] : { ...a }; for (co
 function toast(msg) { const t = $('#toast'); t.textContent = msg; t.hidden = false; clearTimeout(toast.t); toast.t = setTimeout(() => t.hidden = true, 2200); }
 
 /* ───────── estado ───────── */
-const S = { cfg: deep(DEFAULTS, {}), cfgExists: false, opps: [], contas: [], semanas: {}, tarefas: [], recursos: [], playbook: null, loaded: 0, ro: false, db: null, dl: null, noDb: false, showClosed: false, filtroProd: '', busca: '', contaFiltro: 'abertas', contaPrio: '', openMsg: null, openNota: null, prospects: [],
+const S = { inb: { rows: [], carregado: false, busy: false, erro: '', periodo: '30', origem: '', canal: '', aberto: null }, cfg: deep(DEFAULTS, {}), cfgExists: false, opps: [], contas: [], semanas: {}, tarefas: [], recursos: [], playbook: null, loaded: 0, ro: false, db: null, dl: null, noDb: false, showClosed: false, filtroProd: '', busca: '', contaFiltro: 'abertas', contaPrio: '', openMsg: null, openNota: null, prospects: [],
   L: { res: null, pagina: 0, total: 0, sel: new Set(), f: { cargos: 'Diretor Comercial, Gerente Comercial, Head de Vendas', estados: '', setores: [], subsetores: [], tamanhos: [], senioridades: [], departamentos: [], porEmpresa: 2, comEmail: true }, uso: null, hist: null, cat: {}, busy: '', lista: '', ver: '', confirma: '', verHist: false } };
 let view = (location.hash || '#painel').slice(1);
 
@@ -491,6 +502,8 @@ function render() {
   $$('#tabs a').forEach(a => a.classList.toggle('on', a.dataset.v === view));
   const nt = toquesHoje().length, na = abertas().filter(alerta).filter(o => alerta(o).cls === 'bad').length;
   $('#bCad').hidden = !nt; $('#bCad').textContent = nt; $('#bPipe').hidden = !na; $('#bPipe').textContent = na;
+  const ni = inbNovos().length; $('#bInb').hidden = !ni; $('#bInb').textContent = ni;
+  if (view === 'inbound' && sb && S.db && !S.inb.carregado && !S.inb.busy) carregarInbound();
   let banner = '';
   if (S.noDb) banner = `<p class="banner">Não foi possível carregar os dados agora. O sistema está tentando de novo sozinho; se continuar, confira a internet.</p>`;
   else if (S.ro) banner = `<p class="banner">Você está em modo leitura. Para editar, peça a um administrador o papel de vendas ou admin.</p>`;
@@ -649,6 +662,55 @@ const VIEWS = {
     ${!S.opps.length ? `<div class="empty"><b>Nenhuma oportunidade ainda.</b><span>Quando uma conta responder na cadência, use “Respondeu” para trazê-la para cá. Ou crie uma direto.</span></div>` : ''}
     <div class="kan-wrap"><div class="kan">${cols.map(e => { const cs = os.filter(o => o.etapa === e); const tot = cs.reduce((s, o) => s + valores(o).ano, 0);
       return `<section class="col" data-drop="${e}"><header><b>${stg(e)}</b><span>${cs.length} · ${brl(tot)}</span></header>${cs.sort((a, b) => (a.dataProximo || '9').localeCompare(b.dataProximo || '9')).map(card).join('')}</section>`; }).join('')}</div></div>`;
+  },
+
+  inbound() {
+    const I = S.inb, q = S.busca.toLowerCase(), desde = I.periodo ? Date.now() - (+I.periodo) * 864e5 : 0;
+    const uniq = a => [...new Set(a.filter(Boolean))].sort();
+    let ls = I.rows.filter(l => (!desde || Date.parse(l.criado_em) >= desde) && (!I.origem || l.origem === I.origem) && (!I.canal || l.canal === I.canal));
+    if (q) ls = ls.filter(l => `${l.nome} ${l.email} ${l.empresa} ${l.whatsapp}`.toLowerCase().includes(q));
+    const st = l => { const c = inbConta(l); return c ? (c.status || 'fila') : ''; };
+    const pago = l => /Ads$/.test(l.canal || '');
+    const conta = (arr, k) => { const m = {}; arr.forEach(l => { const v = l[k] || '—'; m[v] = (m[v] || 0) + 1; }); return Object.entries(m).sort((a, b) => b[1] - a[1]); };
+    const barras = (arr, k) => { const e = conta(arr, k), max = e.length ? e[0][1] : 1; return e.length ? `<div class="inb-barras">${e.map(([n, v]) => `<div><span>${esc(n)}</span><b class="mono">${v}</b><i><b style="width:${Math.round(v / max * 100)}%"></b></i></div>`).join('')}</div>` : '<p class="mute">Sem leads no período.</p>'; };
+    const dt = d => new Date(d).toLocaleString('pt-BR', { day: '2-digit', month: '2-digit', year: '2-digit', hour: '2-digit', minute: '2-digit' });
+    const wa = n => { const d = String(n || '').replace(/\D/g, ''); return d.length >= 10 ? `https://wa.me/${d.length <= 11 ? '55' + d : d}` : ''; };
+    const fone = n => { const d = String(n || '').replace(/\D/g, '').replace(/^55(?=\d{10,11}$)/, ''); return d.length >= 10 ? `(${d.slice(0, 2)}) ${d.slice(2, -4)}-${d.slice(-4)}` : n || ''; };
+    const lista = o => { const e = Object.entries(o || {}).filter(([k, v]) => v && k !== 'ts'); return e.length ? `<dl>${e.map(([k, v]) => `<dt>${esc(k)}</dt><dd>${esc(v)}</dd>`).join('')}</dl>` : '<p class="mute">Sem dados.</p>'; };
+    const detalhe = l => { const r = l.rastreio || {}, u = r.ultimo || l.utm || {}, p = r.primeiro || {};
+      return `<tr class="inb-det"><td colspan="8"><div class="inb-grid">
+        <div><h3>Último toque · ${esc(l.canal || '—')}</h3>${lista(u)}${u.ts ? `<p class="mute" style="font-size:12px;margin-top:6px">${dt(u.ts)}</p>` : ''}</div>
+        <div><h3>Primeiro toque · ${esc(r.canal_primeiro || '—')}</h3>${lista(p)}${p.ts ? `<p class="mute" style="font-size:12px;margin-top:6px">${dt(p.ts)}</p>` : ''}</div>
+        <div><h3>Conversão</h3>${lista({ página: l.pagina || r.pagina, título: r.titulo, interesse: l.interesse, dispositivo: r.dispositivo, tela: r.tela, visitas: r.visitas, 'segundos na página': r.segundos_na_pagina, idioma: r.idioma, país: r.pais, fbc: r.fbc, fbp: r.fbp, ga: r.ga, event_id: r.event_id })}</div>
+      </div></td></tr>`; };
+    const linhas = ls.map(l => { const c = inbConta(l), s2 = st(l), w = wa(l.whatsapp), u = (l.rastreio && l.rastreio.ultimo) || l.utm || {};
+      return `<tr class="click" data-inb="${l.id}"><td class="mono" style="white-space:nowrap">${dt(l.criado_em)}</td>
+        <td><b style="font-weight:500">${esc(l.nome)}</b>${l.cargo ? `<div class="mute" style="font-size:12px">${esc(l.cargo)}</div>` : ''}</td>
+        <td>${esc(l.empresa || '—')}<div class="mute" style="font-size:12px">${[l.funcionarios && l.funcionarios + ' func.', l.vendedores && l.vendedores + ' vend.', !l.vendedores && l.tamanho_time && 'time ' + l.tamanho_time].filter(Boolean).map(esc).join(' · ')}</div></td>
+        <td style="white-space:nowrap">${w ? `<a href="${w}" target="_blank" rel="noopener">${esc(fone(l.whatsapp))}</a>` : esc(l.whatsapp || '')}<div style="font-size:12px"><a class="mute" href="mailto:${esc(l.email)}">${esc(l.email)}</a></div></td>
+        <td>${esc(l.origem || l.material || '—')}${l.interesse ? `<div class="mute" style="font-size:12px">${esc(l.interesse)}</div>` : ''}</td>
+        <td><span class="chip ${pago(l) ? 'acc' : ''}">${esc(l.canal || '—')}</span>${u.utm_campaign ? `<div class="mute" style="font-size:12px">${esc(u.utm_campaign)}${u.utm_content ? ' · ' + esc(u.utm_content) : ''}</div>` : ''}</td>
+        <td>${c ? `${CSTATUS[s2] || esc(s2)}` : '<span class="mute">—</span>'}</td>
+        <td class="n">${c ? `<button class="btn sm" data-open-conta="${c.id}">Abrir conta</button>` : ''}</td></tr>${I.aberto === String(l.id) ? detalhe(l) : ''}`; }).join('');
+    const nPago = ls.filter(pago).length, nFila = ls.filter(l => st(l) === 'fila').length, nOpp = ls.filter(l => st(l) === 'oportunidade').length;
+    return `
+    <div class="top"><div><h1>Inbound</h1><p class="sub">Leads que chegaram pelos formulários do site e das landing pages, com a origem de cada conversão. Cada lead também vira uma conta em Contas-alvo, na fila. Clique numa linha para ver o rastreio completo.</p></div>
+      <div class="tools">
+        <input class="inp" id="busca" type="search" placeholder="Buscar" value="${esc(S.busca)}" aria-label="Buscar">
+        <select class="inp" id="inbPeriodo" aria-label="Período">${[['7', 'Últimos 7 dias'], ['30', 'Últimos 30 dias'], ['90', 'Últimos 90 dias'], ['', 'Tudo']].map(([v, n]) => `<option value="${v}" ${I.periodo === v ? 'selected' : ''}>${n}</option>`).join('')}</select>
+        <select class="inp" id="inbOrigem" aria-label="Origem"><option value="">Todas as origens</option>${uniq(I.rows.map(l => l.origem)).map(o => `<option ${o === I.origem ? 'selected' : ''}>${esc(o)}</option>`).join('')}</select>
+        <select class="inp" id="inbCanal" aria-label="Canal"><option value="">Todos os canais</option>${uniq(I.rows.map(l => l.canal)).map(o => `<option ${o === I.canal ? 'selected' : ''}>${esc(o)}</option>`).join('')}</select>
+        <button class="btn" id="inbAtualizar" ${I.busy ? 'disabled' : ''}>${I.busy ? 'Atualizando…' : 'Atualizar'}</button>
+        ${S.dl ? `<button class="btn" id="expInbound">Exportar CSV</button>` : ''}
+      </div></div>
+    ${I.erro ? `<p class="banner">${esc(I.erro)}</p>` : ''}
+    <div class="kpis"><div><b>${ls.length}</b><span>Leads no período</span></div><div><b>${nFila}</b><span>Na fila, sem abordagem</span></div><div><b>${nOpp}</b><span>Viraram oportunidade</span></div><div><b>${ls.length ? Math.round(nPago / ls.length * 100) : 0}%</b><span>Vieram de anúncios</span></div></div>
+    <div class="grid2" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px">
+      <section class="card"><header><h2>Por canal</h2></header>${barras(ls, 'canal')}</section>
+      <section class="card"><header><h2>Por origem</h2></header>${barras(ls, 'origem')}</section>
+    </div>
+    ${!I.carregado && I.busy ? `<p class="mute">Carregando leads…</p>` : !ls.length ? `<div class="empty"><b>Nenhum lead ${I.rows.length ? 'com esse filtro' : 'ainda'}.</b><span>Os leads dos formulários do site (home, Sales Coach e Atlas) e da landing page do guia aparecem aqui assim que alguém envia.</span></div>` :
+    `<div class="tw"><table><thead><tr><th>Data</th><th>Lead</th><th>Empresa</th><th>Contato</th><th>Origem</th><th>Canal</th><th>Situação</th><th></th></tr></thead><tbody>${linhas}</tbody></table></div>`}`;
   },
 
   contas() {
@@ -1336,6 +1398,7 @@ addEventListener('hashchange', () => { view = location.hash.slice(1) || 'painel'
 document.addEventListener('keydown', e => { if (e.key === 'Escape' && $('#drawerRoot').innerHTML) closeDrawer(); });
 document.addEventListener('click', e => {
   const et = e.target.closest('[data-edit-task]'); if (et) return openTask(et.dataset.editTask);
+  const ti = e.target.closest('tr[data-inb]'); if (ti && !e.target.closest('a,button')) { S.inb.aberto = S.inb.aberto === ti.dataset.inb ? null : ti.dataset.inb; return render(); }
   const t = e.target.closest('button,[data-open-conta],[data-close]'); if (!t) return;
   const ds = t.dataset;
   if ('close' in ds) return closeDrawer();
@@ -1383,6 +1446,8 @@ document.addEventListener('click', e => {
       return saveCfg({ ...S.cfg, metas: { ...S.cfg.metas, [nk]: { ...prev } } }); }
     case 'expOpp': return exportar('pipeline');
     case 'expContas': return exportar('contas');
+    case 'expInbound': return exportar('inbound');
+    case 'inbAtualizar': return carregarInbound();
   }
 });
 document.addEventListener('input', e => {
@@ -1394,6 +1459,9 @@ document.addEventListener('change', e => {
   if (ds.papel) return sb.from('membros').update({ papel: t.value }).eq('email', ds.papel).then(({ error }) => { if (error) toast('Não foi possível mudar o papel.'); else toast('Papel atualizado'); carregarMembros(); });
   if (t.id === 'fProd') { S.filtroProd = t.value; return render(); }
   if (t.id === 'fStatus') { S.contaFiltro = t.value; return render(); }
+  if (t.id === 'inbPeriodo') { S.inb.periodo = t.value; return render(); }
+  if (t.id === 'inbOrigem') { S.inb.origem = t.value; return render(); }
+  if (t.id === 'inbCanal') { S.inb.canal = t.value; return render(); }
   if (t.id === 'pMes') { S.painelMes = t.value; return render(); }
   if (ds.sem) { const w = ds.sem, cur = { ...(S.semanas[w] || {}) }; cur[ds.f] = ds.f === 'aprendizado' ? t.value.trim() : (t.value === '' ? '' : +t.value);
     S.semanas[w] = cur; const ref = S.db && S.db.collection('semanas').doc(w); write('semanas/' + w, () => ref.set(cur)).then(ok => ok && toast('Semana salva')); return; }
@@ -1412,11 +1480,25 @@ document.addEventListener('drop', e => { const col = e.target.closest && e.targe
   saveOpp(id, { ...strip(o), etapa: et, hist: histFor(o, et), ultimaInteracao: hoje() }).then(ok => ok && toast(`${o.empresa}: ${stg(et)}`)); });
 
 /* exportar */
+/* ───────── inbound ───────── */
+const inbConta = l => l.conta_path ? S.contas.find(c => c.id === l.conta_path.split('/').pop()) : null;
+// Leads dos últimos 14 dias cuja conta ainda está na fila: o que falta abordar.
+function inbNovos() { const lim = Date.now() - 14 * 864e5; return S.inb.rows.filter(l => Date.parse(l.criado_em) >= lim && (inbConta(l) || {}).status === 'fila'); }
+async function carregarInbound() {
+  S.inb.busy = true; S.inb.erro = ''; if (view === 'inbound') schedule();
+  const { data, error } = await sb.from('leads_inbound').select('id,criado_em,material,origem,canal,produto,interesse,nome,email,whatsapp,empresa,cargo,funcionarios,vendedores,tamanho_time,pagina,utm,rastreio,conta_path').order('criado_em', { ascending: false }).limit(2000);
+  S.inb.busy = false; S.inb.carregado = true;
+  if (error) S.inb.erro = 'Não foi possível carregar os leads agora. Tente “Atualizar”.'; else S.inb.rows = data || [];
+  schedule();
+}
+
 function exportar(tipo) {
   const q = v => `"${String(v ?? '').replace(/"/g, '""')}"`;
   let rows;
   if (tipo === 'pipeline') rows = [['Empresa', 'Produto', 'Etapa', 'Contato', 'Cargo', 'Canal', 'Segmento', 'Qtd', 'Mensalidade', 'Implantação', 'Projeto', '1º ano', 'Probabilidade', 'Ponderado', 'Próximo passo', 'Data', 'Última interação', 'Observações'],
     ...S.opps.map(o => { const v = valores(o); return [o.empresa, o.produto, stg(o.etapa), o.contato, o.cargo, o.canal, o.segmento, o.qtd, v.m.toFixed(2), v.i, v.proj, v.ano.toFixed(2), v.prob, v.pond.toFixed(2), o.proximoPasso, o.dataProximo, o.ultimaInteracao, o.obs]; })];
+  else if (tipo === 'inbound') rows = [['Data', 'Nome', 'E-mail', 'WhatsApp', 'Empresa', 'Cargo', 'Funcionários', 'Vendedores', 'Origem', 'Interesse', 'Canal', 'utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term', 'gclid', 'fbclid', 'Página', 'Canal do 1º toque', 'Entrada do 1º toque', 'Situação da conta'],
+    ...S.inb.rows.map(l => { const r = l.rastreio || {}, u = r.ultimo || l.utm || {}, c = inbConta(l); return [new Date(l.criado_em).toLocaleString('pt-BR'), l.nome, l.email, l.whatsapp, l.empresa, l.cargo, l.funcionarios, l.vendedores || l.tamanho_time, l.origem, l.interesse, l.canal, u.utm_source, u.utm_medium, u.utm_campaign, u.utm_content, u.utm_term, u.gclid, u.fbclid, l.pagina, r.canal_primeiro, (r.primeiro || {}).landing, c ? CSTATUS[c.status || 'fila'] : '']; })];
   else rows = [['Empresa', 'Site', 'Segmento', 'Cidade', 'Vendedores', 'Videochamada', 'CRM', 'Colaboradores', 'RH', 'Gatilho', 'Nota SC', 'Nota Atlas', 'Prioridade', 'Produto', 'Decisor', 'Cargo', 'LinkedIn', 'Situação', 'Início cadência', 'Toques feitos'],
     ...S.contas.map(c => { const n = notas(c); return [c.empresa, c.site, c.segmento, c.cidade, c.vendedores, c.online ? 'Sim' : 'Não', c.crm ? 'Sim' : 'Não', c.colaboradores, c.rh ? 'Sim' : 'Não', c.gatilho, n.sc, n.at, n.prio, produtoConta(c), c.decisor, c.cargo, c.linkedin, CSTATUS[c.status || 'fila'], c.inicioCadencia, (c.toques || []).length]; })];
   const csv = '﻿' + rows.map(r => r.map(q).join(';')).join('\r\n');
@@ -1538,6 +1620,11 @@ async function iniciar(session) {
   db.collection('prospects').onSnapshot(s => { S.prospects = s.docs.map(d => ({ ...d.data(), id: d.id })); schedule(); });
   db.doc('conteudo/playbook').onSnapshot(s => { S.playbook = s.exists ? s.data() : null; schedule(); });
   carregarMembros();
+  carregarInbound();
+  sb.channel('inbound-novos').on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'leads_inbound' }, p => {
+    if (p.new && !S.inb.rows.some(l => l.id === p.new.id)) { S.inb.rows.unshift(p.new); toast(`Novo lead inbound: ${p.new.nome || ''}`); schedule(); }
+  }).subscribe();
+  document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible' && S.inb.carregado) carregarInbound(); });
 }
 
 /* ───────── início ───────── */

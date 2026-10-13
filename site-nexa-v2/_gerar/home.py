@@ -5,9 +5,42 @@ from partes import head, topo, contato, rodape, fim, SETA, GRADE, STAR
 RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 B = ''
 
-# Cartões do anel: desenhados em HTML (ver cartoes.py). Opção escolhida por CAPAS=A|B|C.
+# Capas do anel. Padrão (no ar): fotos de assets/capas. CAPAS=A|B|C gera as opções
+# de cartões desenhados em HTML (ver cartoes.py), ainda em avaliação.
+FOTOS = [
+    ('sc-analise', 'Sales Coach', 'análise', 'sales-coach/index.html#depois'),
+    ('pessoa-1', 'Atlas Clima', 'escuta', 'atlas/index.html'),
+    ('plate-sc', 'Sales Coach', 'em ação', 'sales-coach/index.html'),
+    ('ac-painel', 'Atlas Clima', 'painel', 'atlas/index.html#clima'),
+    ('sc-aovivo', 'Sales Coach', 'ao vivo', 'sales-coach/index.html#durante'),
+    ('plate-neural', 'Fábrica', 'IA aplicada', '#fabrica'),
+    ('a3-painel', 'Atlas 360', 'comparar', 'atlas/index.html#atlas-360'),
+    ('pessoa-4', 'Pessoas', 'no centro', 'atlas/index.html'),
+    ('sc-treino', 'Sales Coach', 'treino', 'sales-coach/index.html#antes'),
+    ('ac-liderancas', 'Atlas Clima', 'lideranças', 'atlas/index.html#clima'),
+    ('plate-fabrica', 'Fábrica', 'de soluções', '#fabrica'),
+    ('sc-gestor', 'Sales Coach', 'gestão', 'sales-coach/index.html#gestao'),
+    ('pessoa-3', 'Atlas 360', 'conversa', 'atlas/index.html#atlas-360'),
+    ('ac-links', 'Atlas Clima', 'link anônimo', 'atlas/index.html#clima'),
+    ('plate-orbitas', 'NEXA', 'ecossistema', '#motores'),
+    ('sc-integracoes', 'Sales Coach', 'integrações', 'sales-coach/index.html#integracoes'),
+    ('a3-matriz', 'Atlas 360', 'matriz', 'atlas/index.html#atlas-360'),
+    ('pessoa-2', 'Atlas Clima', 'sinais', 'atlas/index.html'),
+    ('app-extensao', 'Sales Coach', 'extensão', 'sales-coach/index.html#durante'),
+    ('plate-clima', 'Atlas Clima', 'mapa', 'atlas/index.html#clima'),
+    ('ac-comentarios', 'Atlas Clima', 'comentários', 'atlas/index.html#clima'),
+    ('plate-360', 'Atlas 360', 'perspectivas', 'atlas/index.html#atlas-360'),
+]
+def fotos():
+    return '\n'.join(
+    f'<div class="capa" data-href="{h}" role="link" tabindex="0" aria-label="{a} · {b}"><img src="assets/capas/{f}.webp" alt="" loading="{"eager" if i < 12 else "lazy"}" decoding="async">'
+    f'<span class="rot"><i></i><b>{a}</b><em>{b}</em></span><svg class="seta" viewBox="0 0 24 24"><path d="M7 17 17 7M9 7h8v8"/></svg></div>'
+    for i, (f, a, b, h) in enumerate(FOTOS))
+
 from cartoes import OPCOES
-capas = '\n'.join(OPCOES[os.environ.get('CAPAS', 'A')]())
+_op = os.environ.get('CAPAS', 'fotos')
+capas = fotos() if _op == 'fotos' else '\n'.join(OPCOES[_op]())
+
 
 def prod(nome, kick, titulo, texto, itens, video, href, flut):
     lis = ''.join(f'<li>{i}</li>' for i in itens)
@@ -27,7 +60,7 @@ html = head('NEXA · Inteligência que vira solução',
     <div class="kick" data-reveal>Fábrica de soluções digitais</div>
     <h1 class="h-xl" data-palavras>Inteligência <br><span class="tom">que vira solução.</span></h1>
     <p class="lead" data-reveal data-d=".5">Produtos prontos para vender e cuidar de pessoas. E uma fábrica para os desafios que ainda não têm produto.</p>
-    <div class="pills" data-reveal data-d=".7"><a class="pill" href="#produtos">Ver os produtos {GRADE}</a><a class="pill lime" href="#contato">Traga um desafio {SETA}</a></div>
+    <div class="pills" data-reveal data-d=".7"><a class="pill" href="#produtos">Ver os produtos {GRADE}</a><a class="pill lime" href="#contato" data-interesse="Fábrica de soluções">Traga um desafio {SETA}</a></div>
   </div>
   <div class="anel-dica">Arraste para girar <i></i></div>
 </section>
@@ -98,10 +131,10 @@ html = head('NEXA · Inteligência que vira solução',
   <div class="sec-cab"><span class="kick">(05) A fábrica de soluções</span><h2 class="h-l" data-palavras>Um desafio pode virar <span class="tom">o próximo produto.</span></h2>
     <p class="lead" data-reveal>Quando o desafio ainda não tem produto pronto, a NEXA constrói. Se a sua empresa se reconhece em algum destes sinais, a conversa já começou.</p></div>
   <div class="sinais">
-    <a class="sinal" href="#contato" data-reveal><b>01</b><span>Um processo manual que se repete toda semana.</span>{SETA}</a>
-    <a class="sinal" href="#contato" data-reveal><b>02</b><span>Dados espalhados em planilhas e sistemas que não conversam.</span>{SETA}</a>
-    <a class="sinal" href="#contato" data-reveal><b>03</b><span>Uma ideia de produto digital parada no papel.</span>{SETA}</a>
-    <a class="sinal" href="#contato" data-reveal><b>04</b><span>Nenhuma ferramenta pronta resolve do jeito que a empresa precisa.</span>{SETA}</a>
+    <a class="sinal" href="#contato" data-interesse="Fábrica: Processo manual" data-reveal><b>01</b><span>Um processo manual que se repete toda semana.</span>{SETA}</a>
+    <a class="sinal" href="#contato" data-interesse="Fábrica: Dados espalhados" data-reveal><b>02</b><span>Dados espalhados em planilhas e sistemas que não conversam.</span>{SETA}</a>
+    <a class="sinal" href="#contato" data-interesse="Fábrica: Ideia de produto digital" data-reveal><b>03</b><span>Uma ideia de produto digital parada no papel.</span>{SETA}</a>
+    <a class="sinal" href="#contato" data-interesse="Fábrica: Ferramenta sob medida" data-reveal><b>04</b><span>Nenhuma ferramenta pronta resolve do jeito que a empresa precisa.</span>{SETA}</a>
   </div>
 </div></section>
 

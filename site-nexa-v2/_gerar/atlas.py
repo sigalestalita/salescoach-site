@@ -59,7 +59,7 @@ html = head('Atlas · NEXA', 'Atlas Clima e Atlas 360: pesquisa de clima com res
     <h1 class="h-xl" data-palavras>Escute sua organização. <br><span class="tom">Amplie a visão sobre pessoas.</span></h1>
     <p class="lead" data-reveal data-d=".4">Dois módulos na mesma plataforma: o <b>Atlas Clima</b>, pesquisa de clima com respostas anônimas e leitura por área e liderança, e o <b>Atlas 360</b>, avaliação com autoavaliação comparada aos pares.</p>
     <div data-reveal data-d=".55"><div class="alterna" data-grupo="hero" id="alt-hero"><i class="bola"></i><button class="on" data-v="clima">Atlas Clima</button><button data-v="360">Atlas 360</button></div></div>
-    <div class="pills" data-reveal data-d=".7"><a class="pill lime" href="#contato">Agendar demonstração {SETA}</a><a class="pill" href="#videos">Ver os vídeos</a></div>
+    <div class="pills" data-reveal data-d=".7"><a class="pill lime" href="#contato" data-interesse="Demonstração">Agendar demonstração {SETA}</a><a class="pill" href="#videos">Ver os vídeos</a></div>
   </div>
   <div class="palco">
     <div class="orbita-telas" id="orb-clima">
@@ -149,7 +149,7 @@ html = head('Atlas · NEXA', 'Atlas Clima e Atlas 360: pesquisa de clima com res
     <details><summary>Dá para usar Clima e 360 juntos?<i></i></summary><div class="resp">Sim. Os dois módulos ficam na mesma plataforma, com as mesmas pessoas e lideranças cadastradas.</div></details>
   </div>
 </div></section>
-''' + contato(B, 'Escutar é o primeiro <span class="tom">passo para cuidar.</span>') + '''</main>
+''' + contato(B, 'Escutar é o primeiro <span class="tom">passo para cuidar.</span>', 'atlas') + '''</main>
 <script>
 // Troca o vídeo e as telas do hero entre Clima e 360.
 document.getElementById('alt-hero').addEventListener('troca', e => {

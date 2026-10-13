@@ -52,7 +52,7 @@ html = head('Sales Coach · NEXA', 'Coach de vendas com IA em português: treina
     <h1 class="h-xl" data-palavras>Cada reunião <br><span class="tom">vira método.</span></h1>
     <p class="lead" data-reveal data-d=".4">O gestor não ouve todas as reuniões. O Sales Coach ouve: treina antes, orienta durante e analisa depois, em português, no Meet e no Teams, pela metodologia da sua empresa.</p>
     <div class="chips" data-reveal data-d=".55"><span class="chip"><i></i>Meet e Teams</span><span class="chip"><i></i>BANT · MEDDIC · SPIN</span><span class="chip"><i></i>CRM preenchido sozinho</span></div>
-    <div class="pills" data-reveal data-d=".7"><a class="pill lime" href="#contato">Agendar demonstração {SETA}</a><a class="pill" href="#video">Ver em 45 segundos</a></div>
+    <div class="pills" data-reveal data-d=".7"><a class="pill lime" href="#contato" data-interesse="Demonstração">Agendar demonstração {SETA}</a><a class="pill" href="#video">Ver em 45 segundos</a></div>
   </div>
   <div class="palco">
     <div class="orbita-telas">
@@ -116,13 +116,13 @@ html = head('Sales Coach · NEXA', 'Coach de vendas com IA em português: treina
   <div class="planos">
     <div class="plano" data-reveal><span class="kick">1 a 10 usuários</span><h4>Essencial</h4><div class="preco"><small>R$</small> 19,90</div><span class="kick">por usuário/mês · R$ 990 de implantação</span>
       <ul><li>50 reuniões analisadas por usuário/mês</li><li>Coach ao vivo durante a reunião</li><li>Extensão para Meet e Teams</li><li>BANT, MEDDIC e SPIN prontos</li><li>Base de conhecimento e gerador de argumentos</li></ul>
-      <a class="pill" href="#contato">Quero o Essencial {SETA}</a></div>
+      <a class="pill" href="#contato" data-interesse="Plano Essencial">Quero o Essencial {SETA}</a></div>
     <div class="plano dest" data-reveal data-d=".1"><span class="tag">Mais escolhido</span><span class="kick">11 a 50 usuários</span><h4>Profissional</h4><div class="preco"><small>R$</small> 29,90</div><span class="kick">por usuário/mês · R$ 1.690 de implantação</span>
       <ul><li>120 reuniões analisadas por usuário/mês</li><li>Metodologia própria: critérios, pesos e faixas</li><li>CRM preenchido sozinho ao fim da reunião</li><li>Modo de treino e assistente de vendas</li><li>Relatórios de gestão compartilháveis</li></ul>
-      <a class="pill lime" href="#contato">Quero o Profissional {SETA}</a></div>
+      <a class="pill lime" href="#contato" data-interesse="Plano Profissional">Quero o Profissional {SETA}</a></div>
     <div class="plano" data-reveal data-d=".2"><span class="kick">Acima de 50 usuários</span><h4>Enterprise</h4><div class="preco" style="font-size:44px">Sob medida</div><span class="kick">preço por volume</span>
       <ul><li>Volume de análises sob medida</li><li>Integrações dedicadas e acesso à API</li><li>Onboarding da metodologia e da base</li><li>SSO e revisão de segurança</li><li>SLA e suporte dedicado</li></ul>
-      <a class="pill" href="#contato">Falar com a NEXA {SETA}</a></div>
+      <a class="pill" href="#contato" data-interesse="Plano sob medida">Falar com a NEXA {SETA}</a></div>
   </div>
 </div></section>
 
@@ -140,7 +140,7 @@ html = head('Sales Coach · NEXA', 'Coach de vendas com IA em português: treina
     <details><summary>Como é a cobrança?<i></i></summary><div class="resp">Por usuário ativo, mensalmente, com uma taxa de implantação única. Ao passar de 10 pessoas, o time entra no plano Profissional.</div></details>
   </div>
 </div></section>
-''' + contato(B, 'Seu time vendendo melhor <span class="tom">em cada reunião.</span>') + '</main>' + rodape(B) + fim(B)
+''' + contato(B, 'Seu time vendendo melhor <span class="tom">em cada reunião.</span>', 'sales-coach') + '</main>' + rodape(B) + fim(B)
 
 open(os.path.join(RAIZ, 'sales-coach', 'index.html'), 'w', encoding='utf-8').write(html)
 print('sales-coach/index.html', len(html))

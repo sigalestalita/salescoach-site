@@ -31,6 +31,26 @@ async function sha(s: string) {
 }
 const novoId = () => [...crypto.getRandomValues(new Uint8Array(10))].map((x) => x.toString(16).padStart(2, '0')).join('');
 
+// Canal de aquisição a partir do toque (ids de clique primeiro, depois UTM, depois quem indicou).
+function canalDe(t: Record<string, string>) {
+  const s = (t.utm_source || '').toLowerCase(), m = (t.utm_medium || '').toLowerCase();
+  const pago = /cpc|ppc|paid|pago|ads|cpm|display|social_paid|paid_social/.test(m);
+  if (/^(meta|facebook|fb|instagram|ig)$/.test(s) && pago || t.fbclid && pago) return 'Meta Ads';
+  if (t.gclid || t.gbraid || t.wbraid || s === 'google' && pago) return 'Google Ads';
+  if (t.li_fat_id || s === 'linkedin' && pago) return 'LinkedIn Ads';
+  if (t.msclkid) return 'Microsoft Ads';
+  if (t.ttclid || s === 'tiktok' && pago) return 'TikTok Ads';
+  if (s) return /^(meta|facebook|fb|instagram|ig)$/.test(s) ? 'Instagram/Facebook (orgânico)' : s === 'email' || m === 'email' ? 'E-mail' : `${t.utm_source}${m ? ' / ' + t.utm_medium : ''}`;
+  if (t.fbclid) return 'Meta (sem UTM)';
+  const ref = (t.referrer || '').toLowerCase();
+  if (!ref || ref.includes('nexatech.ia.br')) return 'Direto';
+  if (/google\.|bing\.|duckduckgo|yahoo\./.test(ref)) return 'Busca orgânica';
+  if (/instagram|facebook|fb\.|l\.instagram/.test(ref)) return 'Instagram/Facebook (orgânico)';
+  if (/linkedin|lnkd/.test(ref)) return 'LinkedIn (orgânico)';
+  if (/whatsapp|wa\.me/.test(ref)) return 'WhatsApp';
+  try { return 'Indicação · ' + new URL(t.referrer).hostname.replace(/^www\./, ''); } catch { return 'Indicação'; }
+}
+
 Deno.serve(async (req) => {
   const h = cabecalhos(req);
   const resp = (corpo: unknown, status = 200) => new Response(JSON.stringify(corpo), { status, headers: h });
@@ -54,7 +74,7 @@ Deno.serve(async (req) => {
   if (empresa.length < 2) return resp({ erro: 'Informe a empresa.', campo: 'empresa' }, 422);
 
   const utm: Record<string, string> = {};
-  for (const k of ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term', 'fbclid', 'gclid', 'pagina']) {
+  for (const k of ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term', 'fbclid', 'gclid', 'gbraid', 'wbraid', 'li_fat_id', 'referrer', 'pagina']) {
     const v = txt(c.utm?.[k], 200); if (v) utm[k] = v;
   }
 
@@ -85,7 +105,7 @@ Deno.serve(async (req) => {
         path: contaPath, col: 'contas', updated_at: agora,
         data: {
           empresa, decisor: nome, cargo, email, telefone: whatsapp, produto: material.produto,
-          vendedores: TAMANHOS[tamanho] ?? '', online: true, status: 'fila', origem: 'LP · ' + material.nome,
+          vendedores: TAMANHOS[tamanho] ?? '', online: true, status: 'fila', origem: 'LP · ' + material.nome + ' · ' + canalDe(utm),
           inbound: true, obs: origemTxt, criadoEm: agora, atualizadoEm: agora,
         },
       });
@@ -93,7 +113,7 @@ Deno.serve(async (req) => {
   } catch (_) { contaPath = null; }
 
   const { error } = await db.from('leads_inbound').insert({
-    material: txt(c.material, 40), nome, email, whatsapp, empresa, cargo, tamanho_time: tamanho, utm, ip_hash: ipHash, conta_path: contaPath,
+    material: txt(c.material, 40), origem: 'LP · ' + material.nome, canal: canalDe(utm), produto: material.produto, pagina: utm.pagina || null, nome, email, whatsapp, empresa, cargo, tamanho_time: tamanho, utm, ip_hash: ipHash, conta_path: contaPath,
   });
   if (error) return resp({ erro: 'Não foi possível registrar agora. Tente de novo.' }, 500);
 

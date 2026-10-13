@@ -479,3 +479,44 @@ html[data-tema="claro"] .orbitas .centro-o { box-shadow: 0 0 0 10px rgba(88,116,
 .w-chip { position: absolute; right: calc(6 * var(--u)); top: 40%; z-index: 2; padding: calc(1.8 * var(--u)) calc(3 * var(--u)); border-radius: 99px; background: #d4f969; color: #10120e; font-family: var(--mono); font-size: calc(3.4 * var(--u)); letter-spacing: .04em; box-shadow: 0 calc(2 * var(--u)) calc(5 * var(--u)) calc(-2 * var(--u)) rgba(0,0,0,.5); }
 .capa.cx.foto:hover .cx-arte { transform: none; } .capa.cx.foto:hover img { transform: scale(1.06); }
 @media (prefers-reduced-motion: reduce) { .w-onda i, .w-code span { animation: none; } }
+
+/* ── Formulário de conversão (seção final) ───────────────────────────────── */
+.conv { display: grid; grid-template-columns: minmax(0, 1fr) 260px; gap: 16px; max-width: 980px; margin: 60px auto 0; text-align: left; }
+.lead-form, .conv-ok { border-radius: 24px; border: 1px solid var(--line); background: rgba(var(--fg-rgb),.025); padding: clamp(22px, 3vw, 34px); }
+.conv-campos { display: grid; grid-template-columns: 1fr 1fr; gap: 14px 16px; }
+.conv-campos label { display: flex; flex-direction: column; gap: 7px; font-size: 13.5px; color: var(--dim); }
+.conv i { font-style: normal; color: var(--acento); }
+.conv input, .conv select { height: 50px; border-radius: 14px; border: 1px solid var(--line2); background: rgba(var(--fg-rgb),.03); color: var(--txt);
+  font: inherit; font-size: 16px; padding: 0 16px; transition: border-color .2s, background .2s; width: 100%; }
+.conv select { appearance: none; -webkit-appearance: none; padding-right: 40px; cursor: pointer;
+  background-image: linear-gradient(45deg, transparent 50%, var(--dim) 50%), linear-gradient(135deg, var(--dim) 50%, transparent 50%);
+  background-position: calc(100% - 22px) 22px, calc(100% - 17px) 22px; background-size: 5px 5px; background-repeat: no-repeat; }
+.conv select option { color: #111; }
+.conv input::placeholder { color: var(--dim2); }
+.conv input:focus, .conv select:focus { outline: none; border-color: var(--acento); background: rgba(var(--fg-rgb),.05); }
+.conv [aria-invalid="true"] { border-color: #ff7b6b; }
+.conv-isca { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+.conv-envio { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; margin-top: 22px; }
+.conv-envio .pill { cursor: pointer; font: inherit; }
+.conv-envio .pill:disabled { opacity: .6; cursor: wait; }
+.conv-nota { font-size: 13px; color: var(--dim2); max-width: 340px; line-height: 1.45; }
+.conv-nota a { color: var(--dim); text-decoration: underline; text-underline-offset: 2px; }
+.lead-msg { font-size: 14px; color: var(--dim); margin-top: 12px; min-height: 1px; }
+.lead-msg:empty { display: none; }
+.lead-msg.bad { color: #ff9a8c; }
+.conv-ok { display: none; flex-direction: column; gap: 10px; justify-content: center; }
+.conv-ok b { font-family: var(--display); font-weight: 400; font-size: clamp(28px, 3vw, 40px); letter-spacing: -.03em; }
+.conv-ok p { color: var(--dim); max-width: 460px; margin-bottom: 10px; }
+.conv-ok .pill { align-self: flex-start; }
+.conv.enviado .lead-form { display: none; } .conv.enviado .conv-ok { display: flex; }
+.conv-lado { display: flex; flex-direction: column; gap: 10px; }
+.conv-lado .kick { margin: 6px 0 4px; }
+.conv-lado a { border-radius: 18px; border: 1px solid var(--line); padding: 18px 20px; display: flex; flex-direction: column; gap: 2px; transition: border-color .3s, transform .4s; }
+.conv-lado a:hover { border-color: rgba(212,249,105,.5); transform: translateY(-3px); }
+.conv-lado b { font-family: var(--display); font-weight: 400; font-size: 20px; letter-spacing: -.02em; }
+.conv-lado span { color: var(--dim); font-size: 14px; }
+html[data-tema="claro"] .lead-form, html[data-tema="claro"] .conv-ok, html[data-tema="claro"] .conv-lado a { background: #fff; box-shadow: 0 24px 60px -40px rgba(30,40,10,.35); }
+html[data-tema="claro"] .conv input, html[data-tema="claro"] .conv select { background: #f6f7f2; }
+html[data-tema="claro"] .lead-msg.bad { color: #c2410c; } html[data-tema="claro"] .conv [aria-invalid="true"] { border-color: #c2410c; }
+@media (max-width: 860px) { .conv { grid-template-columns: 1fr; } .conv-lado { display: grid; grid-template-columns: 1fr 1fr; } .conv-lado .kick { grid-column: 1 / -1; } }
+@media (max-width: 560px) { .conv-campos { grid-template-columns: 1fr; } .conv-lado { grid-template-columns: 1fr; } .conv-envio .pill { width: 100%; justify-content: center; } }
