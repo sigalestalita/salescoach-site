@@ -147,6 +147,25 @@ select.inp[multiple] option{font-weight:400;padding:2px 4px}
 .opp .v{font-size:13px;font-variant-numeric:tabular-nums;white-space:nowrap}
 .opp .s{font-size:12.5px;color:var(--soft)}
 .opp .meta{display:flex;flex-wrap:wrap;gap:4px}
+/* contas-alvo no kanban: prospecção antes de virar oportunidade */
+.opp.conta{background:var(--surface);border-style:dashed;cursor:default}
+.opp.conta .h b{white-space:normal}
+.opp .lnk{background:none;border:0;padding:0;font:inherit;color:inherit;text-align:left;cursor:pointer;min-width:0}
+.opp .lnk:hover b{text-decoration:underline}
+.opp .acts{display:flex;flex-wrap:wrap;gap:6px}
+.col.prospec{background:transparent;box-shadow:inset 0 0 0 1px var(--line)}
+.col>header small{display:block;font-size:11.5px;color:var(--mute);font-weight:400;margin-top:2px}
+.col .mais{font-size:12.5px;color:var(--soft);text-align:center;padding:4px}
+/* funil do pipeline */
+.funil{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(118px,1fr);border:1px solid var(--line);border-radius:12px;background:var(--surface);overflow-x:auto;margin-bottom:12px}
+.funil>div{padding:10px 12px;border-left:1px solid var(--line);display:grid;gap:2px;min-width:0}
+.funil>div:first-child{border-left:0}
+.funil .k{font-size:11.5px;color:var(--soft);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.funil .n{font-size:20px;font-weight:500;font-variant-numeric:tabular-nums;line-height:1.2}
+.funil .c{font-size:11.5px;color:var(--mute);font-variant-numeric:tabular-nums}
+.funil .c b{color:var(--accent-text);font-weight:500}
+.alertas{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
+.alertas a{text-decoration:none}
 
 /* tabelas */
 .tw{overflow-x:auto;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
@@ -443,6 +462,23 @@ function realizado(a, b) {
 const fimMes = k => { const [y, m] = k.split('-').map(Number); return iso(new Date(y, m, 0)); };
 function mesAtual() { const ks = Object.keys(S.cfg.metas).sort(), k = hoje().slice(0, 7); return ks.includes(k) ? k : (ks.find(x => x > k) || ks[ks.length - 1] || k); }
 const abertas = () => S.opps.filter(o => o.etapa && o.etapa <= 6);
+/* Funil único: a etapa de cada conta-alvo e de cada oportunidade.
+   Conta na fila ou em cadência ainda é prospecção; quando responde, vira
+   oportunidade (oppId) e passa a valer a etapa dela. */
+const oppDaConta = c => c.oppId ? S.opps.find(o => o.id === c.oppId) || null : null;
+function faseConta(c) {
+  const st = c.status || 'fila';
+  if (st === 'descartada') return 'descartada';
+  if (st === 'oportunidade') { const o = oppDaConta(c); if (o) return o.etapa; return c.inicioCadencia ? 'cadencia' : 'fila'; }
+  if (st === 'nutrir') return 9;
+  return st === 'cadencia' ? 'cadencia' : 'fila';
+}
+function situacaoConta(c) {
+  const st = c.status || 'fila', o = st === 'oportunidade' ? oppDaConta(c) : null;
+  if (o) return `<button class="chip acc" data-open-opp="${o.id}" title="Abrir a oportunidade">${esc(stg(o.etapa))}</button>`;
+  return `${CSTATUS[st] || esc(st)}${st === 'cadencia' ? ` <span class="mute">· ${(c.toques || []).length}/${cad().length}</span>` : ''}`;
+}
+const dotsHtml = c => `<span class="dots" aria-label="${(c.toques || []).length} de ${cad().length} toques">${toques(c).map(t => `<i class="${t.done ? 'done' : t.late ? 'late' : ''}" title="Dia ${t.d} · ${t.canal}"></i>`).join('')}</span>`;
 const toquesHoje = () => S.contas.filter(c => c.status === 'cadencia' && !c.naoContatar).map(c => ({ c, t: proximoToque(c) })).filter(x => x.t && x.t.due <= hoje()).sort((a, b) => a.t.due.localeCompare(b.t.due));
 
 /* ───────── gravação ───────── */
@@ -642,16 +678,57 @@ const VIEWS = {
   },
 
   pipeline() {
-    const q = S.busca.toLowerCase();
+    const q = S.busca.toLowerCase(), h = hoje();
     const os = S.opps.filter(o => (!S.filtroProd || o.produto === S.filtroProd) && (!q || `${o.empresa} ${o.contato}`.toLowerCase().includes(q)));
-    const cols = [1, 2, 3, 4, 5, 6].filter(e => e > 1 || os.some(o => o.etapa === 1)).concat(S.showClosed ? [7, 8, 9] : []);
+    // Contas-alvo ainda em prospecção (fila, cadência) ou em Nutrir. As que viraram
+    // oportunidade aparecem pelo cartão da oportunidade, na etapa dela.
+    const cs = S.contas.filter(c => !c.naoContatar && (!S.filtroProd || produtoConta(c) === S.filtroProd) && (!q || `${c.empresa} ${c.decisor || ''}`.toLowerCase().includes(q)))
+      .map(c => ({ c, f: faseConta(c), n: notas(c) }))
+      .filter(x => x.f === 'fila' || x.f === 'cadencia' || (x.f === 9 && x.c.status === 'nutrir'));
+    const filaTodas = cs.filter(x => x.f === 'fila'), filaAB = filaTodas.filter(x => x.n.prio !== 'C');
+    const fila = (S.filaTodas ? filaTodas : filaAB).sort((a, b) => a.n.prio.localeCompare(b.n.prio) || Math.max(b.n.sc, b.n.at) - Math.max(a.n.sc, a.n.at));
+    const emCad = cs.filter(x => x.f === 'cadencia').sort((a, b) => ((proximoToque(a.c) || {}).due || '9').localeCompare((proximoToque(b.c) || {}).due || '9'));
+    const nutrirC = cs.filter(x => x.f === 9);
+    const atrasados = emCad.filter(x => { const t = proximoToque(x.c); return t && t.due < h; }).length;
+    const semResposta = emCad.filter(x => !proximoToque(x.c)).length;
+    const vencidos = os.filter(o => o.etapa >= 2 && o.etapa <= 6 && o.dataProximo && o.dataProximo < h).length;
+    const LIM = 25;
     const card = o => { const v = valores(o), a = alerta(o);
       return `<button class="opp ${a && a.cls === 'bad' ? 'alert' : ''}" draggable="${!dis()}" data-open-opp="${o.id}" data-drag="${o.id}">
         <span class="h"><b>${esc(o.empresa)}</b><span class="v">${brl(v.ano)}</span></span>
-        <span class="meta"><span class="chip">${esc(o.produto || 'Sem produto')}</span>${a ? `<span class="chip ${a.cls}">${a.txt}</span>` : ''}</span>
+        <span class="meta"><span class="chip">${esc(o.produto || 'Sem produto')}</span>${o.contaId ? '<span class="chip" title="Veio da cadência de prospecção">cadência</span>' : ''}${a ? `<span class="chip ${a.cls}">${a.txt}</span>` : ''}</span>
         <span class="s">${esc(o.proximoPasso || 'Sem próximo passo')}${o.dataProximo ? ' · ' + brShort(o.dataProximo) : ''}</span></button>`; };
+    const contaCard = ({ c, f, n }) => { const t = f === 'cadencia' ? proximoToque(c) : null;
+      return `<div class="opp conta" draggable="${!dis()}" data-drag="c:${c.id}">
+        <span class="h"><button class="lnk" data-open-conta="${c.id}"><b>${esc(c.empresa)}</b></button><span class="prio ${n.prio}" title="Prioridade">${n.prio}</span></span>
+        <span class="meta"><span class="chip">${esc(produtoConta(c))}</span>${c.inbound ? '<span class="chip acc">inbound</span>' : ''}${t && t.due < h ? `<span class="chip bad">toque atrasado ${diff(h, t.due)}d</span>` : ''}${f === 'cadencia' && !t ? '<span class="chip warn">sem resposta</span>' : ''}${c.linkedinPend ? '<span class="chip warn">LinkedIn pendente</span>' : ''}</span>
+        ${f === 'cadencia' ? `<span class="s">${dotsHtml(c)}</span><span class="s">${t ? `Próximo: dia ${t.d} · ${esc(t.canal)} · ${brShort(t.due)}` : 'Todos os toques feitos'}</span>`
+          : f === 9 ? `<span class="s">${c.retomarEm ? 'Retomar em ' + brShort(c.retomarEm) : 'Nutrir'}</span>`
+          : `<span class="s">${esc(c.decisor || 'Sem decisor')}${c.cargo ? ' · ' + esc(c.cargo) : ''}</span>`}
+        ${dis() ? '' : `<span class="acts">${f === 'fila' ? `<button class="btn sm" data-start="${c.id}">Iniciar cadência</button>` : `<button class="btn sm pri" data-resp="${c.id}">Respondeu</button>`}${f === 'cadencia' && !t ? `<button class="btn sm" data-nutrir="${c.id}">Nutrir</button>` : ''}</span>`}
+      </div>`; };
+    const lista = (arr, fn) => arr.slice(0, LIM).map(fn).join('') + (arr.length > LIM ? `<a class="mais" href="#contas">+ ${arr.length - LIM} em Contas-alvo</a>` : '');
+    const colunas = ['fila', 'cadencia', 2, 3, 4, 5, 6].concat(S.showClosed ? [7, 8, 9] : []);
+    const opEm = e => os.filter(o => o.etapa === e);
+    const colHtml = e => {
+      if (e === 'fila') return `<section class="col prospec" data-drop="fila"><header><div><b>Na fila</b><small>${S.filaTodas ? 'todas as prioridades' : 'prioridade A e B'}</small></div><span>${fila.length}</span></header>${lista(fila, contaCard)}${filaTodas.length > filaAB.length ? `<button class="btn sm" id="tFila">${S.filaTodas ? 'Mostrar só A e B' : `Ver também ${filaTodas.length - filaAB.length} de prioridade C`}</button>` : ''}</section>`;
+      if (e === 'cadencia') { const legado = opEm(1);
+        return `<section class="col prospec" data-drop="cadencia"><header><div><b>Em cadência</b><small>buscando o primeiro contato</small></div><span>${emCad.length + legado.length}${atrasados ? ` · <span style="color:var(--bad)">${atrasados} atrasado${atrasados > 1 ? 's' : ''}</span>` : ''}</span></header>${lista(emCad, contaCard)}${legado.map(card).join('')}</section>`; }
+      const cards = opEm(e), tot = cards.reduce((sm, o) => sm + valores(o).ano, 0), extra = e === 9 ? nutrirC : [];
+      return `<section class="col" data-drop="${e}"><header><b>${stg(e)}</b><span>${cards.length + extra.length} · ${brl(tot)}</span></header>${cards.sort((a, b) => (a.dataProximo || '9').localeCompare(b.dataProximo || '9')).map(card).join('')}${extra.map(contaCard).join('')}</section>`;
+    };
+    // Funil: quantos estão em cada fase agora e quanto passa de uma fase para a seguinte
+    // (pelo histórico de etapas, para não depender só de quem ainda está aberto).
+    const cheg = k => S.opps.filter(o => (o.hist || {})[k] || (o.etapa >= k && o.etapa <= 7)).length;
+    const iniciadas = S.contas.filter(c => c.inicioCadencia).length;
+    const fases = [
+      ['Na fila (A/B)', filaAB.length, null, ''],
+      ['Em cadência', emCad.length + opEm(1).length, null, ''],
+      ...[2, 3, 4, 5, 6].map((e, i) => [stg(e), opEm(e).length, i === 0 ? (iniciadas ? S.opps.filter(o => o.contaId).length / iniciadas : null) : (cheg(e - 1) ? cheg(e) / cheg(e - 1) : null), i === 0 ? 'das cadências responderam' : 'avançaram']),
+      [stg(7), opEm(7).length, cheg(5) ? cheg(7) / cheg(5) : null, 'das propostas fecharam'],
+    ];
     return `
-    <div class="top"><div><h1>Pipeline</h1><p class="sub">Arraste o cartão para mudar de etapa, ou abra para editar. O valor é o do primeiro ano.</p></div>
+    <div class="top"><div><h1>Pipeline</h1><p class="sub">Do primeiro toque ao fechamento, numa tela só. As contas-alvo aparecem na fila e em cadência; quando respondem, viram oportunidade. Arraste os cartões para mudar de etapa.</p></div>
       <div class="tools">
         <input class="inp" id="busca" type="search" placeholder="Buscar empresa ou contato" value="${esc(S.busca)}" aria-label="Buscar">
         <select class="inp" id="fProd" aria-label="Produto"><option value="">Todos os produtos</option>${PRODUTOS.map(p => `<option ${p === S.filtroProd ? 'selected' : ''}>${p}</option>`).join('')}</select>
@@ -659,9 +736,10 @@ const VIEWS = {
         ${S.dl ? `<button class="btn" id="expOpp">Exportar CSV</button>` : ''}
         <button class="btn pri" id="newOpp" ${dis()}>+ Oportunidade</button>
       </div></div>
-    ${!S.opps.length ? `<div class="empty"><b>Nenhuma oportunidade ainda.</b><span>Quando uma conta responder na cadência, use “Respondeu” para trazê-la para cá. Ou crie uma direto.</span></div>` : ''}
-    <div class="kan-wrap"><div class="kan">${cols.map(e => { const cs = os.filter(o => o.etapa === e); const tot = cs.reduce((s, o) => s + valores(o).ano, 0);
-      return `<section class="col" data-drop="${e}"><header><b>${stg(e)}</b><span>${cs.length} · ${brl(tot)}</span></header>${cs.sort((a, b) => (a.dataProximo || '9').localeCompare(b.dataProximo || '9')).map(card).join('')}</section>`; }).join('')}</div></div>`;
+    <div class="funil" aria-label="Funil comercial">${fases.map(([k, n, cv, txt]) => `<div><span class="k" title="${esc(k)}">${esc(k)}</span><span class="n">${n}</span><span class="c">${cv != null ? `<b>${pct(cv)}</b> ${txt}` : '&nbsp;'}</span></div>`).join('')}</div>
+    ${atrasados || semResposta || vencidos ? `<div class="alertas">${atrasados ? `<a class="chip bad" href="#cadencia">${atrasados} toque${atrasados > 1 ? 's' : ''} atrasado${atrasados > 1 ? 's' : ''} na cadência</a>` : ''}${semResposta ? `<a class="chip warn" href="#cadencia">${semResposta} cadência${semResposta > 1 ? 's' : ''} concluída${semResposta > 1 ? 's' : ''} sem resposta</a>` : ''}${vencidos ? `<span class="chip bad">${vencidos} oportunidade${vencidos > 1 ? 's' : ''} com próximo passo vencido</span>` : ''}</div>` : ''}
+    ${!S.opps.length && !cs.length ? `<div class="empty"><b>Nada no funil ainda.</b><span>Cadastre contas-alvo ou importe uma lista, inicie a cadência e, quando alguém responder, use “Respondeu” para virar oportunidade.</span></div>` : ''}
+    <div class="kan-wrap"><div class="kan">${colunas.map(colHtml).join('')}</div></div>`;
   },
 
   inbound() {
@@ -690,7 +768,7 @@ const VIEWS = {
         <td style="white-space:nowrap">${w ? `<a href="${w}" target="_blank" rel="noopener">${esc(fone(l.whatsapp))}</a>` : esc(l.whatsapp || '')}<div style="font-size:12px"><a class="mute" href="mailto:${esc(l.email)}">${esc(l.email)}</a></div></td>
         <td>${esc(l.origem || l.material || '—')}${l.interesse ? `<div class="mute" style="font-size:12px">${esc(l.interesse)}</div>` : ''}</td>
         <td><span class="chip ${pago(l) ? 'acc' : ''}">${esc(l.canal || '—')}</span>${u.utm_campaign ? `<div class="mute" style="font-size:12px">${esc(u.utm_campaign)}${u.utm_content ? ' · ' + esc(u.utm_content) : ''}</div>` : ''}</td>
-        <td>${c ? `${CSTATUS[s2] || esc(s2)}` : '<span class="mute">—</span>'}</td>
+        <td>${c ? situacaoConta(c) : '<span class="mute">—</span>'}</td>
         <td class="n">${c ? `<button class="btn sm" data-open-conta="${c.id}">Abrir conta</button>` : ''}</td></tr>${I.aberto === String(l.id) ? detalhe(l) : ''}`; }).join('');
     const nPago = ls.filter(pago).length, nFila = ls.filter(l => st(l) === 'fila').length, nOpp = ls.filter(l => st(l) === 'oportunidade').length;
     return `
@@ -716,7 +794,7 @@ const VIEWS = {
   contas() {
     const q = S.busca.toLowerCase();
     let cs = S.contas.map(c => ({ c, n: notas(c) }));
-    if (S.contaFiltro === 'abertas') cs = cs.filter(x => ['fila', 'cadencia', undefined, ''].includes(x.c.status));
+    if (S.contaFiltro === 'abertas') cs = cs.filter(x => ['fila', 'cadencia', undefined, ''].includes(x.c.status) || (x.c.status === 'oportunidade' && (oppDaConta(x.c) || {}).etapa <= 6));
     else if (S.contaFiltro) cs = cs.filter(x => x.c.status === S.contaFiltro);
     if (S.contaPrio) cs = cs.filter(x => x.n.prio === S.contaPrio);
     if (q) cs = cs.filter(x => `${x.c.empresa} ${x.c.decisor}`.toLowerCase().includes(q));
@@ -726,14 +804,14 @@ const VIEWS = {
     <div class="top"><div><h1>Contas-alvo</h1><p class="sub">Pesquise antes de abordar. A nota de encaixe vai de 0 a 5 e define a prioridade. Só coloque em cadência contas A ou B. ${nA ? `<b>${nA}</b> na fila com prioridade A ou B.` : ''}</p></div>
       <div class="tools">
         <input class="inp" id="busca" type="search" placeholder="Buscar" value="${esc(S.busca)}" aria-label="Buscar">
-        <select class="inp" id="fStatus" aria-label="Situação"><option value="abertas" ${S.contaFiltro === 'abertas' ? 'selected' : ''}>Na fila e em cadência</option><option value="" ${!S.contaFiltro ? 'selected' : ''}>Todas</option>${Object.entries(CSTATUS).map(([k, v]) => `<option value="${k}" ${S.contaFiltro === k ? 'selected' : ''}>${v}</option>`).join('')}</select>
+        <select class="inp" id="fStatus" aria-label="Situação"><option value="abertas" ${S.contaFiltro === 'abertas' ? 'selected' : ''}>Ativas (fila, cadência e oportunidades abertas)</option><option value="" ${!S.contaFiltro ? 'selected' : ''}>Todas</option>${Object.entries(CSTATUS).map(([k, v]) => `<option value="${k}" ${S.contaFiltro === k ? 'selected' : ''}>${v}</option>`).join('')}</select>
         <div class="seg" role="group" aria-label="Prioridade">${['', 'A', 'B', 'C'].map(p => `<button data-prio="${p}" class="${S.contaPrio === p ? 'on' : ''}">${p || 'Todas'}</button>`).join('')}</div>
         ${S.dl ? `<button class="btn" id="expContas">Exportar CSV</button>` : ''}
         <button class="btn pri" id="newConta" ${dis()}>+ Conta</button>
       </div></div>
     ${!S.contas.length ? `<div class="empty"><b>Nenhuma conta cadastrada.</b><span>Comece pelas empresas do cliente ideal: 5 a 50 vendedores que vendem por videochamada (Sales Coach) ou 50 a 1.000 pessoas com RH estruturado (Atlas).</span></div>` :
     `<div class="tw"><table><thead><tr><th>Prioridade</th><th>Empresa</th><th>Segmento</th><th class="n">Sales Coach</th><th class="n">Atlas</th><th>Produto</th><th>Decisor</th><th>Situação</th><th></th></tr></thead><tbody>
-      ${cs.map(({ c, n }) => `<tr class="click" data-open-conta="${c.id}"><td><span class="prio ${n.prio}">${n.prio}</span></td><td><b style="font-weight:500">${esc(c.empresa)}</b>${c.inbound ? ` <span class="chip acc" title="${esc(c.origem || 'Inbound')}">inbound</span>` : ''}</td><td>${esc(c.segmento)}</td><td class="n">${n.sc}</td><td class="n">${n.at}</td><td>${esc(produtoConta(c))}</td><td>${esc(c.decisor)}${c.cargo ? `<div class="mute" style="font-size:12px">${esc(c.cargo)}</div>` : ''}</td><td>${CSTATUS[c.status || 'fila']}${c.status === 'cadencia' ? ` <span class="mute">· ${(c.toques || []).length}/${cad().length}</span>` : ''}</td>
+      ${cs.map(({ c, n }) => `<tr class="click" data-open-conta="${c.id}"><td><span class="prio ${n.prio}">${n.prio}</span></td><td><b style="font-weight:500">${esc(c.empresa)}</b>${c.inbound ? ` <span class="chip acc" title="${esc(c.origem || 'Inbound')}">inbound</span>` : ''}</td><td>${esc(c.segmento)}</td><td class="n">${n.sc}</td><td class="n">${n.at}</td><td>${esc(produtoConta(c))}</td><td>${esc(c.decisor)}${c.cargo ? `<div class="mute" style="font-size:12px">${esc(c.cargo)}</div>` : ''}</td><td>${situacaoConta(c)}</td>
         <td class="n">${(c.status || 'fila') === 'fila' && n.prio !== 'C' && !dis() ? `<button class="btn sm" data-start="${c.id}">Iniciar cadência</button>` : ''}</td></tr>`).join('') || `<tr><td colspan="9" class="mute">Nenhuma conta com esse filtro.</td></tr>`}
     </tbody></table></div>`}`;
   },
@@ -744,7 +822,7 @@ const VIEWS = {
     const terminadas = em.filter(c => !proximoToque(c));
     const tmpl = (c, t) => { const nome = (c.decisor || '').trim().split(/\s+/)[0];
       return esc(((isAtlas(produtoConta(c)) ? t.atlas : t.sc) || t.sc || '').replaceAll('{nome}', nome || '[nome]').replaceAll('{empresa}', c.empresa || '[empresa]').replaceAll('{eu}', S.cfg.vendedora || '[seu nome]')).replace(/\[[^\]]+\]/g, m => `<mark>${m}</mark>`); };
-    const dots = c => `<span class="dots" aria-label="${(c.toques || []).length} de ${cad().length} toques">${toques(c).map(t => `<i class="${t.done ? 'done' : t.late ? 'late' : ''}" title="Dia ${t.d} · ${t.canal}"></i>`).join('')}</span>`;
+    const dots = dotsHtml;
     const item = ({ c, t }) => { const key = c.id + ':' + t.d, open = S.openMsg === key;
       return `<div class="touch"><div><div class="who"><b>${esc(c.empresa)}</b> <span class="soft">· ${esc(c.decisor || 'sem decisor')}${c.cargo ? ', ' + esc(c.cargo) : ''}</span></div>
         <div class="what"><span class="chip acc">Dia ${t.d} · ${t.canal}</span><span>${t.acao}</span>${t.due < hoje() ? `<span class="chip bad">atrasado ${diff(hoje(), t.due)}d</span>` : ''}${c.linkedinPend ? `<span class="chip warn">conexão pendente no LinkedIn</span>` : ''}<span class="chip">${esc(isAtlas(produtoConta(c)) ? 'Atlas' : 'Sales Coach')}</span>${dots(c)}</div></div>
@@ -965,7 +1043,7 @@ function openOpp(id, preset) {
   const o = id ? S.opps.find(x => x.id === id) : Object.assign({ etapa: 2, produto: 'Sales Coach', primeiroContato: hoje(), ultimaInteracao: hoje() }, preset || {});
   if (!o) return;
   openDrawer(id ? o.empresa : 'Nova oportunidade', oppForm(o),
-    `<div class="tools">${id && !dis() ? `<button class="btn danger" id="delOpp">Excluir</button>` : ''}${id && !dis() ? `<button class="btn" id="touchOpp">Registrar contato hoje</button>` : ''}</div><div class="tools"><button class="btn" data-close>Cancelar</button><button class="btn pri" id="saveOpp" ${dis()}>Salvar</button></div>`);
+    `<div class="tools">${id && !dis() ? `<button class="btn danger" id="delOpp">Excluir</button>` : ''}${id && !dis() ? `<button class="btn" id="touchOpp">Registrar contato hoje</button>` : ''}${id && o.contaId && S.contas.some(x => x.id === o.contaId) ? `<button class="btn" data-open-conta="${o.contaId}">Conta-alvo e cadência</button>` : ''}</div><div class="tools"><button class="btn" data-close>Cancelar</button><button class="btn pri" id="saveOpp" ${dis()}>Salvar</button></div>`);
   oppSummary();
   $('#fOpp').addEventListener('input', oppSummary);
   $('#fOpp').addEventListener('submit', e => e.preventDefault());
@@ -1035,7 +1113,7 @@ function openConta(id) {
   if (!c) return;
   const st = c.status || 'fila';
   openDrawer(id ? c.empresa : 'Nova conta-alvo', contaForm(c),
-    `<div class="tools">${id && !dis() ? `<button class="btn danger" id="delConta">Excluir</button>` : ''}${id && !dis() && st === 'cadencia' ? `<button class="btn" id="respConta">Respondeu</button>` : ''}</div>
+    `<div class="tools">${id && !dis() ? `<button class="btn danger" id="delConta">Excluir</button>` : ''}${id && !dis() && st === 'cadencia' ? `<button class="btn" id="respConta">Respondeu</button>` : ''}${id && oppDaConta(c) ? `<button class="btn" data-open-opp="${c.oppId}">Oportunidade: ${esc(stg(oppDaConta(c).etapa))}</button>` : ''}</div>
      <div class="tools"><button class="btn" data-close>Cancelar</button>${!dis() && st === 'fila' ? `<button class="btn" id="saveStart">Salvar e iniciar cadência</button>` : ''}<button class="btn pri" id="saveConta" ${dis()}>Salvar</button></div>`);
   contaSummary();
   $('#fConta').addEventListener('input', contaSummary);
@@ -1056,10 +1134,11 @@ function openConta(id) {
     else { del.dataset.c = 1; del.textContent = 'Confirmar exclusão'; }
   });
 }
-function respondeu(contaId) {
+const PROX_PASSO = { 2: 'Marcar diagnóstico', 3: 'Fazer o diagnóstico', 4: 'Enviar proposta', 5: 'Retomar a proposta', 6: 'Fechar condições', 7: 'Iniciar implantação', 8: 'Registrar motivo da perda' };
+function respondeu(contaId, etapa = 2) {
   const c = S.contas.find(x => x.id === contaId); if (!c) return;
   const prod = produtoConta(c), feitos = toques(c).filter(t => t.done), ult = feitos[feitos.length - 1];
-  openOpp(null, { contaId, empresa: c.empresa, segmento: c.segmento || '', produto: prod, contato: c.decisor || '', cargo: c.cargo || '', canal: ult ? ult.canal : 'LinkedIn', qtd: isAtlas(prod) ? (c.colaboradores || '') : prod === 'Sales Coach' ? (c.vendedores || '') : '', primeiroContato: c.inicioCadencia || hoje(), ultimaInteracao: hoje(), etapa: 2, proximoPasso: 'Marcar diagnóstico', dataProximo: addDays(hoje(), 1), obs: textoNotas(c) });
+  openOpp(null, { contaId, empresa: c.empresa, segmento: c.segmento || '', produto: prod, contato: c.decisor || '', cargo: c.cargo || '', canal: ult ? ult.canal : 'LinkedIn', qtd: isAtlas(prod) ? (c.colaboradores || '') : prod === 'Sales Coach' ? (c.vendedores || '') : '', primeiroContato: c.inicioCadencia || hoje(), ultimaInteracao: hoje(), etapa, proximoPasso: PROX_PASSO[etapa] || 'Marcar diagnóstico', dataProximo: addDays(hoje(), 1), obs: textoNotas(c) });
 }
 
 function openTask(id) {
@@ -1435,6 +1514,7 @@ document.addEventListener('click', e => {
     case 'newOpp': return openOpp(null);
     case 'newConta': return openConta(null);
     case 'tClosed': S.showClosed = !S.showClosed; return render();
+    case 'tFila': S.filaTodas = !S.filaTodas; return render();
     case 'newTask': return openTask(null);
     case 'newRec': return openRec(null);
     case 'sair': return sb.auth.signOut().then(() => location.reload());
@@ -1476,8 +1556,20 @@ document.addEventListener('dragstart', e => { const c = e.target.closest && e.ta
 document.addEventListener('dragover', e => { const col = e.target.closest && e.target.closest('[data-drop]'); if (col) { e.preventDefault(); $$('.col.over').forEach(x => x !== col && x.classList.remove('over')); col.classList.add('over'); } });
 document.addEventListener('dragleave', e => { const col = e.target.closest && e.target.closest('[data-drop]'); if (col && !col.contains(e.relatedTarget)) col.classList.remove('over'); });
 document.addEventListener('drop', e => { const col = e.target.closest && e.target.closest('[data-drop]'); if (!col) return; e.preventDefault(); col.classList.remove('over');
-  const id = e.dataTransfer.getData('text/plain'), o = S.opps.find(x => x.id === id), et = +col.dataset.drop; if (!o || o.etapa === et) return;
-  saveOpp(id, { ...strip(o), etapa: et, hist: histFor(o, et), ultimaInteracao: hoje() }).then(ok => ok && toast(`${o.empresa}: ${stg(et)}`)); });
+  if (dis()) return;
+  const id = e.dataTransfer.getData('text/plain'), alvo = col.dataset.drop, et = +alvo;
+  // Conta-alvo (prospecção): fila → cadência → resposta (vira oportunidade na etapa em que foi solta).
+  if (id.startsWith('c:')) { const c = S.contas.find(x => x.id === id.slice(2)); if (!c) return; const f = faseConta(c);
+    if (alvo === String(f)) return;
+    if (alvo === 'fila') return saveConta(c.id, { ...strip(c), status: 'fila' }).then(ok => ok && toast(`${c.empresa}: de volta para a fila`));
+    if (alvo === 'cadencia') return saveConta(c.id, { ...strip(c), status: 'cadencia', ...(c.inicioCadencia ? {} : { inicioCadencia: hoje(), toques: [] }) }).then(ok => ok && toast(`${c.empresa}: cadência iniciada`));
+    if (et === 9) return saveConta(c.id, { ...strip(c), status: 'nutrir', retomarEm: addDays(hoje(), 60) }).then(ok => ok && toast(`${c.empresa}: Nutrir`));
+    if (et >= 2 && et <= 8) return respondeu(c.id, et);
+    return; }
+  const o = S.opps.find(x => x.id === id); if (!o) return;
+  if (alvo === 'fila') return toast('Oportunidade não volta para a fila. Para pausar, mova para Nutrir.');
+  const ne = alvo === 'cadencia' ? 1 : et; if (!ne || o.etapa === ne) return;
+  saveOpp(id, { ...strip(o), etapa: ne, hist: histFor(o, ne), ultimaInteracao: hoje() }).then(ok => ok && toast(`${o.empresa}: ${stg(ne)}`)); });
 
 /* exportar */
 /* ───────── inbound ───────── */
