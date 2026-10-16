@@ -1,11 +1,11 @@
 {
  "endpoint": "higgsfield-ai/soul/cinema",
  "args": {
-  "prompt": "A young Black Brazilian man around 25 working in a logistics warehouse, wearing a grey t-shirt and reflective vest, leaning on a stack of cardboard boxes, calm expression, shelves softly blurred behind him. Candid documentary photograph, natural light, 35mm lens, shallow depth of field, warm natural colors, realistic skin texture, authentic Brazilian workplace, person looking relaxed and genuine, not posed like a stock photo, subject in the upper two thirds of the frame, no text, no logos, no watermarks.",
+  "prompt": "A Brazilian man in his 40s in a supermarket uniform standing behind a checkout counter with no customers, chin resting on his hand, staring blankly at the wall clock, bored and disengaged, the same routine for years. Fluorescent supermarket light, aisles blurred behind. Candid documentary photograph, natural light, 35mm lens, shallow depth of field, warm natural colors, realistic skin texture, authentic Brazilian workplace, genuine emotion, not posed like a stock photo, subject in the upper two thirds of the frame, no text, no logos, no watermarks.",
   "aspect_ratio": "3:4",
   "resolution": "1080p",
   "batch_size": 1
  },
- "url": "https://d3u0tzju9qaucj.cloudfront.net/266d8d97-07d5-4e92-897d-d70270f9fb4a/b9ce8efe-e49c-486d-8cde-3b4c33137dbf.png",
- "request_id": "7bec087c-824c-4a9e-b867-008459a10386"
+ "url": "https://d3u0tzju9qaucj.cloudfront.net/266d8d97-07d5-4e92-897d-d70270f9fb4a/00e1773c-5345-4d55-8161-1afb1a1cd997.png",
+ "request_id": "125ca823-e03f-4067-937f-2bd567a3b271"
 }

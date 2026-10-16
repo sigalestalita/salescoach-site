@@ -1,11 +1,11 @@
 {
  "endpoint": "higgsfield-ai/soul/cinema",
  "args": {
-  "prompt": "A Brazilian HR manager in her 50s with short grey hair and a denim shirt, sitting in a sunny meeting room having an attentive one-on-one conversation with a younger colleague seen from behind, she listens and smiles. Candid documentary photograph, natural light, 35mm lens, shallow depth of field, warm natural colors, realistic skin texture, authentic Brazilian workplace, person looking relaxed and genuine, not posed like a stock photo, subject in the upper two thirds of the frame, no text, no logos, no watermarks.",
+  "prompt": "A Brazilian HR leader in her 40s in a casual linen shirt sitting at a small table in a bright break room, leaning forward and listening attentively to a young warehouse worker in a reflective vest who is talking openly and gesturing, both relaxed, a feeling of trust and being heard. Over-the-shoulder shot, her face in focus, no phones, one single photograph Candid documentary photograph, natural light, 35mm lens, shallow depth of field, warm natural colors, realistic skin texture, authentic Brazilian workplace, genuine emotion, not posed like a stock photo, subject in the upper two thirds of the frame, no text, no logos, no watermarks.",
   "aspect_ratio": "3:4",
   "resolution": "1080p",
   "batch_size": 1
  },
- "url": "https://d3u0tzju9qaucj.cloudfront.net/266d8d97-07d5-4e92-897d-d70270f9fb4a/83e13b91-11c1-4e08-8e0c-4418b3c904b2.png",
- "request_id": "173e90f0-9264-4d09-8582-8bb651711533"
+ "url": "https://d3u0tzju9qaucj.cloudfront.net/266d8d97-07d5-4e92-897d-d70270f9fb4a/5f91e600-b3ec-437a-b193-3314a6f75a3a.png",
+ "request_id": "5caa8bed-6621-4234-acd2-853b4f6b90d2"
 }

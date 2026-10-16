@@ -1,11 +1,11 @@
 {
  "endpoint": "higgsfield-ai/soul/cinema",
  "args": {
-  "prompt": "A small diverse Brazilian team of four in casual clothes laughing during a break around a wooden table in a bright workshop-style office with plants and exposed brick, coffee mugs, one woman gesturing as she tells a story. Candid documentary photograph, natural light, 35mm lens, shallow depth of field, warm natural colors, realistic skin texture, authentic Brazilian workplace, person looking relaxed and genuine, not posed like a stock photo, subject in the upper two thirds of the frame, no text, no logos, no watermarks.",
+  "prompt": "A team meeting in a bright, informal Brazilian workplace with plants: in the foreground a young woman in a casual t-shirt sits with her arms crossed, lips pressed, holding back what she wants to say, while blurred colleagues in the background laugh and talk. The contrast between her silence and the group is the focus. Candid documentary photograph, natural light, 35mm lens, shallow depth of field, warm natural colors, realistic skin texture, authentic Brazilian workplace, genuine emotion, not posed like a stock photo, subject in the upper two thirds of the frame, no text, no logos, no watermarks.",
   "aspect_ratio": "3:4",
   "resolution": "1080p",
   "batch_size": 1
  },
- "url": "https://d3u0tzju9qaucj.cloudfront.net/266d8d97-07d5-4e92-897d-d70270f9fb4a/d929e3af-1eeb-4326-bcfa-b97d450164a0.png",
- "request_id": "e03162fd-af8c-4902-86c0-946457d00752"
+ "url": "https://d3u0tzju9qaucj.cloudfront.net/266d8d97-07d5-4e92-897d-d70270f9fb4a/6500b858-d021-41c2-a9de-34a053a7f353.png",
+ "request_id": "6d79c31d-0da5-4150-aea1-70e5b061c62f"
 }

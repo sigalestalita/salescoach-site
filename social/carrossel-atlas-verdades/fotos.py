@@ -11,23 +11,34 @@ import hf
 
 ESTILO = ('Candid documentary photograph, natural light, 35mm lens, shallow depth of field, '
           'warm natural colors, realistic skin texture, authentic Brazilian workplace, '
-          'person looking relaxed and genuine, not posed like a stock photo, '
+          'genuine emotion, not posed like a stock photo, '
           'subject in the upper two thirds of the frame, no text, no logos, no watermarks.')
 
 FOTOS = {
-    # capa: grupo, clima real de trabalho, nada de terno
-    'f1': 'A small diverse Brazilian team of four in casual clothes laughing during a break around a wooden table '
-          'in a bright workshop-style office with plants and exposed brick, coffee mugs, one woman gesturing as she tells a story.',
-    'f2': 'A Brazilian nurse in her 40s with light blue scrubs sitting on a bench in a hospital staff break area, '
-          'holding a coffee cup with both hands, tired but gentle half smile, looking to the side.',
-    'f3': 'A young Black Brazilian man around 25 working in a logistics warehouse, wearing a grey t-shirt and reflective vest, '
-          'leaning on a stack of cardboard boxes, calm expression, shelves softly blurred behind him.',
-    'f4': 'A Brazilian woman in her 30s with curly hair, wearing a dark apron, behind the counter of a busy cafe '
-          'during a quiet moment, wiping her hands on a cloth, thoughtful look, warm afternoon light.',
-    'f5': 'A Brazilian software developer in his late 20s with headphones around his neck, wearing a hoodie, '
-          'sitting at a desk in a colorful coworking space, looking straight at the camera with a sincere, slightly serious expression.',
-    'f6': 'A Brazilian HR manager in her 50s with short grey hair and a denim shirt, sitting in a sunny meeting room '
-          'having an attentive one-on-one conversation with a younger colleague seen from behind, she listens and smiles.',
+    # 1 · Verdades que o RH precisa ouvir: o que não se diz em voz alta
+    'f1': 'A team meeting in a bright, informal Brazilian workplace with plants: in the foreground a young woman in a casual t-shirt '
+          'sits with her arms crossed, lips pressed, holding back what she wants to say, while blurred colleagues in the background '
+          'laugh and talk. The contrast between her silence and the group is the focus.',
+    # 2 · Ninguém reclamar não significa que o time está bem
+    'f2': 'A row of Brazilian factory workers in grey uniforms and safety glasses standing side by side in a quiet factory hall, '
+          'all silent with closed mouths, eyes looking down or away, arms crossed or hands in pockets, nobody raising a hand. '
+          'A single empty space in the moment, heavy uncomfortable silence. Eye-level shot facing the workers, one woman in the center in sharp focus',
+    # 3 · Turnover baixo não significa equipe engajada
+    'f3': 'A Brazilian man in his 40s in a supermarket uniform standing behind a checkout counter with no customers, '
+          'chin resting on his hand, staring blankly at the wall clock, bored and disengaged, the same routine for years. '
+          'Fluorescent supermarket light, aisles blurred behind.',
+    # 4 · Equipe ocupada não significa equipe motivada
+    'f4': 'Close-up portrait of an exhausted young Brazilian cook in a white chef jacket standing still in a busy restaurant kitchen, '
+          'eyes tired and unfocused, sweat on his forehead, shoulders slumped, while other cooks rush past him as motion blur and pans steam behind. '
+          'He is the only sharp person in the frame, empty drained expression',
+    # 5 · Se o seu melhor talento pedisse demissão amanhã…
+    'f5': 'A young Brazilian woman in her late 20s, casual clothes, packing her personal things into a cardboard box at her desk '
+          'in a colorful creative studio: a small plant, a mug, a notebook and a framed photo on top of the box. '
+          'Last day at work, calm but decided expression, colleagues blurred in the background.',
+    # 6 · Atlas Clima: ouvir o time por área e por liderança
+    'f6': 'A Brazilian HR leader in her 40s in a casual linen shirt sitting at a small table in a bright break room, '
+          'leaning forward and listening attentively to a young warehouse worker in a reflective vest who is talking openly and gesturing, '
+          'both relaxed, a feeling of trust and being heard. Over-the-shoulder shot, her face in focus, no phones, one single photograph',
 }
 ARGS = {'aspect_ratio': '3:4', 'resolution': '1080p', 'batch_size': 1}
 
