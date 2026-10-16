@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Story Atlas</title>
+<link rel="stylesheet" href="fonts.css">
+<link rel="stylesheet" href="poppins.css">
+<link rel="stylesheet" href="base.css">
+<style>
+/* Tema do app Atlas (atlas-grou): navy #071A34, primária #15498D, escala de cores do clima. */
+:root { --navy: #071A34; --pri: #15498D; --t1: #071A34; --t2: #64708a; --line: #e3e8f0; --c2: rgba(186,208,246,.9);
+  --c-crit: hsl(0 68% 46%); --c-low: hsl(18 82% 48%); --c-mid: hsl(34 90% 44%); --c-good: hsl(150 52% 38%); --c-high: hsl(158 60% 32%); }
+#marca .m { background: var(--navy); } #marca .m img { width: 60px; }
+#marca .w small { font-family: 'JetBrains Mono'; font-size: 18px; letter-spacing: .18em; color: var(--dim); margin-left: 16px; vertical-align: 6px; }
+.topo { position: absolute; left: 0; right: 0; top: 0; height: 74px; background: var(--navy); display: flex; align-items: center; gap: 14px; padding-left: 28px; font-weight: 600; font-size: 21px; color: #fff; }
+.topo img { height: 26px; } .topo .hb { width: 22px; height: 14px; border-top: 2.5px solid #8aa0c4; border-bottom: 2.5px solid #8aa0c4; margin-right: 18px; }
+.lado { position: absolute; left: 0; top: 74px; bottom: 0; width: 78px; border-right: 1px solid var(--line); display: grid; align-content: start; justify-items: center; gap: 26px; padding-top: 30px; }
+.lado i { width: 22px; height: 22px; border-radius: 6px; border: 2.4px solid #9aa3b5; }
+.lado i.on { width: 44px; height: 44px; border: 0; border-radius: 12px; background: var(--pri); position: relative; }
+.lado i.on::after { content: ""; position: absolute; inset: 13px; border-radius: 50%; border: 2.4px solid #fff; }
+.miolo { position: absolute; left: 78px; top: 74px; right: 0; bottom: 0; background: #f4f6fa; padding: 18px 26px; color: var(--t1); }
+.trilha { font-size: 15px; color: #8b93a7; } .trilha b { color: var(--pri); font-weight: 500; }
+.cards { display: grid; grid-template-columns: 300px 236px 236px; gap: 16px; margin-top: 16px; }
+.card { background: #fff; border-radius: 18px; border: 1px solid var(--line); padding: 18px 20px; }
+.card .t { font-size: 16px; font-weight: 600; } .card .v { font-size: 30px; font-weight: 500; margin-top: 6px; letter-spacing: -.02em; }
+.card .s { font-size: 13px; color: var(--t2); margin-top: 2px; } .card em { font-style: normal; color: var(--c-good); font-weight: 600; }
+.anel { display: flex; align-items: center; gap: 18px; }
+.anel svg { width: 104px; height: 104px; flex: 0 0 auto; }
+.anel .v { font-size: 15px; font-weight: 600; color: var(--c-good); margin-top: 6px; }
+.areas { margin-top: 16px; background: #fff; border-radius: 18px; border: 1px solid var(--line); padding: 20px 22px; }
+.areas .t { font-size: 18px; font-weight: 600; display: flex; justify-content: space-between; }
+.areas .t span { font-size: 14px; font-weight: 500; color: var(--t2); }
+.linha { display: grid; grid-template-columns: 150px 270px 44px; align-items: center; gap: 14px; margin-top: 15px; font-size: 15px; }
+.linha .b { height: 16px; border-radius: 8px; background: #eef2f8; overflow: hidden; } .linha .b i { display: block; height: 100%; border-radius: 8px; }
+.linha b { font-weight: 600; text-align: right; }
+.agir { margin-top: 16px; display: flex; gap: 10px; align-items: center; font-size: 15px; font-weight: 600; }
+.agir span { font-weight: 500; font-size: 13.5px; padding: 7px 14px; border-radius: 999px; background: #fdeee6; color: var(--c-low); }
+.agir span.m { background: #fdf3e2; color: var(--c-mid); }
+</style>
+</head>
+<body>
+<div id="texto"><div id="marca"><div class="m"><img src="img/atlas.svg" alt=""></div><div class="w"><b>Atlas</b><small>CLIMA · 360</small></div></div>
+<h1><span>Sua empresa merece</span>ouvir o time de verdade.</h1>
+<p id="apoio">Pesquisa de clima, feedback 360, eNPS e resultado por liderança em uma só plataforma. <span>Mais clareza para agir no que importa.</span></p></div>
+
+<div id="conheca">Conheça o<br>Atlas →</div>
+
+<div id="app">
+  <div class="topo"><span class="hb"></span><img src="img/atlas.svg" alt="">Atlas</div>
+  <div class="lado"><i></i><i class="on"></i><i></i><i></i><i></i><i></i><i></i></div>
+  <div class="miolo">
+    <div class="trilha"><b>Pesquisas</b> / Clima 2026 · Resultado</div>
+    <div class="cards">
+      <div class="card anel"><svg viewBox="0 0 120 120"><circle cx="60" cy="60" r="50" fill="none" stroke="#eef2f8" stroke-width="13"/><circle cx="60" cy="60" r="50" fill="none" stroke="hsl(150 52% 38%)" stroke-width="13" stroke-linecap="round" stroke-dasharray="232 314" transform="rotate(-90 60 60)"/><text x="60" y="70" text-anchor="middle" font-family="Poppins" font-size="32" font-weight="600" fill="#071A34">74</text></svg>
+        <div><div class="t">Clima geral</div><div class="v">Saudável</div><div class="s">de 0 a 100</div></div></div>
+      <div class="card"><div class="t">Participação</div><div class="v">86%</div><div class="s"><em>↑ 14%</em> na rodada</div></div>
+      <div class="card"><div class="t">eNPS</div><div class="v">+32</div><div class="s"><em>↑ 9</em> pontos</div></div>
+    </div>
+    <div class="areas"><div class="t">Clima por área <span>Média de 1 a 5</span></div>
+      <div class="linha"><span>Comercial</span><div class="b"><i style="width:84%;background:var(--c-high)"></i></div><b>4,2</b></div>
+      <div class="linha"><span>Atendimento</span><div class="b"><i style="width:78%;background:var(--c-good)"></i></div><b>3,9</b></div>
+      <div class="linha"><span>Operações</span><div class="b"><i style="width:70%;background:var(--c-good)"></i></div><b>3,5</b></div>
+      <div class="linha"><span>Tecnologia</span><div class="b"><i style="width:62%;background:var(--c-mid)"></i></div><b>3,1</b></div>
+      <div class="linha"><span>Financeiro</span><div class="b"><i style="width:52%;background:var(--c-low)"></i></div><b>2,6</b></div>
+    </div>
+    <div class="agir">Onde agir primeiro <span>Reconhecimento</span><span class="m">Carga de trabalho</span></div>
+    <div class="areas" style="margin-top:14px"><div class="t">Feedback 360 · Lideranças <span>12 líderes avaliados</span></div>
+      <div class="linha"><span>Comunicação</span><div class="b"><i style="width:80%;background:var(--pri)"></i></div><b>4,0</b></div></div>
+  </div>
+</div>
+
+<div id="cursor"><svg viewBox="0 0 24 24"><path d="M3 2l18 8-8 2.6L10 21z" fill="#10120e" stroke="#fff" stroke-width="1.4" stroke-linejoin="round"/></svg><b>RH</b></div>
+<div id="nexa"><span>um produto</span><img src="img/nexa.svg" alt="NEXA"></div>
+</body>
+</html>

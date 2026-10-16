@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Story Sales Coach</title>
+<link rel="stylesheet" href="fonts.css">
+<link rel="stylesheet" href="poppins.css">
+<link rel="stylesheet" href="base.css">
+<style>
+:root { --navy: #0f2c5c; --azul: #1d4f9a; --c2: rgba(196,214,245,.9); }
+#marca .m { background: var(--navy); } #marca .m img { width: 66px; filter: brightness(0) invert(1); }
+/* Interface do Sales Coach (gestão) */
+.lado { position: absolute; left: 0; top: 0; bottom: 0; width: 78px; border-right: 1px solid #edf0f5; display: grid; align-content: start; justify-items: center; gap: 26px; padding-top: 104px; }
+.lado i { width: 22px; height: 22px; border-radius: 6px; border: 2.4px solid #9aa3b5; }
+.lado i.on { width: 44px; height: 44px; border: 0; border-radius: 12px; background: var(--navy); position: relative; }
+.lado i.on::after { content: ""; position: absolute; inset: 13px; border-radius: 4px; border: 2.4px solid #fff; }
+.topo { position: absolute; left: 0; right: 0; top: 0; height: 74px; border-bottom: 1px solid #edf0f5; display: flex; align-items: center; gap: 14px; padding-left: 28px; font-weight: 600; font-size: 21px; color: #16213a; }
+.topo img { height: 28px; } .topo .hb { width: 22px; height: 14px; border-top: 2.5px solid #9aa3b5; border-bottom: 2.5px solid #9aa3b5; margin-right: 18px; }
+.miolo { position: absolute; left: 78px; top: 74px; right: 0; bottom: 0; background: #f6f8fb; padding: 18px 26px; }
+.trilha { font-size: 15px; color: #8b93a7; } .trilha b { color: var(--azul); font-weight: 500; }
+.filtros { margin-top: 16px; background: #fff; border-radius: 16px; padding: 18px 22px; display: flex; align-items: center; gap: 18px; font-size: 18px; font-weight: 600; color: #16213a; box-shadow: 0 0 0 1px #edf0f5; }
+.filtros small { font-weight: 400; font-size: 13px; color: #9aa3b5; } .filtros u { font-weight: 500; font-size: 13.5px; color: #16213a; }
+.kpis { display: grid; grid-template-columns: repeat(3, 236px); gap: 16px; margin-top: 16px; }
+.kpi { background: #fff; border-radius: 16px; padding: 18px 20px; box-shadow: 0 0 0 1px #edf0f5; }
+.kpi .t { display: flex; justify-content: space-between; font-size: 16px; font-weight: 600; color: #16213a; }
+.kpi .t em { font-style: normal; font-size: 13px; font-weight: 500; color: #2f9a4a; }
+.kpi .v { font-size: 27px; color: #4a5368; margin-top: 8px; font-weight: 400; }
+.graf { margin-top: 16px; background: #fff; border-radius: 16px; padding: 20px 22px; box-shadow: 0 0 0 1px #edf0f5; height: 352px; position: relative; }
+.graf .t { display: flex; justify-content: space-between; font-size: 18px; font-weight: 600; color: #16213a; }
+.graf .t span { font-size: 15px; font-weight: 500; color: #6a7287; display: flex; gap: 22px; } .graf .t span b { color: #16213a; font-weight: 600; border-bottom: 3px solid #16213a; padding-bottom: 6px; }
+.eixo { position: absolute; left: 22px; top: 72px; bottom: 54px; display: flex; flex-direction: column; justify-content: space-between; font-size: 13px; color: #9aa3b5; }
+.barras { position: absolute; left: 66px; right: 0; top: 80px; bottom: 54px; display: flex; align-items: flex-end; gap: 7px; border-bottom: 1px solid #e7ebf2; }
+.barras i { flex: 0 0 15px; border-radius: 4px 4px 0 0; background: #c9d6ea; }
+.barras i.h { background: var(--azul); }
+.barras svg { position: absolute; inset: 0; overflow: visible; }
+.leg { position: absolute; left: 66px; bottom: 18px; display: flex; gap: 22px; font-size: 13px; color: #6a7287; }
+.leg i { display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 6px; vertical-align: -1px; }
+.rank { margin-top: 14px; display: flex; gap: 120px; font-size: 15px; font-weight: 600; color: #16213a; padding-left: 14px; }
+.rank div { display: flex; align-items: center; gap: 12px; } .rank small { display: block; font-weight: 400; color: #6a7287; }
+.rank i { width: 32px; height: 32px; border-radius: 50%; display: grid; place-items: center; font-style: normal; font-size: 14px; background: var(--lima); color: var(--tinta); }
+.rank i.s { background: #e9edf4; }
+</style>
+</head>
+<body>
+<div id="texto"><div id="marca"><div class="m"><img src="img/mark.png" alt=""></div><div class="w"><b>Sales</b> <span>Coach</span></div></div>
+
+<h1><span>Seu time merece um</span>coach em cada reunião.</h1>
+<p id="apoio">Treino com IA, dica ao vivo no Meet e no Teams, nota de cada reunião e CRM preenchido sozinho. <span>Mais método e menos achismo.</span></p></div>
+
+<div id="conheca">Conheça o<br>Sales Coach →</div>
+
+<div id="app">
+  <div class="topo"><span class="hb"></span><img src="img/mark.png" alt="">Sales Coach</div>
+  <div class="lado"><i></i><i></i><i></i><i class="on"></i><i></i><i></i><i></i><i></i></div>
+  <div class="miolo">
+    <div class="trilha"><b>Gestão</b> / Visão do time</div>
+    <div class="filtros">Filtros <small>Últimos 30 dias · Time comercial</small> <u>Limpar filtros</u></div>
+    <div class="kpis">
+      <div class="kpi"><div class="t">Nota média <em>↑ 12%</em></div><div class="v">82</div></div>
+      <div class="kpi"><div class="t">Reuniões <em>↑ 20%</em></div><div class="v">148</div></div>
+      <div class="kpi"><div class="t">Objeções <em>↑ 9%</em></div><div class="v">71%</div></div>
+    </div>
+    <div class="graf"><div class="t">Nota do time x Meta <span><b>Semanal</b>Mensal</span></div>
+      <div class="eixo"><span>100</span><span>75</span><span>50</span><span>25</span><span>0</span></div>
+      <div class="barras" id="barras"></div>
+      <div class="leg"><span><i style="background:#c9d6ea"></i>Nota da semana</span><span><i style="background:var(--azul)"></i>Acima da meta</span><span><i style="background:#9be05a;border-radius:50%"></i>Meta 75</span></div>
+    </div>
+    <div class="rank"><div><i>1</i><span>Ana Lima<small>Nota 92</small></span></div><div><i class="s">2</i><span>Bruno Teixeira<small>Nota 88</small></span></div></div>
+  </div>
+</div>
+
+<div id="cursor"><svg viewBox="0 0 24 24"><path d="M3 2l18 8-8 2.6L10 21z" fill="#10120e" stroke="#fff" stroke-width="1.4" stroke-linejoin="round"/></svg><b>Gestor</b></div>
+<div id="nexa"><span>um produto</span><img src="img/nexa.svg" alt="NEXA"></div>
+<script>
+// Notas semanais subindo e cruzando a meta (75).
+const notas = [48,52,50,55,58,54,60,63,61,66,64,69,72,70,74,77,79,76,81,83,82,86,88];
+const box = document.getElementById('barras');
+notas.forEach(n => { const i = document.createElement('i'); i.style.height = n + '%'; if (n >= 75) i.className = 'h'; box.appendChild(i); });
+const w = 22 * notas.length, pts = notas.map((n, k) => `${k * 22 + 7.5},${(100 - Math.min(100, n + 6)) * 2.18}`).join(' ');
+box.insertAdjacentHTML('beforeend', `<svg viewBox="0 0 ${w} 218" preserveAspectRatio="none" style="width:${w}px;height:218px"><line x1="0" x2="${w}" y1="${25*2.18}" y2="${25*2.18}" stroke="#9be05a" stroke-width="2.5" stroke-dasharray="7 6"/><polyline points="${pts}" fill="none" stroke="#3f7fe0" stroke-width="3" stroke-linejoin="round"/></svg>`);
+</script>
+</body>
+</html>
