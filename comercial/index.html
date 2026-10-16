@@ -807,9 +807,10 @@ const VIEWS = {
         <select class="inp" id="fStatus" aria-label="Situação"><option value="abertas" ${S.contaFiltro === 'abertas' ? 'selected' : ''}>Ativas (fila, cadência e oportunidades abertas)</option><option value="" ${!S.contaFiltro ? 'selected' : ''}>Todas</option>${Object.entries(CSTATUS).map(([k, v]) => `<option value="${k}" ${S.contaFiltro === k ? 'selected' : ''}>${v}</option>`).join('')}</select>
         <div class="seg" role="group" aria-label="Prioridade">${['', 'A', 'B', 'C'].map(p => `<button data-prio="${p}" class="${S.contaPrio === p ? 'on' : ''}">${p || 'Todas'}</button>`).join('')}</div>
         ${S.dl ? `<button class="btn" id="expContas">Exportar CSV</button>` : ''}
+        <button class="btn" id="impLista" ${dis()}>Importar lista</button>
         <button class="btn pri" id="newConta" ${dis()}>+ Conta</button>
       </div></div>
-    ${!S.contas.length ? `<div class="empty"><b>Nenhuma conta cadastrada.</b><span>Comece pelas empresas do cliente ideal: 5 a 50 vendedores que vendem por videochamada (Sales Coach) ou 50 a 1.000 pessoas com RH estruturado (Atlas).</span></div>` :
+    ${!S.contas.length ? `<div class="empty"><b>Nenhuma conta cadastrada.</b><span>Importe uma lista (CSV, Excel ou Google Sheets) ou comece pelas empresas do cliente ideal: 5 a 50 vendedores que vendem por videochamada (Sales Coach) ou 50 a 1.000 pessoas com RH estruturado (Atlas).</span></div>` :
     `<div class="tw"><table><thead><tr><th>Prioridade</th><th>Empresa</th><th>Segmento</th><th class="n">Sales Coach</th><th class="n">Atlas</th><th>Produto</th><th>Decisor</th><th>Situação</th><th></th></tr></thead><tbody>
       ${cs.map(({ c, n }) => `<tr class="click" data-open-conta="${c.id}"><td><span class="prio ${n.prio}">${n.prio}</span></td><td><b style="font-weight:500">${esc(c.empresa)}</b>${c.inbound ? ` <span class="chip acc" title="${esc(c.origem || 'Inbound')}">inbound</span>` : ''}</td><td>${esc(c.segmento)}</td><td class="n">${n.sc}</td><td class="n">${n.at}</td><td>${esc(produtoConta(c))}</td><td>${esc(c.decisor)}${c.cargo ? `<div class="mute" style="font-size:12px">${esc(c.cargo)}</div>` : ''}</td><td>${situacaoConta(c)}</td>
         <td class="n">${(c.status || 'fila') === 'fila' && n.prio !== 'C' && !dis() ? `<button class="btn sm" data-start="${c.id}">Iniciar cadência</button>` : ''}</td></tr>`).join('') || `<tr><td colspan="9" class="mute">Nenhuma conta com esse filtro.</td></tr>`}
@@ -913,6 +914,7 @@ const VIEWS = {
     <div class="top"><div><h1>Ajustes e importar</h1><p class="sub">Tudo o que vinha da planilha: etapas, listas, cadência e mensagens. Cada campo salva ao sair dele.</p></div></div>
     <section class="card"><header><h2>Importar da planilha</h2><span class="mono soft">.xlsx</span></header>
       <p class="soft">Escolha o arquivo <b>NEXA_operacao_comercial.xlsx</b> preenchido. O sistema lê as abas Pipeline, Contas-alvo, Atividades, Metas e funil, Preços, Etapas e Plano 90 dias. Linhas de EXEMPLO e empresas que já existem aqui são ignoradas.</p>
+      <p class="soft">Para subir outras listas de empresas e contatos (CSV, Excel ou Google Sheets), use <b>Importar lista</b> em Contas-alvo.</p>
       <div class="tools"><input type="file" id="impFile" accept=".xlsx,.xls" ${d}></div>
       ${im ? (im.erro ? `<p class="banner">${esc(im.erro)}</p>` : `<div class="list">
         ${[['opps', 'oportunidades novas', im.opps.length, im.dupOpp], ['contas', 'contas-alvo novas', im.contas.length, im.dupConta], ['semanas', 'semanas de atividades', im.semanas.length]].map(([k, l, n, dup]) => `<label class="row" style="grid-template-columns:auto minmax(0,1fr)"><input type="checkbox" id="imp-${k}" ${n ? 'checked' : 'disabled'}><span><b style="font-weight:500">${n}</b> ${l}${dup ? ` <span class="mute">· ${dup} já existem e serão ignoradas</span>` : ''}</span></label>`).join('')}
@@ -1284,6 +1286,217 @@ async function importar() {
   S.imp = null; S.importando = false; render(); toast(`Importação concluída: ${n} registros`);
 }
 
+/* ───────── importar lista de contatos/empresas (CSV, Excel ou Google Sheets) ───────── */
+const IL_CAMPOS = [
+  ['empresa', 'Empresa', ['empresa', 'company', 'company name', 'nome da empresa', 'razao social', 'nome fantasia', 'organizacao', 'organization', 'account name', 'conta', 'cliente']],
+  ['site', 'Site', ['site', 'website', 'dominio', 'domain', 'company domain', 'company website', 'url', 'site da empresa']],
+  ['segmento', 'Segmento', ['segmento', 'setor', 'industry', 'ramo', 'nicho', 'sector', 'ramo de atividade']],
+  ['cidade', 'Cidade', ['cidade', 'city', 'municipio', 'localidade', 'location', 'company city']],
+  ['vendedores', 'Nº de vendedores', ['vendedores', 'n de vendedores', 'no de vendedores', 'numero de vendedores', 'time comercial']],
+  ['colaboradores', 'Nº de colaboradores', ['colaboradores', 'funcionarios', 'employees', '# employees', 'numero de funcionarios', 'n de funcionarios', 'company size', 'headcount', 'porte']],
+  ['decisor', 'Nome do contato', ['nome', 'name', 'contato', 'decisor', 'full name', 'nome completo', 'contact name', 'first name', 'primeiro nome', 'nome do contato', 'lead']],
+  ['sobrenome', 'Sobrenome', ['sobrenome', 'last name', 'ultimo nome', 'surname']],
+  ['cargo', 'Cargo', ['cargo', 'title', 'job title', 'funcao', 'position', 'cargo do contato']],
+  ['email', 'E-mail', ['email', 'e-mail', 'work email', 'email corporativo', 'e-mail corporativo', 'email address', 'e-mail do contato']],
+  ['telefone', 'Telefone ou WhatsApp', ['telefone', 'phone', 'celular', 'whatsapp', 'mobile', 'fone', 'tel', 'mobile phone', 'direct phone', 'work phone', 'phone number']],
+  ['linkedin', 'LinkedIn do contato', ['linkedin', 'linkedin url', 'person linkedin url', 'perfil linkedin', 'linkedin do decisor', 'linkedin do contato']],
+  ['gatilho', 'Gatilho observado', ['gatilho', 'trigger']],
+  ['obs', 'Observações', ['observacoes', 'obs', 'notas', 'notes', 'comentarios', 'descricao']],
+];
+const IL_PESSOA = ['decisor', 'sobrenome', 'cargo', 'email', 'telefone', 'linkedin'];
+let IL = null;
+
+function ilAdivinhar(headers) {
+  const H = headers.map(norm), usado = new Set(), map = {};
+  const achar = (campo, sin, parcial) => H.findIndex((h, i) => h && !usado.has(i) && (parcial
+    ? sin.some(s => s.length >= 5 && h.includes(s)) && !(IL_PESSOA.includes(campo) && /company|empresa/.test(h))
+    : sin.includes(h)));
+  for (const parcial of [false, true]) for (const [k, , sin] of IL_CAMPOS) {
+    if (map[k] !== undefined) continue; const i = achar(k, sin, parcial); if (i >= 0) { map[k] = i; usado.add(i); }
+  }
+  IL_CAMPOS.forEach(([k]) => { if (map[k] === undefined) map[k] = ''; });
+  return map;
+}
+function ilCsv(txt) {
+  const linha1 = txt.slice(0, txt.indexOf('\n') + 1 || txt.length);
+  const sep = [';', ',', '\t', '|'].map(s => [s, linha1.split(s).length]).sort((a, b) => b[1] - a[1])[0][0];
+  const rows = []; let row = [], f = '', q = false;
+  for (let i = 0; i < txt.length; i++) { const ch = txt[i];
+    if (q) { if (ch === '"') { if (txt[i + 1] === '"') { f += '"'; i++; } else q = false; } else f += ch; continue; }
+    if (ch === '"' && f === '') q = true; else if (ch === sep) { row.push(f); f = ''; }
+    else if (ch === '\n' || ch === '\r') { if (ch === '\r' && txt[i + 1] === '\n') i++; row.push(f); rows.push(row); row = []; f = ''; }
+    else f += ch; }
+  if (f !== '' || row.length) { row.push(f); rows.push(row); }
+  return rows;
+}
+function ilTexto(buf) {
+  let t; try { t = new TextDecoder('utf-8', { fatal: true }).decode(buf); } catch (e) { t = new TextDecoder('windows-1252').decode(buf); }
+  return t.replace(/^﻿/, '');
+}
+function ilTabela(rows) {
+  rows = rows.map(r => r.map(v => String(v ?? '').trim()));
+  const hi = rows.slice(0, 20).findIndex(r => r.filter(Boolean).length >= 2);
+  if (hi < 0) return null;
+  return { headers: rows[hi], linhas: rows.slice(hi + 1).filter(r => r.some(Boolean)) };
+}
+function ilCarregar(nome, abas) {
+  const nomes = Object.keys(abas), aba = nomes.find(n => { const t = ilTabela(abas[n]); return t && t.linhas.length; }) || nomes[0];
+  IL = { nome, abas, aba, origem: 'Lista · ' + nome.replace(/\.(csv|tsv|txt|xlsx|xls)$/i, ''), seg: '', dup: 'ignorar', erro: '' };
+  ilAba(aba);
+}
+function ilAba(aba) {
+  const t = ilTabela(IL.abas[aba] || []); IL.aba = aba;
+  if (!t || !t.linhas.length) { IL.headers = []; IL.linhas = []; IL.map = {}; IL.erro = 'Não encontrei linhas com dados nesta aba. A primeira linha precisa ter os nomes das colunas.'; }
+  else { IL.headers = t.headers; IL.linhas = t.linhas; IL.map = ilAdivinhar(t.headers); IL.erro = ''; }
+  ilDesenhar();
+}
+async function ilArquivo(file) {
+  ilAbrir(); ilStatus('Lendo o arquivo…');
+  try {
+    const buf = await file.arrayBuffer(), b = new Uint8Array(buf.slice(0, 4));
+    const excel = (b[0] === 0x50 && b[1] === 0x4b) || (b[0] === 0xd0 && b[1] === 0xcf);
+    if (excel) {
+      await loadXLSX(); const wb = XLSX.read(buf, { cellDates: true }), abas = {};
+      // Valores crus: telefone salvo como número não vira 5,51E+12, e data vira dd/mm/aaaa.
+      const txt = v => v instanceof Date && !isNaN(v) ? `${pad(v.getDate())}/${pad(v.getMonth() + 1)}/${v.getFullYear()}` : typeof v === 'number' ? (Number.isInteger(v) ? v.toFixed(0) : String(v)) : String(v ?? '');
+      wb.SheetNames.forEach(n => { abas[n] = XLSX.utils.sheet_to_json(wb.Sheets[n], { header: 1, raw: true, defval: '' }).map(r => r.map(txt)); });
+      ilCarregar(file.name, abas);
+    } else ilCarregar(file.name, { [file.name]: ilCsv(ilTexto(buf)) });
+  } catch (e) { IL = null; ilStatus('Não consegui ler este arquivo. Envie um .csv ou .xlsx.', true); }
+}
+async function ilSheets(url) {
+  const m = String(url).match(/\/spreadsheets\/d\/([\w-]{20,})/), gid = (String(url).match(/[#&?]gid=(\d+)/) || [])[1] || '0';
+  if (!m) return ilStatus('Cole o link da planilha do Google, aquele que começa com docs.google.com/spreadsheets/d/…', true);
+  ilStatus('Buscando a planilha no Google…');
+  const naoAbriu = 'O Google não liberou a planilha. No Google Sheets, clique em Compartilhar e escolha “Qualquer pessoa com o link: Leitor”. Se ela não puder ser aberta assim, baixe como CSV (Arquivo → Fazer download → .csv) e envie o arquivo.';
+  try {
+    const r = await fetch(`https://docs.google.com/spreadsheets/d/${m[1]}/export?format=csv&gid=${gid}`, { credentials: 'omit' });
+    if (!r.ok || /text\/html/i.test(r.headers.get('content-type') || '')) return ilStatus(naoAbriu, true);
+    const rows = ilCsv(ilTexto(await r.arrayBuffer()));
+    ilCarregar('Google Sheets', { 'Planilha do Google': rows }); IL.url = url; ilDesenhar();
+  } catch (e) { ilStatus(naoAbriu, true); }
+}
+function ilQtd(v) {
+  const ns = String(v).replace(/\./g, '').match(/\d+/g); if (!ns) return '';
+  return ns.length >= 2 && /\d\s*(-|a|to|até)\s*\d/i.test(v) ? Math.round((+ns[0] + +ns[1]) / 2) : +ns[0];
+}
+function ilLinha(r) {
+  const g = k => { const i = IL.map[k]; return i === '' || i == null ? '' : String(r[i] ?? '').trim(); };
+  let nome = g('decisor'); const sob = g('sobrenome'); if (sob && !norm(nome).includes(norm(sob))) nome = `${nome} ${sob}`.trim();
+  const segs = S.cfg.listas.segmentos || [], sg = g('segmento'), seg = sg ? (segs.find(s => norm(s) === norm(sg)) || sg) : IL.seg;
+  return { empresa: g('empresa'), site: g('site'), segmento: seg, cidade: g('cidade'), vendedores: ilQtd(g('vendedores')), colaboradores: ilQtd(g('colaboradores')),
+    decisor: nome, cargo: g('cargo'), email: g('email').toLowerCase(), telefone: g('telefone'), linkedin: g('linkedin'), gatilho: g('gatilho'), obs: g('obs') };
+}
+const IL_DADOS = ['site', 'segmento', 'cidade', 'vendedores', 'colaboradores', 'decisor', 'cargo', 'email', 'telefone', 'linkedin', 'gatilho'];
+function ilPlano() {
+  const ex = new Map(S.contas.map(c => [norm(c.empresa), c])), exE = new Map(S.contas.filter(c => c.email).map(c => [String(c.email).toLowerCase(), c]));
+  const novas = new Map(), completar = new Map(); let dup = 0, semEmpresa = 0, extras = 0;
+  const preencher = (alvo, c) => { let mud = false; IL_DADOS.forEach(k => { if ((alvo[k] === '' || alvo[k] == null) && c[k] !== '') { alvo[k] = c[k]; mud = true; } }); return mud; };
+  const outroContato = (alvo, c) => {
+    if (!c.decisor && !c.email) return false;
+    if ((c.email && c.email === alvo.email) || (c.decisor && norm(c.decisor) === norm(alvo.decisor))) return false;
+    if (!alvo.decisor && !alvo.email) return false;
+    const txt = 'Outro contato: ' + [c.decisor, c.cargo, c.email, c.telefone, c.linkedin].filter(Boolean).join(' · ');
+    if (String(alvo.obs || '').includes(txt)) return false;
+    alvo.obs = [alvo.obs, txt].filter(Boolean).join('\n'); return true;
+  };
+  for (const r of IL.linhas) {
+    const c = ilLinha(r); if (!c.empresa) { semEmpresa++; continue; }
+    const k = norm(c.empresa), velha = ex.get(k) || (c.email && exE.get(c.email));
+    if (velha) { dup++;
+      if (IL.dup === 'completar') { const cur = completar.get(velha.id) || strip(velha); const a = outroContato(cur, c), b = preencher(cur, c); if (a || b) completar.set(velha.id, cur); }
+      continue; }
+    if (novas.has(k)) { const n = novas.get(k); if (outroContato(n, c)) extras++; preencher(n, c); continue; }
+    novas.set(k, { ...c, online: false, crm: false, rh: false, naoContatar: false, produto: '', status: 'fila', origem: IL.origem.trim() || 'Lista importada' });
+  }
+  return { novas: [...novas.values()], completar: [...completar.entries()], dup, semEmpresa, extras };
+}
+function ilAbrir() {
+  if ($('#ilBody')) return;
+  openDrawer('Importar lista', '<div id="ilBody" style="display:grid;gap:16px"></div>', '<div class="tools"><span class="soft" id="ilProg" aria-live="polite"></span></div><div class="tools"><button class="btn" data-close>Cancelar</button><button class="btn pri" id="ilGo" disabled>Importar</button></div>');
+  ilDesenhar();
+}
+function ilStatus(msg, bad) { ilAbrir(); const el = $('#ilMsg'); if (el) { el.textContent = msg; el.className = bad ? 'banner' : 'soft'; el.hidden = !msg; } }
+function ilDesenhar() {
+  const body = $('#ilBody'); if (!body) return;
+  const fonte = `<div style="display:grid;gap:10px">
+      <p class="soft">Suba uma planilha com empresas e contatos. Cada linha vira uma conta-alvo na fila. A primeira linha precisa ter os nomes das colunas (Empresa, Nome, Cargo, E-mail, Telefone…), e você confere a correspondência antes de importar.</p>
+      <label class="fields" style="display:grid;gap:4px;font-size:12.5px;color:var(--soft)">Arquivo CSV ou Excel<input type="file" class="inp" id="ilFile" accept=".csv,.tsv,.txt,.xlsx,.xls,text/csv"></label>
+      <div class="fields" style="display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:end"><label style="display:grid;gap:4px;font-size:12.5px;color:var(--soft)">Ou link do Google Sheets<input class="inp" id="ilUrl" placeholder="https://docs.google.com/spreadsheets/d/…" value="${esc((IL && IL.url) || '')}"></label><button class="btn" id="ilUrlGo">Buscar</button></div>
+      <p class="mute" style="font-size:12.5px">No Google Sheets, a planilha precisa estar em “Qualquer pessoa com o link: Leitor”. O link da aba aberta é o que vale.</p>
+      <p id="ilMsg" hidden></p></div>`;
+  if (!IL) { body.innerHTML = fonte; ilBotao(); return; }
+  const nomes = Object.keys(IL.abas), cols = IL.headers.map((h, i) => [i, h || `Coluna ${i + 1}`]);
+  const sel = k => `<select class="inp" id="ilm-${k}" data-ilmap="${k}"><option value="">Não importar</option>${cols.map(([i, h]) => `<option value="${i}" ${IL.map[k] === i ? 'selected' : ''}>${esc(h)}</option>`).join('')}</select>`;
+  const p = IL.erro ? null : ilPlano(); IL.plano = p;
+  const amostra = p ? IL.linhas.slice(0, 5).map(ilLinha) : [];
+  body.innerHTML = `${fonte}
+    <section style="display:grid;gap:10px"><header style="display:flex;justify-content:space-between;align-items:center;gap:8px"><h2 style="font-size:15px">${esc(IL.nome)}</h2>
+      ${nomes.length > 1 ? `<select class="inp" id="ilAba" aria-label="Aba">${nomes.map(n => `<option ${n === IL.aba ? 'selected' : ''}>${esc(n)}</option>`).join('')}</select>` : ''}</header>
+      ${IL.erro ? `<p class="banner">${esc(IL.erro)}</p>` : `
+      <p class="soft"><b>${IL.linhas.length}</b> linha${IL.linhas.length === 1 ? '' : 's'} encontrada${IL.linhas.length === 1 ? '' : 's'}. Confira de qual coluna vem cada informação:</p>
+      <div class="fields" style="grid-template-columns:minmax(0,1fr) minmax(0,1.3fr);align-items:center;gap:6px 10px">
+        ${IL_CAMPOS.map(([k, l]) => `<label for="ilm-${k}" style="font-size:13px;color:var(--fg)">${l}${k === 'empresa' ? ' <span class="mute">(obrigatório)</span>' : ''}</label>${sel(k)}`).join('')}
+      </div>`}
+    </section>
+    ${p ? `<section style="display:grid;gap:10px"><h2 style="font-size:15px">Como entra</h2>
+      <div class="fields" style="grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px">
+        <label>Origem (aparece em cada conta)<input class="inp" id="ilOrigem" value="${esc(IL.origem)}"></label>
+        <label>Segmento quando a linha não tiver<select class="inp" id="ilSeg">${opts(S.cfg.listas.segmentos, IL.seg, '—')}</select></label>
+        <label class="full" style="grid-column:1/-1">Empresas que já estão no CRM<select class="inp" id="ilDup"><option value="ignorar" ${IL.dup === 'ignorar' ? 'selected' : ''}>Deixar como estão</option><option value="completar" ${IL.dup === 'completar' ? 'selected' : ''}>Completar só os campos vazios e anotar contatos novos</option></select></label>
+      </div>
+      <div class="list">
+        <div class="row" style="grid-template-columns:minmax(0,1fr)"><span><b style="font-weight:500">${p.novas.length}</b> conta${p.novas.length === 1 ? '' : 's'} nova${p.novas.length === 1 ? '' : 's'} na fila${p.extras ? ` <span class="mute">· ${p.extras} contato${p.extras === 1 ? '' : 's'} a mais da mesma empresa vão para as observações</span>` : ''}</span></div>
+        ${p.dup ? `<div class="row" style="grid-template-columns:minmax(0,1fr)"><span><b style="font-weight:500">${p.dup}</b> linha${p.dup === 1 ? '' : 's'} de empresas que já existem <span class="mute">· ${IL.dup === 'completar' ? `${p.completar.length} conta${p.completar.length === 1 ? '' : 's'} será${p.completar.length === 1 ? '' : 'ão'} completada${p.completar.length === 1 ? '' : 's'}` : 'ficam como estão'}</span></span></div>` : ''}
+        ${p.semEmpresa ? `<div class="row" style="grid-template-columns:minmax(0,1fr)"><span><b style="font-weight:500">${p.semEmpresa}</b> linha${p.semEmpresa === 1 ? '' : 's'} sem empresa <span class="mute">· não entram</span></span></div>` : ''}
+      </div>
+      ${amostra.length ? `<div class="tw"><table><thead><tr><th>Empresa</th><th>Contato</th><th>E-mail</th><th>Telefone</th><th>Segmento</th></tr></thead><tbody>
+        ${amostra.map(c => `<tr><td>${esc(c.empresa) || '<span class="mute">sem empresa</span>'}</td><td>${esc(c.decisor)}${c.cargo ? `<div class="mute" style="font-size:12px">${esc(c.cargo)}</div>` : ''}</td><td>${esc(c.email)}</td><td>${esc(c.telefone)}</td><td>${esc(c.segmento)}</td></tr>`).join('')}
+      </tbody></table></div><p class="mute" style="font-size:12.5px">Prévia das primeiras ${amostra.length} linhas.</p>` : ''}
+    </section>` : ''}`;
+  ilBotao();
+}
+function ilBotao() {
+  const b = $('#ilGo'); if (!b) return; const p = IL && IL.plano, n = p ? p.novas.length + p.completar.length : 0;
+  b.disabled = !n || dis() || (IL && IL.busy); b.textContent = IL && IL.busy ? 'Importando…' : n ? `Importar ${n} conta${n === 1 ? '' : 's'}` : 'Importar';
+}
+async function ilImportar() {
+  if (!IL || !IL.plano || IL.busy || dis()) return;
+  const p = ilPlano();
+  if (!S.db) return toast('Entre com seu login para salvar.');
+  if (S.ro) return toast('Você está em modo leitura.');
+  IL.busy = true; ilBotao();
+  const ag = new Date().toISOString(), prog = m => { const el = $('#ilProg'); if (el) el.textContent = m; };
+  const itens = [...p.novas.map(c => [S.db.collection('contas').doc().path, { ...c, criadoEm: ag, atualizadoEm: ag }]),
+    ...p.completar.map(([id, c]) => ['contas/' + id, { ...c, atualizadoEm: ag }])];
+  let feitos = 0;
+  try { await S.db.setMany(itens, n => { feitos = n; prog(`${n} de ${itens.length} salvas…`); }); }
+  catch (e) {
+    IL.busy = false; ilBotao();
+    if (e && e.code === 'invalid_argument') { S.ro = true; render(); return toast('Sem permissão para editar. Peça a um administrador para mudar seu papel.'); }
+    prog(''); return toast(feitos ? `Parou no meio: ${feitos} de ${itens.length} salvas. Tente de novo; as que já entraram serão reconhecidas.` : 'Não foi possível salvar. Tente de novo.');
+  }
+  const novas = p.novas.length, comp = p.completar.length;
+  IL = null; closeDrawer(); S.contaFiltro = 'abertas'; render();
+  toast(`Lista importada: ${novas} conta${novas === 1 ? '' : 's'} nova${novas === 1 ? '' : 's'}${comp ? ` e ${comp} completada${comp === 1 ? '' : 's'}` : ''}`);
+}
+function abrirImportLista() { IL = null; ilAbrir(); }
+document.addEventListener('change', e => {
+  const t = e.target; if (!t.closest || !t.closest('#ilBody')) return;
+  if (t.id === 'ilFile' && t.files[0]) return ilArquivo(t.files[0]);
+  if (!IL) return;
+  if (t.id === 'ilAba') return ilAba(t.value);
+  if (t.dataset.ilmap) { IL.map[t.dataset.ilmap] = t.value === '' ? '' : +t.value; return ilDesenhar(); }
+  if (t.id === 'ilSeg') { IL.seg = t.value; return ilDesenhar(); }
+  if (t.id === 'ilDup') { IL.dup = t.value; return ilDesenhar(); }
+  if (t.id === 'ilOrigem') { IL.origem = t.value; return; }
+});
+document.addEventListener('click', e => {
+  const t = e.target.closest && e.target.closest('#ilUrlGo,#ilGo'); if (!t) return;
+  if (t.id === 'ilGo') return ilImportar();
+  const u = $('#ilUrl').value.trim(); if (IL) IL.url = u; return ilSheets(u);
+});
+document.addEventListener('keydown', e => { if (e.key === 'Enter' && e.target.id === 'ilUrl') { e.preventDefault(); ilSheets(e.target.value.trim()); } });
 
 /* ───────── listas de prospecção (Lusha) ───────── */
 
@@ -1513,6 +1726,7 @@ document.addEventListener('click', e => {
   switch (t.id) {
     case 'newOpp': return openOpp(null);
     case 'newConta': return openConta(null);
+    case 'impLista': return abrirImportLista();
     case 'tClosed': S.showClosed = !S.showClosed; return render();
     case 'tFila': S.filaTodas = !S.filaTodas; return render();
     case 'newTask': return openTask(null);
@@ -1631,7 +1845,16 @@ function criarDb(sb) {
   const colRef = path => ({ path, doc: id => docRef(path + '/' + (id || novoId())),
     onSnapshot(fn) { const n = segs(path).length + 1; const s2 = () => { if (!pronto) return; const docs = [...cache.keys()].filter(k => k.startsWith(path + '/') && segs(k).length === n).sort().map(snap); fn({ docs, size: docs.length, empty: !docs.length }); };
       subs.add(s2); s2(); return () => subs.delete(s2); } });
-  return { doc: docRef, collection: colRef, carregar, comRetentativa };
+  /* Grava muitos documentos de uma vez (importação de listas), em lotes. */
+  async function setMany(itens, prog) {
+    for (let i = 0; i < itens.length; i += 200) {
+      const lote = itens.slice(i, i + 200);
+      const { error } = await comRetentativa(() => sb.from('docs').upsert(lote.map(([path, data]) => ({ path, data })), { onConflict: 'path' }));
+      if (error) throw erro(error);
+      lote.forEach(([path, data]) => cache.set(path, data)); notify(); prog && prog(i + lote.length);
+    }
+  }
+  return { doc: docRef, collection: colRef, carregar, comRetentativa, setMany };
 }
 
 /* ───────── login ───────── */
