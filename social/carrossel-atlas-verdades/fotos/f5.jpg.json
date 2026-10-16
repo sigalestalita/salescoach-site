@@ -1,11 +1,11 @@
 {
  "endpoint": "higgsfield-ai/soul/cinema",
  "args": {
-  "prompt": "A young Brazilian woman in her late 20s, casual clothes, packing her personal things into a cardboard box at her desk in a colorful creative studio: a small plant, a mug, a notebook and a framed photo on top of the box. Last day at work, calm but decided expression, colleagues blurred in the background. Candid documentary photograph, natural light, 35mm lens, shallow depth of field, warm natural colors, realistic skin texture, authentic Brazilian workplace, genuine emotion, not posed like a stock photo, subject in the upper two thirds of the frame, no text, no logos, no watermarks.",
+  "prompt": "A confident Brazilian woman around 30, smart casual, standing at her desk in a modern sales office packing her things into a cardboard box: a small plant, a mug and a glass top seller award on top of the box. Last day at work, calm and decided expression, blurred colleagues watching in the background. Candid documentary photograph, natural light, 35mm lens, shallow depth of field, warm natural colors, realistic skin texture, modern Brazilian corporate workplace, genuine emotion, not posed like a stock photo, subject in the upper two thirds of the frame, no text, no logos, no watermarks.",
   "aspect_ratio": "3:4",
   "resolution": "1080p",
   "batch_size": 1
  },
- "url": "https://d3u0tzju9qaucj.cloudfront.net/266d8d97-07d5-4e92-897d-d70270f9fb4a/d4a89847-c1e6-4ca7-8a25-94e1fe90dad9.png",
- "request_id": "6415dd93-f0ad-4636-a4a0-5166edf2b6ef"
+ "url": "https://d3u0tzju9qaucj.cloudfront.net/266d8d97-07d5-4e92-897d-d70270f9fb4a/d91e3603-7054-4679-9578-9b31cbfdb1eb.png",
+ "request_id": "6691731a-3ba3-477e-ab57-c8180926831a"
 }

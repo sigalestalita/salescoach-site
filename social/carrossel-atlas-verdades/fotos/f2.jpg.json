@@ -1,11 +1,11 @@
 {
  "endpoint": "higgsfield-ai/soul/cinema",
  "args": {
-  "prompt": "A row of Brazilian factory workers in grey uniforms and safety glasses standing side by side in a quiet factory hall, all silent with closed mouths, eyes looking down or away, arms crossed or hands in pockets, nobody raising a hand. A single empty space in the moment, heavy uncomfortable silence. Eye-level shot facing the workers, one woman in the center in sharp focus Candid documentary photograph, natural light, 35mm lens, shallow depth of field, warm natural colors, realistic skin texture, authentic Brazilian workplace, genuine emotion, not posed like a stock photo, subject in the upper two thirds of the frame, no text, no logos, no watermarks.",
+  "prompt": "Five young Brazilian sales reps in their late 20s, smart casual, sitting around a meeting table in a modern startup office, their manager just asked if anyone has a concern and nobody answers: all silent, avoiding eye contact, one staring at her coffee cup, one looking at his laptop, a young woman in the center looking down with a tense face. Eye-level shot across the table, natural window light Candid documentary photograph, natural light, 35mm lens, shallow depth of field, warm natural colors, realistic skin texture, modern Brazilian corporate workplace, genuine emotion, not posed like a stock photo, subject in the upper two thirds of the frame, no text, no logos, no watermarks.",
   "aspect_ratio": "3:4",
   "resolution": "1080p",
   "batch_size": 1
  },
- "url": "https://d3u0tzju9qaucj.cloudfront.net/266d8d97-07d5-4e92-897d-d70270f9fb4a/7553e21d-7600-4e97-b03c-ddfe60f7c039.png",
- "request_id": "c54fe8c6-91b2-42f8-82d0-5c740386f440"
+ "url": "https://d3u0tzju9qaucj.cloudfront.net/266d8d97-07d5-4e92-897d-d70270f9fb4a/9436c89b-6ead-4eaf-93f7-93f5cea4f073.png",
+ "request_id": "2f122364-62a2-415f-88f0-a454cf65e560"
 }

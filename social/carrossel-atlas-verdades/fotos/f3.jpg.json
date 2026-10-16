@@ -1,11 +1,11 @@
 {
  "endpoint": "higgsfield-ai/soul/cinema",
  "args": {
-  "prompt": "A Brazilian man in his 40s in a supermarket uniform standing behind a checkout counter with no customers, chin resting on his hand, staring blankly at the wall clock, bored and disengaged, the same routine for years. Fluorescent supermarket light, aisles blurred behind. Candid documentary photograph, natural light, 35mm lens, shallow depth of field, warm natural colors, realistic skin texture, authentic Brazilian workplace, genuine emotion, not posed like a stock photo, subject in the upper two thirds of the frame, no text, no logos, no watermarks.",
+  "prompt": "A young Brazilian sales rep around 27 in a modern startup sales floor, wearing a casual sweater and a headset around his neck, slumped in his chair with his cheek on his hand, staring blankly at a laptop, bored and disengaged, young colleagues blurred and busy in the background, plants and neon sign Candid documentary photograph, natural light, 35mm lens, shallow depth of field, warm natural colors, realistic skin texture, modern Brazilian corporate workplace, genuine emotion, not posed like a stock photo, subject in the upper two thirds of the frame, no text, no logos, no watermarks.",
   "aspect_ratio": "3:4",
   "resolution": "1080p",
   "batch_size": 1
  },
- "url": "https://d3u0tzju9qaucj.cloudfront.net/266d8d97-07d5-4e92-897d-d70270f9fb4a/00e1773c-5345-4d55-8161-1afb1a1cd997.png",
- "request_id": "125ca823-e03f-4067-937f-2bd567a3b271"
+ "url": "https://d3u0tzju9qaucj.cloudfront.net/266d8d97-07d5-4e92-897d-d70270f9fb4a/4085980d-47ac-4c0d-8ecb-bfc4b62b3f2a.png",
+ "request_id": "0d2fd444-abe1-418d-8220-f1e1f88bb203"
 }
