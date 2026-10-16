@@ -1,0 +1,19 @@
+/* Variação 4:5 para o feed (1080×1350): mesma estrutura, mais compacta.
+   Sem áreas reservadas do Stories; o produto sangra pela direita e por baixo. */
+html, body { height: 1350px; }
+body { background:
+    radial-gradient(55% 28% at 8% 0%, rgba(212,249,105,.55), transparent 72%),
+    radial-gradient(60% 30% at 100% 2%, var(--c2, rgba(206,196,245,.85)), transparent 70%),
+    radial-gradient(70% 26% at 20% 100%, rgba(212,249,105,.5), transparent 72%),
+    radial-gradient(60% 28% at 100% 98%, var(--c2, rgba(206,196,245,.8)), transparent 70%),
+    linear-gradient(180deg, #ededea 0%, #e9eae6 45%, #eef0e8 100%); }
+#texto { top: 76px; left: 80px; gap: 40px; }
+#marca { gap: 24px; } #marca .m { width: 88px; height: 88px; border-radius: 22px; }
+#marca .w { font-size: 42px; }
+h1 { font-size: 66px; }
+#apoio { font-size: 31px; margin-top: -6px; }
+#conheca { left: 80px; top: 690px; font-size: 36px; }
+#app { left: 420px; top: 600px; }
+#cursor { left: 340px; top: 940px; }
+#nexa { left: 80px; bottom: 56px; font-size: 18px; }
+#nexa img { height: 16px; }
