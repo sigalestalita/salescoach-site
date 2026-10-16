@@ -1,5 +1,6 @@
 """Cliente mínimo da API da Higgsfield para o reel.
-A credencial vem da variável HF_AUTH ("KEY_ID:SECRET"), nunca do repositório.
+A credencial vem das variáveis HIGGSFIELD_API_KEY e HIGGSFIELD_API_SECRET (ou HF_AUTH,
+"KEY_ID:SECRET") do ambiente da sessão, nunca do repositório.
 
   python3 hf.py estimate <endpoint> '<json>'
   python3 hf.py run <endpoint> '<json>' <arquivo-de-saída>
@@ -7,7 +8,11 @@ A credencial vem da variável HF_AUTH ("KEY_ID:SECRET"), nunca do repositório.
 import json, os, sys, time, uuid, urllib.request, urllib.error
 
 API = 'https://api.higgsfield.ai'
-AUTH = {'Authorization': 'Key ' + os.environ['HF_AUTH'], 'Content-Type': 'application/json'}
+_k, _s = os.environ.get('HIGGSFIELD_API_KEY'), os.environ.get('HIGGSFIELD_API_SECRET')
+_cred = os.environ.get('HF_AUTH') or (f'{_k}:{_s}' if _k and _s else None)
+if not _cred:
+    sys.exit('Faltam HIGGSFIELD_API_KEY e HIGGSFIELD_API_SECRET (ou HF_AUTH) no ambiente da sessão.')
+AUTH = {'Authorization': 'Key ' + _cred, 'Content-Type': 'application/json'}
 
 def req(method, url, body=None, extra=None):
     data = json.dumps(body).encode() if body is not None else None

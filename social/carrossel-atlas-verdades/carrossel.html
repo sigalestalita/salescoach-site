@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Carrossel Atlas · Verdades</title>
+<link rel="stylesheet" href="poppins.css">
+<style>
+/* Carrossel 4:5 (1080×1350) do Atlas: foto inteira, frase numa faixa cinza-clara
+   com estrelinhas lima. Fotos em fotos/fN.jpg (python3 fotos.py). Gerar: node render.mjs */
+:root { --navy: #071A34; --lima: #d4f969; --tinta: #10120e; --faixa: rgba(236,236,233,.94); }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: #222; font-family: 'Poppins', sans-serif; -webkit-font-smoothing: antialiased; }
+.s { position: relative; width: 1080px; height: 1350px; overflow: hidden; margin-bottom: 20px;
+  background: linear-gradient(160deg, #5b6470, #2d3239); }
+.s .foto { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.s .falta { position: absolute; left: 40px; top: 40px; font-size: 22px; color: rgba(255,255,255,.55); }
+
+/* Marca discreta no canto */
+.marca { position: absolute; right: 44px; top: 44px; display: flex; align-items: center; gap: 12px;
+  padding: 10px 18px 10px 10px; border-radius: 99px; background: rgba(7,26,52,.72); backdrop-filter: blur(8px);
+  color: #fff; font-weight: 600; font-size: 22px; }
+.marca i { display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%; background: var(--navy); }
+.marca i img { width: 22px; }
+
+/* Faixa da frase */
+.faixa { position: absolute; left: 50%; transform: translateX(-50%); width: 800px; padding: 32px 44px;
+  background: var(--faixa); color: var(--tinta); text-align: center; font-size: 52px; line-height: 1.16;
+  letter-spacing: -.02em; font-weight: 400; box-shadow: 0 30px 60px -30px rgba(0,0,0,.45); }
+.faixa b { font-weight: 600; }
+
+/* Estrelinha de quatro pontas, lima */
+.st { position: absolute; width: 58px; height: 58px; }
+.st svg { width: 100%; height: 100%; fill: var(--lima); filter: drop-shadow(0 2px 3px rgba(0,0,0,.25)); }
+
+/* Capa */
+.capa .grad { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,0) 45%, rgba(0,0,0,.55) 100%); }
+.capa h1 { position: absolute; left: 0; right: 0; bottom: 250px; text-align: center; color: #fff; font-weight: 700;
+  font-size: 104px; line-height: .98; letter-spacing: -.02em; text-transform: uppercase; text-shadow: 0 6px 30px rgba(0,0,0,.35); }
+.capa .selo { position: absolute; left: 560px; bottom: 120px; transform: rotate(-4deg); background: #fff; color: var(--tinta);
+  font-size: 40px; line-height: 1.1; padding: 18px 30px; text-align: center; box-shadow: 0 16px 30px -14px rgba(0,0,0,.5); }
+
+/* Fecho */
+.fecho .grad { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(7,26,52,0) 30%, rgba(7,26,52,.86) 78%); }
+.fecho .faixa { font-size: 46px; }
+.fecho .cta { position: absolute; left: 0; right: 0; bottom: 110px; display: flex; justify-content: center; align-items: center; gap: 22px; color: #fff; font-size: 30px; }
+.fecho .cta span { background: var(--lima); color: var(--tinta); font-weight: 600; padding: 16px 30px; border-radius: 99px; }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute"><symbol id="estrela" viewBox="0 0 100 100"><path d="M50 0C53 30 60 44 100 50C60 56 53 70 50 100C47 70 40 56 0 50C40 44 47 30 50 0Z"/></symbol></svg>
+
+<section class="s capa">
+  <img class="foto" src="fotos/f1.jpg" alt="">
+  <div class="grad"></div>
+  <div class="marca"><i><img src="img/atlas.svg" alt=""></i>Atlas</div>
+  <h1>Verdades que<br>o RH precisa<br>ouvir</h1>
+  <div class="selo">sobre clima<br>e pessoas</div>
+  <div class="st" style="left:536px;bottom:196px;width:44px;height:44px"><svg><use href="#estrela"/></svg></div>
+  <div class="st" style="left:902px;bottom:96px;width:40px;height:40px"><svg><use href="#estrela"/></svg></div>
+</section>
+
+<section class="s">
+  <img class="foto" src="fotos/f2.jpg" alt="">
+  <div class="marca"><i><img src="img/atlas.svg" alt=""></i>Atlas</div>
+  <div class="faixa" style="top:860px">Ninguém reclamar não significa que o time está bem.</div>
+  <div class="st" style="left:110px;top:826px"><svg><use href="#estrela"/></svg></div>
+  <div class="st" style="left:912px;top:1000px"><svg><use href="#estrela"/></svg></div>
+</section>
+
+<section class="s">
+  <img class="foto" src="fotos/f3.jpg" alt="">
+  <div class="marca"><i><img src="img/atlas.svg" alt=""></i>Atlas</div>
+  <div class="faixa" style="top:880px">Turnover baixo não significa equipe engajada.</div>
+  <div class="st" style="left:890px;top:846px"><svg><use href="#estrela"/></svg></div>
+  <div class="st" style="left:96px;top:1000px"><svg><use href="#estrela"/></svg></div>
+  <div class="st" style="left:800px;top:1060px;width:46px;height:46px"><svg><use href="#estrela"/></svg></div>
+</section>
+
+<section class="s">
+  <img class="foto" src="fotos/f4.jpg" alt="">
+  <div class="marca"><i><img src="img/atlas.svg" alt=""></i>Atlas</div>
+  <div class="faixa" style="top:860px">Equipe ocupada não significa equipe motivada.</div>
+  <div class="st" style="left:120px;top:828px"><svg><use href="#estrela"/></svg></div>
+  <div class="st" style="left:900px;top:1010px"><svg><use href="#estrela"/></svg></div>
+</section>
+
+<section class="s">
+  <img class="foto" src="fotos/f5.jpg" alt="">
+  <div class="marca"><i><img src="img/atlas.svg" alt=""></i>Atlas</div>
+  <div class="faixa" style="top:840px">Se o seu melhor talento pedisse demissão amanhã, você saberia o motivo?</div>
+  <div class="st" style="left:96px;top:910px"><svg><use href="#estrela"/></svg></div>
+  <div class="st" style="left:880px;top:806px"><svg><use href="#estrela"/></svg></div>
+  <div class="st" style="left:780px;top:1070px;width:46px;height:46px"><svg><use href="#estrela"/></svg></div>
+</section>
+
+<section class="s fecho">
+  <img class="foto" src="fotos/f6.jpg" alt="">
+  <div class="grad"></div>
+  <div class="marca"><i><img src="img/atlas.svg" alt=""></i>Atlas</div>
+  <div class="faixa" style="top:790px">O <b>Atlas Clima</b> mostra como o time está, por área e por liderança, antes de alguém pedir demissão.</div>
+  <div class="st" style="left:100px;top:760px"><svg><use href="#estrela"/></svg></div>
+  <div class="st" style="left:906px;top:990px"><svg><use href="#estrela"/></svg></div>
+  <div class="cta"><span>Conheça o Atlas</span>nexatech.ia.br</div>
+</section>
+
+<script>
+// Sem a foto ainda: fundo provisório com o nome do arquivo.
+document.querySelectorAll('.foto').forEach(img => img.addEventListener('error', () => {
+  const d = document.createElement('div'); d.className = 'falta'; d.textContent = 'foto provisória · ' + img.getAttribute('src');
+  img.replaceWith(d);
+}));
+</script>
+</body>
+</html>
