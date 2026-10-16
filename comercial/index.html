@@ -331,8 +331,17 @@ const DEFAULTS = {
   listas: {
     segmentos: ['Software/SaaS', 'Serviços B2B', 'Consultoria', 'Distribuidora/indústria', 'Educação corporativa', 'Agência', 'Saúde/clínicas', 'Financeiro/seguros', 'Imobiliário', 'Varejo', 'Outro'],
     canais: ['LinkedIn', 'E-mail', 'Ligação', 'Indicação', 'Parceiro', 'Evento/comunidade', 'Inbound (site/Instagram)', 'WhatsApp'],
+    portes: ['Micro · até 9 pessoas', 'Pequena · 10 a 49 pessoas', 'Média · 50 a 249 pessoas', 'Grande · 250 a 999 pessoas', 'Muito grande · 1.000 pessoas ou mais'],
   },
 };
+/* Porte sugerido pelo nº de colaboradores, quando ninguém escolheu. Só vale se a faixa padrão ainda estiver na lista. */
+const PORTE_FAIXAS = [[9, 0], [49, 1], [249, 2], [999, 3], [Infinity, 4]];
+function porteDe(n) {
+  if (n === '' || n == null || isNaN(+n) || +n <= 0) return '';
+  const [, i] = PORTE_FAIXAS.find(([max]) => +n <= max), v = DEFAULTS.listas.portes[i];
+  return (S.cfg.listas.portes || []).includes(v) ? v : '';
+}
+const porteConta = c => c.porte || porteDe(c.colaboradores);
 const TOUCHES = [
   { d: 1, canal: 'LinkedIn', acao: 'Visitar o perfil, comentar um post e pedir conexão' },
   { d: 2, canal: 'E-mail', acao: 'E-mail 1' },
@@ -811,8 +820,8 @@ const VIEWS = {
         <button class="btn pri" id="newConta" ${dis()}>+ Conta</button>
       </div></div>
     ${!S.contas.length ? `<div class="empty"><b>Nenhuma conta cadastrada.</b><span>Importe uma lista (CSV, Excel ou Google Sheets) ou comece pelas empresas do cliente ideal: 5 a 50 vendedores que vendem por videochamada (Sales Coach) ou 50 a 1.000 pessoas com RH estruturado (Atlas).</span></div>` :
-    `<div class="tw"><table><thead><tr><th>Prioridade</th><th>Empresa</th><th>Segmento</th><th class="n">Sales Coach</th><th class="n">Atlas</th><th>Produto</th><th>Decisor</th><th>Situação</th><th></th></tr></thead><tbody>
-      ${cs.map(({ c, n }) => `<tr class="click" data-open-conta="${c.id}"><td><span class="prio ${n.prio}">${n.prio}</span></td><td><b style="font-weight:500">${esc(c.empresa)}</b>${c.inbound ? ` <span class="chip acc" title="${esc(c.origem || 'Inbound')}">inbound</span>` : ''}</td><td>${esc(c.segmento)}</td><td class="n">${n.sc}</td><td class="n">${n.at}</td><td>${esc(produtoConta(c))}</td><td>${esc(c.decisor)}${c.cargo ? `<div class="mute" style="font-size:12px">${esc(c.cargo)}</div>` : ''}</td><td>${situacaoConta(c)}</td>
+    `<div class="tw"><table><thead><tr><th>Prioridade</th><th>Empresa</th><th>Segmento e porte</th><th class="n">Sales Coach</th><th class="n">Atlas</th><th>Produto</th><th>Decisor</th><th>Situação</th><th></th></tr></thead><tbody>
+      ${cs.map(({ c, n }) => `<tr class="click" data-open-conta="${c.id}"><td><span class="prio ${n.prio}">${n.prio}</span></td><td><b style="font-weight:500">${esc(c.empresa)}</b>${c.inbound ? ` <span class="chip acc" title="${esc(c.origem || 'Inbound')}">inbound</span>` : ''}</td><td>${esc(c.segmento)}${porteConta(c) ? `<div class="mute" style="font-size:12px">${esc(porteConta(c).split(' · ')[0])}</div>` : ''}</td><td class="n">${n.sc}</td><td class="n">${n.at}</td><td>${esc(produtoConta(c))}</td><td>${esc(c.decisor)}${c.cargo ? `<div class="mute" style="font-size:12px">${esc(c.cargo)}</div>` : ''}</td><td>${situacaoConta(c)}</td>
         <td class="n">${(c.status || 'fila') === 'fila' && n.prio !== 'C' && !dis() ? `<button class="btn sm" data-start="${c.id}">Iniciar cadência</button>` : ''}</td></tr>`).join('') || `<tr><td colspan="9" class="mute">Nenhuma conta com esse filtro.</td></tr>`}
     </tbody></table></div>`}`;
   },
@@ -932,7 +941,7 @@ const VIEWS = {
         <td class="n"><input class="inp small" type="number" step="any" min="0" max="100" id="et-${e}-p" data-cfg="probs.${e}" data-kind="pct" value="${Math.round((c.probs[e] || 0) * 1000) / 10}" ${d}></td></tr>`).join('')}
       </tbody></table></div>
     </section>
-    <section class="card"><header><h2>Listas</h2></header><div class="grid2">${lista('segmentos', 'Segmentos')}${lista('canais', 'Canais de origem')}</div></section>
+    <section class="card"><header><h2>Listas</h2></header><div class="grid2">${lista('segmentos', 'Segmentos')}${lista('portes', 'Porte das empresas')}${lista('canais', 'Canais de origem')}</div></section>
     <section class="card"><header><h2>Cadência e mensagens</h2><button class="btn sm" id="addToque" ${d}>+ Toque</button></header>
       <p class="soft">Use {nome}, {empresa} e {eu} nas mensagens: o sistema troca pelo primeiro nome do decisor, pela empresa e pelo seu nome. O que estiver entre colchetes aparece destacado para você trocar. Mudar o dia de um toque desmarca esse toque nas contas que já o tinham feito.</p>
       ${cs.map(({ t, i }) => `<div class="card" style="background:var(--bg)"><div class="fields" style="grid-template-columns:90px minmax(0,1fr) minmax(0,2fr) auto;align-items:end">
@@ -1017,6 +1026,7 @@ function oppForm(o) {
     <label id="lQtd">${isAtlas(o.produto) ? 'Colaboradores' : 'Usuários'}<input class="inp" type="number" min="0" name="qtd" id="o-qtd" value="${esc(o.qtd ?? '')}" ${d}></label>
     <label id="lProj" ${o.produto === 'Fábrica de soluções' ? '' : 'hidden'}>Valor do projeto (R$)<input class="inp" type="number" min="0" name="valorProjeto" id="o-proj" value="${esc(o.valorProjeto ?? '')}" ${d}></label>
     <label>Segmento<select class="inp" name="segmento" id="o-seg" ${d}>${opts(S.cfg.listas.segmentos, o.segmento, '—')}</select></label>
+    <label>Porte<select class="inp" name="porte" id="o-porte" ${d}>${opts(S.cfg.listas.portes || [], o.porte, '—')}</select></label>
     <label>Canal de origem<select class="inp" name="canal" id="o-canal" ${d}>${opts(S.cfg.listas.canais, o.canal, '—')}</select></label>
     <label>Contato<input class="inp" name="contato" id="o-contato" value="${esc(o.contato)}" ${d}></label>
     <label>Cargo<input class="inp" name="cargo" id="o-cargo" value="${esc(o.cargo)}" ${d}></label>
@@ -1075,6 +1085,7 @@ function contaForm(c) {
     <label>Site ou LinkedIn da empresa<input class="inp" name="site" id="c-site" value="${esc(c.site)}" ${d}></label>
     <label>Segmento<select class="inp" name="segmento" id="c-seg" ${d}>${opts(S.cfg.listas.segmentos, c.segmento, '—')}</select></label>
     <label>Cidade<input class="inp" name="cidade" id="c-cidade" value="${esc(c.cidade)}" ${d}></label>
+    <label>Porte<select class="inp" name="porte" id="c-porte" ${d}>${opts(S.cfg.listas.portes || [], porteConta(c), '—')}</select></label>
     <label>Gatilho observado<input class="inp" name="gatilho" id="c-gat" value="${esc(c.gatilho)}" placeholder="Ex.: 3 vagas de SDR" ${d}></label>
     <p class="sect" style="grid-column:1/-1">Encaixe Sales Coach</p>
     <label>Nº de vendedores<input class="inp" type="number" min="0" name="vendedores" id="c-vend" value="${esc(c.vendedores ?? '')}" ${d}></label>
@@ -1140,7 +1151,7 @@ const PROX_PASSO = { 2: 'Marcar diagnóstico', 3: 'Fazer o diagnóstico', 4: 'En
 function respondeu(contaId, etapa = 2) {
   const c = S.contas.find(x => x.id === contaId); if (!c) return;
   const prod = produtoConta(c), feitos = toques(c).filter(t => t.done), ult = feitos[feitos.length - 1];
-  openOpp(null, { contaId, empresa: c.empresa, segmento: c.segmento || '', produto: prod, contato: c.decisor || '', cargo: c.cargo || '', canal: ult ? ult.canal : 'LinkedIn', qtd: isAtlas(prod) ? (c.colaboradores || '') : prod === 'Sales Coach' ? (c.vendedores || '') : '', primeiroContato: c.inicioCadencia || hoje(), ultimaInteracao: hoje(), etapa, proximoPasso: PROX_PASSO[etapa] || 'Marcar diagnóstico', dataProximo: addDays(hoje(), 1), obs: textoNotas(c) });
+  openOpp(null, { contaId, empresa: c.empresa, segmento: c.segmento || '', porte: porteConta(c), produto: prod, contato: c.decisor || '', cargo: c.cargo || '', canal: ult ? ult.canal : 'LinkedIn', qtd: isAtlas(prod) ? (c.colaboradores || '') : prod === 'Sales Coach' ? (c.vendedores || '') : '', primeiroContato: c.inicioCadencia || hoje(), ultimaInteracao: hoje(), etapa, proximoPasso: PROX_PASSO[etapa] || 'Marcar diagnóstico', dataProximo: addDays(hoje(), 1), obs: textoNotas(c) });
 }
 
 function openTask(id) {
@@ -1293,7 +1304,8 @@ const IL_CAMPOS = [
   ['segmento', 'Segmento', ['segmento', 'setor', 'industry', 'ramo', 'nicho', 'sector', 'ramo de atividade']],
   ['cidade', 'Cidade', ['cidade', 'city', 'municipio', 'localidade', 'location', 'company city']],
   ['vendedores', 'Nº de vendedores', ['vendedores', 'n de vendedores', 'no de vendedores', 'numero de vendedores', 'time comercial']],
-  ['colaboradores', 'Nº de colaboradores', ['colaboradores', 'funcionarios', 'employees', '# employees', 'numero de funcionarios', 'n de funcionarios', 'company size', 'headcount', 'porte']],
+  ['colaboradores', 'Nº de colaboradores', ['colaboradores', 'funcionarios', 'employees', '# employees', 'numero de funcionarios', 'n de funcionarios', 'company size', 'headcount']],
+  ['porte', 'Porte', ['porte', 'porte da empresa', 'tamanho da empresa', 'tamanho']],
   ['decisor', 'Nome do contato', ['nome', 'name', 'contato', 'decisor', 'full name', 'nome completo', 'contact name', 'first name', 'primeiro nome', 'nome do contato', 'lead']],
   ['sobrenome', 'Sobrenome', ['sobrenome', 'last name', 'ultimo nome', 'surname']],
   ['cargo', 'Cargo', ['cargo', 'title', 'job title', 'funcao', 'position', 'cargo do contato']],
@@ -1384,10 +1396,13 @@ function ilLinha(r) {
   const g = k => { const i = IL.map[k]; return i === '' || i == null ? '' : String(r[i] ?? '').trim(); };
   let nome = g('decisor'); const sob = g('sobrenome'); if (sob && !norm(nome).includes(norm(sob))) nome = `${nome} ${sob}`.trim();
   const segs = S.cfg.listas.segmentos || [], sg = g('segmento'), seg = sg ? (segs.find(s => norm(s) === norm(sg)) || sg) : IL.seg;
-  return { empresa: g('empresa'), site: g('site'), segmento: seg, cidade: g('cidade'), vendedores: ilQtd(g('vendedores')), colaboradores: ilQtd(g('colaboradores')),
+  const ps = S.cfg.listas.portes || [], pt = g('porte'), pv = norm(pt).split(/[\s·(-]/)[0];
+  const sigla = { mei: 0, me: 0, micro: 0, microempresa: 0, epp: 1, pequena: 1, pequeno: 1, media: 2, medio: 2, grande: 3 }[pv], padrao = sigla !== undefined && DEFAULTS.listas.portes[sigla];
+  const porte = pt ? (ps.find(x => norm(x) === norm(pt)) || (padrao && ps.includes(padrao) && padrao) || (pv.length >= 4 && ps.find(x => norm(x).startsWith(pv))) || pt) : porteDe(ilQtd(g('colaboradores')));
+  return { empresa: g('empresa'), site: g('site'), segmento: seg, porte, cidade: g('cidade'), vendedores: ilQtd(g('vendedores')), colaboradores: ilQtd(g('colaboradores')),
     decisor: nome, cargo: g('cargo'), email: g('email').toLowerCase(), telefone: g('telefone'), linkedin: g('linkedin'), gatilho: g('gatilho'), obs: g('obs') };
 }
-const IL_DADOS = ['site', 'segmento', 'cidade', 'vendedores', 'colaboradores', 'decisor', 'cargo', 'email', 'telefone', 'linkedin', 'gatilho'];
+const IL_DADOS = ['site', 'segmento', 'porte', 'cidade', 'vendedores', 'colaboradores', 'decisor', 'cargo', 'email', 'telefone', 'linkedin', 'gatilho'];
 function ilPlano() {
   const ex = new Map(S.contas.map(c => [norm(c.empresa), c])), exE = new Map(S.contas.filter(c => c.email).map(c => [String(c.email).toLowerCase(), c]));
   const novas = new Map(), completar = new Map(); let dup = 0, semEmpresa = 0, extras = 0;
@@ -1801,12 +1816,12 @@ async function carregarInbound() {
 function exportar(tipo) {
   const q = v => `"${String(v ?? '').replace(/"/g, '""')}"`;
   let rows;
-  if (tipo === 'pipeline') rows = [['Empresa', 'Produto', 'Etapa', 'Contato', 'Cargo', 'Canal', 'Segmento', 'Qtd', 'Mensalidade', 'Implantação', 'Projeto', '1º ano', 'Probabilidade', 'Ponderado', 'Próximo passo', 'Data', 'Última interação', 'Observações'],
-    ...S.opps.map(o => { const v = valores(o); return [o.empresa, o.produto, stg(o.etapa), o.contato, o.cargo, o.canal, o.segmento, o.qtd, v.m.toFixed(2), v.i, v.proj, v.ano.toFixed(2), v.prob, v.pond.toFixed(2), o.proximoPasso, o.dataProximo, o.ultimaInteracao, o.obs]; })];
+  if (tipo === 'pipeline') rows = [['Empresa', 'Produto', 'Etapa', 'Contato', 'Cargo', 'Canal', 'Segmento', 'Porte', 'Qtd', 'Mensalidade', 'Implantação', 'Projeto', '1º ano', 'Probabilidade', 'Ponderado', 'Próximo passo', 'Data', 'Última interação', 'Observações'],
+    ...S.opps.map(o => { const v = valores(o); return [o.empresa, o.produto, stg(o.etapa), o.contato, o.cargo, o.canal, o.segmento, o.porte, o.qtd, v.m.toFixed(2), v.i, v.proj, v.ano.toFixed(2), v.prob, v.pond.toFixed(2), o.proximoPasso, o.dataProximo, o.ultimaInteracao, o.obs]; })];
   else if (tipo === 'inbound') rows = [['Data', 'Nome', 'E-mail', 'WhatsApp', 'Empresa', 'Cargo', 'Funcionários', 'Vendedores', 'Origem', 'Interesse', 'Canal', 'utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term', 'gclid', 'fbclid', 'Página', 'Canal do 1º toque', 'Entrada do 1º toque', 'Situação da conta'],
     ...S.inb.rows.map(l => { const r = l.rastreio || {}, u = r.ultimo || l.utm || {}, c = inbConta(l); return [new Date(l.criado_em).toLocaleString('pt-BR'), l.nome, l.email, l.whatsapp, l.empresa, l.cargo, l.funcionarios, l.vendedores || l.tamanho_time, l.origem, l.interesse, l.canal, u.utm_source, u.utm_medium, u.utm_campaign, u.utm_content, u.utm_term, u.gclid, u.fbclid, l.pagina, r.canal_primeiro, (r.primeiro || {}).landing, c ? CSTATUS[c.status || 'fila'] : '']; })];
-  else rows = [['Empresa', 'Site', 'Segmento', 'Cidade', 'Vendedores', 'Videochamada', 'CRM', 'Colaboradores', 'RH', 'Gatilho', 'Nota SC', 'Nota Atlas', 'Prioridade', 'Produto', 'Decisor', 'Cargo', 'LinkedIn', 'Situação', 'Início cadência', 'Toques feitos'],
-    ...S.contas.map(c => { const n = notas(c); return [c.empresa, c.site, c.segmento, c.cidade, c.vendedores, c.online ? 'Sim' : 'Não', c.crm ? 'Sim' : 'Não', c.colaboradores, c.rh ? 'Sim' : 'Não', c.gatilho, n.sc, n.at, n.prio, produtoConta(c), c.decisor, c.cargo, c.linkedin, CSTATUS[c.status || 'fila'], c.inicioCadencia, (c.toques || []).length]; })];
+  else rows = [['Empresa', 'Site', 'Segmento', 'Porte', 'Cidade', 'Vendedores', 'Videochamada', 'CRM', 'Colaboradores', 'RH', 'Gatilho', 'Nota SC', 'Nota Atlas', 'Prioridade', 'Produto', 'Decisor', 'Cargo', 'LinkedIn', 'Situação', 'Início cadência', 'Toques feitos'],
+    ...S.contas.map(c => { const n = notas(c); return [c.empresa, c.site, c.segmento, porteConta(c), c.cidade, c.vendedores, c.online ? 'Sim' : 'Não', c.crm ? 'Sim' : 'Não', c.colaboradores, c.rh ? 'Sim' : 'Não', c.gatilho, n.sc, n.at, n.prio, produtoConta(c), c.decisor, c.cargo, c.linkedin, CSTATUS[c.status || 'fila'], c.inicioCadencia, (c.toques || []).length]; })];
   const csv = '﻿' + rows.map(r => r.map(q).join(';')).join('\r\n');
   S.dl.save({ filename: `nexa-${tipo}-${hoje()}.csv`, data: csv }).then(() => toast('Arquivo baixado'), () => toast('Não foi possível baixar o arquivo.'));
 }
