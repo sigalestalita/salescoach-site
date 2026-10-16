@@ -397,7 +397,7 @@ const deep = (a, b) => { const o = Array.isArray(a) ? [...a] : { ...a }; for (co
 function toast(msg) { const t = $('#toast'); t.textContent = msg; t.hidden = false; clearTimeout(toast.t); toast.t = setTimeout(() => t.hidden = true, 2200); }
 
 /* ───────── estado ───────── */
-const S = { inb: { rows: [], carregado: false, busy: false, erro: '', periodo: '30', origem: '', canal: '', aberto: null }, cfg: deep(DEFAULTS, {}), cfgExists: false, opps: [], contas: [], semanas: {}, tarefas: [], recursos: [], playbook: null, loaded: 0, ro: false, db: null, dl: null, noDb: false, showClosed: false, filtroProd: '', busca: '', contaFiltro: 'abertas', contaPrio: '', openMsg: null, openNota: null, prospects: [],
+const S = { inb: { rows: [], carregado: false, busy: false, erro: '', periodo: '30', origem: '', canal: '', aberto: null }, cfg: deep(DEFAULTS, {}), cfgExists: false, opps: [], contas: [], semanas: {}, tarefas: [], recursos: [], playbook: null, loaded: 0, ro: false, db: null, dl: null, noDb: false, showClosed: false, filtroProd: '', busca: '', contaFiltro: 'abertas', contaPrio: '', openMsg: null, openNota: null, prospects: [], integ: { campos: [] }, tokens: null, novoToken: null,
   L: { res: null, pagina: 0, total: 0, sel: new Set(), f: { cargos: 'Diretor Comercial, Gerente Comercial, Head de Vendas', estados: '', setores: [], subsetores: [], tamanhos: [], senioridades: [], departamentos: [], porEmpresa: 2, comEmail: true }, uso: null, hist: null, cat: {}, busy: '', lista: '', ver: '', confirma: '', verHist: false } };
 let view = (location.hash || '#painel').slice(1);
 
@@ -931,6 +931,7 @@ const VIEWS = {
         <label class="row" style="grid-template-columns:auto minmax(0,1fr)"><input type="checkbox" id="imp-tarefas" ${im.tarefas.length ? '' : 'disabled'}><span><b style="font-weight:500">${im.tarefas.length}</b> tarefas do plano de 90 dias <span class="mute">· substitui o plano atual</span></span></label>
       </div><div class="tools"><button class="btn pri" id="impGo" ${d} ${S.importando ? 'disabled' : ''}>${S.importando ? 'Importando…' : 'Importar'}</button><button class="btn" id="impCancel">Cancelar</button><span class="soft" id="impProg"></span></div>`) : ''}
     </section>
+    ${integracaoHtml()}
     <section class="card"><header><h2>Etapas do funil</h2></header>
       <p class="soft">A ordem é fixa: 7 é sempre Ganho, 8 Perdido e 9 Nutrir. Os nomes, as definições e a probabilidade são editáveis.</p>
       <div class="tw"><table><thead><tr><th>#</th><th>Nome</th><th>O que significa</th><th>Critério para avançar</th><th class="n">Probabilidade (%)</th></tr></thead><tbody>
@@ -1008,6 +1009,48 @@ const VIEWS = {
   },
 };
 
+/* ───────── integração com o Sales Coach ───────── */
+const URL_INTEGRACAO = () => (CFG.url || '').replace(/\/$/, '') + '/functions/v1/integracao';
+function integracaoHtml() {
+  if (S.papel !== 'admin') return '';
+  const ts = S.tokens || [], nt = S.novoToken;
+  return `<section class="card"><header><h2>Integração com o Sales Coach</h2></header>
+    <p class="soft">Depois de cada reunião analisada, o Sales Coach grava na oportunidade o resumo da reunião, o próximo passo com data e os campos que vocês escolherem lá. A reunião é ligada pelo e-mail do lead; se for com uma conta-alvo que ainda não é oportunidade, ela vira oportunidade em “${esc(stg(4))}”.</p>
+    <p class="soft">No Sales Coach, em <b>Configurações → Integração com CRM → NEXA CRM</b>, cole o endereço abaixo e um token gerado aqui.</p>
+    <div class="kv" style="grid-template-columns:72px minmax(0,1fr) auto"><span class="mono soft">Endereço</span><code>${esc(URL_INTEGRACAO())}</code><button class="btn sm" data-copyval="${esc(URL_INTEGRACAO())}">Copiar</button></div>
+    ${nt ? `<div class="banner" style="display:grid;gap:8px"><b style="color:var(--fg);font-weight:500">Token “${esc(nt.nome)}” criado. Copie agora: ele não aparece de novo.</b>
+      <div class="kv" style="grid-template-columns:minmax(0,1fr) auto"><code>${esc(nt.token)}</code><button class="btn sm" data-copyval="${esc(nt.token)}">Copiar</button></div></div>` : ''}
+    <form class="tools" id="fToken"><input class="inp" name="nome" id="tok-nome" placeholder="Nome do token (ex.: Sales Coach)" required maxlength="60"><button class="btn pri" type="submit">Gerar token</button></form>
+    ${ts.length ? `<div class="tw"><table><thead><tr><th>Nome</th><th>Token</th><th>Criado</th><th>Último uso</th><th></th></tr></thead><tbody>
+      ${ts.map(t => `<tr><td>${esc(t.nome)}</td><td class="mono soft">${esc(t.prefixo)}…</td><td>${brShort(String(t.criado_em).slice(0, 10))}${t.criado_por ? `<div class="mute" style="font-size:12px">${esc(t.criado_por)}</div>` : ''}</td><td>${t.ultimo_uso ? brShort(String(t.ultimo_uso).slice(0, 10)) : '<span class="mute">nunca</span>'}</td>
+        <td class="n">${t.revogado_em ? '<span class="chip">revogado</span>' : `<button class="btn sm danger" data-revtoken="${t.id}">Revogar</button>`}</td></tr>`).join('')}
+    </tbody></table></div>` : ''}
+  </section>`;
+}
+async function carregarTokens() {
+  if (S.papel !== 'admin' || !sb) return;
+  const { data } = await sb.from('integracao_tokens').select('id,nome,prefixo,criado_por,criado_em,ultimo_uso,revogado_em').order('criado_em', { ascending: false });
+  S.tokens = data || []; schedule();
+}
+async function gerarToken(nome) {
+  const al = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz23456789', b = crypto.getRandomValues(new Uint8Array(32));
+  const token = 'nexa_' + [...b].map(x => al[x % al.length]).join('');
+  const h = [...new Uint8Array(await crypto.subtle.digest('SHA-256', new TextEncoder().encode(token)))].map(x => x.toString(16).padStart(2, '0')).join('');
+  const { error } = await sb.from('integracao_tokens').insert({ nome, hash: h, prefixo: token.slice(0, 9) });
+  if (error) return toast('Não foi possível gerar o token.');
+  S.novoToken = { nome, token }; await carregarTokens(); render();
+}
+document.addEventListener('submit', e => {
+  if (e.target.id !== 'fToken') return; e.preventDefault();
+  const nome = String(new FormData(e.target).get('nome') || '').trim(); if (nome) gerarToken(nome);
+});
+document.addEventListener('click', e => {
+  const b = e.target.closest && e.target.closest('[data-revtoken]'); if (!b) return;
+  if (!b.dataset.c) { b.dataset.c = 1; b.textContent = 'Confirmar'; return; }
+  sb.from('integracao_tokens').update({ revogado_em: new Date().toISOString() }).eq('id', b.dataset.revtoken)
+    .then(({ error }) => { if (error) return toast('Não foi possível revogar.'); toast('Token revogado. O Sales Coach para de gravar até receber um novo.'); carregarTokens(); });
+});
+
 /* ───────── drawers ───────── */
 function closeDrawer() { $('#drawerRoot').innerHTML = ''; document.body.style.overflow = ''; }
 function openDrawer(title, bodyHtml, footHtml) {
@@ -1037,6 +1080,7 @@ function oppForm(o) {
     <label>Primeiro contato<input class="inp" type="date" name="primeiroContato" id="o-pri" value="${esc(o.primeiroContato)}" ${d}></label>
     <label class="full">Observações, dor, motivo de perda<textarea class="inp" name="obs" id="o-obs" ${d}>${esc(o.obs)}</textarea></label>
   </form><div class="summary" id="oSum"></div>
+  ${scHtml(o)}
   ${o.hist && Object.keys(o.hist).length ? `<p class="mute" style="font-size:12.5px">Histórico: ${Object.entries(o.hist).sort((a, b) => a[0] - b[0]).map(([k, v]) => `${stg(k)} em ${br(v)}`).join(' · ')}</p>` : ''}`;
 }
 function readOpp() {
@@ -1050,6 +1094,18 @@ function oppSummary() {
   $('#lQtd').firstChild.textContent = isAtlas(o.produto) ? 'Colaboradores' : 'Usuários';
   $('#lProj').hidden = o.produto !== 'Fábrica de soluções';
   $('#oSum').innerHTML = `<div><b>${brl(v.m, 2)}</b><span>mensalidade${v.plano ? ' · ' + v.plano : ''}</span></div><div><b>${brl(v.i)}</b><span>implantação</span></div><div><b>${brl(v.ano)}</b><span>1º ano · ${pct(v.prob)} → ${brl(v.pond)}</span></div>`;
+}
+/* O que o Sales Coach gravou na oportunidade: campos escolhidos na integração e resumos das reuniões. */
+function scHtml(o) {
+  const vals = Object.entries(o.salesCoach || {}).filter(([, v]) => v !== '' && v != null);
+  const nome = k => ((S.integ.campos || []).find(c => c.key === k) || {}).label || k;
+  const val = v => /^https?:\/\//.test(String(v)) ? `<a href="${esc(v)}" target="_blank" rel="noopener">Abrir ↗</a>` : esc(typeof v === 'number' ? v.toLocaleString('pt-BR') : v);
+  const ns = (o.anotacoes || []).slice(-6).reverse();
+  if (!vals.length && !ns.length) return '';
+  return `<section style="display:grid;gap:8px"><p class="sect">Reuniões e anotações</p>
+    ${vals.length ? `<div class="list">${vals.map(([k, v]) => `<div class="row" style="grid-template-columns:minmax(0,1fr) minmax(0,1.4fr)"><span class="soft">${esc(nome(k).replace(/^Sales Coach · /, ''))}</span><span>${val(v)}</span></div>`).join('')}</div>` : ''}
+    ${ns.map((a, i) => `<details ${i ? '' : 'open'} style="border:1px solid var(--line);border-radius:8px;padding:8px 10px;background:var(--surface)"><summary style="cursor:pointer;font-size:13px"><b style="font-weight:500">${brShort(a.em)}</b>${a.origem ? ` · ${esc(a.origem)}` : ''} <span class="mute">${esc(String(a.texto).split('\n')[0].slice(0, 70))}</span></summary><p style="white-space:pre-wrap;font-size:13px;margin-top:6px">${esc(a.texto)}</p></details>`).join('')}
+    ${(o.anotacoes || []).length > 6 ? `<p class="mute" style="font-size:12.5px">+ ${(o.anotacoes || []).length - 6} anteriores</p>` : ''}</section>`;
 }
 function openOpp(id, preset) {
   const o = id ? S.opps.find(x => x.id === id) : Object.assign({ etapa: 2, produto: 'Sales Coach', primeiroContato: hoje(), ultimaInteracao: hoje() }, preset || {});
@@ -1949,7 +2005,9 @@ async function iniciar(session) {
   db.collection('recursos').onSnapshot(s => { S.recursos = s.docs.map(d => ({ ...d.data(), id: d.id })); schedule(); });
   db.collection('prospects').onSnapshot(s => { S.prospects = s.docs.map(d => ({ ...d.data(), id: d.id })); schedule(); });
   db.doc('conteudo/playbook').onSnapshot(s => { S.playbook = s.exists ? s.data() : null; schedule(); });
+  db.doc('config/integracao').onSnapshot(s => { S.integ = { campos: [], ...(s.exists ? s.data() : {}) }; schedule(); });
   carregarMembros();
+  carregarTokens();
   carregarInbound();
   sb.channel('inbound-novos').on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'leads_inbound' }, p => {
     if (p.new && !S.inb.rows.some(l => l.id === p.new.id)) { S.inb.rows.unshift(p.new); toast(`Novo lead inbound: ${p.new.nome || ''}`); schedule(); }

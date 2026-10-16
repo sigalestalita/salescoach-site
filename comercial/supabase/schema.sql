@@ -104,3 +104,21 @@ drop policy if exists lusha_config_admin on public.lusha_config;
 create policy lusha_uso_ler on public.lusha_uso for select to authenticated using (public.pode_ler());
 create policy lusha_config_ler on public.lusha_config for select to authenticated using (public.pode_ler());
 create policy lusha_config_admin on public.lusha_config for update to authenticated using (public.e_admin()) with check (public.e_admin());
+
+-- Integrações (Sales Coach): tokens de acesso à função "integracao".
+-- Só o hash SHA-256 fica guardado; o token aparece uma vez, na hora de gerar.
+create table if not exists public.integracao_tokens (
+  id          uuid primary key default gen_random_uuid(),
+  nome        text not null,
+  hash        text not null unique check (hash ~ '^[0-9a-f]{64}$'),
+  prefixo     text not null,
+  criado_por  text default lower(coalesce(auth.jwt() ->> 'email', '')),
+  criado_em   timestamptz not null default now(),
+  ultimo_uso  timestamptz,
+  revogado_em timestamptz
+);
+alter table public.integracao_tokens enable row level security;
+revoke all on public.integracao_tokens from anon;
+grant select, insert, update on public.integracao_tokens to authenticated;
+drop policy if exists integracao_tokens_admin on public.integracao_tokens;
+create policy integracao_tokens_admin on public.integracao_tokens for all to authenticated using (public.e_admin()) with check (public.e_admin());
