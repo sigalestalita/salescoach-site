@@ -1,0 +1,414 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Reel Sales Coach · cards</title>
+<link rel="stylesheet" href="fonts.css">
+<link rel="stylesheet" href="poppins.css">
+<style>
+/* Reel 9:16 do Sales Coach na linguagem dos anúncios (social/story-anuncio):
+   fundo claro com cantos lima e azul, marca no alto, promessa em dois tons,
+   faixa de ganho com dado e fonte, e a tela do produto saindo pela direita
+   com cursor nomeado. Telas redesenhadas a partir do app, dados de demonstração. */
+:root { --tinta: #10120e; --cinza: #8d9188; --dim: #5d6355; --lima: #d4f969; --oliva: #587406;
+  --navy: #0f2c5c; --azul: #1d4f9a; --azul2: #3f7fe0; --linha: #edf0f5; --t1: #16213a; --t2: #6a7287; --fundo-app: #f6f8fb;
+  --verde: #2f9a4a; --verm: #c2412c; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { width: 1080px; height: 1920px; overflow: hidden; }
+body { position: relative; font-family: 'DM Sans', sans-serif; color: var(--tinta); -webkit-font-smoothing: antialiased; background: #ebece8; }
+#bg { position: absolute; inset: 0; }
+#pontos { position: absolute; inset: 0; pointer-events: none; background: radial-gradient(rgba(16,18,14,.05) 1.2px, transparent 1.6px) 0 0 / 28px 28px;
+  -webkit-mask: linear-gradient(180deg, #000, transparent 20%, transparent 80%, #000); }
+
+/* Marca, título e ganho */
+#marca { position: absolute; left: 80px; top: 190px; display: flex; align-items: center; gap: 24px; z-index: 6; }
+#marca .m { width: 84px; height: 84px; border-radius: 22px; background: var(--navy); display: grid; place-items: center; box-shadow: 0 16px 30px -18px rgba(16,18,14,.55); }
+#marca .m img { width: 50px; filter: brightness(0) invert(1); }
+#marca .w { font-family: 'Poppins'; font-size: 40px; letter-spacing: -.02em; } #marca .w b { font-weight: 600; } #marca .w span { font-weight: 300; }
+#tit { position: absolute; left: 80px; right: 60px; top: 324px; font-weight: 500; font-size: 70px; line-height: 1.07; letter-spacing: -.035em; z-index: 6; }
+#tit .l1 { color: var(--cinza); font-weight: 400; display: block; }
+#tit .w { display: inline-block; white-space: pre; }
+#ganho { position: absolute; left: 80px; right: 80px; top: 518px; height: 128px; z-index: 7; display: flex; align-items: center; gap: 26px; padding: 0 30px 0 26px;
+  border-radius: 26px; background: rgba(255,255,255,.78); box-shadow: inset 0 0 0 1.5px rgba(16,18,14,.06), 0 24px 50px -30px rgba(30,40,20,.5); backdrop-filter: blur(8px); }
+#ganho .n { font-family: 'Space Grotesk'; font-weight: 500; font-size: 66px; letter-spacing: -.05em; line-height: 1; white-space: nowrap; position: relative; }
+#ganho .n::after { content: ""; position: absolute; left: 0; right: 0; bottom: -6px; height: 12px; border-radius: 6px; background: var(--lima); z-index: -1; transform-origin: left; transform: scaleX(var(--k, 1)); }
+#ganho .t { font-size: 25px; line-height: 1.28; letter-spacing: -.01em; }
+#ganho .f { display: block; font-family: 'JetBrains Mono'; font-size: 13.5px; letter-spacing: .08em; color: var(--dim); margin-top: 6px; text-transform: uppercase; }
+#ganho .ic { width: 48px; height: 48px; border-radius: 14px; background: var(--tinta); display: grid; place-items: center; flex: 0 0 auto; }
+#ganho .ic svg { width: 26px; height: 26px; stroke: var(--lima); stroke-width: 2.6; fill: none; }
+#rodape { position: absolute; left: 80px; right: 80px; top: 1566px; display: flex; justify-content: space-between; align-items: center; font-size: 19px; color: var(--dim); z-index: 6; }
+#rodape .nx { display: flex; align-items: center; gap: 10px; } #rodape img { height: 16px; }
+#rodape small { font-family: 'JetBrains Mono'; font-size: 13px; letter-spacing: .1em; text-transform: uppercase; }
+#prog { display: none; position: absolute; left: 80px; right: 80px; top: 104px; height: 4px; border-radius: 2px; background: rgba(16,18,14,.08); z-index: 6; }
+#prog i { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 2px; background: var(--tinta); }
+
+/* Janela do produto (sai pela direita) */
+.cena { position: absolute; inset: 0; visibility: hidden; }
+.win { position: absolute; left: 80px; top: 688px; width: 1120px; height: 846px; border-radius: 28px; background: #fff; overflow: hidden; font-family: 'Poppins'; color: var(--t1);
+  box-shadow: 0 0 0 6px rgba(255,255,255,.55), 0 0 0 7px rgba(16,18,14,.08), 0 60px 90px -50px rgba(20,24,40,.45); }
+.topo { position: absolute; left: 0; right: 0; top: 0; height: 74px; border-bottom: 1px solid var(--linha); display: flex; align-items: center; gap: 14px; padding-left: 28px; font-weight: 600; font-size: 21px; background: #fff; z-index: 2; }
+.topo img { height: 28px; } .topo .hb { width: 22px; height: 14px; border-top: 2.5px solid #9aa3b5; border-bottom: 2.5px solid #9aa3b5; margin-right: 18px; }
+.topo .aba { margin-left: 26px; font-weight: 500; font-size: 16px; color: var(--t2); padding: 8px 14px; border-radius: 10px; background: var(--fundo-app); }
+.lado { position: absolute; left: 0; top: 74px; bottom: 0; width: 84px; border-right: 1px solid var(--linha); display: grid; align-content: start; justify-items: center; gap: 26px; padding-top: 28px; background: #fff; }
+.lado i { width: 22px; height: 22px; border-radius: 6px; border: 2.4px solid #9aa3b5; }
+.lado i.on { width: 46px; height: 46px; border: 0; border-radius: 12px; background: var(--navy); position: relative; }
+.lado i.on::after { content: ""; position: absolute; inset: 14px; border-radius: 4px; border: 2.4px solid #fff; }
+.mio { position: absolute; left: 84px; top: 74px; right: 0; bottom: 0; background: var(--fundo-app); padding: 22px 150px 22px 26px; }
+.trilha { font-size: 16px; color: #8b93a7; } .trilha b { color: var(--azul); font-weight: 500; }
+.card { background: #fff; border-radius: 18px; box-shadow: 0 0 0 1px var(--linha); }
+.bt { display: inline-flex; align-items: center; gap: 8px; height: 46px; padding: 0 20px; border-radius: 12px; font-weight: 600; font-size: 16px; background: var(--navy); color: #fff; white-space: nowrap; }
+.bt.o { background: #fff; color: var(--t1); box-shadow: inset 0 0 0 1.5px var(--linha); }
+.bt.l { background: var(--lima); color: var(--tinta); }
+.chip { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 500; padding: 5px 11px; border-radius: 999px; background: #eef2f8; color: var(--t2); white-space: nowrap; }
+.chip.ok { background: #e3f5e8; color: var(--verde); } .chip.lm { background: var(--lima); color: var(--tinta); } .chip.vm { background: #ffe7e1; color: var(--verm); }
+.mono { font-family: 'JetBrains Mono'; letter-spacing: .12em; font-size: 12px; color: #8b93a7; text-transform: uppercase; }
+.toast { position: absolute; left: 50%; top: 96px; translate: -50% 0; padding: 14px 22px; border-radius: 14px; background: var(--tinta); color: #fff; font-size: 17px; font-weight: 500; display: flex; align-items: center; gap: 12px; z-index: 5; opacity: 0; white-space: nowrap; }
+.toast i { width: 24px; height: 24px; border-radius: 50%; background: var(--lima); color: var(--tinta); display: grid; place-items: center; font-style: normal; font-size: 14px; font-weight: 700; }
+
+/* s0 abertura e s8 fecho */
+#orbita { position: absolute; left: 0; right: 0; top: 720px; height: 760px; }
+#orbita .tile { position: absolute; width: 132px; height: 132px; border-radius: 34px; background: #fff; display: grid; place-items: center; box-shadow: 0 24px 40px -26px rgba(20,24,40,.45), inset 0 0 0 1px rgba(16,18,14,.05); }
+#orbita .tile img { width: 64px; height: 64px; object-fit: contain; }
+#orbita .centro { position: absolute; left: 50%; top: 50%; width: 240px; height: 240px; margin: -120px; border-radius: 60px; background: var(--navy); display: grid; place-items: center; box-shadow: 0 40px 70px -30px rgba(15,44,92,.7); }
+#orbita .centro img { width: 140px; filter: brightness(0) invert(1); }
+#orbita .anel { position: absolute; left: 50%; top: 50%; border-radius: 50%; border: 1.5px dashed rgba(16,18,14,.14); }
+#fecho { position: absolute; left: 0; right: 0; top: 0; bottom: 0; display: grid; justify-items: center; align-content: center; text-align: center; padding-bottom: 120px; }
+#fecho .m { width: 170px; height: 170px; border-radius: 44px; background: var(--navy); display: grid; place-items: center; box-shadow: 0 40px 70px -30px rgba(15,44,92,.7); }
+#fecho .m img { width: 100px; filter: brightness(0) invert(1); }
+#fecho h2 { font-weight: 500; font-size: 96px; line-height: 1.02; letter-spacing: -.045em; margin-top: 60px; }
+#fecho h2 span { color: var(--cinza); font-weight: 400; display: block; }
+#fecho .pills { display: flex; gap: 12px; margin-top: 48px; flex-wrap: wrap; justify-content: center; padding: 0 80px; }
+#fecho .pills span { font-size: 25px; padding: 12px 22px; border-radius: 999px; background: rgba(255,255,255,.75); box-shadow: inset 0 0 0 1.5px rgba(16,18,14,.07); }
+#fecho .cta { margin-top: 64px; display: inline-flex; align-items: center; gap: 18px; font-size: 36px; font-weight: 500; color: #fff; background: var(--tinta); padding: 26px 46px 26px 34px; border-radius: 999px; box-shadow: 0 24px 50px -24px rgba(16,18,14,.8); }
+#fecho .cta i { width: 46px; height: 46px; border-radius: 50%; background: var(--lima); display: grid; place-items: center; }
+#fecho .cta svg { width: 26px; height: 26px; stroke: var(--tinta); stroke-width: 2.4; fill: none; }
+#fecho .preco { margin-top: 26px; font-size: 28px; color: var(--dim); } #fecho .preco b { color: var(--tinta); font-weight: 500; }
+
+/* s1 agenda */
+.ag-top { display: flex; align-items: center; justify-content: space-between; margin-top: 14px; }
+.ag-top h3 { font-size: 26px; font-weight: 600; } .ag-top .sync { display: flex; align-items: center; gap: 10px; font-size: 15px; color: var(--t2); }
+.ag-top .sync img { height: 26px; }
+.spin { width: 18px; height: 18px; border-radius: 50%; border: 2.5px solid #d6dbe6; border-top-color: var(--azul); }
+.ag { margin-top: 18px; display: grid; gap: 14px; }
+.ag .r { display: grid; grid-template-columns: 76px 44px minmax(0,1fr) auto; align-items: center; gap: 16px; padding: 18px 22px; }
+.ag .h { font-weight: 600; font-size: 21px; } .ag .h small { display: block; font-weight: 400; font-size: 13px; color: var(--t2); }
+.ag .r > img { width: 40px; height: 40px; object-fit: contain; }
+.ag .q b { font-weight: 600; font-size: 19px; display: block; } .ag .q span { font-size: 14px; color: var(--t2); }
+.ag .acts { display: flex; gap: 10px; align-items: center; }
+
+/* s2 treino */
+.tr { display: grid; grid-template-columns: 280px 562px; gap: 18px; margin-top: 16px; }
+.perfil { padding: 20px; display: grid; gap: 12px; align-content: start; }
+.perfil h4 { font-size: 19px; font-weight: 600; } .perfil p { font-size: 14.5px; color: var(--t2); line-height: 1.45; }
+.perfil .av { width: 64px; height: 64px; border-radius: 50%; background: linear-gradient(135deg, #c9d6ea, #9fb5d8); display: grid; place-items: center; font-weight: 600; font-size: 24px; color: var(--navy); }
+.chat { padding: 20px; display: grid; gap: 14px; align-content: start; height: 660px; position: relative; }
+.bal { max-width: 440px; padding: 14px 18px; border-radius: 18px; font-family: 'DM Sans'; font-size: 18px; line-height: 1.42; }
+.bal.lead { background: #f1f3f8; border-top-left-radius: 6px; } .bal.eu { background: var(--navy); color: #fff; justify-self: end; border-top-right-radius: 6px; }
+.bal .who { display: block; font-family: 'JetBrains Mono'; font-size: 11px; letter-spacing: .12em; opacity: .6; margin-bottom: 4px; }
+.caret { display: inline-block; width: 2px; height: 1.05em; background: currentColor; vertical-align: -3px; margin-left: 1px; }
+.nota-tr { position: absolute; left: 20px; right: 20px; bottom: 20px; padding: 18px; border-radius: 16px; background: #fff; box-shadow: 0 0 0 1px var(--linha), 0 24px 40px -26px rgba(15,44,92,.5); display: flex; gap: 18px; align-items: center; }
+.nota-tr p { font-size: 15.5px; line-height: 1.45; color: var(--t1); } .nota-tr p b { font-weight: 600; }
+.ring { position: relative; width: 96px; height: 96px; flex: 0 0 auto; } .ring svg { position: absolute; inset: 0; }
+.ring b { position: absolute; inset: 0; display: grid; place-items: center; font-family: 'Space Grotesk'; font-weight: 500; font-size: 34px; letter-spacing: -.04em; }
+
+/* s3 ao vivo */
+.meet { position: absolute; left: 84px; top: 74px; right: 0; bottom: 0; background: #202124; }
+.meet .vid { position: absolute; top: 26px; width: 430px; height: 300px; border-radius: 16px; background: #3c4043; display: grid; place-items: center; }
+.meet .vid b { width: 110px; height: 110px; border-radius: 50%; display: grid; place-items: center; font-size: 44px; font-weight: 500; color: #fff; }
+.meet .vid span { position: absolute; left: 14px; bottom: 12px; font-size: 14px; color: #e8eaed; }
+.meet .vid.fala { box-shadow: 0 0 0 4px #8ab4f8; }
+.meet .barra { position: absolute; left: 0; width: 460px; bottom: 0; height: 84px; display: flex; justify-content: center; gap: 14px; align-items: center; }
+.meet .barra i { width: 52px; height: 52px; border-radius: 50%; background: #3c4043; } .meet .barra i.x { background: #ea4335; width: 74px; border-radius: 26px; }
+.legenda-meet { position: absolute; left: 30px; top: 350px; width: 430px; font-family: 'DM Sans'; font-size: 19px; line-height: 1.45; color: #e8eaed; background: rgba(0,0,0,.55); padding: 12px 16px; border-radius: 12px; }
+.legenda-meet b { color: #8ab4f8; font-weight: 500; } .legenda-meet mark { background: var(--lima); color: var(--tinta); border-radius: 4px; padding: 0 3px; }
+.ext { position: absolute; left: 490px; top: 26px; width: 400px; bottom: 26px; border-radius: 20px; background: #fbfbf8; padding: 18px; display: grid; gap: 12px; align-content: start; box-shadow: 0 30px 60px -20px rgba(0,0,0,.6); }
+.ext .hd { display: flex; align-items: center; gap: 10px; font-weight: 600; font-size: 17px; } .ext .hd img { height: 24px; }
+.ext .rec { margin-left: auto; display: flex; align-items: center; gap: 7px; font-size: 13px; font-weight: 600; color: var(--verm); background: #ffe7e1; padding: 5px 10px; border-radius: 999px; }
+.ext .rec i { width: 8px; height: 8px; border-radius: 50%; background: #e5533d; }
+.medidor { display: grid; gap: 8px; } .medidor div { display: grid; grid-template-columns: 70px 1fr 48px; align-items: center; gap: 10px; font-size: 13.5px; color: var(--t2); }
+.medidor u { height: 10px; border-radius: 5px; background: #eceee6; overflow: hidden; display: block; } .medidor u s { display: block; height: 100%; background: var(--azul); border-radius: 5px; }
+.medidor b { font-weight: 600; color: var(--t1); text-align: right; }
+.dica { border-radius: 16px; background: #fff; padding: 16px; box-shadow: 0 18px 30px -20px rgba(15,44,92,.55), 0 0 0 1px #eceee6; }
+.dica .tags { display: flex; gap: 6px; } .dica p { font-family: 'DM Sans'; font-size: 18px; font-weight: 500; line-height: 1.4; margin-top: 10px; }
+.dica .bt { margin-top: 14px; width: 100%; justify-content: center; }
+
+.ck { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.ck span { display: flex; align-items: center; gap: 8px; font-size: 14.5px; font-weight: 500; padding: 9px 12px; border-radius: 10px; background: #f1f3f8; color: var(--t2); }
+.ck span::before { content: ""; width: 16px; height: 16px; border-radius: 50%; border: 2px solid #b7c0d3; flex: 0 0 auto; }
+.ck span.ok { background: #e3f5e8; color: var(--verde); } .ck span.ok::before { border: 0; background: var(--verde) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M6 12.5l4 4L18 8' fill='none' stroke='white' stroke-width='3.4'/%3E%3C/svg%3E") center/12px no-repeat; }
+/* s4 análise */
+.an { display: grid; grid-template-columns: 300px 542px; gap: 18px; margin-top: 16px; }
+.an .score { padding: 24px; display: grid; justify-items: center; gap: 10px; }
+.an .score .ring { width: 190px; height: 190px; } .an .score .ring b { font-size: 70px; }
+.crit { padding: 22px; display: grid; gap: 14px; }
+.crit h4, .an h4 { font-size: 18px; font-weight: 600; }
+.crit .c { display: grid; grid-template-columns: 130px 1fr 44px; align-items: center; gap: 12px; font-size: 15px; }
+.crit .c u { height: 12px; border-radius: 6px; background: #eef2f8; overflow: hidden; display: block; } .crit .c u s { display: block; height: 100%; border-radius: 6px; background: var(--azul); }
+.crit .c b { font-weight: 600; text-align: right; }
+.fala2 { padding: 20px 22px; display: grid; gap: 10px; }
+.fala2 .bar { height: 22px; border-radius: 11px; overflow: hidden; display: flex; background: #eef2f8; } .fala2 .bar s { background: var(--azul); } .fala2 .bar em { background: #9be05a; }
+.fala2 .lg { display: flex; justify-content: space-between; font-size: 14px; color: var(--t2); }
+.trecho { padding: 18px 22px; font-family: 'DM Sans'; font-size: 18px; line-height: 1.45; } .trecho small { display: block; font-family: 'JetBrains Mono'; font-size: 11.5px; letter-spacing: .1em; color: #8b93a7; margin-top: 6px; }
+.prox { padding: 18px 22px; display: flex; align-items: center; justify-content: space-between; gap: 14px; }
+.prox b { font-weight: 600; font-size: 17px; } .prox span { font-size: 14px; color: var(--t2); display: block; }
+
+/* s5 CRM */
+.crms { display: flex; gap: 12px; margin-top: 16px; }
+.crms span { display: flex; align-items: center; gap: 8px; padding: 10px 14px; border-radius: 12px; background: #fff; box-shadow: 0 0 0 1px var(--linha); font-size: 15px; font-weight: 500; }
+.crms span img { height: 22px; } .crms span.on { box-shadow: 0 0 0 2.5px #ff7a59; }
+.deal { margin-top: 18px; padding: 24px; display: grid; gap: 14px; }
+.deal .hd { display: flex; align-items: center; gap: 14px; } .deal .hd img { height: 34px; } .deal .hd b { font-size: 24px; font-weight: 600; display: block; } .deal .hd span { font-size: 15px; color: var(--t2); }
+.campo { display: grid; grid-template-columns: 240px 1fr; align-items: center; gap: 16px; padding: 14px 16px; border-radius: 12px; background: var(--fundo-app); font-size: 17px; }
+.campo span { color: var(--t2); font-size: 15px; } .campo b { font-weight: 500; min-height: 24px; }
+.campo.feito { box-shadow: inset 0 0 0 1.5px #b9e6c4; background: #f2fbf4; }
+.nota-crm { padding: 14px 16px; border-radius: 12px; background: #fffdf0; box-shadow: inset 0 0 0 1.5px #f1e7a6; font-family: 'DM Sans'; font-size: 16px; line-height: 1.5; min-height: 100px; }
+.nota-crm small { display: block; font-family: 'JetBrains Mono'; font-size: 11px; letter-spacing: .12em; color: #a59a4a; margin-bottom: 4px; }
+
+/* s6 gestão */
+.kpis { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 16px; }
+.kpi { padding: 18px 20px; } .kpi .t { display: flex; justify-content: space-between; font-size: 16px; font-weight: 600; }
+.kpi .t em { font-style: normal; font-size: 14px; font-weight: 600; color: var(--verde); } .kpi .v { font-family: 'Space Grotesk'; font-size: 46px; letter-spacing: -.04em; margin-top: 4px; }
+.graf { margin-top: 16px; padding: 20px 22px; height: 380px; position: relative; }
+.graf h4 { font-size: 18px; font-weight: 600; display: flex; justify-content: space-between; } .graf h4 span { font-size: 14px; font-weight: 500; color: var(--t2); }
+.barras { position: absolute; left: 60px; right: 22px; top: 70px; bottom: 50px; display: flex; align-items: flex-end; gap: 9px; border-bottom: 1px solid #e7ebf2; }
+.barras i { flex: 1; border-radius: 5px 5px 0 0; background: #c9d6ea; transform-origin: bottom; } .barras i.h { background: var(--azul); }
+.eixo { position: absolute; left: 22px; top: 62px; bottom: 42px; display: flex; flex-direction: column; justify-content: space-between; font-size: 13px; color: #9aa3b5; }
+.meta { position: absolute; left: 60px; right: 22px; border-top: 2.5px dashed #9be05a; } .meta span { position: absolute; left: 6px; top: -26px; font-size: 13px; font-weight: 600; color: #5c9a1e; }
+.graf .lg { position: absolute; left: 60px; bottom: 14px; display: flex; gap: 22px; font-size: 13px; color: var(--t2); }
+.insight { margin-top: 16px; padding: 18px 22px; display: flex; align-items: center; gap: 18px; }
+.insight .ic { width: 50px; height: 50px; border-radius: 14px; background: #fff3d6; display: grid; place-items: center; font-size: 24px; flex: 0 0 auto; }
+.insight p { font-size: 17px; line-height: 1.4; flex: 1; } .insight p b { font-weight: 600; }
+
+/* s7 assistente */
+.as { margin-top: 0; height: 706px; padding: 24px; display: grid; gap: 16px; align-content: start; position: relative; }
+.as .bal { max-width: 640px; font-size: 19px; }
+.as .resp { background: #fff; box-shadow: 0 0 0 1px var(--linha); border-top-left-radius: 6px; }
+.as .resp ol { margin: 8px 0 0 24px; display: grid; gap: 6px; } .as .resp li b { font-weight: 600; }
+.as .resp .sug { margin-top: 12px; padding: 12px 14px; border-radius: 12px; background: #f4f9e3; font-size: 17px; }
+.as .inp { position: absolute; left: 24px; right: 24px; bottom: 24px; height: 64px; border-radius: 16px; box-shadow: inset 0 0 0 1.5px var(--linha); display: flex; align-items: center; padding: 0 12px 0 20px; font-family: 'DM Sans'; font-size: 18px; color: var(--t2); }
+.as .inp .bt { margin-left: auto; height: 44px; }
+.pens { display: flex; gap: 6px; padding: 18px; } .pens i { width: 10px; height: 10px; border-radius: 50%; background: #b7c0d3; }
+
+/* Cursor nomeado (como nos anúncios) */
+#cur { position: absolute; left: 0; top: 0; z-index: 30; pointer-events: none; opacity: 0; }
+#cur svg { width: 46px; height: 46px; filter: drop-shadow(0 4px 6px rgba(0,0,0,.25)); }
+#cur.esq b { left: auto; right: 30px; }
+#cur b { position: absolute; left: 34px; top: 40px; font-weight: 500; font-size: 24px; color: #fff; background: var(--tinta); padding: 7px 16px; border-radius: 10px; white-space: nowrap; }
+#rip { position: absolute; width: 110px; height: 110px; margin: -55px; border-radius: 50%; border: 5px solid var(--lima); z-index: 29; opacity: 0; pointer-events: none; }
+</style>
+</head>
+<body>
+<canvas id="bgc" hidden></canvas>
+<div id="bg"></div><div id="pontos"></div>
+<div id="prog"><i></i></div>
+<div id="marca"><div class="m"><img src="img/mark.png" alt=""></div><div class="w"><b>Sales</b> <span>Coach</span></div></div>
+<h1 id="tit"></h1>
+<div id="ganho"><div class="ic"><svg viewBox="0 0 24 24"><path d="M4 16l5-5 4 4 7-7M14 8h6v6"/></svg></div><div class="n"></div><div class="t"></div></div>
+
+<!-- s0 abertura: integrações em volta da marca -->
+<section class="cena" id="s0"><div id="orbita">
+  <div class="anel" style="width:560px;height:560px;margin:-280px"></div><div class="anel" style="width:860px;height:860px;margin:-430px"></div>
+  <div class="tile" data-o="0"><img src="img/googlemeet.svg" alt=""></div><div class="tile" data-o="1"><img src="img/microsoftteams.svg" alt=""></div>
+  <div class="tile" data-o="2"><img src="img/zoom.svg" alt=""></div><div class="tile" data-o="3"><img src="img/hubspot.svg" alt=""></div>
+  <div class="tile" data-o="4"><img src="img/rdstation.png" alt=""></div><div class="tile" data-o="5"><img src="img/pipedrive.png" alt=""></div>
+  <div class="tile" data-o="6"><img src="img/kommo.png" alt=""></div><div class="tile" data-o="7"><img src="img/googlecalendar.svg" alt=""></div>
+  <div class="centro"><img src="img/mark.png" alt=""></div>
+</div></section>
+
+<!-- s1 agenda -->
+<section class="cena" id="s1"><div class="win">
+  <div class="topo"><span class="hb"></span><img src="img/mark.png" alt="">Sales Coach<span class="aba">Agendas</span></div>
+  <div class="lado"><i></i><i class="on"></i><i></i><i></i><i></i><i></i><i></i></div>
+  <div class="mio">
+    <div class="trilha"><b>Vendas</b> / Minhas agendas</div>
+    <div class="ag-top"><h3>Hoje · qui, 16 out</h3><div class="sync"><img src="img/googlecalendar.svg" alt=""><span id="s1sync">Sincronizando…</span><span class="spin" id="s1spin"></span></div></div>
+    <div class="ag">
+      <div class="card r"><div class="h">09:30<small>30 min</small></div><img src="img/googlemeet.svg" alt=""><div class="q"><b>Diagnóstico · Clínica Sorriso</b><span>Ana Lima · gravação automática</span></div><div class="acts"><span class="chip ok">Analisada · 81</span></div></div>
+      <div class="card r"><div class="h">11:00<small>45 min</small></div><img src="img/microsoftteams.svg" alt=""><div class="q"><b>Demo · Grupo Orbe</b><span>Ricardo Souza · diretor comercial</span></div><div class="acts"><span class="bt o" id="s1treino">Treinar antes</span></div></div>
+      <div class="card r"><div class="h">14:00<small>30 min</small></div><img src="img/googlemeet.svg" alt=""><div class="q"><b>Proposta · Value Projetos</b><span>Marcos Prado · gravação automática</span></div><div class="acts"><span class="chip">Agendada</span></div></div>
+      <div class="card r"><div class="h">16:30<small>30 min</small></div><img src="img/zoom.svg" alt=""><div class="q"><b>Follow-up · Travel Mate</b><span>Carla Nunes · gravação automática</span></div><div class="acts"><span class="chip">Agendada</span></div></div>
+      <div class="card r"><div class="h">17:30<small>30 min</small></div><img src="img/googlemeet.svg" alt=""><div class="q"><b>Diagnóstico · Rede Vale</b><span>Renata Lopes · gravação automática</span></div><div class="acts"><span class="chip">Agendada</span></div></div>
+      <div class="card r semana" style="grid-template-columns:1fr auto;background:var(--navy);color:#fff;box-shadow:none"><div class="q"><b style="color:#fff">Semana · 18 reuniões</b><span style="color:#c9d6ea">Todas gravadas e analisadas, sem ninguém apertar nada</span></div><span class="chip lm">100%</span></div>
+    </div>
+  </div>
+</div></section>
+
+<!-- s2 treino -->
+<section class="cena" id="s2"><div class="win">
+  <div class="topo"><span class="hb"></span><img src="img/mark.png" alt="">Sales Coach<span class="aba">Treino</span></div>
+  <div class="lado"><i></i><i></i><i class="on"></i><i></i><i></i><i></i><i></i></div>
+  <div class="mio">
+    <div class="trilha"><b>Treino</b> / Demo · Grupo Orbe</div>
+    <div class="tr">
+      <div class="card perfil"><div class="mono">Perfil do lead</div><div class="av">RS</div><h4>Diretor comercial cético</h4>
+        <p><b>Dores:</b> time sem padrão de diagnóstico, forecast no chute.</p><p><b>Objeções:</b> preço; "já usamos planilha".</p>
+        <span class="chip lm" style="justify-self:start">Montado pela IA</span></div>
+      <div class="card chat">
+        <div class="bal lead" id="s2b1"><span class="who">RICARDO · CLIENTE SIMULADO</span><span class="tx"></span></div>
+        <div class="bal eu" id="s2b2"><span class="who">VOCÊ</span><span class="tx"></span></div>
+        <div class="bal lead" id="s2b3"><span class="who">RICARDO · CLIENTE SIMULADO</span><span class="tx"></span></div>
+        <span class="bt o" id="s2fim" style="justify-self:start">Encerrar e ver a nota</span>
+        <div class="nota-tr" id="s2nota"><div class="ring" id="s2ring"></div><p><b>Boa pergunta de dor.</b> Faltou quantificar quanto o forecast errado custa por mês. Treine de novo antes da demo.</p></div>
+      </div>
+    </div>
+  </div>
+</div></section>
+
+<!-- s3 ao vivo -->
+<section class="cena" id="s3"><div class="win">
+  <div class="topo"><span class="hb" style="visibility:hidden"></span><img src="img/microsoftteams.svg" alt="">Demo · Grupo Orbe<span class="aba">Ao vivo</span></div>
+  <div class="lado"><i></i><i></i><i></i><i></i><i></i></div>
+  <div class="meet">
+    <div class="vid fala" style="left:30px" id="s3v1"><b style="background:#5f6fd8">RS</b><span>Ricardo Souza</span></div>
+    <div class="vid" style="left:30px;top:340px;height:0;opacity:0"></div>
+    <div class="legenda-meet" id="s3leg"><b>Ricardo:</b> <span class="tx"></span></div>
+    <div class="vid" style="left:30px;top:520px;width:200px;height:140px" id="s3v2"><b style="background:#2f9a4a;width:64px;height:64px;font-size:26px">AL</b><span>Você</span></div>
+    <div class="ext">
+      <div class="hd"><img src="img/mark.png" alt="">Sales Coach<span class="rec"><i></i><span id="s3t">12:48</span></span></div>
+      <div class="medidor"><div>Você<u><s id="s3m1"></s></u><b id="s3p1">54%</b></div><div>Cliente<u><s id="s3m2" style="background:#9be05a"></s></u><b id="s3p2">46%</b></div></div>
+      <div class="mono">Dica do coach</div>
+      <div class="dica" id="s3dica"><div class="tags"><span class="chip vm">OBJEÇÃO · PREÇO</span><span class="chip lm">FALE AGORA</span></div>
+        <p>Pergunte quanto custa, por mês, não saber o que acontece nas reuniões do time.</p><span class="bt" id="s3usar">Usar a dica</span></div>
+      <div class="mono" style="margin-top:4px">Próximo passo sugerido</div>
+      <div class="card" style="padding:14px;font-family:'DM Sans';font-size:16px;line-height:1.4" id="s3prox">Combinar a proposta com data: “Posso te mandar até sexta?”</div>
+      <div class="mono" style="margin-top:4px">Critérios na conversa · BANT</div>
+      <div class="ck" id="s3ck"><span data-i="0">Orçamento</span><span data-i="1">Autoridade</span><span data-i="2">Necessidade</span><span data-i="3">Prazo</span></div>
+    </div>
+    <div class="barra"><i></i><i></i><i></i><i class="x"></i></div>
+  </div>
+  <div class="toast" id="s3toast" style="top:auto;bottom:120px;left:290px"><i>✓</i>Dica usada · anotada na análise</div>
+</div></section>
+
+<!-- s4 análise -->
+<section class="cena" id="s4"><div class="win">
+  <div class="topo"><span class="hb"></span><img src="img/mark.png" alt="">Sales Coach<span class="aba">Análise</span></div>
+  <div class="lado"><i></i><i class="on"></i><i></i><i></i><i></i><i></i><i></i></div>
+  <div class="mio">
+    <div class="trilha"><b>Agendas</b> / Demo · Grupo Orbe · 42 min</div>
+    <div class="an">
+      <div style="display:grid;gap:16px;align-content:start">
+        <div class="card score"><div class="mono">Nota da reunião</div><div class="ring" id="s4ring"></div><span class="chip ok" id="s4temp">Quente</span></div>
+        <div class="card fala2"><h4>Quem falou</h4><div class="bar"><s id="s4f1"></s><em id="s4f2"></em></div><div class="lg"><span>Você <b id="s4p1">57%</b></span><span>Cliente <b id="s4p2">43%</b></span></div><span class="chip ok" style="justify-self:start">Dentro do ideal</span></div>
+      </div>
+      <div style="display:grid;gap:16px;align-content:start">
+        <div class="card crit"><h4>Critérios · BANT</h4>
+          <div class="c"><span>Orçamento</span><u><s data-v="80"></s></u><b>8,0</b></div>
+          <div class="c"><span>Autoridade</span><u><s data-v="92"></s></u><b>9,2</b></div>
+          <div class="c"><span>Necessidade</span><u><s data-v="95"></s></u><b>9,5</b></div>
+          <div class="c"><span>Prazo</span><u><s data-v="70"></s></u><b>7,0</b></div></div>
+        <div class="card trecho" id="s4tre">“Hoje o nosso forecast é chute. Não sei o que acontece nas reuniões.”<small>RICARDO · 18:22 · DOR CONFIRMADA</small></div>
+        <div class="card prox" id="s4prox"><div><b>Enviar proposta até sexta, 20/10</b><span>Combinado com o Ricardo aos 39 min</span></div><span class="bt" id="s4crm">Enviar ao CRM</span></div>
+      </div>
+    </div>
+  </div>
+</div></section>
+
+<!-- s5 CRM -->
+<section class="cena" id="s5"><div class="win">
+  <div class="topo"><span class="hb"></span><img src="img/mark.png" alt="">Sales Coach<span class="aba">Integração com CRM</span></div>
+  <div class="lado"><i></i><i></i><i></i><i></i><i class="on"></i><i></i><i></i></div>
+  <div class="mio">
+    <div class="crms"><span class="on"><img src="img/hubspot.svg" alt="">HubSpot</span><span><img src="img/rdstation.png" alt="">RD Station</span><span><img src="img/pipedrive.png" alt="">Pipedrive</span><span><img src="img/kommo.png" alt="">Kommo</span></div>
+    <div class="card deal"><div class="hd"><img src="img/hubspot.svg" alt=""><div><b>Negócio · Grupo Orbe</b><span>Vinculado pelo e-mail do lead</span></div></div>
+      <div class="campo" data-i="0"><span>Nota Sales Coach</span><b data-v="86"></b></div>
+      <div class="campo" data-i="1"><span>Temperatura</span><b data-v="Quente"></b></div>
+      <div class="campo" data-i="2"><span>Próximo passo</span><b data-v="Enviar proposta"></b></div>
+      <div class="campo" data-i="3"><span>Data do próximo passo</span><b data-v="20/10/2026"></b></div>
+      <div class="nota-crm"><small>ANOTAÇÃO · SALES COACH</small><span id="s5nota"></span></div>
+    </div>
+  </div>
+  <div class="toast" id="s5toast"><i>✓</i>Enviado ao HubSpot · tarefa criada para 20/10</div>
+</div></section>
+
+<!-- s6 gestão -->
+<section class="cena" id="s6"><div class="win">
+  <div class="topo"><span class="hb"></span><img src="img/mark.png" alt="">Sales Coach<span class="aba">Gestão</span></div>
+  <div class="lado"><i></i><i></i><i></i><i class="on"></i><i></i><i></i><i></i></div>
+  <div class="mio">
+    <div class="trilha"><b>Gestão</b> / Visão do time · últimas 12 semanas</div>
+    <div class="kpis">
+      <div class="card kpi"><div class="t">Nota média <em id="s6d1">+18</em></div><div class="v" id="s6k1">68</div></div>
+      <div class="card kpi"><div class="t">Reuniões analisadas</div><div class="v" id="s6k2">0</div></div>
+      <div class="card kpi"><div class="t">Objeções contornadas <em>↑</em></div><div class="v" id="s6k3">0%</div></div>
+    </div>
+    <div class="card graf"><h4>Nota do time x Meta <span>semanal</span></h4>
+      <div class="eixo"><span>100</span><span>75</span><span>50</span><span>25</span><span>0</span></div>
+      <div class="barras" id="s6bar"></div><div class="meta" id="s6meta"><span>Meta 75</span></div>
+      <div class="lg"><span>■ Abaixo da meta</span><span style="color:var(--azul)">■ Acima da meta</span></div></div>
+    <div class="card insight" id="s6ins"><div class="ic">💡</div><p><b>Objeção de preço</b> apareceu em 34% das reuniões e trava 3 negócios. Sugestão: treino com o perfil "Diretor cético".</p><span class="bt l" id="s6treino">Criar treino</span></div>
+  </div>
+  <div class="toast" id="s6toast"><i>✓</i>Treino enviado para 6 vendedores</div>
+</div></section>
+
+<!-- s7 assistente -->
+<section class="cena" id="s7"><div class="win">
+  <div class="topo"><span class="hb"></span><img src="img/mark.png" alt="">Sales Coach<span class="aba">Assistente</span></div>
+  <div class="lado"><i></i><i></i><i></i><i></i><i></i><i class="on"></i><i></i></div>
+  <div class="mio">
+    <div class="card as">
+      <div class="bal eu" id="s7q"><span class="tx"></span></div>
+      <div class="pens" id="s7pens"><i></i><i></i><i></i></div>
+      <div class="bal resp" id="s7r"><span class="who" style="color:var(--azul)">ASSISTENTE · 148 REUNIÕES DO MÊS</span>
+        <div>As objeções que mais travaram vendas:</div>
+        <ol><li data-i="0"><b>Preço</b> · 34% das reuniões, 3 negócios parados</li><li data-i="1"><b>“Já usamos planilha”</b> · 21%</li><li data-i="2"><b>Prazo de implantação</b> · 12%</li></ol>
+        <div class="sug" data-i="3">Quem mais contorna preço: <b>Ana Lima</b> (nota 92). Vale usar a reunião dela de exemplo no treino.</div></div>
+      <div class="inp" id="s7inp"><span id="s7digit">Pergunte sobre agendas, notas e objeções…</span><span class="bt" id="s7env">Enviar</span></div>
+    </div>
+  </div>
+</div></section>
+
+<!-- s8 fecho -->
+<section class="cena" id="s8"><div id="fecho">
+  <div class="m"><img src="img/mark.png" alt=""></div>
+  <h2><span>Cada reunião</span>vira método.</h2>
+  <div class="pills"><span>Treino</span><span>Ao vivo</span><span>Análise</span><span>CRM</span><span>Gestão</span><span>Assistente</span></div>
+  <div class="cta"><i><svg viewBox="0 0 24 24"><path d="M5 12h13M13 6l6 6-6 6"/></svg></i>Agende uma demonstração</div>
+  <div class="preco">A partir de <b>R$ 19,90</b> por usuário/mês</div>
+</div></section>
+
+<div id="rodape"><span class="nx">um produto <img src="img/nexa.svg" alt="NEXA"></span><small id="demo">Telas com dados de demonstração</small></div>
+<div id="cur"><svg viewBox="0 0 24 24"><path d="M3 2l18 8-8 2.6L10 21z" fill="#10120e" stroke="#fff" stroke-width="1.4" stroke-linejoin="round"/></svg><b>Vendedor</b></div>
+<div id="rip"></div>
+
+<script>
+window.REEL = {
+  DUR: 53.0,
+  CENAS: { s0: [0, 3.6], s1: [3.6, 9.2], s2: [9.2, 16.4], s3: [16.4, 24.4], s4: [24.4, 31.6], s5: [31.6, 37.6], s6: [37.6, 44.6], s7: [44.6, 49.6], s8: [49.6, 53.0] },
+  TIT: {
+    s0: ['Seu time merece um', 'coach em cada reunião.'],
+    s1: ['Toda reunião da agenda', 'já entra sozinha.'],
+    s2: ['Antes, treine com', 'o cliente simulado.'],
+    s3: ['Durante, a dica certa', 'na hora da objeção.'],
+    s4: ['Depois, a nota e', 'o porquê de cada critério.'],
+    s5: ['E o CRM', 'preenchido sozinho.'],
+    s6: ['O gestor vê quem evolui', 'e onde agir.'],
+    s7: ['Pergunte o que quiser', 'sobre o seu time.'],
+  },
+  // Ganho ligado à função: dado de mercado com a fonte na tela.
+  GANHO: {
+    s1: ['67%', 'dos compradores B2B preferem comprar sem falar com vendedor. Cada reunião conta.', 'Gartner · pesquisa com compradores B2B, 2026'],
+    s2: ['53%', 'de turnover no comercial. Quem chega treina desde o primeiro dia.', 'Meetime · Inside Sales Benchmark Brasil 2022'],
+    s3: ['75%', 'dos vendedores dizem ter mais chance de bater a meta com um coach.', 'Salesforce · State of Sales, 7ª ed.'],
+    s4: ['57% × 62%', 'de fala do vendedor em negócios ganhos × perdidos.', 'Gong Labs · 326 mil chamadas'],
+    s5: ['60%', 'do tempo do vendedor não é vender. O registro sai sozinho.', 'Salesforce · State of Sales, 7ª ed.'],
+    s6: ['43%', 'dos vendedores brasileiros bateram a meta. Saiba onde agir.', 'Meetime · Inside Sales Benchmark Brasil 2022'],
+    s7: ['20%', 'das operações não fazem coaching nenhum. Aqui ele vem pronto.', 'Meetime · Inside Sales Benchmark Brasil 2022'],
+  },
+  SONS: {"ping": [6.6, 15.0, 20.4, 26.4, 35.6, 42.6, 47.6], "tecla": [[11.2, 12.6], [45.4, 46.6]], "pulso": [24.8, 27.2]},
+  PONTEIRO: [[1.2, 3.4, 'mouse', 'Você'], [5.6, 9.0, 'mouse', 'Vendedor'], [12.4, 16.2, 'mouse', 'Vendedor'], [19.0, 24.2, 'mouse', 'Vendedor'], [28.6, 31.4, 'mouse', 'Vendedor'], [40.4, 44.4, 'mouse', 'Gestor'], [44.8, 49.4, 'mouse', 'Gestor']],
+  CURSOR: [
+    [0.0, [700, 1500], 0], [2.6, [760, 1240], 0],
+    [5.6, [820, 1500], 0], [8.2, '#s1treino', 1], [9.0, '#s1treino', 0],
+    [12.4, [820, 1500], 0], [14.4, '#s2fim', 1], [16.2, '#s2fim', 0],
+    [19.0, [820, 1500], 0], [21.0, '#s3usar', 1], [24.2, [820, 1450], 0],
+    [28.6, [820, 1500], 0], [30.6, '#s4crm', 1], [31.4, '#s4crm', 0],
+    [32.2, [820, 1500], 0], [37.4, [820, 1500], 0],
+    [40.4, [820, 1500], 0], [42.2, '#s6treino', 1], [44.4, '#s6treino', 0],
+    [44.8, [760, 1500], 0], [46.8, '#s7env', 1], [49.4, [820, 1300], 0],
+  ],
+  INIT() {},
+};
+</script>
+<script src="motor.js"></script>
+</body>
+</html>
