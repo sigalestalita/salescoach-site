@@ -153,6 +153,8 @@ select.inp[multiple] option{font-weight:400;padding:2px 4px}
 .opp .lnk{background:none;border:0;padding:0;font:inherit;color:inherit;text-align:left;cursor:pointer;min-width:0}
 .opp .lnk:hover b{text-decoration:underline}
 .opp .acts{display:flex;flex-wrap:wrap;gap:6px}
+.opp .nota1{display:block;font-size:12px;line-height:1.4;padding:6px 8px;border-radius:8px;background:var(--bg)}.opp .nota1 b{font-family:var(--mono);font-weight:500;font-size:11px;color:var(--fg)}
+.opp .nota-ed{margin-top:4px}
 .col.prospec{background:transparent;box-shadow:inset 0 0 0 1px var(--line)}
 .col>header small{display:block;font-size:11.5px;color:var(--mute);font-weight:400;margin-top:2px}
 .col .mais{font-size:12.5px;color:var(--soft);text-align:center;padding:4px}
@@ -440,6 +442,9 @@ function notasHtml(c, max = 3) {
   const ns = (c.anotacoes || []).slice(-max).reverse();
   return ns.length ? `<div class="notas">${ns.map(a => `<p><b>${brShort(a.em)}${a.dia ? ' · dia ' + a.dia : ''}</b>${esc(a.texto)}</p>`).join('')}${(c.anotacoes || []).length > max ? `<p class="mute">+ ${(c.anotacoes || []).length - max} anteriores na ficha da conta</p>` : ''}</div>` : '';
 }
+/* Última anotação da cadência, numa linha, para o cartão do pipeline. */
+function ultimaNota(c) { const a = (c.anotacoes || [])[(c.anotacoes || []).length - 1]; if (!a) return '';
+  const tx = String(a.texto).replace(/\s+/g, ' '); return `<span class="s nota1" title="${esc(a.texto)}"><b>${brShort(a.em)}${a.dia ? ' · dia ' + a.dia : ''}</b> ${esc(tx.length > 90 ? tx.slice(0, 90) + '…' : tx)}</span>`; }
 function notaEditor(c, dia) {
   return S.openNota === c.id ? `<div class="nota-ed"><textarea class="inp" rows="3" id="nota-${c.id}-${dia || 0}" placeholder="O que aconteceu neste toque? Ex.: pediu para retomar em novembro, quem decide é o diretor financeiro."></textarea>
     <div class="tools"><button class="btn sm pri" data-salvanota="${c.id}" data-dia="${dia || ''}">Salvar anotação</button><button class="btn sm" data-nota="${c.id}">Cancelar</button></div></div>` : '';
@@ -711,10 +716,11 @@ const VIEWS = {
       return `<div class="opp conta" draggable="${!dis()}" data-drag="c:${c.id}">
         <span class="h"><button class="lnk" data-open-conta="${c.id}"><b>${esc(c.empresa)}</b></button><span class="prio ${n.prio}" title="Prioridade">${n.prio}</span></span>
         <span class="meta"><span class="chip">${esc(produtoConta(c))}</span>${c.inbound ? '<span class="chip acc">inbound</span>' : ''}${t && t.due < h ? `<span class="chip bad">toque atrasado ${diff(h, t.due)}d</span>` : ''}${f === 'cadencia' && !t ? '<span class="chip warn">sem resposta</span>' : ''}${c.linkedinPend ? '<span class="chip warn">LinkedIn pendente</span>' : ''}</span>
-        ${f === 'cadencia' ? `<span class="s">${dotsHtml(c)}</span><span class="s">${t ? `Próximo: dia ${t.d} · ${esc(t.canal)} · ${brShort(t.due)}` : 'Todos os toques feitos'}</span>`
+        ${f === 'cadencia' ? `<span class="s">${dotsHtml(c)}</span><span class="s">${t ? `Próximo: dia ${t.d} · ${esc(t.canal)} · ${brShort(t.due)}` : 'Todos os toques feitos'}</span>${ultimaNota(c)}`
           : f === 9 ? `<span class="s">${c.retomarEm ? 'Retomar em ' + brShort(c.retomarEm) : 'Nutrir'}</span>`
           : `<span class="s">${esc(c.decisor || 'Sem decisor')}${c.cargo ? ' · ' + esc(c.cargo) : ''}</span>`}
-        ${dis() ? '' : `<span class="acts">${f === 'fila' ? `<button class="btn sm" data-start="${c.id}">Iniciar cadência</button>` : `<button class="btn sm pri" data-resp="${c.id}">Respondeu</button>`}${f === 'cadencia' && !t ? `<button class="btn sm" data-nutrir="${c.id}">Nutrir</button>` : ''}</span>`}
+        ${dis() ? '' : `<span class="acts">${f === 'fila' ? `<button class="btn sm" data-start="${c.id}">Iniciar cadência</button>` : `<button class="btn sm pri" data-resp="${c.id}">Respondeu</button>`}${f === 'cadencia' && t ? `<button class="btn sm" data-done="${c.id}:${t.d}" title="Marca o toque do dia ${t.d} como feito">Feito</button>` : ''}${f === 'cadencia' ? `<button class="btn sm" data-nota="${c.id}">Anotar</button>` : ''}${f === 'cadencia' && !t ? `<button class="btn sm" data-nutrir="${c.id}">Nutrir</button>` : ''}</span>`}
+        ${f === 'cadencia' ? notaEditor(c, t ? t.d : null) : ''}
       </div>`; };
     const lista = (arr, fn) => arr.slice(0, LIM).map(fn).join('') + (arr.length > LIM ? `<a class="mais" href="#contas">+ ${arr.length - LIM} em Contas-alvo</a>` : '');
     const colunas = ['fila', 'cadencia', 2, 3, 4, 5, 6].concat(S.showClosed ? [7, 8, 9] : []);
@@ -1164,7 +1170,8 @@ function contaForm(c) {
     ${c.inicioCadencia ? `<p class="sect" style="grid-column:1/-1">Cadência</p>
     <label>Início da cadência<input class="inp" type="date" name="inicioCadencia" id="c-ini" value="${esc(c.inicioCadencia)}" ${d}></label>
     ${(c.anotacoes || []).length ? `<div class="full" style="grid-column:1/-1;display:grid;gap:4px"><span style="font-size:12.5px;color:var(--soft)">Anotações da cadência${c.linkedinPend ? ' · conexão pendente no LinkedIn desde ' + brShort(c.linkedinPend.desde) : ''}</span>${notasHtml(c, 50)}</div>` : ''}
-    <div class="full" style="grid-column:1/-1;display:grid;gap:4px">${cad().map(t => `<label class="check" style="height:auto"><input type="checkbox" name="tq" value="${t.d}" id="c-tq-${t.d}" ${(c.toques || []).includes(t.d) ? 'checked' : ''} ${d}> Dia ${t.d} · ${esc(t.canal)} · ${esc(t.acao)}</label>`).join('')}</div>` : ''}
+    <div class="full" style="grid-column:1/-1;display:grid;gap:4px">${cad().map(t => `<label class="check" style="height:auto"><input type="checkbox" name="tq" value="${t.d}" id="c-tq-${t.d}" ${(c.toques || []).includes(t.d) ? 'checked' : ''} ${d}> Dia ${t.d} · ${esc(t.canal)} · ${esc(t.acao)}</label>`).join('')}</div>
+    <label class="full">Nova anotação <span class="mute">· opcional; se marcar um toque agora, ela fica ligada a ele</span><textarea class="inp" name="novaNota" id="c-nota" rows="3" placeholder="O que aconteceu neste toque? Ex.: pediu para retomar em novembro, quem decide é o diretor financeiro." ${d}></textarea></label>` : ''}
   </form><div class="summary" id="cSum"></div>`;
 }
 function readConta() {
@@ -1172,7 +1179,7 @@ function readConta() {
   for (const [k, v] of fd) o[k] = typeof v === 'string' ? v.trim() : v;
   ['online', 'crm', 'rh', 'naoContatar'].forEach(k => o[k] = f.elements[k].checked);
   if (f.elements.inicioCadencia) { o.toques = fd.getAll('tq').map(Number); }
-  delete o.tq;
+  delete o.tq; delete o.novaNota;
   ['vendedores', 'colaboradores'].forEach(k => o[k] = o[k] === '' ? '' : +o[k]);
   return o;
 }
@@ -1190,9 +1197,13 @@ function openConta(id) {
   const doSave = async (start) => {
     const n = readConta(); if (!n.empresa) { toast('Informe a empresa.'); $('#c-empresa').focus(); return; }
     const body = { ...(id ? strip(c) : {}), ...n };
+    // Anotação escrita na gaveta: entra no histórico da cadência, ligada ao toque marcado agora (se houver).
+    const nota = ($('#c-nota') || {}).value ? $('#c-nota').value.trim() : '';
+    if (nota) { const novos = (n.toques || []).filter(x => !(c.toques || []).includes(x));
+      body.anotacoes = [...(c.anotacoes || []), { em: hoje(), dia: novos.length ? Math.max(...novos) : null, texto: nota }]; }
     if (start) Object.assign(body, { status: 'cadencia', inicioCadencia: hoje(), toques: [] });
     if (body.status === 'cadencia' && !body.inicioCadencia) Object.assign(body, { inicioCadencia: hoje(), toques: [] });
-    closeDrawer(); const ok = await saveConta(id, body); if (ok) toast(start ? 'Cadência iniciada: o toque do dia 1 já está em Cadência' : 'Conta salva');
+    closeDrawer(); const ok = await saveConta(id, body); if (ok) toast(start ? 'Cadência iniciada: o toque do dia 1 já está em Cadência' : nota ? 'Conta salva com a anotação' : 'Conta salva');
   };
   $('#saveConta') && $('#saveConta').addEventListener('click', () => doSave(false));
   $('#saveStart') && $('#saveStart').addEventListener('click', () => doSave(true));
@@ -1782,7 +1793,7 @@ document.addEventListener('click', e => {
     const tq = cad().find(x => x.d === +d), msgLk = c.linkedinPend && tq && /linkedin/i.test(tq.canal) && +d !== c.linkedinPend.dia;
     return saveConta(cid, { ...strip(c), toques: [...new Set([...(c.toques || []), +d])].sort((a, b) => a - b), ...(msgLk ? { linkedinPend: null } : {}) }).then(ok => ok && toast(msgLk ? `Dia ${d} feito. Lembrete do LinkedIn concluído` : `Dia ${d} feito`)); }
   if (ds.resp) return respondeu(ds.resp);
-  if (ds.nota) { S.openNota = S.openNota === ds.nota ? null : ds.nota; render(); const b = document.querySelector(`[data-nota="${ds.nota}"]`), ta = b && b.closest('.touch,.row') && b.closest('.touch,.row').querySelector('.nota-ed textarea'); if (ta) ta.focus(); return; }
+  if (ds.nota) { S.openNota = S.openNota === ds.nota ? null : ds.nota; render(); const b = document.querySelector(`[data-nota="${ds.nota}"]`), ta = b && b.closest('.touch,.row,.opp') && b.closest('.touch,.row,.opp').querySelector('.nota-ed textarea'); if (ta) ta.focus(); return; }
   if (ds.salvanota) { const c = S.contas.find(x => x.id === ds.salvanota), ed = t.closest('.nota-ed'), ta = ed && ed.querySelector('textarea'), txt = ta ? ta.value.trim() : '';
     if (!txt) return toast('Escreva a anotação.'); S.openNota = null;
     return saveConta(c.id, { ...strip(c), anotacoes: [...(c.anotacoes || []), { em: hoje(), dia: ds.dia ? +ds.dia : null, texto: txt }] }).then(ok => ok && toast('Anotação salva')); }
