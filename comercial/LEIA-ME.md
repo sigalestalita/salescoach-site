@@ -1,6 +1,6 @@
 # NEXA Comercial
 
-Sistema comercial com login e senha, para publicar em `comercial.nexatech.ia.br`.
+Sistema comercial com login e senha, para publicar em `crm.nexatech.ia.br`.
 
 - Site estático (esta pasta), hospedado no Cloudflare Pages.
 - Login, senha e banco de dados no Supabase (plano gratuito).
@@ -15,8 +15,8 @@ Sistema comercial com login e senha, para publicar em `comercial.nexatech.ia.br`
    - desligue **Allow new users to sign up** (ninguém cria conta sozinho);
    - mantenha o login por e-mail e senha ligado.
 5. Menu **Authentication → URL Configuration**:
-   - Site URL: `https://comercial.nexatech.ia.br`
-   - Redirect URLs: `https://comercial.nexatech.ia.br/**`
+   - Site URL: `https://crm.nexatech.ia.br`
+   - Redirect URLs: `https://crm.nexatech.ia.br/**`
 6. Menu **Authentication → Users → Add user → Create new user**, para cada pessoa da equipe:
    - mesmo e-mail que está na tabela de equipe;
    - uma senha provisória;
@@ -28,7 +28,7 @@ Sistema comercial com login e senha, para publicar em `comercial.nexatech.ia.br`
 
 1. Cloudflare → **Workers & Pages → Create → Pages → Upload assets**.
 2. Nome do projeto: `nexa-comercial`. Envie o .zip desta pasta (já com o `config.js` preenchido).
-3. No projeto: **Custom domains → Set up a custom domain** → `comercial.nexatech.ia.br`. Como o domínio já está na Cloudflare, o DNS é criado sozinho.
+3. No projeto: **Custom domains → Set up a custom domain** → `crm.nexatech.ia.br`. Como o domínio já está na Cloudflare, o DNS é criado sozinho.
 
 ## 3. Equipe no dia a dia
 
