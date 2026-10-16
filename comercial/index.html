@@ -1039,7 +1039,8 @@ async function carregarGmail() {
   schedule();
 }
 function emailHtml() {
-  if (S.papel !== 'admin') return '';
+  if (S.papel !== 'admin') return `<section class="card"><header><h2>E-mail da cadência (Gmail)</h2>${(S.gmail || {}).email ? `<span class="chip acc">conectado: ${esc(S.gmail.email)}</span>` : '<span class="chip">não conectado</span>'}</header>
+    <p class="soft">Conectar a caixa do Gmail e ligar o envio automático é feito por um administrador do CRM (Equipe → papel Admin).</p></section>`;
   const g = S.gmail || {}, e = S.cfg.email || {}, st = S.emailStats, d = dis();
   const taxa = st && st.total ? Math.round(st.respondidos / st.total * 100) : 0;
   return `<section class="card"><header><h2>E-mail da cadência (Gmail)</h2>${g.email ? '<span class="chip acc">conectado</span>' : '<span class="chip">não conectado</span>'}</header>
