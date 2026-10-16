@@ -1,0 +1,11 @@
+{
+ "endpoint": "higgsfield-ai/soul/cinema",
+ "args": {
+  "prompt": "A Brazilian woman in her 30s with curly hair, wearing a dark apron, behind the counter of a busy cafe during a quiet moment, wiping her hands on a cloth, thoughtful look, warm afternoon light. Candid documentary photograph, natural light, 35mm lens, shallow depth of field, warm natural colors, realistic skin texture, authentic Brazilian workplace, person looking relaxed and genuine, not posed like a stock photo, subject in the upper two thirds of the frame, no text, no logos, no watermarks.",
+  "aspect_ratio": "3:4",
+  "resolution": "1080p",
+  "batch_size": 1
+ },
+ "url": "https://d3u0tzju9qaucj.cloudfront.net/266d8d97-07d5-4e92-897d-d70270f9fb4a/dd3e1b05-c4a7-4894-8b40-0bc8b46cb9fa.png",
+ "request_id": "3dc6ee89-61ec-452b-ac5c-1ce2ca9b6412"
+}

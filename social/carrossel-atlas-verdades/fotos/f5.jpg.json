@@ -1,0 +1,11 @@
+{
+ "endpoint": "higgsfield-ai/soul/cinema",
+ "args": {
+  "prompt": "A Brazilian software developer in his late 20s with headphones around his neck, wearing a hoodie, sitting at a desk in a colorful coworking space, looking straight at the camera with a sincere, slightly serious expression. Candid documentary photograph, natural light, 35mm lens, shallow depth of field, warm natural colors, realistic skin texture, authentic Brazilian workplace, person looking relaxed and genuine, not posed like a stock photo, subject in the upper two thirds of the frame, no text, no logos, no watermarks.",
+  "aspect_ratio": "3:4",
+  "resolution": "1080p",
+  "batch_size": 1
+ },
+ "url": "https://d3u0tzju9qaucj.cloudfront.net/266d8d97-07d5-4e92-897d-d70270f9fb4a/dd34878f-e8a6-4319-af9d-11539bd02043.png",
+ "request_id": "4b467f3b-7ef8-415e-934a-f56937ecf3ac"
+}

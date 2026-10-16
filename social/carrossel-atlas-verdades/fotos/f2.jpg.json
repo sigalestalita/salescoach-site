@@ -1,0 +1,11 @@
+{
+ "endpoint": "higgsfield-ai/soul/cinema",
+ "args": {
+  "prompt": "A Brazilian nurse in her 40s with light blue scrubs sitting on a bench in a hospital staff break area, holding a coffee cup with both hands, tired but gentle half smile, looking to the side. Candid documentary photograph, natural light, 35mm lens, shallow depth of field, warm natural colors, realistic skin texture, authentic Brazilian workplace, person looking relaxed and genuine, not posed like a stock photo, subject in the upper two thirds of the frame, no text, no logos, no watermarks.",
+  "aspect_ratio": "3:4",
+  "resolution": "1080p",
+  "batch_size": 1
+ },
+ "url": "https://d3u0tzju9qaucj.cloudfront.net/266d8d97-07d5-4e92-897d-d70270f9fb4a/bba88b69-81e9-451f-b703-0cc84062f476.png",
+ "request_id": "96e4759b-3e94-4210-b52e-78cd6275b1a0"
+}

@@ -1,4 +1,4 @@
-"""Gera as 6 fotos do carrossel na Higgsfield (uma por slide, 4:5).
+"""Gera as 6 fotos do carrossel na Higgsfield (uma por slide, 3:4, recortada para 4:5).
 
   python3 fotos.py            # gera só as que faltam em fotos/
   python3 fotos.py f3         # refaz uma
@@ -29,7 +29,7 @@ FOTOS = {
     'f6': 'A Brazilian HR manager in her 50s with short grey hair and a denim shirt, sitting in a sunny meeting room '
           'having an attentive one-on-one conversation with a younger colleague seen from behind, she listens and smiles.',
 }
-ARGS = {'aspect_ratio': '4:5', 'resolution': '1080p', 'batch_size': 1}
+ARGS = {'aspect_ratio': '3:4', 'resolution': '1080p', 'batch_size': 1}
 
 if __name__ == '__main__':
     pasta = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'fotos')
