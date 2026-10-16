@@ -122,3 +122,48 @@ revoke all on public.integracao_tokens from anon;
 grant select, insert, update on public.integracao_tokens to authenticated;
 drop policy if exists integracao_tokens_admin on public.integracao_tokens;
 create policy integracao_tokens_admin on public.integracao_tokens for all to authenticated using (public.e_admin()) with check (public.e_admin());
+
+-- E-mail pela caixa do Gmail (cadência): conta conectada e envios.
+-- gmail_contas guarda o refresh token: só a service role (funções) lê e grava.
+create table if not exists public.gmail_contas (
+  email         text primary key,
+  refresh_token text not null,
+  conectado_por text,
+  conectado_em  timestamptz not null default now(),
+  ultimo_erro   text,
+  atualizado_em timestamptz not null default now()
+);
+alter table public.gmail_contas enable row level security;
+revoke all on public.gmail_contas from anon, authenticated;
+
+create table if not exists public.email_envios (
+  id            uuid primary key default gen_random_uuid(),
+  criado_em     timestamptz not null default now(),
+  conta_id      text not null,
+  empresa       text,
+  dia           int,
+  de            text,
+  para          text not null,
+  assunto       text,
+  gmail_id      text,
+  thread_id     text,
+  message_id    text,
+  status        text not null default 'enviado' check (status in ('enviado', 'respondido', 'descadastro', 'bounce', 'erro')),
+  resposta      text,
+  respondido_em timestamptz,
+  erro          text
+);
+create index if not exists email_envios_thread_idx on public.email_envios (thread_id);
+create index if not exists email_envios_criado_idx on public.email_envios (criado_em);
+alter table public.email_envios enable row level security;
+revoke all on public.email_envios from anon;
+grant select on public.email_envios to authenticated;
+drop policy if exists email_envios_ler on public.email_envios;
+create policy email_envios_ler on public.email_envios for select to authenticated using (public.pode_ler());
+
+-- Quem está conectado (sem o token), para a tela de Ajustes.
+create or replace function public.gmail_status() returns table (email text, conectado_em timestamptz, ultimo_erro text)
+language sql stable security definer set search_path = public as $$
+  select g.email, g.conectado_em, g.ultimo_erro from public.gmail_contas g where public.pode_ler()
+$$;
+grant execute on function public.gmail_status() to authenticated;

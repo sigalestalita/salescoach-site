@@ -335,6 +335,8 @@ const DEFAULTS = {
     canais: ['LinkedIn', 'E-mail', 'Ligação', 'Indicação', 'Parceiro', 'Evento/comunidade', 'Inbound (site/Instagram)', 'WhatsApp'],
     portes: ['Micro · até 9 pessoas', 'Pequena · 10 a 49 pessoas', 'Média · 50 a 249 pessoas', 'Grande · 250 a 999 pessoas', 'Muito grande · 1.000 pessoas ou mais'],
   },
+  // Envio dos toques de e-mail pela caixa do Gmail (função email-cadencia).
+  email: { auto: false, limite: 50, semGancho: false, assinatura: '' },
 };
 /* Porte sugerido pelo nº de colaboradores, quando ninguém escolheu. Só vale se a faixa padrão ainda estiver na lista. */
 const PORTE_FAIXAS = [[9, 0], [49, 1], [249, 2], [999, 3], [Infinity, 4]];
@@ -399,7 +401,7 @@ const deep = (a, b) => { const o = Array.isArray(a) ? [...a] : { ...a }; for (co
 function toast(msg) { const t = $('#toast'); t.textContent = msg; t.hidden = false; clearTimeout(toast.t); toast.t = setTimeout(() => t.hidden = true, 2200); }
 
 /* ───────── estado ───────── */
-const S = { inb: { rows: [], carregado: false, busy: false, erro: '', periodo: '30', origem: '', canal: '', aberto: null }, cfg: deep(DEFAULTS, {}), cfgExists: false, opps: [], contas: [], semanas: {}, tarefas: [], recursos: [], playbook: null, loaded: 0, ro: false, db: null, dl: null, noDb: false, showClosed: false, filtroProd: '', busca: '', contaFiltro: 'abertas', contaPrio: '', openMsg: null, openNota: null, prospects: [], integ: { campos: [] }, tokens: null, novoToken: null,
+const S = { inb: { rows: [], carregado: false, busy: false, erro: '', periodo: '30', origem: '', canal: '', aberto: null }, cfg: deep(DEFAULTS, {}), cfgExists: false, opps: [], contas: [], semanas: {}, tarefas: [], recursos: [], playbook: null, loaded: 0, ro: false, db: null, dl: null, noDb: false, showClosed: false, filtroProd: '', busca: '', contaFiltro: 'abertas', contaPrio: '', openMsg: null, openNota: null, prospects: [], integ: { campos: [] }, gmail: null, emailStats: null, tokens: null, novoToken: null,
   L: { res: null, pagina: 0, total: 0, sel: new Set(), f: { cargos: 'Diretor Comercial, Gerente Comercial, Head de Vendas', estados: '', setores: [], subsetores: [], tamanhos: [], senioridades: [], departamentos: [], porEmpresa: 2, comEmail: true }, uso: null, hist: null, cat: {}, busy: '', lista: '', ver: '', confirma: '', verHist: false } };
 let view = (location.hash || '#painel').slice(1);
 
@@ -841,7 +843,7 @@ const VIEWS = {
     const dots = dotsHtml;
     const item = ({ c, t }) => { const key = c.id + ':' + t.d, open = S.openMsg === key;
       return `<div class="touch"><div><div class="who"><b>${esc(c.empresa)}</b> <span class="soft">· ${esc(c.decisor || 'sem decisor')}${c.cargo ? ', ' + esc(c.cargo) : ''}</span></div>
-        <div class="what"><span class="chip acc">Dia ${t.d} · ${t.canal}</span><span>${t.acao}</span>${t.due < hoje() ? `<span class="chip bad">atrasado ${diff(hoje(), t.due)}d</span>` : ''}${c.linkedinPend ? `<span class="chip warn">conexão pendente no LinkedIn</span>` : ''}<span class="chip">${esc(isAtlas(produtoConta(c)) ? 'Atlas' : 'Sales Coach')}</span>${dots(c)}</div></div>
+        <div class="what"><span class="chip acc">Dia ${t.d} · ${t.canal}</span><span>${t.acao}</span>${t.due < hoje() ? `<span class="chip bad">atrasado ${diff(hoje(), t.due)}d</span>` : ''}${c.linkedinPend ? `<span class="chip warn">conexão pendente no LinkedIn</span>` : ''}<span class="chip">${esc(isAtlas(produtoConta(c)) ? 'Atlas' : 'Sales Coach')}</span>${emailChip(c, t)}${dots(c)}</div></div>
         <div class="acts"><button class="btn sm" data-msg="${key}">${open ? 'Fechar mensagem' : 'Ver mensagem'}</button>
           ${c.linkedin ? `<a class="btn sm" href="${esc(/^https?:\/\//.test(c.linkedin) ? c.linkedin : 'https://' + c.linkedin)}" target="_blank" rel="noopener">LinkedIn ↗</a>` : ''}
           <button class="btn sm" data-nota="${c.id}" ${dis()}>Anotar</button>
@@ -937,6 +939,7 @@ const VIEWS = {
         <label class="row" style="grid-template-columns:auto minmax(0,1fr)"><input type="checkbox" id="imp-tarefas" ${im.tarefas.length ? '' : 'disabled'}><span><b style="font-weight:500">${im.tarefas.length}</b> tarefas do plano de 90 dias <span class="mute">· substitui o plano atual</span></span></label>
       </div><div class="tools"><button class="btn pri" id="impGo" ${d} ${S.importando ? 'disabled' : ''}>${S.importando ? 'Importando…' : 'Importar'}</button><button class="btn" id="impCancel">Cancelar</button><span class="soft" id="impProg"></span></div>`) : ''}
     </section>
+    ${emailHtml()}
     ${integracaoHtml()}
     <section class="card"><header><h2>Etapas do funil</h2></header>
       <p class="soft">A ordem é fixa: 7 é sempre Ganho, 8 Perdido e 9 Nutrir. Os nomes, as definições e a probabilidade são editáveis.</p>
@@ -1014,6 +1017,61 @@ const VIEWS = {
       <select class="inp" id="tk-${t.id}" data-task="${t.id}" ${dis()} aria-label="Status">${['A fazer', 'Fazendo', 'Feito'].map(s => `<option ${s === t.status ? 'selected' : ''}>${s}</option>`).join('')}</select></div>`).join('')}</div></section>`).join('')}`;
   },
 };
+
+/* ───────── e-mail da cadência pelo Gmail ───────── */
+const ehEmailCanal = canal => /e-?mail/i.test(canal || '');
+/* No toque de e-mail: se vai sair sozinho pelo Gmail ou o que falta para sair. */
+function emailChip(c, t) {
+  if (!ehEmailCanal(t.canal) || !(S.cfg.email || {}).auto || !(S.gmail || {}).email) return '';
+  if (!c.email) return '<span class="chip warn">sem e-mail do decisor</span>';
+  if (c.emailInvalido) return '<span class="chip bad">e-mail inválido</span>';
+  if (c.emailPendente && c.emailPendente.dia === t.d) return `<span class="chip warn" title="${esc(c.emailPendente.motivo)}">não saiu: ${esc(c.emailPendente.motivo)}</span>`;
+  return '<span class="chip acc" title="A função de e-mail envia em horário comercial, dentro do limite do dia">sai sozinho pelo Gmail</span>';
+}
+async function carregarGmail() {
+  if (!sb) return;
+  const { data } = await sb.rpc('gmail_status'); S.gmail = (data || [])[0] || { email: null };
+  const desde = new Date(Date.now() - 30 * 864e5).toISOString();
+  const { data: env } = await sb.from('email_envios').select('status, criado_em').gte('criado_em', desde).limit(5000);
+  if (env) { const ini = hoje(); const conta = st => env.filter(e => e.status === st).length;
+    S.emailStats = { hoje: env.filter(e => e.status !== 'erro' && iso(new Date(e.criado_em)) === ini).length, total: env.filter(e => e.status !== 'erro').length,
+      respondidos: conta('respondido'), descadastros: conta('descadastro'), bounces: conta('bounce'), erros: conta('erro') }; }
+  schedule();
+}
+function emailHtml() {
+  if (S.papel !== 'admin') return '';
+  const g = S.gmail || {}, e = S.cfg.email || {}, st = S.emailStats, d = dis();
+  const taxa = st && st.total ? Math.round(st.respondidos / st.total * 100) : 0;
+  return `<section class="card"><header><h2>E-mail da cadência (Gmail)</h2>${g.email ? '<span class="chip acc">conectado</span>' : '<span class="chip">não conectado</span>'}</header>
+    <p class="soft">Os toques de e-mail da cadência saem sozinhos pela caixa conectada, em dias úteis das 8h às 18h, com intervalos irregulares. Os toques seguintes vão na mesma conversa. Se a pessoa responde, a conta vira oportunidade; se pede para parar, sai da cadência; se o e-mail volta, fica marcado como inválido.</p>
+    ${g.email ? `<div class="kv" style="grid-template-columns:72px minmax(0,1fr) auto"><span class="mono soft">Caixa</span><code>${esc(g.email)}</code><button class="btn sm danger" id="gmailSair" ${d}>Desconectar</button></div>
+      ${g.ultimo_erro ? `<p class="banner">${esc(g.ultimo_erro)}</p>` : ''}`
+      : `<div class="tools"><button class="btn pri" id="gmailConectar" ${d}>Conectar o Gmail</button><span class="soft">Entre com a caixa que vai enviar (ex.: dandara@nexatech.ia.br) e aceite as duas permissões.</span></div>`}
+    <div class="fields" style="grid-template-columns:minmax(0,1fr) minmax(0,1fr)">
+      <label><span>Envio automático</span><span class="check"><input type="checkbox" id="em-auto" data-cfg="email.auto" data-kind="bool" ${e.auto ? 'checked' : ''} ${d}> Enviar os toques de e-mail sozinho</span></label>
+      <label>Limite por dia<input class="inp" type="number" min="5" max="200" id="em-lim" data-cfg="email.limite" data-kind="num" value="${esc(e.limite ?? 50)}" ${d}><span class="mute" style="font-size:12px">Nas duas primeiras semanas a caixa esquenta: até 20 e depois 35 por dia.</span></label>
+      <label class="full"><span>Sem gancho na conta</span><span class="check"><input type="checkbox" id="em-semg" data-cfg="email.semGancho" data-kind="bool" ${e.semGancho ? 'checked' : ''} ${d}> Enviar mesmo assim, tirando a linha personalizada</span></label>
+      <label class="full">Assinatura<textarea class="inp" rows="4" id="em-ass" data-cfg="email.assinatura" data-kind="msg" placeholder="Dandara Brasil&#10;Cargo · NEXA&#10;(11) 99999-9999&#10;nexatech.ia.br" ${d}>${esc(e.assinatura || '')}</textarea><span class="mute" style="font-size:12px">Sem assinatura, nada é enviado. Ela entra no lugar da linha com o seu nome, ou no fim.</span></label>
+    </div>
+    ${st ? `<div class="summary"><div><b>${st.hoje}</b><span>enviados hoje</span></div><div><b>${st.total}</b><span>enviados em 30 dias</span></div><div><b>${st.respondidos}</b><span>respostas · ${taxa}%</span></div><div><b>${st.descadastros + st.bounces}</b><span>pararam ou voltaram</span></div></div>` : ''}
+  </section>`;
+}
+document.addEventListener('click', async e => {
+  const b = e.target.closest && e.target.closest('#gmailConectar,#gmailSair'); if (!b) return;
+  const { data: { session } } = await sb.auth.getSession();
+  if (b.id === 'gmailSair' && !b.dataset.c) { b.dataset.c = 1; b.textContent = 'Confirmar'; return; }
+  b.disabled = true;
+  const r = await fetch(CFG.url.replace(/\/$/, '') + '/functions/v1/gmail-oauth', { method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + (session && session.access_token) },
+    body: JSON.stringify({ action: b.id === 'gmailSair' ? 'desconectar' : 'url' }) }).then(r => r.json()).catch(() => ({ error: 'Não foi possível falar com o servidor.' }));
+  b.disabled = false;
+  if (r.error) return toast(r.error);
+  if (r.url) { location.href = r.url; return; }
+  toast('Gmail desconectado'); carregarGmail();
+});
+/* Volta do Google: ?gmail=ok ou ?gmail=erro&motivo=… */
+(() => { const q = new URLSearchParams(location.search), g = q.get('gmail'); if (!g) return;
+  setTimeout(() => toast(g === 'ok' ? 'Gmail conectado. Ligue o envio automático e confira a assinatura.' : 'Não foi possível conectar: ' + (q.get('motivo') || 'tente de novo.')), 600);
+  history.replaceState(null, '', location.pathname + location.hash); })();
 
 /* ───────── integração com o Sales Coach ───────── */
 const URL_INTEGRACAO = () => (CFG.url || '').replace(/\/$/, '') + '/functions/v1/integracao';
@@ -1149,6 +1207,9 @@ function contaForm(c) {
     <label>Cidade<input class="inp" name="cidade" id="c-cidade" value="${esc(c.cidade)}" ${d}></label>
     <label>Porte<select class="inp" name="porte" id="c-porte" ${d}>${opts(S.cfg.listas.portes || [], porteConta(c), '—')}</select></label>
     <label>Gatilho observado<input class="inp" name="gatilho" id="c-gat" value="${esc(c.gatilho)}" placeholder="Ex.: 3 vagas de SDR" ${d}></label>
+    <label class="full">Gancho do e-mail <span class="mute">· a linha personalizada do 1º e-mail da cadência</span><input class="inp" name="gancho" id="c-gancho" value="${esc(c.gancho)}" placeholder="Ex.: Vi que vocês abriram 3 vagas de SDR este mês." ${d}></label>
+    ${c.emailInvalido ? `<p class="banner full" style="grid-column:1/-1">O e-mail deste decisor voltou (endereço inválido). Corrija o e-mail para os próximos toques saírem.</p>` : ''}
+    ${c.emailPendente ? `<p class="banner full" style="grid-column:1/-1">E-mail do dia ${c.emailPendente.dia} esperando: ${esc(c.emailPendente.motivo)}.</p>` : ''}
     <p class="sect" style="grid-column:1/-1">Encaixe Sales Coach</p>
     <label>Nº de vendedores<input class="inp" type="number" min="0" name="vendedores" id="c-vend" value="${esc(c.vendedores ?? '')}" ${d}></label>
     ${yn('online', c.online, 'Vende por videochamada?')}
@@ -1841,7 +1902,7 @@ document.addEventListener('change', e => {
   if (t.id === 'pMes') { S.painelMes = t.value; return render(); }
   if (ds.sem) { const w = ds.sem, cur = { ...(S.semanas[w] || {}) }; cur[ds.f] = ds.f === 'aprendizado' ? t.value.trim() : (t.value === '' ? '' : +t.value);
     S.semanas[w] = cur; const ref = S.db && S.db.collection('semanas').doc(w); write('semanas/' + w, () => ref.set(cur)).then(ok => ok && toast('Semana salva')); return; }
-  if (ds.cfg) { const path = ds.cfg.split('.'); let v = t.value; if (ds.kind === 'pct') { v = (+v || 0) / 100; if (path[0] === 'taxas' && v <= 0) return toast('A taxa precisa ser maior que zero.'); } else if (ds.kind === 'num') v = +v || 0; else if (ds.kind !== 'msg') v = v.trim();
+  if (ds.cfg) { const path = ds.cfg.split('.'); let v = ds.kind === 'bool' ? t.checked : t.value; if (ds.kind === 'bool') {} else if (ds.kind === 'pct') { v = (+v || 0) / 100; if (path[0] === 'taxas' && v <= 0) return toast('A taxa precisa ser maior que zero.'); } else if (ds.kind === 'num') v = +v || 0; else if (ds.kind !== 'msg') v = v.trim();
     if (path[0] === 'cadencia' && path[2] === 'd' && v < 1) return toast('O dia precisa ser 1 ou mais.');
     const next = JSON.parse(JSON.stringify(S.cfg)); if (!next.cadencia) next.cadencia = cad(); let o = next; path.slice(0, -1).forEach(k => { o[k] = o[k] || {}; o = o[k]; }); o[path[path.length - 1]] = v;
     return saveCfg(next).then(ok => ok && toast('Salvo')); }
@@ -2019,6 +2080,7 @@ async function iniciar(session) {
   db.doc('config/integracao').onSnapshot(s => { S.integ = { campos: [], ...(s.exists ? s.data() : {}) }; schedule(); });
   carregarMembros();
   carregarTokens();
+  carregarGmail();
   carregarInbound();
   sb.channel('inbound-novos').on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'leads_inbound' }, p => {
     if (p.new && !S.inb.rows.some(l => l.id === p.new.id)) { S.inb.rows.unshift(p.new); toast(`Novo lead inbound: ${p.new.nome || ''}`); schedule(); }
