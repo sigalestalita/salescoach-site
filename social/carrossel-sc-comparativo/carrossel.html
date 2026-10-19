@@ -1,0 +1,282 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Carrossel Sales Coach · Comparativo</title>
+<link rel="stylesheet" href="fonts.css">
+<link rel="stylesheet" href="poppins.css">
+<style>
+/* Carrossel 4:5 (1080×1350): "Sales Coach x outros sistemas".
+   Concorrentes sem nome nem marca: o lado "outros" é uma tela genérica, antiga.
+   Cada <section class="s"> vira uma imagem. Gerar: node render.mjs out */
+:root { --tinta: #16181a; --cinza: #8a8d90; --dim: #55595e; --lima: #d4f969; --lilas: #c9b8f5; --navy: #0f2c5c; --azul: #1d4f9a; --verde: #2f9a4a; --verm: #d1453b; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: #333; font-family: 'DM Sans', sans-serif; color: var(--tinta); -webkit-font-smoothing: antialiased; }
+.s { position: relative; width: 1080px; height: 1350px; overflow: hidden; margin-bottom: 20px; background: #ececea; }
+
+/* Moldura com borda em degradê lima → lilás, como na referência */
+.moldura { position: absolute; border-radius: 46px; padding: 14px; background: linear-gradient(135deg, #e6fbb0, #f2f2ee 45%, #b9a2f2); box-shadow: 0 40px 80px -50px rgba(20,20,40,.45); }
+.moldura > .tela { position: relative; width: 100%; height: 100%; border-radius: 34px; overflow: hidden; background: #fff; }
+
+/* ── Capa ── */
+.capa h1 { position: absolute; left: 0; right: 0; top: 120px; text-align: center; font-weight: 500; font-size: 104px; line-height: 1.02; letter-spacing: -.04em; }
+.capa .sub { position: absolute; left: 0; right: 0; top: 380px; text-align: center; font-size: 44px; color: var(--cinza); letter-spacing: -.02em; }
+.capa .sub b { color: var(--tinta); font-weight: 500; }
+.capa .moldura { left: 76px; right: 76px; top: 500px; bottom: -60px; }
+.metade { position: absolute; top: 0; bottom: 0; }
+.metade.sc { left: 0; width: 50%; background: #fff; font-family: 'Poppins'; }
+.metade.velho { left: 50%; right: 0; background: #c3c3c3; font-family: Tahoma, Verdana, 'DejaVu Sans', sans-serif; border-left: 3px solid #fff; }
+
+/* Sales Coach (moderno) */
+.sc .bar { height: 70px; display: flex; align-items: center; gap: 12px; padding-left: 26px; border-bottom: 1px solid #edf0f5; font-weight: 600; font-size: 19px; color: #16213a; }
+.sc .bar img { height: 26px; }
+.sc .miolo { padding: 18px 22px; }
+.sc .trilha { font-size: 14px; color: #8b93a7; } .sc .trilha b { color: var(--azul); font-weight: 500; }
+.sc .card { background: #fff; border-radius: 16px; box-shadow: 0 0 0 1px #edf0f5, 0 10px 20px -16px rgba(20,30,60,.3); padding: 16px 18px; margin-top: 14px; }
+.sc .nota { display: flex; align-items: center; gap: 16px; }
+.sc .nota svg { width: 92px; height: 92px; flex: 0 0 auto; }
+.sc .nota b { display: block; font-size: 17px; } .sc .nota span { font-size: 13.5px; color: #6a7287; }
+.sc .t { font-size: 15px; font-weight: 600; color: #16213a; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+.chips span { font-size: 13px; font-weight: 500; padding: 6px 12px; border-radius: 999px; background: #e7f5ea; color: var(--verde); }
+.chips span.n { background: #fdeee6; color: #c2531c; }
+.sc .passo { font-size: 13.5px; line-height: 1.45; color: #4a5368; margin-top: 6px; }
+.dica { margin-top: 14px; border-radius: 16px; padding: 14px 16px; background: #10203f; color: #fff; }
+.dica small { display: block; font-size: 11.5px; letter-spacing: .14em; text-transform: uppercase; color: var(--lima); font-weight: 600; }
+.dica p { font-size: 14px; line-height: 1.4; margin-top: 6px; }
+
+/* Tela antiga (genérica) */
+.win { margin: 18px 16px; background: #c3c3c3; box-shadow: inset -2px -2px #6b6b6b, inset 2px 2px #fff; padding: 3px; }
+.win .tit { height: 30px; display: flex; align-items: center; justify-content: space-between; padding: 0 6px 0 10px; background: linear-gradient(90deg, #0a246a, #3a6ea5); color: #fff; font-size: 14px; font-weight: 700; }
+.win .tit i { display: inline-block; width: 18px; height: 16px; margin-left: 3px; background: #c3c3c3; box-shadow: inset -1px -1px #555, inset 1px 1px #fff; }
+.win .corpo { padding: 10px; font-size: 14px; color: #111; }
+.tab { width: 100%; border-collapse: collapse; background: #fff; box-shadow: inset 1px 1px #6b6b6b; font-size: 13px; }
+.tab th { background: #d8d8d8; text-align: left; padding: 5px 6px; border: 1px solid #9a9a9a; font-weight: 700; }
+.tab td { padding: 6px; border: 1px solid #c8c8c8; }
+.prog { margin-top: 12px; height: 22px; background: #fff; box-shadow: inset 1px 1px #6b6b6b, inset -1px -1px #fff; padding: 3px; display: flex; gap: 3px; }
+.prog i { width: 14px; background: #0a246a; }
+.btns { display: flex; gap: 10px; margin-top: 12px; }
+.btns span { padding: 6px 16px; background: #c3c3c3; box-shadow: inset -2px -2px #6b6b6b, inset 2px 2px #fff; font-size: 13px; }
+.aviso { display: flex; gap: 10px; align-items: flex-start; margin-top: 12px; font-size: 13px; line-height: 1.35; }
+.aviso b { flex: 0 0 auto; display: grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; background: #f1c40f; color: #111; font-size: 18px; }
+
+/* ── Cards de comparação ── */
+.comp h2 { position: absolute; left: 90px; right: 90px; top: 110px; font-weight: 500; font-size: 76px; line-height: 1.04; letter-spacing: -.035em; }
+.comp .lin { position: absolute; left: 90px; right: 90px; font-size: 31px; line-height: 1.38; letter-spacing: -.01em; color: var(--dim); }
+.comp .lin b { color: var(--tinta); font-weight: 600; }
+.comp .lin.sc { top: 300px; } .comp .lin.ou { top: 430px; color: var(--cinza); } .comp .lin.ou b { color: var(--dim); }
+.comp .lin i { font-style: normal; display: inline-grid; place-items: center; width: 34px; height: 34px; border-radius: 50%; margin-right: 12px; font-size: 20px; vertical-align: 3px; }
+.comp .lin.sc i { background: var(--lima); color: var(--tinta); } .comp .lin.ou i { background: #dcdcd8; color: #77797c; }
+.comp .moldura { left: 90px; right: 90px; top: 600px; bottom: 90px; }
+.marca { position: absolute; right: 64px; top: 52px; display: flex; align-items: center; gap: 10px; font-family: 'Poppins'; font-weight: 600; font-size: 20px; color: #16213a; }
+.marca img { height: 30px; }
+.num { position: absolute; left: 90px; top: 58px; font-family: 'JetBrains Mono', monospace; font-size: 18px; letter-spacing: .16em; color: var(--cinza); }
+
+/* Ilustrações */
+.call { position: absolute; inset: 0; background: #1f2124; padding: 26px 26px 150px; display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; gap: 14px; }
+.call .p { position: relative; border-radius: 18px; background: linear-gradient(160deg, #3a3f46, #2a2d32); display: grid; place-items: center; }
+.call .p .av { width: 96px; height: 96px; margin-bottom: 30px; border-radius: 50%; display: grid; place-items: center; font-family: 'Poppins'; font-weight: 600; font-size: 36px; color: #fff; }
+.call .p small { position: absolute; left: 14px; bottom: 12px; font-size: 16px; color: #e8e8e8; font-family: 'Poppins'; }
+.call .p.bot { background: #2a2d32; outline: 3px dashed #6c7077; outline-offset: -3px; }
+.call .p.bot .av { background: #4b5058; font-size: 44px; }
+.risco { position: absolute; left: 0; right: 0; bottom: 46px; display: grid; place-items: center; }
+.risco span { padding: 10px 20px; border-radius: 999px; background: var(--verm); color: #fff; font-family: 'Poppins'; font-weight: 600; font-size: 20px; transform: rotate(-6deg); }
+.painel { position: absolute; left: 26px; right: 26px; bottom: 26px; border-radius: 18px; background: #fff; box-shadow: 0 20px 40px -20px rgba(0,0,0,.6); padding: 16px 18px; font-family: 'Poppins'; }
+.painel .h { display: flex; align-items: center; gap: 10px; font-weight: 600; font-size: 20px; color: #16213a; }
+.painel .h img { height: 22px; } .painel .h em { margin-left: auto; font-style: normal; font-size: 13px; color: var(--verm); display: flex; align-items: center; gap: 6px; }
+.painel .h em::before { content: ""; width: 9px; height: 9px; border-radius: 50%; background: var(--verm); }
+.painel p { font-size: 18px; color: #4a5368; margin-top: 8px; line-height: 1.4; }
+
+.ao-vivo { position: absolute; inset: 0; background: #f6f8fb; padding: 30px; font-family: 'Poppins'; }
+.fala { max-width: 80%; border-radius: 18px; padding: 14px 18px; font-size: 20px; line-height: 1.4; background: #fff; box-shadow: 0 0 0 1px #edf0f5; color: #2b3245; }
+.fala small { display: block; font-size: 13px; color: #8b93a7; margin-bottom: 4px; font-weight: 500; }
+.fala + .fala { margin-top: 12px; }
+.ao-vivo .dica { position: absolute; left: 30px; right: 30px; bottom: 30px; padding: 22px 24px; }
+.ao-vivo .dica small { font-size: 14px; } .ao-vivo .dica p { font-size: 21px; } .ao-vivo .dica p b { color: var(--lima); font-weight: 600; }
+.depois { position: absolute; right: 30px; top: 30px; padding: 8px 14px; border-radius: 999px; background: #e9ecf2; font-size: 14px; color: #6a7287; }
+
+.treino { position: absolute; inset: 0; background: linear-gradient(160deg, #10203f, #1d3a6e); padding: 34px; font-family: 'Poppins'; color: #fff; }
+.treino .cli { display: flex; align-items: center; gap: 18px; }
+.treino .cli .av { width: 74px; height: 74px; border-radius: 50%; background: linear-gradient(135deg, #f0c9a8, #c98b67); }
+.treino .cli b { display: block; font-size: 22px; } .treino .cli span { font-size: 15px; color: #b9c6e4; }
+.onda { margin-top: 26px; height: 70px; display: flex; align-items: center; gap: 6px; }
+.onda i { flex: 1; border-radius: 4px; background: var(--lima); opacity: .85; }
+.fb { margin-top: 22px; border-radius: 16px; padding: 18px 20px; background: rgba(212,249,105,.12); box-shadow: inset 0 0 0 1px rgba(212,249,105,.35); }
+.fb small { font-size: 13px; letter-spacing: .14em; text-transform: uppercase; color: var(--lima); font-weight: 600; }
+.fb p { font-size: 19px; line-height: 1.45; margin-top: 6px; color: #e6ecfa; }
+.treino .q { margin-top: 22px; font-size: 22px; line-height: 1.4; color: #e6ecfa; }
+.treino .res { position: absolute; left: 34px; right: 34px; bottom: 34px; display: flex; gap: 14px; }
+.treino .res div { flex: 1; border-radius: 16px; background: rgba(255,255,255,.1); padding: 14px 16px; }
+.treino .res small { display: block; font-size: 13px; color: #b9c6e4; } .treino .res b { font-size: 30px; font-weight: 500; }
+
+.precos { position: absolute; inset: 0; display: grid; grid-template-columns: 1fr 1fr; }
+.precos > div { padding: 34px 30px; display: flex; flex-direction: column; }
+.precos .a { background: #fff; font-family: 'Poppins'; }
+.precos .b { background: #c3c3c3; font-family: Tahoma, Verdana, 'DejaVu Sans', sans-serif; border-left: 3px solid #fff; }
+.precos .a .h { display: flex; align-items: center; gap: 10px; font-weight: 600; font-size: 18px; color: #16213a; } .precos .a .h img { height: 26px; }
+.precos .a .de { margin-top: 30px; font-size: 18px; color: #6a7287; }
+.precos .a .val { margin-top: 6px; font-size: 80px; font-weight: 300; letter-spacing: -.04em; color: #16213a; line-height: 1; }
+.precos .a .val small { font-size: 26px; color: #6a7287; margin-right: 6px; }
+.precos .a .per { margin-top: 6px; font-size: 16px; color: #4a5368; }
+.precos .a ul { margin-top: 24px; list-style: none; display: flex; flex-direction: column; gap: 12px; font-size: 18px; color: #4a5368; }
+.precos .a li::before { content: "✓"; color: var(--verde); font-weight: 700; margin-right: 10px; }
+.precos .b .win { margin: 0; }
+</style>
+</head>
+<body>
+
+<!-- 1 · Capa -->
+<section class="s capa">
+  <h1>Sales Coach<br>x outros sistemas</h1>
+  <div class="sub">Qual a <b>REAL</b> diferença?</div>
+  <div class="moldura"><div class="tela">
+    <div class="metade sc">
+      <div class="bar"><img src="img/mark.png" alt="">Sales Coach</div>
+      <div class="miolo">
+        <div class="trilha"><b>Reuniões</b> / Demo · Grupo Alfa</div>
+        <div class="card nota">
+          <svg viewBox="0 0 120 120"><circle cx="60" cy="60" r="50" fill="none" stroke="#eef2f8" stroke-width="13"/><circle cx="60" cy="60" r="50" fill="none" stroke="#2f9a4a" stroke-width="13" stroke-linecap="round" stroke-dasharray="270 314" transform="rotate(-90 60 60)"/><text x="60" y="71" text-anchor="middle" font-family="Poppins" font-size="34" font-weight="600" fill="#16213a">86</text></svg>
+          <div><b>Nota da reunião</b><span>pela metodologia BANT</span></div>
+        </div>
+        <div class="card"><div class="t">Critérios</div>
+          <div class="chips"><span>Orçamento ✓</span><span>Decisor ✓</span><span>Dor ✓</span><span class="n">Prazo ?</span></div>
+          <div class="passo"><b>Próximo passo:</b> proposta até 24/10, com o sócio na reunião.</div>
+        </div>
+        <div class="dica"><small>Coach ao vivo</small><p>Objeção de preço: pergunte quanto custa hoje fazer isso sem método.</p></div>
+        <div class="card"><div class="t">CRM atualizado sozinho</div>
+          <div class="passo">Etapa: <b>Proposta</b> · Decisor: <b>Ricardo (sócio)</b><br>Tarefa criada: enviar proposta · 24/10</div>
+          <div class="chips"><span>HubSpot ✓</span><span>RD Station ✓</span><span>Pipedrive ✓</span></div>
+        </div>
+        <div class="card"><div class="t">Quem falou</div>
+          <div style="display:flex;height:14px;border-radius:8px;overflow:hidden;margin-top:10px"><i style="width:43%;background:#1d4f9a"></i><i style="width:57%;background:#c9d6ea"></i></div>
+          <div class="passo">Vendedor 43% · Cliente 57%</div>
+        </div>
+      </div>
+    </div>
+    <div class="metade velho">
+      <div class="win">
+        <div class="tit">Gravacoes_reunioes.xls <span><i></i><i></i><i></i></span></div>
+        <div class="corpo">
+          <table class="tab">
+            <tr><th>Data</th><th>Cliente</th><th>Status</th></tr>
+            <tr><td>14/10</td><td>Grupo Alfa</td><td>Gravado</td></tr>
+            <tr><td>13/10</td><td>Beta S.A.</td><td>Na fila</td></tr>
+            <tr><td>13/10</td><td>Gama Ltda</td><td>Na fila</td></tr>
+            <tr><td>12/10</td><td>Delta</td><td>Erro</td></tr>
+          </table>
+          <div style="margin-top:12px">Processando resumo...</div>
+          <div class="prog"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+          <div class="aviso"><b>!</b><span>"Robô de anotações" entrou na reunião como participante.</span></div>
+          <div class="btns"><span>OK</span><span>Cancelar</span></div>
+        </div>
+      </div>
+      <div class="win">
+        <div class="tit">Resumo_reuniao.txt <span><i></i><i></i><i></i></span></div>
+        <div class="corpo" style="background:#fff;margin:4px;box-shadow:inset 1px 1px #6b6b6b;line-height:1.5">
+          Reunião com Grupo Alfa. O cliente falou sobre o<br>orçamento e sobre o prazo. Foram discutidos<br>vários pontos. O vendedor apresentou a<br>solução. Próximos passos a definir.<br><br>Duração: 47 min · Participantes: 4<br>Nota: —<br>Metodologia: —
+        </div>
+      </div>
+      <div class="win">
+        <div class="tit">Aviso <span><i></i></span></div>
+        <div class="corpo"><div class="aviso" style="margin:0"><b>i</b><span>A análise fica pronta depois que a<br>reunião terminar.</span></div></div>
+      </div>
+    </div>
+  </div></div>
+</section>
+
+<!-- 2 · Sem robô -->
+<section class="s comp">
+  <div class="num">01 / 04</div>
+  <div class="marca"><img src="img/mark.png" alt="">Sales Coach</div>
+  <h2>Sem robô na<br>sua reunião</h2>
+  <p class="lin sc"><i>✓</i><b>Sales Coach:</b> grava pela extensão do Chrome. Ninguém a mais entra na chamada.</p>
+  <p class="lin ou"><i>–</i><b>Outros sistemas:</b> muitos colocam um robô de anotações na lista de participantes.</p>
+  <div class="moldura"><div class="tela">
+    <div class="call">
+      <div class="p"><div class="av" style="background:#6a8fd8">AL</div><small>Ana (você)</small></div>
+      <div class="p"><div class="av" style="background:#d88a6a">RC</div><small>Ricardo · cliente</small></div>
+      <div class="p"><div class="av" style="background:#7cb87a">MS</div><small>Marina · cliente</small></div>
+      <div class="p bot"><div class="av">🤖</div><small>Robô de anotações</small><div class="risco"><span>Não precisa</span></div></div>
+    </div>
+    <div class="painel"><div class="h"><img src="img/mark.png" alt="">Sales Coach <em>gravando</em></div><p>Pela extensão, direto na aba do Meet, do Teams ou do Zoom.</p></div>
+  </div></div>
+</section>
+
+<!-- 3 · Ao vivo -->
+<section class="s comp">
+  <div class="num">02 / 04</div>
+  <div class="marca"><img src="img/mark.png" alt="">Sales Coach</div>
+  <h2>A dica chega<br>durante a reunião</h2>
+  <p class="lin sc"><i>✓</i><b>Sales Coach:</b> quando a objeção aparece, o coach mostra o que perguntar na hora.</p>
+  <p class="lin ou"><i>–</i><b>Outros sistemas:</b> em geral, o resumo e a análise chegam depois que a chamada acabou.</p>
+  <div class="moldura"><div class="tela">
+    <div class="ao-vivo">
+      <div class="fala" style="margin-left:auto;background:#eaf1ff;box-shadow:none"><small>Você · 18:39</small>Hoje, como você acompanha as reuniões do time?</div>
+      <div class="fala"><small>Cliente · 18:40</small>Pelo que eles anotam no CRM depois. Nem sempre anotam.</div>
+      <div class="fala" style="margin-left:auto;background:#eaf1ff;box-shadow:none"><small>Você · 18:41</small>E quanto custa uma proposta que esfria por falta de próximo passo?</div>
+      <div class="fala"><small>Cliente · 18:42</small>Gostei, mas achei caro para o nosso momento.</div>
+      <div class="dica"><small>Fale agora</small><p>Pergunte <b>quanto custa hoje</b> deixar as reuniões sem acompanhamento, antes de falar de desconto.</p></div>
+    </div>
+  </div></div>
+</section>
+
+<!-- 4 · Treino -->
+<section class="s comp">
+  <div class="num">03 / 04</div>
+  <div class="marca"><img src="img/mark.png" alt="">Sales Coach</div>
+  <h2>Treino antes da<br>reunião de verdade</h2>
+  <p class="lin sc"><i>✓</i><b>Sales Coach:</b> o vendedor treina por voz com um cliente simulado e recebe nota.</p>
+  <p class="lin ou"><i>–</i><b>Outros sistemas:</b> focam em gravar e resumir as reuniões que já aconteceram.</p>
+  <div class="moldura"><div class="tela">
+    <div class="treino">
+      <div class="cli"><div class="av"></div><div><b>Diretor cético</b><span>Cliente simulado · treino por voz</span></div></div>
+      <div class="onda" id="onda"></div>
+      <div class="q">"Já usamos outra ferramenta e ninguém abriu. Por que com vocês seria diferente?"</div>
+      <div class="fb"><small>Feedback do coach</small><p>Boa pergunta de volta sobre o que travou a adoção. Faltou combinar o próximo passo com data.</p></div>
+      <div class="res"><div><small>Nota do treino</small><b>78</b></div><div><small>Objeção tratada</small><b>Sim</b></div><div><small>Duração</small><b>6 min</b></div></div>
+    </div>
+  </div></div>
+</section>
+
+<!-- 5 · Preço -->
+<section class="s comp">
+  <div class="num">04 / 04</div>
+  <div class="marca"><img src="img/mark.png" alt="">Sales Coach</div>
+  <h2>Preço aberto,<br>por quem usa</h2>
+  <p class="lin sc"><i>✓</i><b>Sales Coach:</b> a partir de R$ 19,90 por usuário/mês, publicado no site. Você paga por quem usa.</p>
+  <p class="lin ou"><i>–</i><b>Outros sistemas:</b> muitos só informam o preço sob consulta, depois de uma reunião comercial.</p>
+  <div class="moldura"><div class="tela">
+    <div class="precos">
+      <div class="a"><div class="h"><img src="img/mark.png" alt="">Sales Coach</div>
+        <div class="de">Essencial · 1 a 10 usuários</div>
+        <div class="val"><small>R$</small>19,90</div>
+        <div class="per">por usuário/mês</div>
+        <ul><li>Coach ao vivo na reunião</li><li>Treino com cliente simulado</li><li>BANT, MEDDIC e SPIN prontos</li><li>Extensão para Meet e Teams</li><li>50 reuniões por usuário/mês</li></ul>
+        <div class="per" style="margin-top:22px">Você paga por quem usa.<br>Nada de licença parada.</div>
+      </div>
+      <div class="b"><div class="win">
+        <div class="tit">Planos <span><i></i><i></i><i></i></span></div>
+        <div class="corpo">
+          <div class="aviso"><b>?</b><span>Preço sob consulta.<br>Preencha o formulário e aguarde o contato de um vendedor.</span></div>
+          <table class="tab" style="margin-top:14px"><tr><th>Campo</th><th>&nbsp;</th></tr><tr><td>Nome</td><td>&nbsp;</td></tr><tr><td>Empresa</td><td>&nbsp;</td></tr><tr><td>Telefone</td><td>&nbsp;</td></tr><tr><td>Nº de vendedores</td><td>&nbsp;</td></tr></table>
+          <div class="btns"><span>Enviar</span><span>Cancelar</span></div>
+        </div>
+      </div>
+      <div class="win" style="margin-top:22px">
+        <div class="tit">Status <span><i></i></span></div>
+        <div class="corpo"><div class="aviso" style="margin:0"><b>i</b><span>Recebemos seu pedido.<br>Retorno em até 3 dias úteis.</span></div>
+          <div class="prog"><i></i><i></i></div></div>
+      </div></div>
+    </div>
+  </div></div>
+</section>
+
+<!-- 6 · Post do produto (story-anuncio/sales-coach-feed.html em 2x) -->
+<section class="s"><img src="img/post-sales-coach.jpg" alt="" style="width:100%;height:100%;display:block"></section>
+
+<script>
+const onda = document.getElementById('onda');
+[30,55,40,80,62,90,48,70,35,85,60,95,50,75,40,66,88,45,72,58,38,64,82,52,30].forEach(h => { const i = document.createElement('i'); i.style.height = h + '%'; onda.appendChild(i); });
+</script>
+</body>
+</html>
