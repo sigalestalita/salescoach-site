@@ -121,6 +121,28 @@ body { background: #333; font-family: 'DM Sans', sans-serif; color: var(--tinta)
 .precos .a ul { margin-top: 24px; list-style: none; display: flex; flex-direction: column; gap: 12px; font-size: 18px; color: #4a5368; }
 .precos .a li::before { content: "✓"; color: var(--verde); font-weight: 700; margin-right: 10px; }
 .precos .b .win { margin: 0; }
+
+/* CRM */
+.crm { position: absolute; inset: 0; background: #f6f8fb; padding: 28px; font-family: 'Poppins'; display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+.crm .col { background: #fff; border-radius: 18px; box-shadow: 0 0 0 1px #edf0f5; padding: 20px 22px; }
+.crm .t { font-size: 15px; font-weight: 600; color: #16213a; display: flex; align-items: center; gap: 8px; }
+.crm .t small { margin-left: auto; font-size: 12px; font-weight: 500; color: var(--verde); background: #e7f5ea; padding: 4px 10px; border-radius: 999px; }
+.campo { margin-top: 14px; }
+.campo small { display: block; font-size: 12.5px; color: #8b93a7; }
+.campo b { display: block; font-size: 16px; font-weight: 500; color: #16213a; margin-top: 3px; padding: 8px 12px; border-radius: 10px; background: #f2f7ec; box-shadow: inset 0 0 0 1px #d8ecc8; }
+.crm .logos { grid-column: 1 / -1; display: flex; gap: 12px; align-items: center; }
+.crm .logos span { flex: 1; text-align: center; padding: 14px 0; border-radius: 14px; background: #fff; box-shadow: 0 0 0 1px #edf0f5; font-size: 17px; font-weight: 600; color: #16213a; }
+.crm .logos span::before { content: "✓ "; color: var(--verde); }
+.crm .nota { font-size: 17px; line-height: 1.5; color: #4a5368; margin-top: 12px; }
+/* Chat */
+.chat { position: absolute; inset: 0; background: #f6f8fb; padding: 30px; font-family: 'Poppins'; display: flex; flex-direction: column; gap: 16px; }
+.chat .eu { align-self: flex-end; max-width: 78%; background: var(--navy); color: #fff; border-radius: 18px 18px 4px 18px; padding: 14px 18px; font-size: 20px; line-height: 1.4; }
+.chat .ia { max-width: 92%; background: #fff; box-shadow: 0 0 0 1px #edf0f5; border-radius: 18px 18px 18px 4px; padding: 16px 20px; font-size: 18px; line-height: 1.45; color: #2b3245; }
+.chat .ia small { display: flex; align-items: center; gap: 8px; font-size: 13px; color: #8b93a7; font-weight: 500; margin-bottom: 8px; } .chat .ia small img { height: 18px; }
+.chat .ia ol { margin: 8px 0 0 22px; } .chat .ia li { margin-top: 6px; } .chat .ia li b { color: #16213a; }
+.chat .ia .fonte { margin-top: 10px; font-size: 13.5px; color: #8b93a7; }
+.chat .campo-chat { margin-top: auto; display: flex; align-items: center; gap: 12px; padding: 14px 18px; border-radius: 16px; background: #fff; box-shadow: 0 0 0 1px #e3e8f0; font-size: 17px; color: #9aa3b5; }
+.chat .campo-chat i { margin-left: auto; width: 40px; height: 40px; border-radius: 12px; background: var(--navy); }
 </style>
 </head>
 <body>
@@ -186,7 +208,7 @@ body { background: #333; font-family: 'DM Sans', sans-serif; color: var(--tinta)
 
 <!-- 2 · Sem robô -->
 <section class="s comp">
-  <div class="num">01 / 04</div>
+  <div class="num">01 / 06</div>
   <div class="marca"><img src="img/mark.png" alt="">Sales Coach</div>
   <h2>Sem robô na<br>sua reunião</h2>
   <p class="lin sc"><i>✓</i><b>Sales Coach:</b> grava pela extensão do Chrome. Ninguém a mais entra na chamada.</p>
@@ -204,7 +226,7 @@ body { background: #333; font-family: 'DM Sans', sans-serif; color: var(--tinta)
 
 <!-- 3 · Ao vivo -->
 <section class="s comp">
-  <div class="num">02 / 04</div>
+  <div class="num">02 / 06</div>
   <div class="marca"><img src="img/mark.png" alt="">Sales Coach</div>
   <h2>A dica chega<br>durante a reunião</h2>
   <p class="lin sc"><i>✓</i><b>Sales Coach:</b> quando a objeção aparece, o coach mostra o que perguntar na hora.</p>
@@ -222,7 +244,7 @@ body { background: #333; font-family: 'DM Sans', sans-serif; color: var(--tinta)
 
 <!-- 4 · Treino -->
 <section class="s comp">
-  <div class="num">03 / 04</div>
+  <div class="num">03 / 06</div>
   <div class="marca"><img src="img/mark.png" alt="">Sales Coach</div>
   <h2>Treino antes da<br>reunião de verdade</h2>
   <p class="lin sc"><i>✓</i><b>Sales Coach:</b> o vendedor treina por voz com um cliente simulado e recebe nota.</p>
@@ -238,20 +260,71 @@ body { background: #333; font-family: 'DM Sans', sans-serif; color: var(--tinta)
   </div></div>
 </section>
 
-<!-- 5 · Preço -->
+<!-- 5 · CRM -->
 <section class="s comp">
-  <div class="num">04 / 04</div>
+  <div class="num">04 / 06</div>
+  <div class="marca"><img src="img/mark.png" alt="">Sales Coach</div>
+  <h2>O CRM se preenche<br>sozinho</h2>
+  <p class="lin sc"><i>✓</i><b>Sales Coach:</b> etapa, decisor, dor e próximo passo vão para o CRM, com a tarefa e a data.</p>
+  <p class="lin ou"><i>–</i><b>Outros sistemas:</b> muitos param no resumo, e alguém ainda copia tudo para o CRM.</p>
+  <div class="moldura"><div class="tela">
+    <div class="crm">
+      <div class="col"><div class="t">Da reunião</div>
+        <div class="nota">"O orçamento já foi aprovado pela diretoria. Quem decide comigo é o Ricardo, nosso sócio. Precisamos resolver até o fim do mês."</div>
+        <div class="nota" style="color:#8b93a7">Grupo Alfa · Demo · 47 min</div>
+        <div class="campo" style="margin-top:22px"><small>Tarefa criada no CRM</small><b style="background:#eef3fb;box-shadow:inset 0 0 0 1px #d3def0">Enviar proposta ao Ricardo · 24/10</b></div>
+        <div class="campo"><small>Nota anexada</small><b style="background:#eef3fb;box-shadow:inset 0 0 0 1px #d3def0">Resumo + nota 86 (BANT)</b></div>
+      </div>
+      <div class="col"><div class="t">No CRM <small>atualizado</small></div>
+        <div class="campo"><small>Etapa</small><b>Proposta</b></div>
+        <div class="campo"><small>Decisor</small><b>Ricardo (sócio)</b></div>
+        <div class="campo"><small>Orçamento</small><b>Aprovado</b></div>
+        <div class="campo"><small>Próximo passo</small><b>Enviar proposta · 24/10</b></div>
+      </div>
+      <div class="logos"><span>HubSpot</span><span>RD Station</span><span>Pipedrive</span><span>Kommo</span></div>
+    </div>
+  </div></div>
+</section>
+
+<!-- 6 · Chat com IA -->
+<section class="s comp">
+  <div class="num">05 / 06</div>
+  <div class="marca"><img src="img/mark.png" alt="">Sales Coach</div>
+  <h2>Pergunte às reuniões<br>do seu time</h2>
+  <p class="lin sc"><i>✓</i><b>Sales Coach:</b> um chat com IA responde sobre todas as reuniões, em português, com a fonte.</p>
+  <p class="lin ou"><i>–</i><b>Outros sistemas:</b> muitos só deixam buscar dentro de uma reunião por vez.</p>
+  <div class="moldura"><div class="tela">
+    <div class="chat">
+      <div class="eu">Quais objeções mais travaram vendas este mês?</div>
+      <div class="ia"><small><img src="img/mark.png" alt="">Assistente do Sales Coach</small>
+        Nas 148 reuniões do mês, as que mais apareceram em negócios perdidos:
+        <ol><li><b>Preço</b> · 31 reuniões, quase sempre antes de mostrar o retorno</li><li><b>"Já temos uma ferramenta"</b> · 18 reuniões</li><li><b>Prazo de implantação</b> · 12 reuniões</li></ol>
+        <div class="fonte">Fontes: 61 reuniões · ver trechos →</div>
+      </div>
+      <div class="eu">E quem tratou melhor a objeção de preço?</div>
+      <div class="ia"><small><img src="img/mark.png" alt="">Assistente do Sales Coach</small>
+        <b>Ana Lima</b>: avançou 9 de 11 reuniões com objeção de preço. Ela pergunta o custo de hoje antes de falar de desconto.
+        <div class="fonte">Vale virar treino para o time →</div>
+      </div>
+      <div class="campo-chat">Pergunte sobre as reuniões do time…<i></i></div>
+    </div>
+  </div></div>
+</section>
+
+<!-- 7 · Preço -->
+<section class="s comp">
+  <div class="num">06 / 06</div>
   <div class="marca"><img src="img/mark.png" alt="">Sales Coach</div>
   <h2>Preço aberto,<br>por quem usa</h2>
-  <p class="lin sc"><i>✓</i><b>Sales Coach:</b> a partir de R$ 19,90 por usuário/mês, publicado no site. Você paga por quem usa.</p>
+  <p class="lin sc"><i>✓</i><b>Sales Coach:</b> a partir de R$ 89 por usuário/mês. Você paga só por quem usa.</p>
   <p class="lin ou"><i>–</i><b>Outros sistemas:</b> muitos só informam o preço sob consulta, depois de uma reunião comercial.</p>
   <div class="moldura"><div class="tela">
     <div class="precos">
       <div class="a"><div class="h"><img src="img/mark.png" alt="">Sales Coach</div>
-        <div class="de">Essencial · 1 a 10 usuários</div>
-        <div class="val"><small>R$</small>19,90</div>
+        <div class="de">A partir de</div>
+        <div class="val"><small>R$</small>89</div>
         <div class="per">por usuário/mês</div>
-        <ul><li>Coach ao vivo na reunião</li><li>Treino com cliente simulado</li><li>BANT, MEDDIC e SPIN prontos</li><li>Extensão para Meet e Teams</li><li>50 reuniões por usuário/mês</li></ul>
+        <ul><li>Coach ao vivo na reunião</li><li>Treino com cliente simulado</li><li>BANT, MEDDIC e SPIN prontos</li><li>Chat com IA sobre as reuniões</li><li>CRM preenchido sozinho</li></ul>
         <div class="per" style="margin-top:22px">Você paga por quem usa.<br>Nada de licença parada.</div>
       </div>
       <div class="b"><div class="win">
@@ -271,7 +344,7 @@ body { background: #333; font-family: 'DM Sans', sans-serif; color: var(--tinta)
   </div></div>
 </section>
 
-<!-- 6 · Post do produto (story-anuncio/sales-coach-feed.html em 2x) -->
+<!-- 8 · Post do produto (story-anuncio/sales-coach-feed.html em 2x) -->
 <section class="s"><img src="img/post-sales-coach.jpg" alt="" style="width:100%;height:100%;display:block"></section>
 
 <script>
