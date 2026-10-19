@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Fundo do formulário · Sales Coach (Instagram)</title>
+<link rel="stylesheet" href="fonts.css">
+<link rel="stylesheet" href="poppins.css">
+<style>
+/* Fundo do formulário de leads da Meta (1200×628).
+   No celular a Meta recorta o centro (~628×628) e o cartão branco do formulário
+   cobre o miolo: o que importa fica na coluna central, em cima e embaixo.
+   As laterais (telas do produto) só aparecem no computador. */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { width: 1200px; height: 628px; overflow: hidden; }
+body { position: relative; font-family: 'DM Sans', sans-serif; color: #fff; -webkit-font-smoothing: antialiased;
+  background:
+    radial-gradient(38% 60% at 50% -8%, rgba(212,249,105,.32), transparent 70%),
+    radial-gradient(40% 70% at 100% 100%, rgba(150,170,255,.35), transparent 70%),
+    radial-gradient(40% 70% at 0% 100%, rgba(212,249,105,.16), transparent 70%),
+    linear-gradient(180deg, #0f2c5c 0%, #0b1a36 45%, #070f20 100%); }
+body::after { content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: radial-gradient(rgba(255,255,255,.07) 1.2px, transparent 1.6px) 0 0 / 26px 26px;
+  -webkit-mask: radial-gradient(60% 80% at 50% 40%, transparent 30%, #000 100%); }
+
+/* Coluna central */
+.topo { position: absolute; left: 0; right: 0; top: 52px; display: flex; flex-direction: column; align-items: center; gap: 14px; }
+.marca { display: flex; align-items: center; gap: 12px; font-family: 'Poppins'; font-size: 30px; letter-spacing: -.02em; }
+.marca .m { width: 60px; height: 60px; border-radius: 16px; background: #fff; display: grid; place-items: center; box-shadow: 0 12px 30px -12px rgba(0,0,0,.6); }
+.marca .m img { width: 38px; }
+.marca b { font-weight: 600; } .marca span { font-weight: 300; }
+.frase { font-size: 40px; font-weight: 500; letter-spacing: -.03em; text-align: center; line-height: 1.1; }
+.frase em { font-style: normal; color: #d4f969; }
+.base { position: absolute; left: 0; right: 0; bottom: 30px; display: flex; justify-content: center; gap: 10px; }
+.base span { font-size: 15px; font-weight: 500; padding: 8px 14px; border-radius: 999px; background: rgba(255,255,255,.1); box-shadow: inset 0 0 0 1px rgba(255,255,255,.18); }
+.base span::before { content: "✓ "; color: #d4f969; }
+
+/* Laterais: pedaços do produto */
+.ui { position: absolute; border-radius: 18px; background: #fff; color: #16213a; font-family: 'Poppins'; box-shadow: 0 30px 60px -30px rgba(0,0,0,.7); }
+.nota { left: 40px; top: 150px; width: 270px; padding: 18px; transform: rotate(-4deg); display: flex; align-items: center; gap: 14px; }
+.nota svg { width: 72px; height: 72px; flex: 0 0 auto; }
+.nota b { display: block; font-size: 15px; white-space: nowrap; } .nota small { font-size: 12px; color: #6a7287; }
+.dica { left: 64px; top: 330px; width: 230px; padding: 16px 18px; background: #10203f; color: #fff; box-shadow: 0 0 0 1px rgba(212,249,105,.35), 0 30px 60px -30px rgba(0,0,0,.7); transform: rotate(3deg); }
+.dica small { font-size: 11px; letter-spacing: .14em; color: #d4f969; font-weight: 600; text-transform: uppercase; }
+.dica p { font-size: 14px; line-height: 1.4; margin-top: 6px; }
+.crm { right: 46px; top: 140px; width: 230px; padding: 16px 18px; transform: rotate(4deg); }
+.crm .t { font-size: 14px; font-weight: 600; display: flex; justify-content: space-between; } .crm .t em { font-style: normal; font-size: 11px; color: #2f9a4a; background: #e7f5ea; padding: 3px 8px; border-radius: 999px; }
+.crm .c { margin-top: 10px; font-size: 11.5px; color: #8b93a7; } .crm .c b { display: block; font-size: 13.5px; font-weight: 500; color: #16213a; padding: 6px 10px; margin-top: 3px; border-radius: 8px; background: #f2f7ec; }
+.chat { right: 60px; top: 380px; width: 220px; padding: 14px 16px; transform: rotate(-3deg); font-size: 13px; line-height: 1.4; }
+.chat .q { background: #0f2c5c; color: #fff; border-radius: 12px 12px 3px 12px; padding: 8px 10px; }
+.chat .r { margin-top: 8px; color: #4a5368; }
+.sub { display: flex; align-items: center; gap: 8px; font-size: 14px; color: rgba(255,255,255,.7); }
+.sub img { height: 12px; }
+/* Faixa central (o que o Instagram mostra): sem nada no meio */
+.ui { opacity: .9; }
+</style>
+</head>
+<body>
+  <div class="topo">
+    <div class="marca"><div class="m"><img src="img/mark.png" alt=""></div><b>Sales</b><span>Coach</span></div>
+    <div class="sub">um produto <img src="img/nexa-branco.svg" alt="NEXA"></div>
+  </div>
+
+  <div class="ui nota">
+    <svg viewBox="0 0 120 120"><circle cx="60" cy="60" r="50" fill="none" stroke="#eef2f8" stroke-width="13"/><circle cx="60" cy="60" r="50" fill="none" stroke="#2f9a4a" stroke-width="13" stroke-linecap="round" stroke-dasharray="270 314" transform="rotate(-90 60 60)"/><text x="60" y="72" text-anchor="middle" font-family="Poppins" font-size="36" font-weight="600" fill="#16213a">86</text></svg>
+    <div><b>Nota da reunião</b><small>pela metodologia BANT</small></div>
+  </div>
+  <div class="ui dica"><small>Fale agora</small><p>Pergunte quanto custa hoje fazer isso sem método.</p></div>
+  <div class="ui crm"><div class="t">No CRM <em>atualizado</em></div>
+    <div class="c">Etapa<b>Proposta</b></div><div class="c">Próximo passo<b>Proposta · 24/10</b></div></div>
+  <div class="ui chat"><div class="q">Quais objeções mais travaram vendas?</div><div class="r"><b>Preço</b> · 31 reuniões<br><b>"Já temos ferramenta"</b> · 18</div></div>
+</body>
+</html>
