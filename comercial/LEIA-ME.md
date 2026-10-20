@@ -37,6 +37,18 @@ Sistema comercial com login e senha, para publicar em `crm.nexatech.ia.br`.
 - Esqueceu a senha: em **Authentication → Users**, abra a pessoa e defina uma nova senha provisória.
   O link "Esqueci minha senha" da tela de login só envia e-mail depois de configurar um SMTP próprio no Supabase (**Authentication → Emails → SMTP Settings**, por exemplo com Resend ou Zoho no domínio nexatech.ia.br). Sem isso, o envio padrão do Supabase é limitado.
 
+## Leads dos anúncios de cadastro da Meta → Inbound
+
+Função `supabase/functions/lead-meta` (deploy com **verify_jwt desligado**). Grava o lead em
+`leads_inbound` (origem "Meta · Formulário", canal "Meta Ads", campanha e anúncio no rastreio)
+e cria a conta na fila, como o formulário do site. Não grava o mesmo lead duas vezes.
+
+- **Via Make/Zapier** (mais simples): conector *Facebook Lead Ads → New Lead* → *HTTP POST*
+  para `https://atzwinvlemkyttkrdumn.supabase.co/functions/v1/lead-meta`, cabeçalho
+  `x-nexa-token: <LEAD_META_TOKEN>`, corpo JSON com os campos do lead. Segredo: `LEAD_META_TOKEN`.
+- **Via webhook da Meta** (sem custo): app da Meta com Webhooks → Page → `leadgen`, mesma URL.
+  Segredos: `META_APP_SECRET`, `META_VERIFY_TOKEN`, `META_PAGE_TOKEN` (token da Página com `leads_retrieval`).
+
 ## Papéis
 
 | Papel   | Pode                                             |
