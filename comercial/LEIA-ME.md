@@ -49,6 +49,17 @@ e cria a conta na fila, como o formulário do site. Não grava o mesmo lead duas
 - **Via webhook da Meta** (sem custo): app da Meta com Webhooks → Page → `leadgen`, mesma URL.
   Segredos: `META_APP_SECRET`, `META_VERIFY_TOKEN`, `META_PAGE_TOKEN` (token da Página com `leads_retrieval`).
 
+### Planilha de leads do Sales Coach (Google Planilhas)
+
+A Meta grava os leads do formulário numa planilha do Google. O Apps Script
+`integracoes/planilha-leads.gs`, colado na própria planilha:
+- manda as linhas novas da Meta para o CRM (`lead-meta`) a cada 5 minutos;
+- recebe os leads do site (a função `lead-site` chama o script) e grava na aba **Site**.
+
+Segredos no Supabase: `LEAD_META_TOKEN`, `PLANILHA_WEBHOOK_URL` (URL do app da web do
+script) e `PLANILHA_TOKEN`. Propriedades do script: `CRM_TOKEN` (= LEAD_META_TOKEN) e
+`PLANILHA_TOKEN`.
+
 ## Papéis
 
 | Papel   | Pode                                             |

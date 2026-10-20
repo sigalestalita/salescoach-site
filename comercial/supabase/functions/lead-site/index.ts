@@ -2,6 +2,7 @@
 // lead em public.leads_inbound com todo o rastreio da conversão (página, UTMs, ids de
 // clique, primeiro e último toque) e cria ou atualiza a conta no CRM, na fila.
 // Pública (sem login): protege com honeypot, limite por IP e lista de origens.
+// Também copia o lead na planilha de leads (aba "Site"), se PLANILHA_WEBHOOK_URL estiver configurada.
 import { createClient } from 'jsr:@supabase/supabase-js@2';
 
 const ORIGENS = ['https://nexatech.ia.br', 'https://www.nexatech.ia.br', 'http://localhost:8000', 'http://127.0.0.1:8000', 'http://127.0.0.1:8080'];
@@ -148,5 +149,25 @@ Deno.serve(async (req) => {
     tamanho_time: vendedores || null, pagina: rastreio.pagina, utm, rastreio, ip_hash: ipHash, conta_path: contaPath,
   });
   if (error) return resp({ erro: 'Não foi possível registrar agora. Tente de novo.' }, 500);
+
+  // Cópia na planilha de leads (aba "Site"), pelo Apps Script da planilha. Opcional:
+  // sem PLANILHA_WEBHOOK_URL não faz nada; falha aqui nunca derruba o envio do lead.
+  const planilha = Deno.env.get('PLANILHA_WEBHOOK_URL');
+  if (planilha) {
+    try {
+      await fetch(planilha, {
+        method: 'POST', redirect: 'follow', signal: AbortSignal.timeout(8000),
+        headers: { 'Content-Type': 'text/plain' },
+        body: JSON.stringify({
+          token: Deno.env.get('PLANILHA_TOKEN') ?? '',
+          lead: {
+            created_time: new Date().toISOString(), origem: pg.origem, canal, nome, email, whatsapp, empresa, cargo,
+            funcionarios, vendedores, interesse, utm_source: ultimo.utm_source ?? '', utm_medium: ultimo.utm_medium ?? '',
+            utm_campaign: ultimo.utm_campaign ?? '', utm_content: ultimo.utm_content ?? '', pagina: rastreio.pagina,
+          },
+        }),
+      });
+    } catch (e) { console.error('lead-site: planilha', e); }
+  }
   return resp({ ok: true });
 });

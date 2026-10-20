@@ -10,7 +10,7 @@
 //    Segredos: META_APP_SECRET, META_VERIFY_TOKEN, META_PAGE_TOKEN (token da Página com
 //    leads_retrieval). Opcional: META_GRAPH (padrão https://graph.facebook.com/v23.0).
 //
-// 2. Zapier / Make / Pluga (conector "Facebook Lead Ads" → Webhook POST):
+// 2. Zapier / Make / Pluga / planilha do Google (Apps Script em comercial/integracoes) (conector "Facebook Lead Ads" → Webhook POST):
 //    POST com o cabeçalho  x-nexa-token: <LEAD_META_TOKEN>  e um JSON com os campos do
 //    lead, em qualquer formato plano (full_name, email, phone_number, company_name,
 //    job_title, campaign_name, ad_name, form_name, id, …). Perguntas personalizadas
@@ -143,7 +143,7 @@ const META_CHAVES: Record<string, keyof Lead> = {
   id: 'leadgen_id', leadgen_id: 'leadgen_id', lead_id: 'leadgen_id', created_time: 'criado', platform: 'plataforma',
   campaign_name: 'campanha', adset_name: 'conjunto', ad_name: 'anuncio', form_name: 'formulario', form_id: 'form_id', ad_id: 'ad_id',
 };
-const IGNORAR = /^(page_id|page_name|adgroup_id|adset_id|campaign_id|is_organic|partner_name|retailer_item_id|custom_disclaimer_responses|inbox_url|vehicle)$/;
+const IGNORAR = /^(page_id|page_name|adgroup_id|adset_id|campaign_id|is_organic|partner_name|retailer_item_id|custom_disclaimer_responses|inbox_url|vehicle|lead_status|_linha)$/;
 function deIntegracao(b: Record<string, unknown>): Lead {
   const l: Lead = { leadgen_id: '', campos: {} };
   const plano: Record<string, unknown> = { ...b };
@@ -156,6 +156,8 @@ function deIntegracao(b: Record<string, unknown>): Lead {
     if (m) (l as any)[m] = String(v);
     else if (!IGNORAR.test(k)) l.campos[k] = String(v);
   }
+  // Exportação da Meta para o Google Planilhas: ids com prefixo (l:123, ag:456, f:789).
+  for (const k of ['leadgen_id', 'ad_id', 'form_id'] as const) if (l[k]) l[k] = String(l[k]).replace(/^[a-z]+:/, '');
   if (!l.leadgen_id) l.leadgen_id = 'sem-id-' + novoId();
   return l;
 }
