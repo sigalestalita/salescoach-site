@@ -1,31 +1,35 @@
-# Vídeo de lançamento · Sales Coach no Sales Sprint (16:9, 44s)
+# Vídeo de lançamento · Sales Coach no Sales Sprint (16:9, ~80s)
 
 Lançamento oficial do Sales Coach no Sales Sprint, evento da parceira Sales Rocket.
-Identidade light da NEXA (osso, tinta, lima e oliva), minimalista; o azul do produto aparece
-só dentro das telas. Layout horizontal: título do capítulo à esquerda, produto à direita.
-`vertical-escuro.html` é a primeira versão (9:16, escura), guardada como alternativa
-(render com `PAGE=vertical-escuro.html W=1080 H=1920`). Telas redesenhadas em
-HTML, com dados de demonstração (dito no rodapé).
+Abre em suspense, com perguntas em lettering (Instrument Serif) sobre uma onda de voz, e cada
+funcionalidade começa com uma pergunta antes de mostrar a tela. As telas redesenham o app de verdade
+(mesmos rótulos, cores, ícones lucide e fluxos) em uso: cursor, cliques, digitação e uma câmera que
+aproxima o que importa. Identidade light da NEXA por fora; dentro das telas, as cores do app.
+Dados de demonstração (dito no rodapé).
 
 | Tempo | Cena | O que mostra |
 |---|---|---|
-| 0–4,2s | Gancho | 412 reuniões no mês, o gestor ouviu 3. "O resto vira achismo no CRM." |
-| 4,2–7,6s | Revelação | As 412 acendem e viram a marca: "Um coach em cada reunião do seu time." |
-| 7,6–11,8s | 01 Gravação | Agenda sincronizada, gravação no Meet/Teams/Zoom pela extensão, sem robô na chamada |
-| 11,8–17s | 02 Coach ao vivo | Objeção de preço detectada, dica "fale agora", BANT marcando |
-| 17–21,8s | 03 Análise | Nota 86, critérios, metodologia (BANT, MEDDIC, SPIN ou a da empresa), próximo passo |
-| 21,8–26s | 04 CRM | Campos preenchidos sozinhos; HubSpot, RD Station, Pipedrive e Kommo |
-| 26–30,4s | 05 Treino | Cliente simulado por voz, evolução 62 → 81 |
-| 30,4–34,4s | 06 Argumentos | Retorno, resposta à objeção e frase pronta para o lead |
-| 34,4–38,8s | 07 Gestão | Nota do time cruzando a meta e o assistente respondendo |
-| 38,8–44s | Fecho | "412 de 412 reuniões ouvidas", "Cada reunião vira método.", marca e Sales Sprint |
+| 0–9,9s | Perguntas | "O que o seu cliente disse na última reunião?", "Quantas vendas se perderam numa frase que ninguém ouviu?", "E se alguém estivesse ouvindo?" |
+| 9,9–13s | Revelação | A onda vira um ponto e o ponto vira a marca: "Um coach em cada reunião do seu time." |
+| 13–21s | 01 Gravação | "E se nenhuma reunião se perdesse?" No Meet, o card "Gravar esta reunião?", o clique e o painel da extensão gravando |
+| 21–29,8s | 02 Coach ao vivo | "E se alguém soprasse a resposta no meio da objeção?" O cliente diz que achou caro; aparece "Fale agora" e o vendedor usa a dica |
+| 29,8–38,4s | 03 Análise | "E se cada reunião tivesse uma nota?" Progresso, Score Geral 86, Temperatura, Talk Ratio, BANT Score e próximos passos |
+| 38,4–46,8s | 04 CRM | "E se o CRM se preenchesse sozinho?" "Enviar ao CRM" e o negócio no HubSpot preenchendo campo a campo, com a tarefa criada |
+| 46,8–55,4s | 05 Treino | "E se o seu time treinasse antes do cliente de verdade?" Chamada por voz com lead difícil e a avaliação do treino (81, +19) |
+| 55,4–63,8s | 06 Argumentos | "E se cada lead chegasse com o argumento certo?" Dores marcadas, "Gerar Argumentos" e os cards com solução e ROI |
+| 63,8–72,6s | 07 Gestão | "E se você soubesse o que acontece em todas?" Dashboard, evolução, ranking e o assistente respondendo |
+| 72,6–79,5s | Fecho | "Agora, alguém está ouvindo." Marca, "Cada reunião vira método.", NEXA, Sales Sprint e CTA |
+
+`horizontal-44s.html` (com `trilha-44s.py`) é a versão anterior, de 44s, sem as perguntas.
+`vertical-escuro.html` é a primeira versão (9:16, escura), render com `PAGE=vertical-escuro.html W=1080 H=1920`.
 
 ## Gerar
 ```bash
 python3 trilha.py                          # trilha.wav, lida da linha do tempo (<script id="tl">)
-node render.mjs seq 0 1320 frames          # 30 fps; dá para dividir em faixas e rodar em paralelo
+node render.mjs seq 0 2385 frames          # 30 fps; dá para dividir em faixas e rodar em paralelo
 FF=/usr/local/lib/python3.11/dist-packages/imageio_ffmpeg/binaries/ffmpeg-linux-x86_64-v7.0.2
 $FF -y -framerate 30 -i frames/f_%05d.jpg -i trilha.wav -c:v libx264 -pix_fmt yuv420p -crf 17 -preset slow \
   -c:a aac -b:a 192k -shortest -movflags +faststart out/lancamento-sales-coach-sales-sprint.mp4
 ```
-`node render.mjs still 9.8,14.8 stills` gera quadros soltos; `index.html?play` toca no navegador.
+`node render.mjs still 26.4,36.4 stills` gera quadros soltos; `index.html?play` toca no navegador.
+`icones.js` traz os ícones lucide usados no app (licença ISC).
