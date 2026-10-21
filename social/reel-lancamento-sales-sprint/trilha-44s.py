@@ -6,7 +6,7 @@ import numpy as np
 from scipy.signal import butter, sosfilt, fftconvolve
 from scipy.io import wavfile
 
-html = open('index.html', encoding='utf-8').read()
+html = open('horizontal-44s.html', encoding='utf-8').read()
 TL = json.loads(re.search(r'<script id="tl" type="application/json">(.*?)</script>', html, re.S).group(1))
 DUR = TL['DUR']; CENAS = TL['CENAS']
 SR = 48000; N = int(SR * DUR); rng = np.random.default_rng(11)
@@ -79,5 +79,5 @@ Lw = L + fftconvolve(L, ir)[:N] * .55; Rw = R + fftconvolve(R, ir[::-1])[:N] * .
 fade = np.ones(N); fade[int((DUR - 1.6) * SR):] = np.linspace(1, 0, N - int((DUR - 1.6) * SR)) ** 1.3
 fade[:int(.02 * SR)] = np.linspace(0, 1, int(.02 * SR))
 mix = np.stack([Lw, Rw], 1) * fade[:, None]; mix = np.tanh(mix / np.abs(mix).max() * 1.3) * .9
-wavfile.write('trilha.wav', SR, (mix * 32767).astype(np.int16))
+wavfile.write('trilha-44s.wav', SR, (mix * 32767).astype(np.int16))
 print('ok', DUR, 's')
