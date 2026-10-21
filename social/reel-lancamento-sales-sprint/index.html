@@ -7,7 +7,7 @@
 <link rel="stylesheet" href="poppins.css">
 <link rel="stylesheet" href="instrument.css">
 <style>
-/* Vídeo de lançamento do Sales Coach no Sales Sprint (Sales Rocket). 16:9, 1920×1080, ~80s.
+/* Vídeo de lançamento do Sales Coach no Sales Sprint (Sales Rocket). 16:9, 1920×1080, ~93s.
    Abre com perguntas em lettering (Instrument Serif) e cada funcionalidade começa com uma pergunta
    antes da tela. As telas redesenham o app de verdade (mesmos rótulos, cores e ícones), em uso:
    cursor, cliques, digitação e câmera que aproxima o que importa.
@@ -221,10 +221,10 @@ body { position: relative; font-family: 'DM Sans', sans-serif; color: var(--tint
 <div id="grao"></div>
 
 <script id="tl" type="application/json">
-{"DUR": 79.5, "REV": 9.9, "Q": 2.4,
- "INTRO": [[0.3, 3.3], [3.4, 6.6], [6.7, 9.6]],
- "FECHO": [72.8, 75.4, 75.5],
- "CAPS": [[13.0, 21.0], [21.0, 29.8], [29.8, 38.4], [38.4, 46.8], [46.8, 55.4], [55.4, 63.8], [63.8, 72.6]],
+{"DUR": 93.1, "REV": 12.9, "Q": 3.8,
+ "INTRO": [[0.3, 4.4], [4.5, 8.6], [8.7, 12.6]],
+ "FECHO": [85.6, 89.0, 89.1],
+ "CAPS": [[16.0, 25.4], [25.4, 35.6], [35.6, 45.6], [45.6, 55.4], [55.4, 65.4], [65.4, 75.2], [75.2, 85.4]],
  "EV": [
   {"clique": [1.9], "ping": [2.2], "tecla": [[3.6, 4.6]]},
   {"tecla": [[0.5, 1.9], [4.2, 5.4]], "ping": [2.2]},
@@ -428,8 +428,8 @@ function montaQ(linhas) { $('#q').innerHTML = linhas.map((l, li) => `<div class=
 function letreiro(t, linhas, a, b, encolhe = null) {
   const key = linhas.join('|'); if (qAtual !== key) { qAtual = key; montaQ(linhas); }
   const q = $('#q'), cs = $$('#q .c'), n = cs.length; q.style.visibility = '';
-  cs.forEach(c => { const d = c._r * .55 + (c._i / n) * .45;
-    const k = eo(lin(t, a + d, a + d + .75)), o = encolhe ? 0 : eio(lin(t, b - .7 + d * .5, b - .25 + d * .5));
+  cs.forEach(c => { const d = c._r * .42 + (c._i / n) * .33;
+    const k = eo(lin(t, a + d, a + d + .7)), o = encolhe ? 0 : eio(lin(t, b - .7 + d * .5, b - .25 + d * .5));
     const pisca = k > 0 && k < 1 ? .55 + .45 * Math.abs(Math.sin((t + c._r) * 40)) : 1;
     c.style.opacity = k * (1 - o) * pisca;
     c.style.filter = (k < 1 || o > 0) ? `blur(${(1 - k) * 16 + o * 14}px)` : 'none';
@@ -459,7 +459,7 @@ function luz(t, m) {
 function onda(t, m) {
   const el = $('#onda'), intro = t < TL.REV + .3, o = intro ? janela(t, .1, TL.REV + .2, .8, .3) : m * .55;
   el.style.opacity = o; vis(el, o); if (o < .001) return;
-  const acende = intro ? eo(lin(t, 6.9, 8.2)) : 0, junta = intro ? eio(lin(t, 8.9, 9.7)) : 0, pts = [];
+  const R0 = TL.REV, acende = intro ? eo(lin(t, R0 - 3.0, R0 - 1.7)) : 0, junta = intro ? eio(lin(t, R0 - 1.0, R0 - .2)) : 0, pts = [];
   for (let x = 0; x <= 1920; x += 6) {
     const xx = 960 + (x - 960) * (1 - junta), u = x / 1920;
     const env = Math.pow(Math.max(0, Math.sin(u * Math.PI)), 1.4) * (.35 + .65 * Math.pow(Math.abs(Math.sin(u * 7.3 + t * 1.1) * Math.sin(u * 3.1 - t * .7)), 1.5));
@@ -467,7 +467,7 @@ function onda(t, m) {
     pts.push(`${xx.toFixed(1)},${y.toFixed(1)}`); }
   const p = $('#ondap'); p.setAttribute('d', 'M' + pts.join(' L'));
   p.setAttribute('stroke', acende > 0 ? `rgba(${Math.round(16 + 72 * acende)},${Math.round(18 + 98 * acende)},${Math.round(14 - 8 * acende)},${.32 + .5 * acende})` : 'rgba(16,18,14,.3)');
-  $('#ondac').setAttribute('cx', 960); $('#ondac').setAttribute('cy', 120); $('#ondac').setAttribute('r', 14 * eo(lin(t, 9.4, 9.75)) * (1 - lin(t, 9.85, 10.0)));
+  $('#ondac').setAttribute('cx', 960); $('#ondac').setAttribute('cy', 120); $('#ondac').setAttribute('r', 14 * eo(lin(t, TL.REV - .5, TL.REV - .15)) * (1 - lin(t, TL.REV - .05, TL.REV + .1)));
 }
 
 /* ---------- Abertura, revelação e fecho ---------- */
@@ -477,10 +477,10 @@ function abertura(t) {
   return false;
 }
 function revelacao(t) {
-  const r = $('#rev'), on = t > TL.REV - .1 && t < 13.05; vis(r, on ? 1 : 0); if (!on) return;
-  pop($('#revlogo'), lin(t, TL.REV, TL.REV + .6)); vista($('#revnome'), eo(lin(t, 10.25, 10.85)), 40, 12);
-  vista($('#revtag'), eo(lin(t, 10.6, 11.3)), 24, 10); vista($('#revlanc'), eo(lin(t, 11.0, 11.5)), 16, 6);
-  const s = 1 - eio(lin(t, 12.55, 13.0)); r.style.opacity = s; r.style.transform = `translateY(${-(1 - s) * 50}px) scale(${1 - (1 - s) * .04})`; r.style.filter = s < .99 ? `blur(${(1 - s) * 14}px)` : 'none';
+  const R0 = TL.REV, r = $('#rev'), on = t > R0 - .1 && t < R0 + 3.15; vis(r, on ? 1 : 0); if (!on) return;
+  pop($('#revlogo'), lin(t, TL.REV, TL.REV + .6)); vista($('#revnome'), eo(lin(t, R0 + .35, R0 + .95)), 40, 12);
+  vista($('#revtag'), eo(lin(t, R0 + .7, R0 + 1.4)), 24, 10); vista($('#revlanc'), eo(lin(t, R0 + 1.1, R0 + 1.6)), 16, 6);
+  const s = 1 - eio(lin(t, R0 + 2.65, R0 + 3.1)); r.style.opacity = s; r.style.transform = `translateY(${-(1 - s) * 50}px) scale(${1 - (1 - s) * .04})`; r.style.filter = s < .99 ? `blur(${(1 - s) * 14}px)` : 'none';
 }
 function fecho(t) {
   const [a, b, f] = TL.FECHO; let usou = false;
