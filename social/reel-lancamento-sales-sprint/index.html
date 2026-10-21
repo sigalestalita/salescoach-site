@@ -7,7 +7,7 @@
 <link rel="stylesheet" href="poppins.css">
 <link rel="stylesheet" href="instrument.css">
 <style>
-/* Vídeo de lançamento do Sales Coach no Sales Sprint (Sales Rocket). 16:9, 1920×1080, 96s, no compasso da trilha (120 bpm).
+/* Vídeo de lançamento do Sales Coach no Sales Sprint (Sales Rocket). 16:9, 1920×1080, 124s, no compasso da trilha (120 bpm).
    Abre com perguntas em lettering (Instrument Serif) e cada funcionalidade começa com uma pergunta
    antes da tela. As telas redesenham o app de verdade (mesmos rótulos, cores e ícones), em uso:
    cursor, cliques, digitação e câmera que aproxima o que importa.
@@ -221,10 +221,10 @@ body { position: relative; font-family: 'DM Sans', sans-serif; color: var(--tint
 <div id="grao"></div>
 
 <script id="tl" type="application/json">
-{"DUR": 96.0, "REV": 12.0, "Q": 4.0, "BPM": 120,
+{"DUR": 124.0, "REV": 12.0, "Q": 4.0, "BPM": 120, "ESC": 1.4,
  "INTRO": [[0.05, 3.8], [4.05, 7.8], [8.05, 11.6]],
- "FECHO": [86.05, 89.8, 90.0],
- "CAPS": [[16.0, 26.0], [26.0, 36.0], [36.0, 46.0], [46.0, 56.0], [56.0, 66.0], [66.0, 76.0], [76.0, 86.0]],
+ "FECHO": [114.05, 117.8, 118.0],
+ "CAPS": [[16.0, 30.0], [30.0, 44.0], [44.0, 58.0], [58.0, 72.0], [72.0, 86.0], [86.0, 100.0], [100.0, 114.0]],
  "EV": [
   {"clique": [1.9], "ping": [2.2], "tecla": [[3.6, 4.6]]},
   {"tecla": [[0.5, 1.9], [4.2, 5.4]], "ping": [2.2]},
@@ -508,7 +508,7 @@ function capitulos(t) {
   $('#fav').src = meet ? 'img/googlemeet.svg' : 'img/mark-app.png'; $('#abat').textContent = meet ? 'Demo · Grupo Alfa – Google Meet' : 'Sales Coach';
   $('#url').textContent = meet ? 'meet.google.com/xqd-fhkr-pmb' : c.url;
   $('#legn').textContent = `0${i + 1} · ${c.tag}`; $('#legt').textContent = c.leg; vista($('#leg'), janela(t, c.s + .35, c.b - .1, .5, .35), 14, 6);
-  R[c.id](lt, t, c.b - c.s);
+  R[c.id](lt / TL.ESC, t, (c.b - c.s) / TL.ESC);  // telas de 10s: animação 1,4× mais lenta e o resultado fica na tela
   return true;
 }
 
@@ -530,7 +530,7 @@ R.c1 = (lt, t) => {
   if (lt < 3.6) $('#c1tr').textContent = 'Conectado. Aguardando a primeira fala…';
   else digita($('#c1tr'), '<b>Cliente:</b> Bom dia, Ana! Pode começar, a Marina também está aqui.'.replace(/<\/?b>/g, ''), lin(lt, 3.6, 4.6), false), $('#c1tr').innerHTML = $('#c1tr').innerHTML.replace(/^Cliente:/, '<b>Cliente:</b>');
   POS.c1 = POS.c1 || { g: centro('c1', '#c1g'), sc: centro('c1', '#c1sc') };
-  camera('c1', lt, [[0, 1, 790, 373], [.6, 1, 790, 373], [1.4, 1.42, POS.c1.g[0] - 120, POS.c1.g[1] - 60], [2.4, 1.42, POS.c1.g[0] - 120, POS.c1.g[1] - 60], [3.1, 1.2, 922, 373]]);
+  camera('c1', lt, [[0, 1, 790, 373], [.6, 1, 790, 373], [1.4, 1.42, POS.c1.g[0] - 120, POS.c1.g[1] - 60], [2.4, 1.42, POS.c1.g[0] - 120, POS.c1.g[1] - 60], [3.1, 1.2, 922, 300]]);
   cursor('c1', lt, [[0, 700, 600], [.5, 700, 600], [1.75, POS.c1.g[0] + 8, POS.c1.g[1] + 4], [2.4, POS.c1.g[0] + 8, POS.c1.g[1] + 4], [3.4, 1000, 640]], [1.9], .2);
 };
 R.c2 = (lt, t) => {

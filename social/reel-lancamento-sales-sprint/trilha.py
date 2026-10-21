@@ -1,5 +1,5 @@
-"""Trilha do vídeo de lançamento (Sales Sprint, 96s): uma música só, contínua, a 120 bpm (compasso = 2s).
-O vídeo está no mesmo compasso: cada pergunta dura 2 compassos e cada tela 3, então toda tela entra
+"""Trilha do vídeo de lançamento (Sales Sprint, 124s): uma música só, contínua, a 120 bpm (compasso = 2s).
+O vídeo está no mesmo compasso: cada pergunta dura 2 compassos e cada tela 5, então toda tela entra
 num tempo forte. O bumbo nunca para. As perguntas são preparações (baixo filtrado, tique, virada de
 caixa e subida) que explodem quando a tela entra, e a música cresce a cada funcionalidade:
  tela 1 base (bumbo, baixo, palma, chimbal) · 2 chimbal aberto · 3 acordes · 4 arpejo · 5 semicolcheias
@@ -13,7 +13,7 @@ from scipy.io import wavfile
 
 html = open('index.html', encoding='utf-8').read()
 TL = json.loads(re.search(r'<script id="tl" type="application/json">(.*?)</script>', html, re.S).group(1))
-DUR, REV, Q, BPM = TL['DUR'], TL['REV'], TL['Q'], TL['BPM']
+DUR, REV, Q, BPM, ESC = TL['DUR'], TL['REV'], TL['Q'], TL['BPM'], TL.get('ESC', 1)
 BEAT = 60 / BPM; COMP = 4 * BEAT; S16 = BEAT / 4; NB = int(round(DUR / COMP))
 SR = 48000; N = int(SR * DUR); rng = np.random.default_rng(5)
 def buf(): return [np.zeros(N), np.zeros(N)]
@@ -167,11 +167,11 @@ def tecla(): t = tt(.03); return hp(rng.standard_normal(len(t)), 3000) * np.exp(
 NOTAS = [1318.5, 1567.98, 1760.0, 1975.5]
 for i, ((a, b), ev) in enumerate(zip(TL['CAPS'], TL['EV'])):
     s = a + Q
-    for c in ev.get('clique', []): add(FX, clique(), s + c, pan=.2)
-    for c in ev.get('toque', []): add(FX, toque(), s + c, pan=-.1)
-    for j, c in enumerate(ev.get('ping', [])): add(FX, ping(NOTAS[(i + j) % 4]), s + c, pan=rng.uniform(-.3, .3))
+    for c in ev.get('clique', []): add(FX, clique(), s + c * ESC, pan=.2)
+    for c in ev.get('toque', []): add(FX, toque(), s + c * ESC, pan=-.1)
+    for j, c in enumerate(ev.get('ping', [])): add(FX, ping(NOTAS[(i + j) % 4]), s + c * ESC, pan=rng.uniform(-.3, .3))
     for x0, x1 in ev.get('tecla', []):
-        for x in np.arange(x0, x1, .065): add(FX, tecla(), s + x + rng.uniform(-.01, .01), pan=-.2)
+        for x in np.arange(x0 * ESC, x1 * ESC, .08): add(FX, tecla(), s + x + rng.uniform(-.01, .01), pan=-.2)
 
 # ---- Mix
 L_ = DR[0] + (BX[0] + MU[0]) * SC + FX[0]; R_ = DR[1] + (BX[1] + MU[1]) * SC + FX[1]
