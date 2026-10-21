@@ -7,12 +7,12 @@
 <link rel="stylesheet" href="poppins.css">
 <link rel="stylesheet" href="instrument.css">
 <style>
-/* Vídeo de lançamento do Sales Coach no Sales Sprint (Sales Rocket). 16:9, 1920×1080, 124s, no compasso da trilha (120 bpm).
-   Abre com perguntas em lettering (Instrument Serif) e cada funcionalidade começa com uma pergunta
-   antes da tela. As telas redesenham o app de verdade (mesmos rótulos, cores e ícones), em uso:
-   cursor, cliques, digitação e câmera que aproxima o que importa.
-   Identidade light da NEXA por fora; dentro das telas, as cores do app.
-   Linha do tempo determinística: o render chama window.renderAt(t). ?play toca no navegador. */
+/* Vídeo de lançamento do Sales Coach no Sales Sprint (Sales Rocket), versão impacto. 16:9, 1920×1080, 63s.
+   Segue a linguagem da referência: telas pretas/azul-profundo com chamadas curtas, produto flutuando
+   em 3D, close extremo que abre para a tela inteira, carrossel de frases, marca batendo, montagem
+   rápida em branco, órbita de integrações, campo gigante digitando e o fecho com o horizonte aceso.
+   Cores do Sales Coach (navy e azul) com o lima da NEXA como destaque. Uma pergunta só, na abertura.
+   Cortes no tempo da trilha (120 bpm). Linha do tempo determinística: o render chama window.renderAt(t). */
 :root { --osso: #f3f4ee; --tinta: #10120e; --dim: #6f7468; --dim2: #a6aa9d; --linha: #e3e5dc; --lima: #d4f969; --oliva: #587406;
   --navy: #071A34; --pri: #15498D; --bg: #F5F7FA; --borda: #D9DFE8; --mut: #5A6779; --suc: #237A55; --warn: #C2700A; --err: #C52626; }
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -183,61 +183,158 @@ body { position: relative; font-family: 'DM Sans', sans-serif; color: var(--tint
 .chk.on { border-color: rgba(21,73,141,.5); background: #F2F6FC; } .chk.on i { background: var(--pri); border-color: var(--pri); }
 .inp { margin-top: 10px; } .inp small { display: block; font-size: 12.5px; color: var(--mut); } .inp div { margin-top: 4px; height: 40px; border-radius: 10px; border: 1px solid var(--borda); display: flex; align-items: center; padding: 0 12px; font-size: 14px; }
 .tabs { display: inline-flex; padding: 4px; border-radius: 12px; background: #EEF1F5; gap: 2px; } .tabs span { padding: 7px 16px; border-radius: 9px; font-size: 13.5px; color: var(--mut); font-weight: 500; } .tabs .on { background: #fff; color: var(--navy); box-shadow: 0 1px 3px rgba(7,26,52,.12); }
+/* ---------- Versão impacto (referência: telas escuras com chamadas, UI em 3D, carrossel, órbita) ---------- */
+#fundo { position: absolute; inset: 0; }
+#faixa { position: absolute; inset: -20%; pointer-events: none; mix-blend-mode: screen; }
+.cena { position: absolute; inset: 0; visibility: hidden; }
+.kt { font-family: 'Poppins'; font-weight: 600; color: #fff; letter-spacing: -.03em; }
+.kt .w { display: inline-block; white-space: pre; }
+.lima { color: #d4f969; }
+#c3d { position: absolute; inset: 0; perspective: 2600px; perspective-origin: 50% 45%; }
+#jan { top: 145px; transform-origin: 50% 50%; will-change: transform; }
+#rot { position: absolute; left: 96px; top: 76px; display: flex; gap: 14px; align-items: center; font: 500 18px 'JetBrains Mono'; letter-spacing: .2em; text-transform: uppercase; color: rgba(255,255,255,.78); }
+#rot::before { content: ""; width: 9px; height: 9px; border-radius: 50%; background: #d4f969; box-shadow: 0 0 14px #d4f969; }
+#pilula { position: absolute; left: 64px; bottom: 60px; padding: 16px 28px; border-radius: 999px; background: #071A34; color: #fff; font: 600 27px 'Poppins'; letter-spacing: -.01em; box-shadow: 0 24px 60px -20px rgba(7,26,52,.7); display: flex; gap: 14px; align-items: center; }
+#pilula::before { content: ""; width: 10px; height: 10px; border-radius: 50%; background: #d4f969; }
+#demo { z-index: 5; }
+
+/* Carrossel de frases */
+#lista { position: absolute; left: 0; right: 0; top: 0; bottom: 0; -webkit-mask: linear-gradient(180deg, transparent 18%, #000 38%, #000 62%, transparent 82%); }
+#lista .it2 { position: absolute; left: 790px; top: 0; font-size: 78px; line-height: 1; white-space: nowrap; transform-origin: 0 50%; }
+#mini { position: absolute; left: 400px; top: 430px; width: 330px; height: 220px; }
+.mini { position: absolute; inset: 0; border-radius: 22px; background: #fff; overflow: hidden; box-shadow: 0 0 0 1px rgba(255,255,255,.3), 0 30px 70px -20px rgba(0,0,0,.6); font-family: 'Poppins'; color: #071A34; padding: 20px; }
+.mini .hd { display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 600; }
+.mini .hd img { width: 18px; }
+
+/* Órbita */
+#orb { position: absolute; left: 860px; top: 330px; width: 200px; height: 200px; border-radius: 50%; display: grid; place-items: center;
+  background: radial-gradient(circle at 35% 30%, #3F8CF0, #15498D 60%, #071A34); box-shadow: 0 0 0 10px rgba(63,140,240,.18), 0 0 90px 20px rgba(63,140,240,.45); }
+#orb img { width: 92px; }
+.ic8 { position: absolute; width: 124px; height: 124px; margin: -62px 0 0 -62px; border-radius: 50%; background: #fff; display: grid; place-items: center; box-shadow: 0 16px 40px -12px rgba(0,0,0,.5); }
+.ic8 img { max-width: 66px; max-height: 56px; }
+#orbsvg { position: absolute; inset: 0; }
+
+/* Campo gigante (pergunta do gestor) e campo com metodologias */
+.campo2 { position: absolute; display: flex; align-items: center; gap: 26px; border-radius: 999px; background: #fff; box-shadow: 0 40px 90px -30px rgba(0,0,0,.55); font-family: 'Poppins'; color: #071A34; }
+.campo2 .mais { width: 64px; height: 64px; border-radius: 50%; display: grid; place-items: center; font-size: 46px; font-weight: 300; color: #071A34; flex: 0 0 auto; }
+.campo2 .env { margin-left: auto; width: 74px; height: 74px; border-radius: 50%; background: #15498D; display: grid; place-items: center; color: #fff; flex: 0 0 auto; }
+.chip { position: absolute; left: 0; top: 0; white-space: nowrap; padding: 8px 20px; border-radius: 14px; background: #EAF1FC; color: #15498D; font-size: 42px; font-weight: 500; }
+.seta { position: absolute; left: 0; top: 0; width: 44px; height: 44px; }
+
+/* Fecho */
+#arco { position: absolute; left: -10%; right: -10%; top: 760px; height: 1200px; border-radius: 50%;
+  background: radial-gradient(60% 40% at 50% 0%, rgba(63,140,240,.55), transparent 70%), #02050B;
+  box-shadow: 0 -2px 0 0 rgba(212,249,105,.85), 0 -10px 40px 0 rgba(63,140,240,.8), 0 -40px 140px 10px rgba(63,140,240,.45); }
+.logo2 { position: absolute; border-radius: 40px; background: linear-gradient(135deg, #071A34, #15498D); display: grid; place-items: center; box-shadow: 0 0 0 1px rgba(255,255,255,.12), 0 30px 80px -20px rgba(63,140,240,.6); }
+.logo2 img { width: 62%; }
+.wm { font-family: 'Poppins'; color: #fff; letter-spacing: -.035em; white-space: nowrap; }
+.wm b { font-weight: 600; } .wm span { font-weight: 300; }
 </style>
 </head>
 <body>
-<div id="luz"></div><div id="pontos"></div><div id="vinheta"></div>
-<svg id="onda" viewBox="0 0 1920 240"><path id="ondap" fill="none" stroke-width="2.4" stroke-linecap="round"/><circle id="ondac" r="0" fill="#d4f969"/></svg>
+<div id="fundo"></div><div id="faixa"></div>
 
-<div id="qn" class="mono"></div>
-<div id="q" class="serif"></div>
-
-<!-- Revelação -->
-<div id="rev" class="abs" style="inset:0;visibility:hidden">
-  <div class="logo" id="revlogo" style="top:250px;width:184px;height:184px;margin-left:-92px"><img src="img/mark-white.png" alt=""></div>
-  <div class="nome" id="revnome" style="top:470px;font-size:116px"><b>Sales</b> <span>Coach</span></div>
-  <div class="lema serif" id="revtag" style="top:640px">Um coach em <i>cada reunião</i> do seu time.</div>
-  <div class="abs mono" id="revlanc" style="left:0;right:0;top:770px;text-align:center;font-size:16px;color:var(--oliva)">Lançamento oficial · Sales Sprint</div>
+<!-- E se -->
+<div class="cena" id="sEse">
+  <div class="kt" id="ese1" style="position:absolute;left:0;right:0;top:300px;text-align:center;font-size:260px;line-height:1">E se</div>
+  <div class="kt" id="ese2" style="position:absolute;left:0;right:0;top:590px;text-align:center;font-size:66px;font-weight:500">cada reunião do seu time tivesse um <span class="lima">coach?</span></div>
 </div>
 
-<!-- Janela com o produto -->
-<div id="jan" style="visibility:hidden">
+<!-- Produto em 3D (Meet, montagem, gestor) -->
+<div id="c3d"><div id="jan" style="visibility:hidden">
   <div id="cromo"><div class="bol"><i></i><i></i><i></i></div><div class="aba"><img id="fav" alt=""><span id="abat"></span></div><div class="url"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#5f6368" stroke-width="2.2"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg><span id="url"></span></div></div>
   <div id="vp"></div>
+</div></div>
+
+<!-- Carrossel -->
+<div class="cena" id="sCar">
+  <div id="lista"></div>
+  <div id="mini"></div>
 </div>
 
-<div id="leg"><span class="mono" id="legn"></span><span id="legt"></span></div>
-<div id="demo">Telas ilustrativas, com dados de demonstração.</div>
+<!-- Marca -->
+<div class="cena" id="sMarca">
+  <div class="logo2" id="mlogo" style="left:430px;top:405px;width:200px;height:200px"><img src="img/mark-white.png" alt=""></div>
+  <div class="wm" id="mwm" style="position:absolute;left:680px;top:420px;font-size:150px;line-height:1.1"><b>Sales</b> <span>Coach</span></div>
+  <div class="kt" id="mtag" style="position:absolute;left:0;right:0;top:680px;text-align:center;font-size:40px;font-weight:400;color:rgba(255,255,255,.75)">Um coach em <span style="color:#fff;font-weight:600">cada reunião</span> do seu time.</div>
+</div>
+
+<!-- e muito mais -->
+<div class="cena" id="sMais"><div class="kt" id="maist" style="position:absolute;left:0;right:0;top:470px;text-align:center;font-size:110px">e muito mais…</div></div>
+
+<!-- Órbita -->
+<div class="cena" id="sOrb">
+  <svg id="orbsvg" viewBox="0 0 1920 1080"></svg>
+  <div id="orbic"></div>
+  <div id="orb"><img src="img/mark-white.png" alt=""></div>
+  <div class="kt" id="orbt" style="position:absolute;left:0;right:0;top:800px;text-align:center;font-size:58px;font-weight:500">Conecta com a sua agenda, as suas chamadas e o seu <span class="lima">CRM.</span></div>
+</div>
+
+<!-- Pergunta do gestor (campo gigante) -->
+<div class="cena" id="sPerg">
+  <div id="inpw" style="position:absolute;left:210px;top:470px;width:1500px;height:140px;transform-origin:14% 50%">
+    <div class="campo2" style="inset:0;padding:0 30px 0 36px"><span class="mais">+</span><span id="inpt" style="font-size:52px;font-weight:500;white-space:nowrap"></span><span class="env" id="inpenv"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg></span></div>
+  </div>
+  <svg class="seta" id="seta" viewBox="0 0 28 28"><path d="M5 3 L5 22 L10 17.5 L13.6 25 L17 23.4 L13.5 16.2 L20 16.2 Z" fill="#fff" stroke="#071A34" stroke-width="1.6" stroke-linejoin="round"/></svg>
+</div>
+
+<!-- Metodologia -->
+<div class="cena" id="sMet"><div id="metw" style="position:absolute;inset:0;transform-origin:50% 50%">
+  <div class="kt" id="mett" style="position:absolute;left:0;right:0;top:360px;text-align:center;font-size:56px;font-weight:500;color:#071A34">Na metodologia da sua empresa</div>
+  <div class="campo2" id="metin" style="left:470px;width:980px;top:480px;height:120px;padding:0 30px"><span class="mais">+</span><span id="metchip" style="position:relative;flex:1;height:72px;overflow:hidden"></span></div>
+</div></div>
+
+<!-- É só vender -->
+<div class="cena" id="sVend"><div class="kt" id="vendt" style="position:absolute;left:0;right:0;top:440px;text-align:center;font-size:170px">É só <span class="lima">vender.</span></div></div>
 
 <!-- Fecho -->
-<div id="fim" class="abs" style="inset:0;visibility:hidden">
-  <div class="logo" style="top:130px;width:150px;height:150px;margin-left:-75px;border-radius:38px"><img src="img/mark-white.png" alt=""></div>
-  <div class="nome" style="top:310px;font-size:100px"><b>Sales</b> <span>Coach</span></div>
-  <div class="lema serif" style="top:455px;font-size:62px">Cada reunião <i>vira método.</i></div>
-  <div class="nexa"><span>um produto</span><img src="img/nexa.svg" alt="NEXA"></div>
-  <div class="lanc"><small class="mono">Lançamento oficial</small><b>Sales Sprint</b><span>com a Sales Rocket</span></div>
-  <div class="cta"><b>Conheça no evento</b><span>nexatech.ia.br</span></div>
+<div class="cena" id="sFim">
+  <div id="arco"></div>
+  <div class="logo2" id="flogo" style="left:528px;top:250px;width:150px;height:150px;border-radius:34px"><img src="img/mark-white.png" alt=""></div>
+  <div class="wm" id="fwm" style="position:absolute;left:712px;top:262px;font-size:116px;line-height:1.1"><b>Sales</b> <span>Coach</span></div>
+  <div id="fnexa" style="position:absolute;left:0;right:0;top:450px;display:flex;justify-content:center;align-items:center;gap:12px;font:400 22px 'DM Sans';color:rgba(255,255,255,.65)"><span>um produto</span><img src="img/nexa-claro.svg" alt="NEXA" style="height:17px"></div>
+  <div id="flanc" style="position:absolute;left:0;right:0;top:530px;text-align:center">
+    <div class="mono" style="font-size:15px;color:#d4f969">Lançamento oficial</div>
+    <div style="font:400 72px 'Space Grotesk';letter-spacing:-.035em;color:#fff;margin-top:8px">Sales Sprint</div>
+    <div style="font:400 24px 'DM Sans';color:rgba(255,255,255,.7);margin-top:2px">com a Sales Rocket</div></div>
+  <div id="fcta" style="position:absolute;left:0;right:0;top:770px;display:flex;justify-content:center;align-items:center;gap:22px;font:400 24px 'DM Sans';color:rgba(255,255,255,.75)"><b style="background:#fff;color:#071A34;font:600 22px 'Poppins';padding:16px 32px;border-radius:999px">Conheça no evento</b><span>nexatech.ia.br</span></div>
 </div>
+
+<div id="rot"></div>
+<div id="pilula"></div>
+<div id="demo">Telas ilustrativas, com dados de demonstração.</div>
 <div id="grao"></div>
 
 <script id="tl" type="application/json">
-{"DUR": 124.0, "REV": 12.0, "Q": 4.0, "BPM": 120, "ESC": 1.4,
- "INTRO": [[0.05, 3.8], [4.05, 7.8], [8.05, 11.6]],
- "FECHO": [114.05, 117.8, 118.0],
- "CAPS": [[16.0, 30.0], [30.0, 44.0], [44.0, 58.0], [58.0, 72.0], [72.0, 86.0], [86.0, 100.0], [100.0, 114.0]],
- "EV": [
-  {"clique": [1.9], "ping": [2.2], "tecla": [[3.6, 4.6]]},
-  {"tecla": [[0.5, 1.9], [4.2, 5.4]], "ping": [2.2]},
-  {"toque": [0.35, 0.7, 1.05], "ping": [1.4, 2.4], "tecla": [[3.4, 4.6]]},
-  {"clique": [1.2], "ping": [2.2], "toque": [2.2, 2.55, 2.9, 3.25, 3.6, 3.95, 4.3]},
-  {"tecla": [[0.3, 1.6]], "clique": [1.8, 3.3, 4.4], "ping": [3.8, 5.3]},
-  {"clique": [0.7, 1.2, 1.8], "ping": [2.6, 3.0]},
-  {"clique": [2.0], "tecla": [[2.5, 3.5], [4.3, 5.6]], "ping": [3.6]}
- ]}
+{"DUR": 63.0, "BPM": 120, "Q": 0, "CAPS": [[0, 1], [0, 1], [0, 1], [0, 1], [0, 1], [0, 1], [0, 1]], 
+ "CENAS": {"ese": [0, 3],
+  "grava": [3, 8],
+  "aovivo": [8, 13],
+  "carrossel": [13, 19],
+  "marca": [19, 22],
+  "analise": [22, 26],
+  "crm": [26, 30],
+  "treino": [30, 33.5],
+  "arg": [33.5, 37],
+  "mais": [37, 39],
+  "orbita": [39, 44],
+  "pergunta": [44, 47],
+  "gestor": [47, 51],
+  "metodo": [51, 55],
+  "vender": [55, 57],
+  "fim": [57, 63]}, 
+ "SFX": {"golpe": [0.0, 13.0, 19.0, 47.0, 57.0],
+  "golpe_leve": [3.0, 22.0, 39.0, 51.0, 55.0],
+  "clique": [4.1, 26.6, 31.0, 32.1, 33.8, 34.3, 34.9, 46.6],
+  "tecla": [[5.8, 6.8], [8.5, 9.9], [12.2, 12.9], [24.2, 25.4], [44.15, 46.2], [47.7, 48.8]],
+  "ping": [10.2, 22.2, 27.6, 32.3, 35.7, 39.0, 47.1],
+  "toque": [27.6, 27.95, 28.3, 28.65, 29.0, 29.35, 29.7, 51.5, 52.0, 52.5, 53.0, 53.5, 39.25, 39.35, 39.45, 39.55, 39.65, 39.75, 39.85, 39.95],
+  "whoosh": [2.75, 4.25, 12.45, 14.0, 15.0, 16.0, 17.0, 22.0, 26.0, 30.0, 33.5, 37.0, 39.0, 43.8, 46.7, 51.0, 55.0, 57.0]}}
 </script>
 <script src="icones.js"></script>
 <script>
 const TL = JSON.parse(document.getElementById('tl').textContent);
+
 const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
 const lin = (t, a, b) => clamp((t - a) / (b - a));
 const eo = x => 1 - Math.pow(1 - x, 3), eq = x => 1 - Math.pow(1 - x, 5);
@@ -419,99 +516,6 @@ function cursor(id, lt, K, cliques = [], ent = 0) { const el = $('#t' + id + ' .
   el.style.transform = `translate(${x - 5}px, ${y - 3}px)`; $('svg', el).style.transform = `scale(${esc})`; el.style.opacity = clamp((lt - ent) * 4);
   const r = $('.r', el); r.style.opacity = anel > 0 ? 1 - anel : 0; r.style.transform = `translate(5px, 3px) scale(${.4 + anel})`; }
 
-/* ---------- Lettering ---------- */
-let qAtual = null;
-function montaQ(linhas) { $('#q').innerHTML = linhas.map((l, li) => `<div class="l l${li + 1}">${l.split(' ').map(p => `<span class="p">${[...p].map(ch => `<span class="c">${ch}</span>`).join('')}</span>`).join(' ')}</div>`).join('');
-  $$('#q .c').forEach((c, i) => { c._r = rnd(i + linhas[0].length * 3); c._i = i; });
-  const q = $('#q'); q.style.letterSpacing = '-.015em'; let f = 124; q.style.fontSize = f + 'px';
-  while (f > 70 && $$('#q .l').some(l => l.scrollWidth > 1640)) { f -= 4; q.style.fontSize = f + 'px'; } }
-function letreiro(t, linhas, a, b, encolhe = null) {
-  const key = linhas.join('|'); if (qAtual !== key) { qAtual = key; montaQ(linhas); }
-  const q = $('#q'), cs = $$('#q .c'), n = cs.length; q.style.visibility = '';
-  cs.forEach(c => { const d = c._r * .42 + (c._i / n) * .33;
-    const k = eo(lin(t, a + d, a + d + .7)), o = encolhe ? 0 : eio(lin(t, b - .7 + d * .5, b - .25 + d * .5));
-    const pisca = k > 0 && k < 1 ? .55 + .45 * Math.abs(Math.sin((t + c._r) * 40)) : 1;
-    c.style.opacity = k * (1 - o) * pisca;
-    c.style.filter = (k < 1 || o > 0) ? `blur(${(1 - k) * 16 + o * 14}px)` : 'none';
-    c.style.transform = `translateY(${(1 - k) * 18 - o * 22}px)`; });
-  q.style.letterSpacing = `${-.015 + .06 * (1 - eo(lin(t, a, a + 1.6)))}em`;
-  if (encolhe) { const [ea, eb] = encolhe, k = eio(lin(t, ea, ea + .7)), sai = eio(lin(t, eb - .4, eb));
-    q.style.transform = `translateY(${-439 * k}px) scale(${1 - .7 * k})`; q.style.opacity = 1 - sai; q.style.filter = sai > 0 ? `blur(${sai * 8}px)` : 'none'; }
-  else { q.style.transform = 'none'; q.style.opacity = 1; q.style.filter = 'none'; }
-}
-
-/* ---------- Fundo ---------- */
-function misterio(t) { // 1 nas perguntas, 0 com o produto na tela
-  let m = t < TL.REV + .4 ? 1 : 0;
-  CAPS.forEach(c => { m = Math.max(m, janela(t, c.a - .3, c.s + .1, .4, .5)); });
-  m = Math.max(m, janela(t, TL.FECHO[0] - .3, TL.FECHO[1] + .2, .4, .5)); return m; }
-function luz(t, m) {
-  const s = Math.sin(t * .23), c = Math.cos(t * .19), f = .3 + .7 * (1 - m);
-  $('#luz').style.background = `
-    radial-gradient(45% 50% at ${8 + 6 * s}% ${4 + 5 * c}%, rgba(212,249,105,${.5 * f}), transparent 72%),
-    radial-gradient(45% 55% at ${98 - 5 * c}% ${6 + 5 * s}%, rgba(190,210,246,${.85 * f}), transparent 70%),
-    radial-gradient(50% 50% at ${18 + 8 * c}% ${104 - 4 * s}%, rgba(212,249,105,${.35 * f}), transparent 72%),
-    radial-gradient(45% 50% at ${100 - 6 * s}% ${100 + 3 * c}%, rgba(190,210,246,${.7 * f}), transparent 70%),
-    linear-gradient(180deg, #ededea 0%, #f1f2ec 50%, #eef0e8 100%)`;
-  $('#vinheta').style.opacity = m;
-}
-/* Onda de voz: a conversa que ninguém ouve. Acende e vira um ponto na revelação */
-function onda(t, m) {
-  const el = $('#onda'), intro = t < TL.REV + .3, o = intro ? janela(t, .1, TL.REV + .2, .8, .3) : m * .55;
-  el.style.opacity = o; vis(el, o); if (o < .001) return;
-  const R0 = TL.REV, acende = intro ? eo(lin(t, R0 - 3.0, R0 - 1.7)) : 0, junta = intro ? eio(lin(t, R0 - 1.0, R0 - .2)) : 0, pts = [];
-  for (let x = 0; x <= 1920; x += 6) {
-    const xx = 960 + (x - 960) * (1 - junta), u = x / 1920;
-    const env = Math.pow(Math.max(0, Math.sin(u * Math.PI)), 1.4) * (.35 + .65 * Math.pow(Math.abs(Math.sin(u * 7.3 + t * 1.1) * Math.sin(u * 3.1 - t * .7)), 1.5));
-    const y = 120 + Math.sin(x * .045 + t * 9) * Math.sin(x * .011 - t * 2.3) * 70 * env * (1 + .6 * acende) * (1 - junta);
-    pts.push(`${xx.toFixed(1)},${y.toFixed(1)}`); }
-  const p = $('#ondap'); p.setAttribute('d', 'M' + pts.join(' L'));
-  p.setAttribute('stroke', acende > 0 ? `rgba(${Math.round(16 + 72 * acende)},${Math.round(18 + 98 * acende)},${Math.round(14 - 8 * acende)},${.32 + .5 * acende})` : 'rgba(16,18,14,.3)');
-  $('#ondac').setAttribute('cx', 960); $('#ondac').setAttribute('cy', 120); $('#ondac').setAttribute('r', 14 * eo(lin(t, TL.REV - .5, TL.REV - .15)) * (1 - lin(t, TL.REV - .05, TL.REV + .1)));
-}
-
-/* ---------- Abertura, revelação e fecho ---------- */
-function abertura(t) {
-  const i = INTRO.findIndex((_, k) => t >= TL.INTRO[k][0] - .05 && t < TL.INTRO[k][1] + .05);
-  if (i >= 0) { letreiro(t, INTRO[i], TL.INTRO[i][0], TL.INTRO[i][1]); return true; }
-  return false;
-}
-function revelacao(t) {
-  const R0 = TL.REV, R1 = TL.CAPS[0][0], r = $('#rev'), on = t > R0 - .1 && t < R1 + .05; vis(r, on ? 1 : 0); if (!on) return;
-  pop($('#revlogo'), lin(t, TL.REV, TL.REV + .6)); vista($('#revnome'), eo(lin(t, R0 + .35, R0 + .95)), 40, 12);
-  vista($('#revtag'), eo(lin(t, R0 + .7, R0 + 1.4)), 24, 10); vista($('#revlanc'), eo(lin(t, R0 + 1.1, R0 + 1.6)), 16, 6);
-  const s = 1 - eio(lin(t, R1 - .45, R1)); r.style.opacity = s; r.style.transform = `translateY(${-(1 - s) * 50}px) scale(${1 - (1 - s) * .04})`; r.style.filter = s < .99 ? `blur(${(1 - s) * 14}px)` : 'none';
-}
-function fecho(t) {
-  const [a, b, f] = TL.FECHO; let usou = false;
-  if (t >= a - .05 && t < b + .05) { letreiro(t, FECHO_Q, a, b); usou = true; }
-  const fm = $('#fim'), on = t > f - .05; vis(fm, on ? 1 : 0);
-  if (on) { pop($('#fim .logo'), lin(t, f, f + .6)); vista($('#fim .nome'), eo(lin(t, f + .25, f + .8)), 40, 12); vista($('#fim .lema'), eo(lin(t, f + .55, f + 1.2)), 24, 10);
-    vista($('#fim .nexa'), eo(lin(t, f + .9, f + 1.4)), 16, 6); vista($('#fim .lanc'), eo(lin(t, f + 1.2, f + 1.8)), 40, 8); vista($('#fim .cta'), eo(lin(t, f + 1.6, f + 2.1)), 16, 6); }
-  return usou;
-}
-
-/* ---------- Capítulos ---------- */
-function capitulos(t) {
-  const i = CAPS.findIndex(c => t >= c.a - .05 && t < c.b + .02), jan = $('#jan');
-  $$('.tela').forEach(e => e.style.visibility = 'hidden');
-  if (i < 0) { vis(jan, 0); $('#leg').style.opacity = 0; $('#qn').style.opacity = 0; return false; }
-  const c = CAPS[i], lt = t - c.s;
-  letreiro(t, c.q, c.a + .05, c.b, [c.s - .55, c.b]);
-  vista($('#qn'), janela(t, c.a, c.s - .4, .5, .4), 10, 4); $('#qn').textContent = `0${i + 1} / 07`;
-  const k = janela(t, c.s - .45, c.b, .7, .45); vis(jan, k); jan.style.opacity = k;
-  const ent = eo(lin(t, c.s - .45, c.s + .25)), sai = eio(lin(t, c.b - .45, c.b));
-  jan.style.transform = `translateY(${(1 - ent) * 70 + sai * 30}px) scale(${.965 + .035 * ent - .02 * sai})`;
-  jan.style.filter = k < .99 ? `blur(${(1 - k) * 12}px)` : 'none';
-  $('#t' + c.id).style.visibility = 'visible';
-  const meet = c.tela === 'meet';
-  $('#fav').src = meet ? 'img/googlemeet.svg' : 'img/mark-app.png'; $('#abat').textContent = meet ? 'Demo · Grupo Alfa – Google Meet' : 'Sales Coach';
-  $('#url').textContent = meet ? 'meet.google.com/xqd-fhkr-pmb' : c.url;
-  $('#legn').textContent = `0${i + 1} · ${c.tag}`; $('#legt').textContent = c.leg; vista($('#leg'), janela(t, c.s + .35, c.b - .1, .5, .35), 14, 6);
-  R[c.id](lt / TL.ESC, t, (c.b - c.s) / TL.ESC);  // telas de 10s: animação 1,4× mais lenta e o resultado fica na tela
-  return true;
-}
-
 /* Medidores de áudio e o "falando" do Meet */
 function medidores(id, t, voz, cli) {
   const a = Math.abs(Math.sin(t * 7.3) * Math.sin(t * 2.9)), b = Math.abs(Math.sin(t * 6.1 + 1) * Math.sin(t * 3.3 + 2));
@@ -617,20 +621,181 @@ R.c7 = (lt) => {
   cursor('c7', lt, [[0, 800, 500], [.9, 800, 500], [1.85, POS.c7.hub[0], POS.c7.hub[1]], [2.3, POS.c7.hub[0], POS.c7.hub[1]], [3.0, POS.c7.hub[0] - 140, POS.c7.hub[1] + 10]], [2.0], .8);
 };
 
-window.renderAt = function (t) {
-  const m = misterio(t); luz(t, m); onda(t, m);
-  let q = abertura(t); revelacao(t);
-  q = capitulos(t) || q; q = fecho(t) || q;
-  if (!q) { $('#q').style.visibility = 'hidden'; }
-  $('#demo').style.opacity = $('#jan').style.visibility === 'hidden' ? 0 : .9;
-};
 function medir() { // posições sem câmera nem animação, antes do primeiro quadro
   POS.c1 = { g: centro('c1', '#c1g'), sc: centro('c1', '#c1sc') }; POS.c2 = { sc: centro('c2', '#c2sc') };
   POS.c3 = { row: centro('c3', '#c3row'), col: centro('c3', '#c3col') }; POS.c4 = { card: centro('c4', '#c4card'), btn: centro('c4', '#c4btn') };
   POS.c5 = { chat: centro('c5', '#c5card'), mic: centro('c5', '#c5mic'), enc: centro('c5', '#c5enc') };
   POS.c6 = { d0: centro('c6', '#c6d0'), d1: centro('c6', '#c6d1'), btn: centro('c6', '#c6btn'), cards: centro('c6', '#c6cards', 0, 150) };
   POS.c7 = { hub: centro('c7', '#c7hub'), as: centro('c7', '#c7as') }; }
-window.ready = document.fonts.ready.then(() => Promise.all([...document.images].map(i => i.complete ? 0 : new Promise(r => { i.onload = i.onerror = r; })))).then(() => { medir(); window.renderAt(0); return true; });
+/* ---------- Versão impacto: cenas ---------- */
+const C = TL.CENAS;
+const fl = document.createElement('div'); fl.id = 'flash'; fl.style.cssText = 'position:absolute;inset:0;background:#fff;pointer-events:none;opacity:0'; document.body.insertBefore(fl, $('#rot'));
+
+/* Palavras e letras que entram com desfoque */
+function prepPal(el) { if (el._ws) return el._ws; const out = [];
+  [...el.childNodes].forEach(n => { if (n.nodeType === 3) n.textContent.split(/(\s+)/).forEach(p => { if (!p) return; if (/^\s+$/.test(p)) out.push(document.createTextNode(p)); else { const s = document.createElement('span'); s.className = 'w'; s.textContent = p; out.push(s); } });
+    else { n.classList.add('w'); out.push(n); } });
+  el.innerHTML = ''; out.forEach(x => el.appendChild(x)); el._ws = $$('.w', el); return el._ws; }
+function prepLet(el) { if (el._ls) return el._ls; el.innerHTML = [...el.textContent].map(c => `<span class="w">${c === ' ' ? ' ' : c}</span>`).join(''); el._ls = $$('.w', el); return el._ls; }
+function revela(ws, t, a, passo = .1, dur = .45, dy = 30, blur = 14) { ws.forEach((w, i) => { const k = eo(lin(t, a + i * passo, a + i * passo + dur));
+  w.style.opacity = k; w.style.transform = `translateY(${(1 - k) * dy}px)`; w.style.filter = k < .99 ? `blur(${(1 - k) * blur}px)` : 'none'; }); }
+function sai(el, t, a, b, esc = .15, blur = 16) { const e = eio(lin(t, a, b)); el.style.opacity = 1 - e; el.style.filter = e > .01 ? `blur(${e * blur}px)` : 'none'; return e; }
+
+/* Fundos: preto com brilho azul embaixo, azul profundo, claro e branco */
+function fundo(tipo, t) {
+  const f = $('#fundo'), s = Math.sin(t * .4), c = Math.cos(t * .33);
+  f.style.background = {
+    preto: `radial-gradient(70% 55% at 50% 120%, rgba(30,103,200,.6), transparent 70%), radial-gradient(40% 28% at 50% 108%, rgba(90,160,255,.35), transparent 70%), #02050B`,
+    azul: `radial-gradient(60% 45% at ${50 + 8 * s}% 110%, rgba(110,175,255,.9), rgba(42,114,218,.55) 35%, transparent 70%), radial-gradient(130% 100% at 50% 100%, #1C5BBA 0%, #0D3170 42%, #06142C 75%, #03080F 100%)`,
+    claro: `radial-gradient(80% 55% at 50% 114%, #B9D3F8, transparent 70%), linear-gradient(180deg, #FFFFFF 0%, #F1F6FD 60%, #DCE8FB 100%)`,
+    branco: '#F5F7FA', fim: '#02050B' }[tipo];
+  const fx = $('#faixa'); fx.style.opacity = tipo === 'azul' ? 1 : tipo === 'preto' ? .4 : 0;
+  fx.style.background = `linear-gradient(${112 + 6 * c}deg, transparent 38%, rgba(140,190,255,.09) 46%, rgba(140,190,255,.15) 50%, rgba(140,190,255,.09) 54%, transparent 62%)`;
+  fx.style.transform = `translateX(${(t * 46) % 460 - 230}px)`;
+  $('#demo').style.color = tipo === 'branco' ? '#9aa3b2' : 'rgba(255,255,255,.45)';
+}
+
+/* Janela do produto em 3D */
+const FULL = { s: 1.2152, rx: 0, ry: 0, tx: 0, ty: -26.7, cr: 0 };
+const mix = (p, q, k) => Object.fromEntries(Object.keys(p).map(x => [x, p[x] + (q[x] - p[x]) * k]));
+function pose(p, op = 1, blur = 0) { const j = $('#jan');
+  j.style.transform = `translate(${p.tx}px, ${p.ty}px) rotateX(${p.rx}deg) rotateY(${p.ry}deg) scale(${p.s})`;
+  j.style.opacity = op; j.style.filter = blur > .05 ? `blur(${blur}px)` : 'none'; vis(j, op);
+  $('#cromo').style.opacity = p.cr; j.style.background = p.cr > .02 ? '#fff' : 'transparent'; j.style.boxShadow = p.cr > .02 ? '' : 'none'; j.style.borderRadius = (18 * p.cr) + 'px'; }
+function tela(id) { $$('.tela').forEach(e => e.style.visibility = e.id === 't' + id ? 'visible' : 'hidden');
+  const meet = id === 'c1' || id === 'c2'; $('#fav').src = meet ? 'img/googlemeet.svg' : 'img/mark-app.png';
+  $('#abat').textContent = meet ? 'Demo · Grupo Alfa – Google Meet' : 'Sales Coach';
+  $('#url').textContent = meet ? 'meet.google.com/xqd-fhkr-pmb' : ({ c3: 'salescoach.grougp.com.br/agendas/4f2a9c', c4: 'salescoach.grougp.com.br/agendas/4f2a9c', c5: 'salescoach.grougp.com.br/treino', c6: 'salescoach.grougp.com.br/argumentos', c7: 'salescoach.grougp.com.br' })[id]; }
+function rotulo(txt, k) { const r = $('#rot'); if (txt && r.textContent !== txt) r.textContent = txt; vista(r, txt ? k : 0, 12, 6); }
+function pilula(txt, k) { const r = $('#pilula'); if (txt && r.textContent !== txt) r.textContent = txt; vista(r, txt ? k : 0, 20, 6); }
+
+/* ---- Cenas ---- */
+function cEse(t) { const el = $('#sEse'); el.style.visibility = 'visible';
+  const k = eo(lin(t, 0, .45)), e1 = $('#ese1');
+  e1.style.opacity = k; e1.style.filter = k < .99 ? `blur(${(1 - k) * 26}px)` : 'none';
+  e1.style.transform = `translateY(${-110 * eio(lin(t, 1.0, 1.6))}px) scale(${(1.4 - .4 * k) * (1 - .1 * eio(lin(t, .45, 2.9)))})`;
+  revela(prepPal($('#ese2')), t, 1.25, .1, .45);
+  const z = eio(lin(t, 2.72, 3.0)); el.style.transform = `scale(${1 + .35 * z})`; el.style.opacity = 1 - z; el.style.filter = z > .01 ? `blur(${z * 16}px)` : 'none'; }
+
+function cGrava(t) { const u = t - C.grava[0], lt = u + .8; tela('c1'); R.c1(lt, t);
+  const g = POS.c1.g, sc = POS.c1.sc;
+  camera('c1', lt, [[.8, 3.0, g[0] - 20, g[1]], [2.05, 3.0, g[0] - 20, g[1]], [3.3, 1.0, 790, 373], [3.6, 1.0, 790, 373], [4.4, 1.38, sc[0] - 60, sc[1] + 10]]);
+  const P1 = { s: .9, rx: 7, ry: -11, tx: 0, ty: 14, cr: 1 }, P2 = { s: .93, rx: 5, ry: -7, tx: 0, ty: 10, cr: 1 };
+  pose(mix(mix(FULL, P1, eio(lin(u, 1.25, 2.5))), P2, eio(lin(u, 2.5, 5))));
+  rotulo('Grava no Meet, no Teams e no Zoom', eo(lin(u, 2.3, 2.8))); }
+
+function cAoVivo(t) { const u = t - C.aovivo[0], lt = u; tela('c2'); R.c2(lt, t); const sc = POS.c2.sc;
+  camera('c2', lt, [[0, 1.38, sc[0] - 60, sc[1] + 10], [.3, 1.38, sc[0] - 60, sc[1] + 10], [1.1, 2.0, sc[0] - 20, sc[1] + 40], [2.2, 2.0, sc[0] - 20, sc[1] + 40], [2.9, 2.45, sc[0], sc[1] - 50]]);
+  const P2 = { s: .93, rx: 5, ry: -7, tx: 0, ty: 10, cr: 1 }, P3 = { s: .95, rx: 3, ry: -4, tx: 0, ty: 8, cr: 1 };
+  const p = mix(P2, P3, eio(lin(u, 0, 4.4))), e = eio(lin(u, 4.45, 5.0)); p.s *= 1 + 1.5 * e;
+  pose(p, 1 - e, 18 * e); rotulo('Coach ao vivo · só o vendedor vê', (1 - e) * eo(lin(u, .1, .5))); }
+
+const ITENS = ['Grava cada reunião', 'Sopra a resposta ao vivo', 'Dá nota a cada conversa', 'Preenche o seu CRM', 'Treina o seu time'];
+const barras = n => Array.from({ length: n }, (_, i) => `<i style="flex:1;border-radius:3px;background:${i % 2 ? '#2FA36B' : '#15498D'};height:${18 + 70 * Math.abs(Math.sin(i * 1.7) * Math.sin(i * .5 + 1))}%"></i>`).join('');
+const MINIS = [
+  `<div class="hd"><img src="img/mark-app.png" alt="">Sales Coach<span style="margin-left:auto;font-size:12px;font-weight:700;color:#D63A2B;background:rgba(214,58,43,.1);padding:3px 9px;border-radius:999px">● REC 12:04</span></div><div style="display:flex;gap:4px;align-items:center;height:96px;margin-top:18px">${barras(30)}</div><div style="font-size:12px;color:#5A6779;margin-top:8px">Você · Cliente · gravando a tela e o áudio</div>`,
+  `<div style="border-radius:14px;padding:16px;background:linear-gradient(180deg,#EAF1FC,#F3F6FA);box-shadow:inset 0 0 0 1px rgba(21,73,141,.4)"><div style="display:flex;justify-content:space-between;font-size:11px"><span style="font-weight:600;color:#15498D;background:rgba(21,73,141,.1);padding:2px 9px;border-radius:999px">objeção</span><span style="color:#6b7686">agora</span></div><div style="font-size:11px;font-weight:800;letter-spacing:.08em;color:#15498D;margin-top:10px">FALE AGORA</div><div style="font-size:16px;font-weight:600;margin-top:5px;line-height:1.35">Pergunte quanto custa hoje uma proposta que esfria.</div></div>`,
+  `<div style="border-radius:16px;padding:16px 18px;color:#fff;background:linear-gradient(135deg,#071A34,#15498D)"><div style="font-size:12px;opacity:.85">Score Geral</div><div style="font-size:44px;font-weight:700;line-height:1.1">86 <span style="font-size:14px;font-weight:500;opacity:.8">de 100</span></div></div>${['Budget', 'Authority', 'Need'].map((n, i) => `<div style="display:flex;align-items:center;gap:8px;font-size:11px;margin-top:9px"><span style="width:62px">${n}</span><div style="flex:1;height:6px;border-radius:4px;background:#EEF1F5"><i style="display:block;height:100%;width:${[88, 92, 96][i]}%;border-radius:4px;background:#15498D"></i></div></div>`).join('')}`,
+  `<div class="hd"><img src="img/hubspot.svg" alt="" style="width:20px">Grupo Alfa – Expansão</div>${[['Nota da reunião', '86'], ['Próximo passo', 'Enviar proposta'], ['Tarefa', 'criada · 24/10']].map(([l, v]) => `<div style="display:flex;justify-content:space-between;align-items:center;margin-top:11px;padding:8px 10px;border-radius:9px;background:#F3FBE3;font-size:12.5px"><span style="color:#516F90">${l}</span><b style="font-weight:600">${v} <span style="color:#237A55">✓</span></b></div>`).join('')}`,
+  `<div style="display:flex;align-items:center;gap:12px"><span style="width:44px;height:44px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#f3d2b4,#a86d4c)"></span><div><div style="font-size:14px;font-weight:600">Carlos Mendes</div><div style="font-size:11.5px;color:#5A6779">Lead simulado · Difícil</div></div></div><div style="display:flex;align-items:flex-end;gap:12px;margin-top:20px"><div style="font-size:12px;color:#5A6779">Score do treino<div style="font-size:52px;font-weight:700;color:#071A34;line-height:1">81</div></div><span style="margin-bottom:8px;font-size:15px;font-weight:700;background:#d4f969;padding:5px 12px;border-radius:999px">+19</span></div>`];
+(function () { $('#lista').innerHTML = ITENS.map(x => `<div class="it2 kt">${x}</div>`).join(''); $('#mini').innerHTML = MINIS.map(m => `<div class="mini">${m}</div>`).join(''); })();
+function cCar(t) { const el = $('#sCar'), u = t - C.carrossel[0]; el.style.visibility = 'visible';
+  const pos = [1, 2, 3, 4].reduce((s, p) => s + eio(lin(u, p, p + .42)), 0), ent = eo(lin(u, 0, .5));
+  $$('#lista .it2').forEach((e, j) => { const d = Math.abs(j - pos);
+    e.style.transform = `translateY(${540 - 39 + (j - pos) * 132 + (1 - ent) * 220}px) scale(${1 - .12 * Math.min(d, 2)})`;
+    e.style.opacity = clamp(1 - d * .6) * ent; e.style.filter = d > .05 ? `blur(${Math.min(d, 2) * 3}px)` : 'none'; });
+  $$('#mini .mini').forEach((m, j) => { const k = clamp(1 - Math.abs(j - pos) * 1.6); m.style.opacity = k * ent; m.style.transform = `translateY(${(j - pos) * 60 + (1 - ent) * 120}px) scale(${.86 + .14 * k})`; });
+  const z = eio(lin(u, 5.6, 6.0)); el.style.transform = `scale(${1 + .2 * z})`; el.style.opacity = 1 - z; el.style.filter = z > .01 ? `blur(${z * 14}px)` : 'none'; }
+
+function cMarca(t) { const el = $('#sMarca'), u = t - C.marca[0]; el.style.visibility = 'visible';
+  const k = eo(lin(u, 0, .4)), lg = $('#mlogo'); lg.style.opacity = k; lg.style.transform = `scale(${1.7 - .7 * back(k)})`; lg.style.filter = k < .99 ? `blur(${(1 - k) * 20}px)` : 'none';
+  const k2 = eo(lin(u, .15, .65)), wm = $('#mwm'); wm.style.opacity = k2; wm.style.transform = `translateX(${(1 - k2) * 90}px)`; wm.style.filter = k2 < .99 ? `blur(${(1 - k2) * 14}px)` : 'none';
+  const g = Math.max(0, 1 - Math.abs(u - 1.0) / .5); wm.style.textShadow = `0 0 ${50 * g}px rgba(150,200,255,${.9 * g})`;
+  revela(prepPal($('#mtag')), u, .95, .08, .4, 18, 10);
+  const s = 1 + .04 * u / 3; el.style.transform = `scale(${s})`; }
+
+const MONT = [['c3', 'analise', 1.2, 'Nota e diagnóstico de cada reunião'], ['c4', 'crm', .6, 'O CRM se preenche sozinho'], ['c5', 'treino', 2.3, 'Treino com um cliente simulado'], ['c6', 'arg', .4, 'O argumento certo para cada lead']];
+function cMontagem(t) { const i = MONT.findIndex(m => t >= C[m[1]][0] && t < C[m[1]][1]); if (i < 0) return;
+  const [id, nome, off, txt] = MONT[i], [a, b] = C[nome], u = t - a, lt = u + off; tela(id); R[id](lt, t);
+  if (id === 'c3') camera(id, lt, [[1.2, 2.3, POS.c3.k1[0], POS.c3.k1[1]], [2.4, 2.3, POS.c3.k1[0], POS.c3.k1[1]], [3.1, 1.25, POS.c3.row[0], POS.c3.row[1] + 120], [5.2, 1.25, POS.c3.col[0], POS.c3.col[1] - 40]]);
+  if (id === 'c4') camera(id, lt, [[.6, 1.9, POS.c4.btn[0], POS.c4.btn[1] - 40], [1.35, 1.9, POS.c4.btn[0], POS.c4.btn[1] - 40], [2.0, 1.05, 990, 373]]);
+  if (id === 'c5') camera(id, lt, [[2.3, 1.45, POS.c5.mic[0], POS.c5.mic[1] - 150], [3.6, 1.45, POS.c5.mic[0], POS.c5.mic[1] - 150], [4.4, 1.0, 790, 373]]);
+  if (id === 'c6') camera(id, lt, [[.4, 1.5, POS.c6.d0[0] + 80, POS.c6.d0[1] + 40], [1.9, 1.5, POS.c6.btn[0] + 80, POS.c6.btn[1] - 60], [2.6, 1.2, 1580, 373]]);
+  const ent = eo(lin(u, 0, .28)), sa = eio(lin(t, b - .22, b)), p = { ...FULL };
+  p.ty += (1 - ent) * 170 - sa * 170; pose(p, 1, (1 - ent) * 14 + sa * 14);
+  pilula(txt, eo(lin(u, .25, .6)) * (1 - sa)); }
+
+function cMais(t) { const el = $('#sMais'), u = t - C.mais[0]; el.style.visibility = 'visible';
+  revela(prepLet($('#maist')), u, .05, .035, .4, 20, 16); el.style.transform = `scale(${1 + .06 * u / 2})`; }
+
+const ORB = ['googlemeet.svg', 'hubspot.svg', 'microsoftteams.svg', 'rdstation.png', 'zoom.svg', 'pipedrive.png', 'googlecalendar.svg', 'kommo.png'];
+(function () { $('#orbic').innerHTML = ORB.map(f => `<div class="ic8"><img src="img/${f}" alt=""></div>`).join(''); })();
+function cOrb(t) { const el = $('#sOrb'), u = t - C.orbita[0]; el.style.visibility = 'visible';
+  const ko = eo(lin(u, 0, .45)), orb = $('#orb'); orb.style.opacity = ko; orb.style.transform = `scale(${.6 + .4 * back(ko)})`;
+  orb.style.boxShadow = `0 0 0 ${10 + 8 * Math.abs(Math.sin(u * 4))}px rgba(63,140,240,.18), 0 0 90px 20px rgba(63,140,240,.45)`;
+  let lines = ''; $$('#orbic .ic8').forEach((ic, i) => { const ang = i * Math.PI / 4 + u * .28 + .2, x = 960 + 600 * Math.cos(ang), y = 430 + 215 * Math.sin(ang);
+    const dep = (Math.sin(ang) + 1) / 2, k = lin(u, .25 + i * .1, .6 + i * .1);
+    ic.style.left = x + 'px'; ic.style.top = y + 'px'; ic.style.zIndex = dep > .5 ? 3 : 1;
+    ic.style.opacity = clamp(k * 1.6) * (.8 + .2 * dep); ic.style.transform = `scale(${(.82 + .25 * dep) * (.5 + .5 * back(clamp(k)))})`;
+    lines += `<line x1="960" y1="430" x2="${x.toFixed(1)}" y2="${y.toFixed(1)}" stroke="rgba(170,205,255,${.45 * k})" stroke-width="2.5" stroke-dasharray="2 12" stroke-linecap="round"/>`; });
+  $('#orbsvg').innerHTML = lines;
+  revela(prepPal($('#orbt')), u, .9, .09, .45);
+  const z = eio(lin(u, 4.7, 5.0)); el.style.opacity = 1 - z; el.style.filter = z > .01 ? `blur(${z * 14}px)` : 'none'; }
+
+const PERG = 'Quais objeções mais aparecem nas minhas reuniões?';
+function cPerg(t) { const el = $('#sPerg'), u = t - C.pergunta[0]; el.style.visibility = 'visible';
+  const w = $('#inpw'), s = 2.7 - 1.7 * eio(lin(u, .2, 2.4)), e = eio(lin(u, 2.7, 3.1));
+  w.style.transform = `translateY(${320 * e}px) scale(${s * (1 - .6 * e)})`; w.style.opacity = 1 - e; w.style.filter = e > .01 ? `blur(${e * 10}px)` : 'none';
+  digita($('#inpt'), PERG, lin(u, .15, 2.2)); $('#inpt').style.color = '#071A34';
+  const sx = 1643, sy = 540, [x, y] = kf(u, [[1.9, 1560, 930], [2.5, sx + 6, sy + 8]]), seta = $('#seta');
+  const cl = u - 2.6, esc = cl > -.12 && cl < .12 ? .82 + 1.5 * Math.abs(cl) : 1;
+  seta.style.transform = `translate(${x}px, ${y}px) scale(${esc})`; seta.style.opacity = clamp((u - 1.9) * 5) * (1 - e);
+  $('#inpenv').style.transform = `scale(${cl > 0 && cl < .25 ? .9 : 1})`; $('#inpenv').style.background = cl > 0 && cl < .3 ? '#1E67C8' : '#15498D'; }
+function cGestor(t) { const u = t - (C.pergunta[1] - .2), lt = Math.max(3.3, t - C.gestor[0] + 3.5); tela('c7'); R.c7(lt, t);
+  camera('c7', lt, [[0, 1.3, POS.c7.as[0] - 40, POS.c7.as[1]]]);
+  const P0 = { s: .55, rx: 28, ry: -24, tx: 0, ty: 300, cr: 1 }, P1 = { s: .9, rx: 9, ry: -12, tx: 0, ty: 10, cr: 1 }, P2 = { s: .94, rx: 6, ry: -8, tx: 0, ty: 8, cr: 1 };
+  const k = eo(lin(u, 0, .8)); pose(mix(mix(P0, P1, k), P2, eio(lin(u, .8, 4.2))), clamp(k * 2), (1 - k) * 12);
+  rotulo('O gestor pergunta sobre todas as reuniões', eo(lin(u, .7, 1.1))); }
+
+const METS = ['BANT', 'SPIN', 'MEDDIC', 'SPICED', 'A da sua empresa'];
+(function () { $('#metchip').innerHTML = METS.map(m => `<span class="chip">/${m}</span>`).join(''); })();
+function cMet(t) { const el = $('#sMet'), u = t - C.metodo[0]; el.style.visibility = 'visible';
+  revela(prepPal($('#mett')), u, .05, .07, .4, 20, 10);
+  const ki = eo(lin(u, .15, .55)), mi = $('#metin'); mi.style.opacity = ki; mi.style.transform = `translateY(${(1 - ki) * 40}px) scale(${.94 + .06 * ki})`;
+  const T0 = [.5, 1.0, 1.5, 2.0, 2.5, 99];
+  $$('#metchip .chip').forEach((c, j) => { const k = eo(lin(u, T0[j], T0[j] + .25)), e = eio(lin(u, T0[j + 1], T0[j + 1] + .22));
+    c.style.transform = `translateY(${(1 - k) * 70 - e * 70}px)`; c.style.opacity = k * (1 - e); c.style.filter = (k < .99 || e > .01) ? `blur(${(1 - k) * 8 + e * 8}px)` : 'none'; });
+  $('#metw').style.transform = `translateX(${-40 * u / 4}px) scale(${1 + .06 * u / 4})`; }
+
+function cVend(t) { const el = $('#sVend'), u = t - C.vender[0]; el.style.visibility = 'visible';
+  revela(prepPal($('#vendt')), u, .02, .22, .4, 26, 22); el.style.transform = `scale(${1 + .05 * u / 2})`; }
+
+function cFim(t) { const el = $('#sFim'), u = t - C.fim[0]; el.style.visibility = 'visible';
+  $('#arco').style.transform = `translateY(${(1 - eo(lin(u, 0, 1.1))) * 340}px)`;
+  pop($('#flogo'), lin(u, .3, .8)); vista($('#fwm'), eo(lin(u, .45, 1.0)), 0, 14); $('#fwm').style.transform = `translateX(${(1 - eo(lin(u, .45, 1.0))) * 60}px)`;
+  vista($('#fnexa'), eo(lin(u, .85, 1.3)), 14, 6); vista($('#flanc'), eo(lin(u, 1.05, 1.6)), 30, 10); vista($('#fcta'), eo(lin(u, 1.4, 1.9)), 16, 6); }
+
+window.renderAt = function (t) {
+  $$('.cena').forEach(e => { e.style.visibility = 'hidden'; e.style.transform = ''; e.style.opacity = ''; e.style.filter = ''; });
+  vis($('#jan'), 0); $$('.tela').forEach(e => e.style.visibility = 'hidden'); rotulo('', 0); pilula('', 0); let tipo = 'preto', demo = 0;
+  if (t < C.ese[1]) { tipo = 'preto'; cEse(t); }
+  else if (t < C.grava[1]) { tipo = 'azul'; cGrava(t); demo = 1; }
+  else if (t < C.aovivo[1]) { tipo = 'azul'; cAoVivo(t); demo = 1; }
+  else if (t < C.carrossel[1]) { tipo = 'preto'; cCar(t); }
+  else if (t < C.marca[1]) { tipo = 'azul'; cMarca(t); }
+  else if (t < C.arg[1]) { tipo = 'branco'; cMontagem(t); demo = 1; }
+  else if (t < C.mais[1]) { tipo = 'azul'; cMais(t); }
+  else if (t < C.orbita[1]) { tipo = 'azul'; cOrb(t); }
+  else if (t < C.gestor[1]) { tipo = 'azul'; if (t < C.pergunta[1] + .2) cPerg(t); if (t >= C.pergunta[1] - .2) { cGestor(t); demo = 1; } }
+  else if (t < C.metodo[1]) { tipo = 'claro'; cMet(t); }
+  else if (t < C.vender[1]) { tipo = 'preto'; cVend(t); }
+  else { tipo = 'fim'; cFim(t); }
+  fundo(tipo, t);
+  $('#demo').style.opacity = demo * .9;
+  $('#flash').style.opacity = t < C.marca[1] ? eio(lin(t, C.marca[1] - .3, C.marca[1])) : 1 - eo(lin(t, C.marca[1], C.marca[1] + .35));
+};
+function medir2() { medir(); POS.c3.k1 = centro('c3', '#c3k1'); }
+window.ready = document.fonts.ready.then(() => Promise.all([...document.images].map(i => i.complete ? 0 : new Promise(r => { i.onload = i.onerror = r; })))).then(() => { medir2(); window.renderAt(0); return true; });
 if (location.search.includes('play')) { const t0 = performance.now(); const loop = () => { window.renderAt((performance.now() - t0) / 1000 % TL.DUR); requestAnimationFrame(loop); }; requestAnimationFrame(loop); }
 </script>
 </body>
