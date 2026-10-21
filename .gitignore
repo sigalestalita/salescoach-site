@@ -17,3 +17,8 @@ social/reel-salescoach-light/trilha.wav
 social/reel-salescoach-cards/trilha.wav
 social/*/frames/
 social/*/stills/
+
+# Reel de lançamento: quadros, stills e trilha são gerados
+social/reel-lancamento-sales-sprint/frames/
+social/reel-lancamento-sales-sprint/stills/
+social/reel-lancamento-sales-sprint/trilha.wav
