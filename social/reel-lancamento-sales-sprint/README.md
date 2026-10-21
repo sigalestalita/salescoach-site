@@ -1,8 +1,10 @@
-# Reel de lançamento · Sales Coach no Sales Sprint (9:16, 44s)
+# Vídeo de lançamento · Sales Coach no Sales Sprint (16:9, 44s)
 
 Lançamento oficial do Sales Coach no Sales Sprint, evento da parceira Sales Rocket.
-Identidade escura da NEXA (grafite, osso e lima), exceção prevista nas diretrizes para
-palco e lançamento; o azul do produto aparece só dentro das telas. Telas redesenhadas em
+Identidade light da NEXA (osso, tinta, lima e oliva), minimalista; o azul do produto aparece
+só dentro das telas. Layout horizontal: título do capítulo à esquerda, produto à direita.
+`vertical-escuro.html` é a primeira versão (9:16, escura), guardada como alternativa
+(render com `PAGE=vertical-escuro.html W=1080 H=1920`). Telas redesenhadas em
 HTML, com dados de demonstração (dito no rodapé).
 
 | Tempo | Cena | O que mostra |

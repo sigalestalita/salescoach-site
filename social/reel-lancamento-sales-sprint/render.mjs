@@ -6,7 +6,7 @@ const types = { '.html':'text/html', '.js':'text/javascript', '.css':'text/css',
 const srv = http.createServer((q, r) => { const f = path.join(root, decodeURIComponent(q.url.split('?')[0])); fs.readFile(f, (e, d) => { if (e) { r.writeHead(404); r.end(); return; } r.writeHead(200, {'content-type': types[path.extname(f)] || 'application/octet-stream'}); r.end(d); }); });
 await new Promise(r => srv.listen(0, r)); const port = srv.address().port;
 const br = await chromium.launch({ executablePath: '/opt/pw-browsers/chromium', args: ['--no-proxy-server','--use-gl=angle','--use-angle=swiftshader','--enable-unsafe-swiftshader','--ignore-gpu-blocklist','--font-render-hinting=none'] });
-const pg = await br.newPage({ viewport: { width: 1080, height: 1920 }, deviceScaleFactor: 1 });
+const pg = await br.newPage({ viewport: { width: +(process.env.W || 1920), height: +(process.env.H || 1080) }, deviceScaleFactor: 1 });
 pg.on('console', m => { if (m.type() === 'error' || m.type()==='warning') console.log('[page]', m.text()); });
 pg.on('pageerror', e => console.log('[pageerror]', e.message));
 await pg.goto(`http://localhost:${port}/${process.env.PAGE || 'index.html'}`); await pg.waitForFunction(() => window.ready); await pg.evaluate(() => window.ready);
