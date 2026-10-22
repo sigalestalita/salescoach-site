@@ -15,9 +15,9 @@ import numpy as np
 from scipy.io import wavfile
 from scipy.signal import butter, sosfilt
 
-VOZ = sys.argv[1] if len(sys.argv) > 1 else '7i7dgyCkKt4c16dLtwT3'   # David - Deep, Gravelly and Resonant (pt-BR)
+VOZ = sys.argv[1] if len(sys.argv) > 1 else 'gsZm1DPba0FTT6X1RVYW'   # voz escolhida na biblioteca do ElevenLabs
 MODELO = 'eleven_multilingual_v2'
-AJUSTE = {'stability': .38, 'similarity_boost': .8, 'style': .45, 'use_speaker_boost': True}
+AJUSTE = {'stability': .3, 'similarity_boost': .8, 'style': .6, 'use_speaker_boost': True}
 FF = '/usr/local/lib/python3.11/dist-packages/imageio_ffmpeg/binaries/ffmpeg-linux-x86_64-v7.0.2'
 CACHE = 'narracao-cache'; SR = 48000
 CHAVE = os.environ.get('ELEVENLABS_API_KEY', '')
@@ -29,13 +29,17 @@ for linha in open('locucao.md', encoding='utf-8'):
     m = re.match(r'\| (\d+:\d+(?:,\d+)?)–(\d+:\d+(?:,\d+)?) \| .*? \| (.+?) \|\s*$', linha)
     if m and not m.group(3).startswith('('): falas.append((seg(m.group(1)), seg(m.group(2)), m.group(3)))
 
-def gera(texto, vel=1.0):
+def pausas(texto):  # reticências = pausa curta, fim de frase = pausa maior
+    t = re.sub(r'…\s*', '… <break time="0.4s"/> ', texto.strip())
+    return re.sub(r'([.?!])\s+(?=\S)', r'\1 <break time="0.6s"/> ', t)
+def gera(texto, vel=1.0, antes='', depois=''):
     os.makedirs(CACHE, exist_ok=True)
-    h = hashlib.sha1(json.dumps([VOZ, MODELO, AJUSTE, texto, vel]).encode()).hexdigest()[:16]
+    h = hashlib.sha1(json.dumps([VOZ, MODELO, AJUSTE, texto, vel, antes, depois]).encode()).hexdigest()[:16]
     mp3, wav = f'{CACHE}/{h}.mp3', f'{CACHE}/{h}.wav'
     if not os.path.exists(mp3):
         if not CHAVE: sys.exit('Defina ELEVENLABS_API_KEY.')
-        corpo = json.dumps({'text': texto, 'model_id': MODELO, 'voice_settings': {**AJUSTE, 'speed': vel}}).encode()
+        corpo = json.dumps({'text': pausas(texto), 'model_id': MODELO, 'voice_settings': {**AJUSTE, 'speed': vel},
+                            'previous_text': antes, 'next_text': depois}).encode()   # contexto: entonação contínua entre as falas
         req = urllib.request.Request(f'https://api.elevenlabs.io/v1/text-to-speech/{VOZ}?output_format=mp3_44100_128', corpo,
                                      {'xi-api-key': CHAVE, 'Content-Type': 'application/json'})
         open(mp3, 'wb').write(urllib.request.urlopen(req, timeout=120).read())
@@ -46,11 +50,12 @@ def gera(texto, vel=1.0):
 
 sr, cama = wavfile.read('trilha-locucao.wav'); cama = cama.astype(float) / 32768
 N = len(cama); voz = np.zeros(N)
-for a, b, texto in falas:
+for k, (a, b, texto) in enumerate(falas):
     ini, jan = a + .3, (b - a) - .5
-    x = gera(texto)
+    antes = falas[k - 1][2] if k else ''; depois = falas[k + 1][2] if k + 1 < len(falas) else ''
+    x = gera(texto, 1.0, antes, depois)
     if len(x) / SR > jan:   # passou da janela: gera um pouco mais rápido
-        x = gera(texto, round(min(1.15, len(x) / SR / jan + .02), 2))
+        x = gera(texto, round(min(1.15, len(x) / SR / jan + .02), 2), antes, depois)
     if len(x) / SR > jan: print(f'AVISO: "{texto[:40]}…" ainda passa {len(x) / SR - jan:.1f}s da janela')
     i = int(ini * SR); n = min(len(x), N - i); voz[i:i + n] += x[:n]
     print(f'{a:6.1f}s  {len(x) / SR:4.1f}s de {jan:4.1f}s  {texto}')

@@ -8,7 +8,7 @@ momento-chave (perguntas de 4s e telas de 10s), clímax de cortes de um segundo 
 marca. Cores do Sales Coach (navy e azul) com o lima da NEXA como destaque. As telas redesenham o app
 de verdade, com dados de demonstração (dito no rodapé). Trilha thriller a 120 bpm, cortes no tempo.
 A câmera enquadra sempre o componente inteiro (cartão, painel ou janela), com margem: aproxima
-sem cortar a tela. Narração pronta: `narracao.py` gera cada fala do `locucao.md` no ElevenLabs (voz David, grave, pt-BR),
+sem cortar a tela. Narração pronta: `narracao.py` gera cada fala do `locucao.md` no ElevenLabs (voz escolhida, grave, pt-BR, com pausas e contexto entre as falas),
 encaixa cada uma na janela da cena e mixa com a cama da trilha, abaixando a música sob a voz.
 
 | Tempo | Cena |
