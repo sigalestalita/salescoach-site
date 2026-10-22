@@ -48,11 +48,12 @@ Legendas: o `narracao.py` também gera `out/legendas.srt` (narração completa, 
 renderiza a camada transparente, que o ffmpeg sobrepõe ao vídeo narrado (`-itsoffset 11`, `overlay`).
 Versão clara de 2min04 narrada: `out/lancamento-sales-coach-versao-clara-narrado.mp4`, com o roteiro em
 `locucao-perguntas.md` (mesma voz e mesmo processo; comando no fim do roteiro).
-Reel da versão clara (9:16, 1080×1920, 2min04): `reel-claro.html`, mesma linha do tempo, trilha e narração
-da versão de 2min04. As perguntas ficam num fundo preto e a tela abre para o claro com a marca e o produto;
-a janela do app fica em pé e a câmera enquadra o componente em uso. Render:
-`PAGE=reel-claro.html W=1080 H=1920 node render.mjs seq 0 3720 frames`, depois o ffmpeg com
-`out/perguntas-trilha-com-narracao.wav` (narrado) ou `trilha-perguntas.wav` (só a trilha) gera
+Reel para o Instagram (9:16, 1080×1920, 1min56): `reel-claro.html`, a partir da versão clara, sem menção a
+evento. As perguntas ficam num fundo preto e a tela abre para o claro no produto; "E se alguém estivesse
+ouvindo?" leva direto à primeira tela e a marca (com preço e CTA) entra só no fim. A janela do app fica em
+pé e a câmera enquadra o componente em uso. Roteiro e comandos em `locucao-reel.md`; render:
+`PAGE=reel-claro.html W=1080 H=1920 node render.mjs seq 0 3480 frames`, depois o ffmpeg com
+`out/reel-trilha-com-narracao.wav` (narrado) ou `trilha-reel.wav` (só a trilha) gera
 `out/reel-sales-coach-versao-clara-narrado.mp4` e `out/reel-sales-coach-versao-clara.mp4`.
 `node render.mjs still 9.2,26.5 stills` gera quadros soltos; `index.html?play` toca no navegador.
 `icones.js` traz os ícones lucide usados no app (licença ISC).

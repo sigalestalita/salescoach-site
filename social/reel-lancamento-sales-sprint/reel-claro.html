@@ -2,15 +2,17 @@
 <html lang="pt-BR">
 <head>
 <meta charset="utf-8">
-<title>Sales Coach · Lançamento Sales Sprint</title>
+<title>Sales Coach · Reel</title>
 <link rel="stylesheet" href="fonts.css">
 <link rel="stylesheet" href="poppins.css">
 <link rel="stylesheet" href="instrument.css">
 <style>
-/* Reel (9:16, 1080×1920) da versão clara de 2min04: mesma linha do tempo, trilha e narração.
+/* Reel (9:16, 1080×1920) para o Instagram, a partir da versão clara: 116s, sem menção a evento.
+   Duas perguntas de abertura; "E se alguém estivesse ouvindo?" já leva à primeira tela; a marca
+   (com o preço e o CTA) aparece só no fim, como resposta a "Agora, alguém está ouvindo".
    As perguntas ficam num fundo preto e a tela abre para o claro quando entram a marca e o produto.
    A janela do app fica em pé: a câmera enquadra o componente em uso (o app mantém o layout de desktop).
-   Base: Vídeo de lançamento do Sales Coach no Sales Sprint (Sales Rocket). 124s, no compasso da trilha (120 bpm).
+   No compasso da trilha (120 bpm): trilha-perguntas.py com PAGE=reel-claro.html.
    Abre com perguntas em lettering (Instrument Serif) e cada funcionalidade começa com uma pergunta
    antes da tela. As telas redesenham o app de verdade (mesmos rótulos, cores e ícones), em uso:
    cursor, cliques, digitação e câmera que aproxima o que importa.
@@ -196,13 +198,6 @@ body { position: relative; font-family: 'DM Sans', sans-serif; color: var(--tint
 <div id="qn" class="mono"></div>
 <div id="q" class="serif"></div>
 
-<!-- Revelação -->
-<div id="rev" class="abs" style="inset:0;visibility:hidden">
-  <div class="logo" id="revlogo" style="top:560px;width:200px;height:200px;margin-left:-100px"><img src="img/mark-white.png" alt=""></div>
-  <div class="nome" id="revnome" style="top:800px;font-size:124px"><b>Sales</b> <span>Coach</span></div>
-  <div class="lema serif" id="revtag" style="top:990px">Um coach em <i>cada reunião</i> do seu time.</div>
-  <div class="abs mono" id="revlanc" style="left:0;right:0;top:1200px;text-align:center;font-size:20px;color:var(--oliva)">Lançamento oficial · Sales Sprint</div>
-</div>
 
 <!-- Janela com o produto -->
 <div id="jan" style="visibility:hidden">
@@ -217,18 +212,18 @@ body { position: relative; font-family: 'DM Sans', sans-serif; color: var(--tint
 <div id="fim" class="abs" style="inset:0;visibility:hidden">
   <div class="logo" style="top:400px;width:170px;height:170px;margin-left:-85px;border-radius:42px"><img src="img/mark-white.png" alt=""></div>
   <div class="nome" style="top:610px;font-size:112px"><b>Sales</b> <span>Coach</span></div>
-  <div class="lema serif" style="top:780px;font-size:72px">Cada reunião <i>vira método.</i></div>
+  <div class="lema serif" style="top:780px;font-size:72px">Um coach em <i>cada reunião</i><br>do seu time.</div>
   <div class="nexa"><span>um produto</span><img src="img/nexa.svg" alt="NEXA"></div>
-  <div class="lanc"><small class="mono">Lançamento oficial</small><b>Sales Sprint</b><span>com a Sales Rocket</span></div>
-  <div class="cta"><b>Conheça no evento</b><span>nexatech.ia.br</span></div>
+  <div class="lanc"><small class="mono">a partir de</small><b>R$ 89,90</b><span>por usuário/mês · sem limites de uso</span></div>
+  <div class="cta"><b>Conheça o Sales Coach</b><span>link na bio</span></div>
 </div>
 <div id="grao"></div>
 
 <script id="tl" type="application/json">
-{"DUR": 124.0, "REV": 12.0, "Q": 4.0, "BPM": 120, "ESC": 1.4,
- "INTRO": [[0.05, 3.8], [4.05, 7.8], [8.05, 11.6]],
- "FECHO": [114.05, 117.8, 118.0],
- "CAPS": [[16.0, 30.0], [30.0, 44.0], [44.0, 58.0], [58.0, 72.0], [72.0, 86.0], [86.0, 100.0], [100.0, 114.0]],
+{"DUR": 116.0, "REV": 8.0, "ONDA": 12.0, "Q": 4.0, "BPM": 120, "ESC": 1.4,
+ "INTRO": [[0.05, 3.8], [4.05, 7.8]],
+ "FECHO": [106.05, 109.8, 110.0],
+ "CAPS": [[8.0, 22.0], [22.0, 36.0], [36.0, 50.0], [50.0, 64.0], [64.0, 78.0], [78.0, 92.0], [92.0, 106.0]],
  "EV": [
   {"clique": [1.9], "ping": [2.2], "tecla": [[3.6, 4.6]]},
   {"tecla": [[0.5, 1.9], [4.2, 5.4]], "ping": [2.2]},
@@ -395,7 +390,7 @@ T.c7 = `<div class="mundo">${casca('visao', `<div style="display:flex;align-item
     <div style="position:absolute;left:16px;right:16px;bottom:16px;height:48px;border-radius:14px;border:1px solid var(--borda);display:flex;align-items:center;padding:0 8px 0 16px;font-size:14.5px;color:var(--mut)"><span id="c7in" style="flex:1;color:var(--navy)"></span><span style="width:34px;height:34px;border-radius:10px;background:var(--pri);color:#fff;display:grid;place-items:center">${ic('send', 16)}</span></div></div>`)}${CUR}</div>`;
 
 const CAPS = [
-  { id: 'c1', q: ['E se nenhuma reunião', 'se perdesse?'], tag: 'Gravação', leg: 'Entrou no Meet ou no Teams, clicou em Gravar. Sem robô na chamada.', tela: 'meet' },
+  { id: 'c1', q: ['E se alguém', 'estivesse ouvindo?'], tag: 'Gravação', leg: 'Entrou no Meet ou no Teams, clicou em Gravar. Sem robô na chamada.', tela: 'meet' },
   { id: 'c2', q: ['E se alguém soprasse a resposta', 'no meio da objeção?'], tag: 'Coach ao vivo', leg: 'A dica certa na hora da objeção. Só o vendedor vê.', tela: 'meet' },
   { id: 'c3', q: ['E se cada reunião', 'tivesse uma nota?'], tag: 'Análise', leg: 'Nota, temperatura e diagnóstico pela metodologia da sua empresa.', tela: 'app', url: 'salescoach.grougp.com.br/agendas/4f2a9c' },
   { id: 'c4', q: ['E se o CRM', 'se preenchesse sozinho?'], tag: 'CRM', leg: 'Nota, critérios e próximo passo gravados no negócio, com a tarefa criada.', tela: 'app', url: 'salescoach.grougp.com.br/agendas/4f2a9c' },
@@ -404,7 +399,7 @@ const CAPS = [
   { id: 'c7', q: ['E se você soubesse', 'o que acontece em todas?'], tag: 'Gestão', leg: 'O time inteiro numa tela. E um assistente que conhece todas as reuniões.', tela: 'app', url: 'salescoach.grougp.com.br' },
 ];
 CAPS.forEach((c, i) => { [c.a, c.b] = TL.CAPS[i]; c.s = c.a + TL.Q; });
-const INTRO = [['O que o seu cliente disse', 'na última reunião?'], ['Quantas vendas se perderam', 'numa frase que ninguém ouviu?'], ['E se alguém', 'estivesse ouvindo?']];
+const INTRO = [['O que o seu cliente disse', 'na última reunião?'], ['Quantas vendas se perderam', 'numa frase que ninguém ouviu?']];
 const FECHO_Q = ['Agora, alguém', 'está ouvindo.'];
 
 const vp = $('#vp');
@@ -469,9 +464,9 @@ function luz(t, m) {
 }
 /* Onda de voz: a conversa que ninguém ouve. Acende e vira um ponto na revelação */
 function onda(t, m) {
-  const el = $('#onda'), intro = t < TL.REV + .3, o = intro ? janela(t, .1, TL.REV + .2, .8, .3) : m * .55;
+  const el = $('#onda'), intro = t < TL.ONDA + .3, o = intro ? janela(t, .1, TL.ONDA + .2, .8, .3) : m * .55;
   el.style.opacity = o; vis(el, o); if (o < .001) return;
-  const R0 = TL.REV, acende = intro ? eo(lin(t, R0 - 3.0, R0 - 1.7)) : 0, junta = intro ? eio(lin(t, R0 - 1.0, R0 - .2)) : 0, pts = [];
+  const R0 = TL.ONDA, acende = intro ? eo(lin(t, R0 - 3.0, R0 - 1.7)) : 0, junta = intro ? eio(lin(t, R0 - 1.0, R0 - .2)) : 0, pts = [];
   for (let x = 0; x <= 1920; x += 6) {
     const xx = 960 + (x - 960) * (1 - junta), u = x / 1920;
     const env = Math.pow(Math.max(0, Math.sin(u * Math.PI)), 1.4) * (.35 + .65 * Math.pow(Math.abs(Math.sin(u * 7.3 + t * 1.1) * Math.sin(u * 3.1 - t * .7)), 1.5));
@@ -479,7 +474,7 @@ function onda(t, m) {
     pts.push(`${xx.toFixed(1)},${y.toFixed(1)}`); }
   const p = $('#ondap'); p.setAttribute('d', 'M' + pts.join(' L'));
   p.setAttribute('stroke', acende > 0 ? `rgba(${Math.round(243 - 31 * acende)},${Math.round(244 + 5 * acende)},${Math.round(238 - 133 * acende)},${.32 + .6 * acende})` : `rgba(${m > .5 ? '243,244,238,.3' : '16,18,14,.3'})`);
-  $('#ondac').setAttribute('cx', 960); $('#ondac').setAttribute('cy', 120); $('#ondac').setAttribute('r', 14 * eo(lin(t, TL.REV - .5, TL.REV - .15)) * (1 - lin(t, TL.REV - .05, TL.REV + .1)));
+  $('#ondac').setAttribute('cx', 960); $('#ondac').setAttribute('cy', 120); $('#ondac').setAttribute('r', 14 * eo(lin(t, TL.ONDA - .5, TL.ONDA - .15)) * (1 - lin(t, TL.ONDA - .05, TL.ONDA + .1)));
 }
 
 /* ---------- Abertura, revelação e fecho ---------- */
@@ -487,12 +482,6 @@ function abertura(t) {
   const i = INTRO.findIndex((_, k) => t >= TL.INTRO[k][0] - .05 && t < TL.INTRO[k][1] + .05);
   if (i >= 0) { letreiro(t, INTRO[i], TL.INTRO[i][0], TL.INTRO[i][1]); return true; }
   return false;
-}
-function revelacao(t) {
-  const R0 = TL.REV, R1 = TL.CAPS[0][0], r = $('#rev'), on = t > R0 - .1 && t < R1 + .05; vis(r, on ? 1 : 0); if (!on) return;
-  pop($('#revlogo'), lin(t, TL.REV, TL.REV + .6)); vista($('#revnome'), eo(lin(t, R0 + .35, R0 + .95)), 40, 12);
-  vista($('#revtag'), eo(lin(t, R0 + .7, R0 + 1.4)), 24, 10); vista($('#revlanc'), eo(lin(t, R0 + 1.1, R0 + 1.6)), 16, 6);
-  const s = 1 - eio(lin(t, R1 - .45, R1)); r.style.opacity = s; r.style.transform = `translateY(${-(1 - s) * 50}px) scale(${1 - (1 - s) * .04})`; r.style.filter = s < .99 ? `blur(${(1 - s) * 14}px)` : 'none';
 }
 function fecho(t) {
   const [a, b, f] = TL.FECHO; let usou = false;
@@ -631,7 +620,7 @@ R.c7 = (lt) => {
 
 window.renderAt = function (t) {
   const m = misterio(t); luz(t, m); noite(t, m); onda(t, m);
-  let q = abertura(t); revelacao(t);
+  let q = abertura(t);
   q = capitulos(t) || q; q = fecho(t) || q;
   if (!q) { $('#q').style.visibility = 'hidden'; }
   $('#demo').style.opacity = $('#jan').style.visibility === 'hidden' ? 0 : .9;

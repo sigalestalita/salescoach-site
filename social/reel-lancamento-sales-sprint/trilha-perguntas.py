@@ -6,12 +6,12 @@ caixa e subida) que explodem quando a tela entra, e a música cresce a cada func
  e sobe um tom · 6 melodia · 7 prato de condução · fecho: a maior preparação e o clímax com tudo.
 Sons de interface seguem os eventos de cada tela. Lê a linha do tempo do <script id="tl"> do
 index.html e gera trilha.wav (48 kHz, estéreo)."""
-import json, re
+import json, os, re
 import numpy as np
 from scipy.signal import butter, sosfilt, fftconvolve
 from scipy.io import wavfile
 
-html = open('horizontal-perguntas.html', encoding='utf-8').read()
+html = open(os.environ.get('PAGE', 'horizontal-perguntas.html'), encoding='utf-8').read()   # PAGE=reel-claro.html para o reel
 TL = json.loads(re.search(r'<script id="tl" type="application/json">(.*?)</script>', html, re.S).group(1))
 DUR, REV, Q, BPM, ESC = TL['DUR'], TL['REV'], TL['Q'], TL['BPM'], TL.get('ESC', 1)
 BEAT = 60 / BPM; COMP = 4 * BEAT; S16 = BEAT / 4; NB = int(round(DUR / COMP))
@@ -180,5 +180,5 @@ Lw = L_ + fftconvolve(hp(L_, 300), ir)[:N] * .35; Rw = R_ + fftconvolve(hp(R_, 3
 fade = np.ones(N); fade[:int(.02 * SR)] = np.linspace(0, 1, int(.02 * SR))
 fim = int((DUR - .6) * SR); fade[fim:] = np.linspace(1, 0, N - fim)
 mix = np.stack([Lw, Rw], 1) * fade[:, None]; mix = np.tanh(mix / np.percentile(np.abs(mix), 99.9) * 1.5) * .93
-wavfile.write('trilha-perguntas.wav', SR, (mix * 32767).astype(np.int16))
+wavfile.write(os.environ.get('OUT', 'trilha-perguntas.wav'), SR, (mix * 32767).astype(np.int16))
 print('ok', DUR, 's', NB, 'compassos')
