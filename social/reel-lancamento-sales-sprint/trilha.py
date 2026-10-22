@@ -1,4 +1,4 @@
-"""Trilha da versão thriller (Sales Sprint, 78s): suspense que cresce até o clímax, a 120 bpm.
+"""Trilha da versão thriller (Sales Sprint, 130s): suspense que cresce até o clímax, a 120 bpm.
 Batimento cardíaco, relógio e um ostinato grave em semicolcheias que nunca para; pancada (braam) a
 cada pergunta, com um zap de glitch em cada palavra; bateria que ganha uma camada a cada
 funcionalidade (bumbo em meio tempo, caixa, cordas em staccato, bumbo 4/4, tambores, semicolcheias);
@@ -12,7 +12,7 @@ from scipy.io import wavfile
 
 html = open('index.html', encoding='utf-8').read()
 TL = json.loads(re.search(r'<script id="tl" type="application/json">(.*?)</script>', html, re.S).group(1))
-DUR, BPM = TL['DUR'], TL['BPM']; ABRE, CAPS, CL, MARCA, FIMC = TL['ABRE'], TL['CAPS2'], TL['CLIMAX'], TL['MARCA'], TL['FIM']
+DUR, BPM, Q2, CORTE = TL['DUR'], TL['BPM'], TL['Q2'], TL['CORTE']; ABRE, CAPS, CL, MARCA, FIMC = TL['ABRE'], TL['CAPS2'], TL['CLIMAX'], TL['MARCA'], TL['FIM']
 BEAT = 60 / BPM; COMP = 4 * BEAT; S16 = BEAT / 4
 SR = 48000; N = int(SR * DUR); rng = np.random.default_rng(9)
 def buf(): return [np.zeros(N), np.zeros(N)]
@@ -111,7 +111,7 @@ def estado(x):
     """(tipo, nível): abertura, pergunta, tela, clímax, silêncio, marca, fim."""
     if x < ABRE[2][1]: return ('abre', 0 if x < ABRE[2][0] else 1)
     for i, (a, b) in enumerate(CAPS):
-        if a <= x < b: return ('perg', i + 1) if x < a + 2 else ('tela', i + 1)
+        if a <= x < b: return ('perg', i + 1) if x < a + Q2 else ('tela', i + 1)
     if CL[0] <= x < CL[1]: return ('climax', 8)
     if CL[1] <= x < MARCA[0]: return ('silencio', 0)
     if MARCA[0] <= x < MARCA[1]: return ('marca', 0)
@@ -161,16 +161,16 @@ def virada(a, b, g=1, fim32=False):
         x += S16 if (k < .6 or not fim32) else S16 / 2
 # Abertura
 for i, (a, b) in enumerate(ABRE): add(FX, braam([.9, 1.05, 1.15][i]), a)
-for x in np.arange(ABRE[0][0] + .3, ABRE[0][0] + 1.5, S16 / 2): add(FX, tique(.8), x, pan=.3)   # contador 0 → 412
+for x in np.arange(ABRE[0][0] + .7, ABRE[0][0] + 2.4, S16 / 2): add(FX, tique(.8), x, pan=.3)   # contador 0 → 412
 add(FX, subida(1.6, .9), ABRE[2][1] - 1.6); virada(ABRE[2][1] - 1.0, ABRE[2][1], 1.0)
 # Capítulos: braam na pergunta, subida e virada até a tela, impacto quando a tela entra
 for i, (a, b) in enumerate(CAPS):
-    s = a + 2; add(FX, braam(.75 + .05 * i), a)
+    s = a + Q2; add(FX, braam(.75 + .05 * i), a)
     add(FX, subida(1.0, .8 + .04 * i), s - 1.0); virada(s - .5, s, .8 + .05 * i)
     add(DR, crash(.9 + .05 * i), s, pan=.2); add(DR, tambor(1.1, 90), s); add(FX, whoosh(.5, 1), s - .25)
 # Clímax: tambor e golpe a cada corte, virada acelerando, subida grande e silêncio
 for n in range(8):
-    x = CL[0] + n * .5; add(DR, tambor(1.2, 100 + 6 * n), x); add(FX, braam(.35 + .03 * n, 1.2), x); add(DR, clap(.9), x + .25); add(FX, whoosh(.3, .8), x - .12)
+    x = CL[0] + n * CORTE; add(DR, tambor(1.2, 100 + 6 * n), x); add(FX, braam(.45 + .04 * n, 1.6), x); add(DR, clap(.9), x + CORTE / 2); add(FX, whoosh(.4, .8), x - .15)
 add(FX, subida(2.6, 1.4), CL[1] - 2.6); virada(CL[1] - 1.5, CL[1], 1.3, fim32=True)
 add(FX, braam(1.6, 4.0), MARCA[0]); add(DR, crash(1.5), MARCA[0]); add(MU, drone([33, 45, 57, 60, 64, 71], MARCA[1] - MARCA[0] + 1, 2200), MARCA[0], 2.4)
 add(FX, braam(.8), FIMC[0]); add(MU, drone([33, 45, 57, 60, 64, 71], FIMC[1] - FIMC[0], 1600), FIMC[0], 1.6)
@@ -182,7 +182,7 @@ def ping(f): t = tt(1.0); return (np.sin(2 * np.pi * f * t) + .45 * np.sin(2 * n
 def tecla(): t = tt(.03); return hp(rng.standard_normal(len(t)), 3000) * np.exp(-t * 250) * .06
 NOTAS = [1318.5, 1567.98, 1760.0, 1975.5]
 for i, ((a, b), ev, (off, vel)) in enumerate(zip(CAPS, TL['EVL'], TL['MAPA'])):
-    s = a + 2; T = lambda lt: s + (lt - off) / vel; ok = lambda x: s <= x < b - .1
+    s = a + Q2; T = lambda lt: s + (lt - off) / vel; ok = lambda x: s <= x < b - .1
     for c in ev.get('clique', []):
         if ok(T(c)): add(FX, clique(), T(c), pan=.2)
     for c in ev.get('toque', []):
@@ -192,11 +192,11 @@ for i, ((a, b), ev, (off, vel)) in enumerate(zip(CAPS, TL['EVL'], TL['MAPA'])):
     for x0, x1 in ev.get('tecla', []):
         for x in np.arange(T(x0), T(x1), .08):
             if ok(x): add(FX, tecla(), x + rng.uniform(-.01, .01), pan=-.2)
-ZAP = [ABRE[0][0] + .05 + i * .12 for i in range(3)] + [ABRE[0][0] + .3 + i * .12 for i in range(2)] + [ABRE[0][0] + 1.5 + i * .12 for i in range(2)]
-ZAP += [ABRE[1][0] + .05 + i * .28 for i in range(3)] + [ABRE[2][0] + .05 + i * .3 for i in range(2)] + [ABRE[2][0] + .9 + i * .2 for i in range(3)]
+ZAP = [ABRE[0][0] + .1 + i * .22 for i in range(3)] + [ABRE[0][0] + .7 + i * .22 for i in range(2)] + [ABRE[0][0] + 2.5 + i * .22 for i in range(2)]
+ZAP += [ABRE[1][0] + .1 + i * .45 for i in range(3)] + [ABRE[2][0] + .1 + i * .45 for i in range(2)] + [ABRE[2][0] + 1.4 + i * .3 for i in range(3)]
 for (a, b), (n1, n2) in zip(CAPS, TL['QW']):
-    ZAP += [a + .12 + i * .11 for i in range(n1)] + [a + .12 + n1 * .11 + .05 + j * .11 for j in range(n2)]
-ZAP += [CL[0] + n * .5 for n in range(8)]
+    ZAP += [a + .2 + i * .18 for i in range(n1)] + [a + .2 + n1 * .18 + .1 + j * .18 for j in range(n2)]
+ZAP += [CL[0] + n * CORTE for n in range(8)]
 for x in ZAP: add(FX, zap(1.0), x, pan=rng.uniform(-.4, .4))
 
 def mixa(cama):

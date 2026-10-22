@@ -7,7 +7,7 @@
 <link rel="stylesheet" href="poppins.css">
 <link rel="stylesheet" href="instrument.css">
 <style>
-/* Vídeo de lançamento do Sales Coach no Sales Sprint (Sales Rocket), versão thriller. 16:9, 1920×1080, 78s.
+/* Vídeo de lançamento do Sales Coach no Sales Sprint (Sales Rocket), versão thriller. 16:9, 1920×1080, 130s.
    Segue a linguagem da referência: telas pretas/azul-profundo com chamadas curtas, produto flutuando
    em 3D, close extremo que abre para a tela inteira, carrossel de frases, marca batendo, montagem
    rápida em branco, órbita de integrações, campo gigante digitando e o fecho com o horizonte aceso.
@@ -294,17 +294,17 @@ body { position: relative; font-family: 'DM Sans', sans-serif; color: var(--tint
 <div id="grao"></div>
 
 <script id="tl" type="application/json">
-{"DUR": 78.0,
+{"DUR": 130.0,
  "BPM": 120,
  "Q": 0,
  "CAPS": [[0, 1], [0, 1], [0, 1], [0, 1], [0, 1], [0, 1], [0, 1]],
- "ABRE": [[0, 2.5], [2.5, 4.5], [4.5, 8]],
- "CAPS2": [[8, 16], [16, 24], [24, 32], [32, 40], [40, 48], [48, 56], [56, 64]],
- "CLIMAX": [64, 68],
- "MARCA": [68.5, 72],
- "FIM": [72, 78],
+ "ABRE": [[0, 4], [4, 7], [7, 12]],
+ "CAPS2": [[12, 26], [26, 40], [40, 54], [54, 68], [68, 82], [82, 96], [96, 110]], "Q2": 4, "TELA": 10, "CORTE": 1.0,
+ "CLIMAX": [110, 118],
+ "MARCA": [118.5, 123],
+ "FIM": [123, 130],
  "QW": [[3, 3], [4, 4], [2, 2], [3, 3], [3, 3], [4, 4], [5, 3]],
- "MAPA": [[0.8, 0.9], [0.3, 0.95], [1.2, 0.8], [0.5, 0.8], [2.0, 0.75], [0.4, 0.8], [1.6, 0.9]],
+ "MAPA": [[0.8, 0.55], [0.3, 0.6], [1.2, 0.5], [0.5, 0.5], [2.0, 0.45], [0.4, 0.5], [1.6, 0.55]], "MAPA_CAM": [0.9, 0.95, 0.8, 0.8, 0.75, 0.8, 0.9],
  "EVL": [{"clique": [1.9],
  "ping": [2.2],
  "tecla": [[3.6, 4.6]]}, {"tecla": [[0.5, 1.9], [4.2, 5.4]],
@@ -652,13 +652,13 @@ function tela(id) { $$('.tela').forEach(e => e.style.visibility = e.id === 't' +
   $('#url').textContent = meet ? 'meet.google.com/xqd-fhkr-pmb' : ({ c3: 'salescoach.grougp.com.br/agendas/4f2a9c', c4: 'salescoach.grougp.com.br/agendas/4f2a9c', c5: 'salescoach.grougp.com.br/treino', c6: 'salescoach.grougp.com.br/argumentos', c7: 'salescoach.grougp.com.br' })[id]; }
 
 /* ---- Abertura ---- */
-function cA(t) { const u = t - A[0][0]; cena('sA', .05 * u / 2.5);
-  glitch(prepPal($('#aT1')), u, .05, .12); glitch(prepPal($('#aT2')), u, .3, .12, .3, 5); glitch(prepPal($('#aT3')), u, 1.5, .12, .3, 9);
-  $('#aN').textContent = Math.round(412 * eio(lin(u, .3, 1.5))); }
-function cB(t) { const u = t - A[1][0]; cena('sB', .05 * u / 2); glitch(prepPal($('#bT')), u, .05, .28, .3); }
-function cC(t) { const u = t - A[2][0]; cena('sC', .07 * u / 3.5);
-  glitch(prepPal($('#cT1')), u, .05, .3, .35); glitch(prepPal($('#cT2')), u, .9, .2, .32, 4);
-  const z = eio(lin(u, 3.3, 3.5)); $('#sC').style.opacity = 1 - z; }
+function cA(t) { const u = t - A[0][0]; cena('sA', .05 * u / 4);
+  glitch(prepPal($('#aT1')), u, .1, .22, .45); glitch(prepPal($('#aT2')), u, .7, .22, .45, 5); glitch(prepPal($('#aT3')), u, 2.5, .22, .45, 9);
+  $('#aN').textContent = Math.round(412 * eio(lin(u, .7, 2.4))); }
+function cB(t) { const u = t - A[1][0]; cena('sB', .05 * u / 3); glitch(prepPal($('#bT')), u, .1, .45, .45); }
+function cC(t) { const u = t - A[2][0]; cena('sC', .07 * u / 5);
+  glitch(prepPal($('#cT1')), u, .1, .45, .45); glitch(prepPal($('#cT2')), u, 1.4, .3, .45, 4);
+  const z = eio(lin(u, 4.7, 5.0)); $('#sC').style.opacity = 1 - z; }
 
 /* ---- Capítulos: pergunta (2s) e tela (6s) ---- */
 const QS = [['Quem está <span class="lima">ouvindo</span>', 'as suas reuniões?', 'Gravação'], ['E quando o cliente', 'diz que está <span class="lima">caro?</span>', 'Coach ao vivo'],
@@ -667,9 +667,9 @@ const QS = [['Quem está <span class="lima">ouvindo</span>', 'as suas reuniões?
   ['O que acontece nas reuniões', 'que você <span class="lima">não vê?</span>', 'Gestão']];
 const IDS = ['c1', 'c2', 'c3', 'c4', 'c5', 'c6', 'c7'];
 let qAt = -1;
-function cQ(t, i) { const [a] = CAP[i], u = t - a; cena('sQ', .06 * u / 2);
+function cQ(t, i) { const [a] = CAP[i], u = t - a; cena('sQ', .06 * u / TL.Q2);
   if (qAt !== i) { qAt = i; $('#qL1').innerHTML = QS[i][0]; $('#qL2').innerHTML = QS[i][1]; $('#qL1')._ws = $('#qL2')._ws = null; $('#qLab').textContent = `0${i + 1} · ${QS[i][2]}`; }
-  const w1 = prepPal($('#qL1')), w2 = prepPal($('#qL2')); glitch(w1, u, .12, .11); glitch(w2, u, .12 + w1.length * .11 + .05, .11, .32, 10);
+  const w1 = prepPal($('#qL1')), w2 = prepPal($('#qL2')); glitch(w1, u, .2, .18, .45); glitch(w2, u, .2 + w1.length * .18 + .1, .18, .45, 10);
   vista($('#qLab'), eo(lin(u, 0, .3)), 10, 4); }
 function camK(id, u) { const P = POS[id];
   return {
@@ -680,25 +680,25 @@ function camK(id, u) { const P = POS[id];
     c5: () => [[0, 1.55, 1100, 300], [2.8, 1.6, 1100, 320], [3.6, 1.9, P.fb[0] + 120, P.fb[1] + 20], [6, 2.0, P.fb[0] + 120, P.fb[1] + 20]],
     c6: () => [[0, 1.75, P.d0[0] + 70, P.d0[1] + 30], [1.95, 1.75, P.btn[0] + 70, P.btn[1] - 60], [2.6, 1.75, P.a0[0], P.a0[1] + 40], [6, 1.85, P.a0[0], P.a0[1] + 60]],
     c7: () => [[0, 1.15, 900, 373], [.6, 1.15, 900, 373], [1.3, 1.8, P.as[0] - 30, P.as[1] - 20], [6, 1.9, P.as[0] - 30, P.as[1]]] }[id](); }
-function cTela(t, i) { const [a, b] = CAP[i], s = a + 2, u = t - s, id = IDS[i], m = TL.MAPA[i], lt = m[0] + u * m[1]; tela(id); R[id](lt, t);
-  camera(id, u, camK(id, u));
-  const ent = eo(lin(u, 0, .35)), dr = u / 6;
+function cTela(t, i) { const [a, b] = CAP[i], s = a + TL.Q2, u = t - s, id = IDS[i], m = TL.MAPA[i], lt = m[0] + u * m[1], uc = u * m[1] / TL.MAPA_CAM[i]; tela(id); R[id](lt, t);
+  camera(id, uc, camK(id, uc));
+  const ent = eo(lin(u, 0, .45)), dr = u / TL.TELA;
   let p = { s: 1.04 + .04 * dr, rx: 4 - 2 * dr, ry: -5 + 3 * dr, tx: 0, ty: 4, cr: 1 };
-  if (id === 'c4') { const k = eio(lin(u, 1.25, 2.0)); p = mix(p, { s: 1.42, rx: 2, ry: -3, tx: -410, ty: 56, cr: 1 }, k); }
-  p.s *= 1 + .25 * (1 - ent); const sai = eio(lin(u, 5.75, 6)); p.s *= 1 + .12 * sai;
+  if (id === 'c4') { const k = eio(lin(uc, 1.25, 2.0)); p = mix(p, { s: 1.42, rx: 2, ry: -3, tx: -410, ty: 56, cr: 1 }, k); }
+  p.s *= 1 + .25 * (1 - ent); const sai = eio(lin(u, TL.TELA - .3, TL.TELA)); p.s *= 1 + .12 * sai;
   pose(p, ent, (1 - ent) * 14 + sai * 6); }
 
 /* ---- Clímax: cortes de meio segundo ---- */
 const CORTES = [['c1', 5.5, 2.0, 'sc', 'Grava.'], ['c2', 3.2, 2.7, 'hero', 'Sopra.'], ['c3', 3.0, 2.7, 'k1', 'Avalia.'], ['c4', 5.2, 1.0, 'crm', 'Preenche.'],
   ['c5', 5.8, 2.1, 'fb', 'Treina.'], ['c6', 4.0, 1.9, 'a0', 'Convence.'], ['c7', 6.0, 2.0, 'as', 'Revela.'], ['c3', 5.0, 2.3, 'ps', 'Orienta.']];
-function cM(t) { const [a] = CL, u = t - a, n = Math.min(CORTES.length - 1, Math.floor(u / .5)), v = u - n * .5, [id, lt, s, foco, pal] = CORTES[n], P = POS[id];
+function cM(t) { const [a] = CL, u = t - a, n = Math.min(CORTES.length - 1, Math.floor(u / TL.CORTE)), v = u - n * TL.CORTE, [id, lt, s, foco, pal] = CORTES[n], P = POS[id];
   tela(id); R[id](lt, t);
   const f = foco === 'hero' ? [P.sc[0], P.sc[1] - 50] : foco === 'crm' ? [790, 373] : P[foco];
   camera(id, 0, [[0, s, f[0], f[1]]]);
   const p = id === 'c4' ? { s: 1.45, rx: 0, ry: 0, tx: -420, ty: 56, cr: 1 } : { s: 1.08, rx: 0, ry: 0, tx: 0, ty: 0, cr: 1 };
-  p.s *= 1.12 - .12 * eo(lin(v, 0, .45)); pose(p, 1, 0);
+  p.s *= 1.12 - .14 * eo(lin(v, 0, .9)); pose(p, 1, 0);
   const el = cena('sM'); const w = $('#mW'); if (w.textContent !== pal) { w.textContent = pal; w._ws = null; }
-  glitch(prepPal(w), v, 0, .1, .16, n * 3); el.style.opacity = 1; }
+  glitch(prepPal(w), v, 0, .1, .3, n * 3); el.style.opacity = 1; }
 
 /* ---- Marca e fecho ---- */
 function cL(t) { const u = t - LG[0]; cena('sL', .05 * u / 3.5);
@@ -720,7 +720,7 @@ window.renderAt = function (t) {
   if (t < A[0][1]) cA(t);
   else if (t < A[1][1]) cB(t);
   else if (t < A[2][1]) cC(t);
-  else if (ci >= 0) { if (t < CAP[ci][0] + 2) cQ(t, ci); else { tipo = 'azul'; cTela(t, ci); demo = 1; } }
+  else if (ci >= 0) { if (t < CAP[ci][0] + TL.Q2) cQ(t, ci); else { tipo = 'azul'; cTela(t, ci); demo = 1; } }
   else if (t >= CL[0] && t < CL[1]) { tipo = 'azul'; cM(t); demo = 1; }
   else if (t >= LG[0] && t < LG[1]) cL(t);
   else if (t >= FIM[0]) { tipo = 'fim'; cFim(t); }
