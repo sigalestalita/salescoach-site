@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Carrossel · O ponto cego dos gestores de vendas</title>
+<link rel="stylesheet" href="inter.css">
+<style>
+/* Carrossel de conteúdo (1080×1350) no estilo editorial da referência: cabeçalho de perfil, cards que
+   alternam foto escura, cinza claro com painel arredondado e preto com dado; letras pesadas e
+   apertadas com degradê do cinza ao preto (ou ao branco); nota pequena em caixa alta; diagrama de
+   iceberg em traço; conclusão em pílulas. O produto entra só na virada, com telas reais do app
+   (as do vídeo de lançamento). "um produto NEXA" em todos os cards. ?s=1..11 escolhe o card. */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { width: 1080px; height: 1350px; overflow: hidden; }
+body { position: relative; font-family: 'Inter Tight', sans-serif; -webkit-font-smoothing: antialiased; background: #0b0b0b; color: #fff; }
+body.cla { background: #e6e6e6; color: #111; }
+.card { display: none; position: absolute; inset: 0; }
+.card.on { display: block; }
+.caps { font-size: 19px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; }
+
+/* Cabeçalho de perfil, rótulo do capítulo e seta */
+#perfil { position: absolute; left: 64px; top: 56px; display: flex; align-items: center; gap: 16px; z-index: 5; }
+#perfil i { width: 62px; height: 62px; border-radius: 50%; background: #fff; display: grid; place-items: center; }
+#perfil i b { width: 34px; height: 32px; background: #071A34; -webkit-mask: url(img/mark-white.png) center / contain no-repeat; }
+#perfil strong { display: block; font-size: 23px; font-weight: 700; letter-spacing: .02em; line-height: 1.1; }
+#perfil span { display: flex; align-items: center; gap: 8px; font-size: 19px; opacity: .6; margin-top: 4px; }
+#perfil span img { height: 13px; }
+.cla #perfil i { background: #111; }
+.cla #perfil i b { background: #fff; }
+#tema { position: absolute; right: 64px; top: 68px; padding: 10px 20px; border-radius: 999px; font-size: 17px; z-index: 5;
+  box-shadow: inset 0 0 0 1.5px rgba(255,255,255,.3); }
+.cla #tema { box-shadow: inset 0 0 0 1.5px rgba(0,0,0,.22); }
+#cap { position: absolute; left: 64px; bottom: 56px; padding: 11px 22px; border-radius: 999px; font-size: 16px; z-index: 5; background: rgba(255,255,255,.1); }
+.cla #cap { background: rgba(0,0,0,.07); }
+#seta { position: absolute; right: 64px; bottom: 64px; z-index: 5; }
+.cla #seta path { stroke: #111; }
+
+/* Tipografia */
+.h { font-weight: 800; letter-spacing: -.045em; line-height: .98; }
+.esc-g { background: linear-gradient(180deg, #6d6d6d 0%, #8a8a8a 25%, #fff 70%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.cla-g { background: linear-gradient(180deg, #a8a8a8 0%, #9a9a9a 25%, #111 70%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.cz { color: #9a9a9a; }
+.esc .cz { color: #6f6f6f; }
+.lima { color: #d4f969; }
+.painel { position: absolute; left: 64px; right: 64px; border-radius: 36px; background: #d9d9d9; overflow: hidden; }
+.painel.esc { background: #161616; }
+
+/* Fotos */
+.ft { position: absolute; inset: 0; background-size: cover; }
+.ft::after { content: ""; position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(0,0,0,.6) 0%, rgba(0,0,0,0) 22%, rgba(0,0,0,0) 42%, rgba(0,0,0,.88) 74%, #000 100%); }
+.base { position: absolute; left: 64px; right: 64px; bottom: 150px; }
+
+/* Telas reais */
+.tela { position: absolute; border-radius: 24px; box-shadow: 0 40px 80px -30px rgba(0,0,0,.55), 0 0 0 1px rgba(0,0,0,.06); }
+
+/* Conclusão: pílulas */
+.pil { display: flex; align-items: center; gap: 26px; padding: 22px 34px 22px 22px; border-radius: 999px; box-shadow: inset 0 0 0 2px #111; font-size: 36px; font-weight: 600; letter-spacing: -.02em; line-height: 1.15; }
+.pil + .pil { margin-top: 24px; }
+.pil i { flex: none; width: 74px; height: 74px; border-radius: 50%; background: #111; display: grid; place-items: center; }
+</style>
+</head>
+<body>
+<div id="perfil"><i><b></b></i><div><strong>SALES COACH</strong><span>um produto <img id="nx" src="img/nexa-claro.svg" alt="NEXA"></span></div></div>
+<div id="tema">Gestão de vendas</div>
+<div id="cap" class="caps"></div>
+<svg id="seta" width="74" height="30" viewBox="0 0 74 30" fill="none"><path d="M2 15h68M58 3l12 12-12 12" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+
+<!-- 1. Capa -->
+<section class="card" data-tema="foto" data-cap="Deslize">
+  <div class="ft" style="background-image:url(fotos/capa.jpg);background-size:1080px auto;background-position:50% -170px;background-repeat:no-repeat"></div>
+  <div class="base">
+    <div class="caps lima">Gestão de vendas na era da IA</div>
+    <div class="h" style="font-size:118px;margin-top:26px">O ponto cego dos gestores de vendas.</div>
+    <div style="font-size:34px;line-height:1.3;margin-top:30px;color:rgba(255,255,255,.7);letter-spacing:-.01em">E por que ele custa mais vendas do que<br>qualquer meta mal batida.</div>
+  </div>
+</section>
+
+<!-- 2. O mês: 412 pontos, 3 cheios -->
+<section class="card" data-tema="cla" data-cap="Um mês normal">
+  <div class="painel" style="top:170px;bottom:140px;padding:64px 60px">
+    <div class="h" style="font-size:92px"><span class="cz">Seu time fez 412 reuniões este mês.</span> Você ouviu 3.</div>
+    <div id="pontos" style="margin-top:64px;display:grid;grid-template-columns:repeat(28,1fr);gap:11px 0;justify-items:center"></div>
+    <div class="caps" style="margin-top:34px;font-size:16px;color:#777;display:flex;gap:28px"><span>● ouvidas por você</span><span>○ só pelo vendedor e pelo cliente</span></div>
+  </div>
+</section>
+
+<!-- 3. O dado -->
+<section class="card" data-tema="esc" data-cap="O dado">
+  <div class="painel esc" style="top:200px;bottom:150px;padding:70px 64px">
+    <div class="caps" style="color:#8a8a8a;line-height:1.6">Do que acontece nas reuniões<br>do seu time, você acompanha</div>
+    <div class="h esc-g" style="font-size:330px;letter-spacing:-.065em;margin-top:40px;line-height:.9">0,7%</div>
+    <div style="height:1.5px;background:rgba(255,255,255,.12);margin:60px 0 44px"></div>
+    <div style="font-size:44px;font-weight:600;letter-spacing:-.03em;line-height:1.15">O resto você conhece<br><span class="cz">pelo que o vendedor conta.</span></div>
+    <div class="caps" style="position:absolute;left:64px;bottom:56px;font-size:15px;color:#5f5f5f">3 de 412 reuniões</div>
+  </div>
+</section>
+
+<!-- 4. Foto: onde a venda se perde -->
+<section class="card" data-tema="foto" data-cap="Onde a venda se perde">
+  <div class="ft" style="background-image:url(fotos/vendedora.jpg);background-position:50% 30%"></div>
+  <div class="base">
+    <div class="h" style="font-size:88px">A venda não se perde no pipeline.</div>
+    <div style="font-size:40px;font-weight:600;letter-spacing:-.025em;line-height:1.2;margin-top:30px;color:rgba(255,255,255,.62)">Ela se perde no minuto 23 da reunião, numa objeção que ninguém ouviu.</div>
+  </div>
+</section>
+
+<!-- 5. Tipografia grande -->
+<section class="card" data-tema="cla" data-cap="O engano">
+  <div class="h cla-g" style="position:absolute;left:58px;right:40px;top:190px;font-size:186px;letter-spacing:-.06em;line-height:.9">O CRM não conta a reunião.</div>
+  <div style="position:absolute;left:64px;top:1000px;display:flex;gap:22px;align-items:flex-start">
+    <span style="flex:none;width:14px;height:14px;border-radius:50%;background:#111;margin-top:6px"></span>
+    <div class="caps" style="font-size:20px;line-height:1.55;color:#555">Ele guarda o que o vendedor<br>lembrou de digitar. Quando lembrou.</div>
+  </div>
+</section>
+
+<!-- 6. Iceberg -->
+<section class="card" data-tema="cla" data-cap="O mapa">
+  <div class="h cla-g" style="position:absolute;left:64px;right:64px;top:180px;font-size:84px">O que você vê é só a ponta.</div>
+  <svg style="position:absolute;left:64px;top:390px" width="952" height="820" viewBox="0 0 952 820" fill="none" font-family="Inter Tight" stroke-linecap="round" stroke-linejoin="round">
+    <g stroke="#111" stroke-width="2">
+      <path d="M392 236 L420 160 L452 128 L480 96 L512 122 L540 168 L572 236"/>
+      <path d="M392 236 L330 300 L268 410 L246 520 L282 640 L380 732 L520 760 L652 700 L716 580 L706 440 L650 320 L572 236"/>
+      <path d="M452 128 L470 190 M512 122 L500 200" stroke-width="1.2" opacity=".5"/>
+    </g>
+    <path d="M0 236 H952" stroke="#111" stroke-width="1.2" stroke-dasharray="2 9" opacity=".7"/>
+    <path d="M40 262 H180 M760 262 H912 M90 288 H220 M720 288 H870" stroke="#111" stroke-width="1.2" opacity=".25"/>
+    <g fill="#111" font-size="17" font-weight="600" letter-spacing="2.4">
+      <text x="0" y="214">SUPERFÍCIE</text><text x="0" y="214" dy="24" fill="#888">O QUE VOCÊ VÊ</text>
+      <text x="0" y="330">PROFUNDIDADE</text><text x="0" y="354" fill="#888">ONDE A VENDA SE DECIDE</text>
+    </g>
+    <g fill="#111" font-size="25" font-weight="600" letter-spacing="-.4">
+      <text x="610" y="96">Pipeline</text><text x="610" y="134">Etapa no CRM</text><text x="610" y="172">Meta do mês</text>
+      <path d="M582 126 H600" stroke="#111" stroke-width="1.5"/>
+    </g>
+    <g fill="#111" font-size="27" font-weight="600" letter-spacing="-.4" text-anchor="middle">
+      <text x="481" y="380">Objeção sem resposta</text>
+      <text x="481" y="440">Desconto dado cedo demais</text>
+      <text x="481" y="500">Decisor fora da reunião</text>
+      <text x="481" y="560">Próximo passo esquecido</text>
+      <text x="481" y="620">Argumento errado</text>
+      <text x="481" y="680" fill="#888">Tom do cliente</text>
+    </g>
+  </svg>
+</section>
+
+<!-- 7. A virada -->
+<section class="card" data-tema="esc" data-cap="A virada">
+  <div style="position:absolute;left:64px;right:64px;top:240px">
+    <div class="h esc-g" style="font-size:104px">Gerir vendas na era da IA não é ter mais relatório.</div>
+    <div class="h" style="font-size:104px;margin-top:56px">É ouvir <span class="lima">todas</span> as reuniões.</div>
+  </div>
+</section>
+
+<!-- 8. O produto: telas reais -->
+<section class="card" data-tema="cla" data-cap="Como">
+  <div style="position:absolute;left:64px;right:64px;top:180px">
+    <div class="h" style="font-size:84px"><span class="cz">O Sales Coach</span> ouve todas.</div>
+    <div style="font-size:30px;line-height:1.35;color:#555;margin-top:24px;letter-spacing:-.01em">Grava no Meet, no Teams ou no Zoom, dá nota em cada<br>reunião e preenche o CRM sozinho.</div>
+  </div>
+  <div class="painel" style="top:500px;bottom:130px">
+    <img class="tela" src="telas/c4-destaque.png" alt="" style="left:424px;top:48px;width:500px">
+    <img class="tela" src="telas/c3-destaque.png" alt="" style="left:28px;top:48px;width:380px">
+    <div style="position:absolute;left:36px;bottom:44px"><div class="caps" style="font-size:16px;color:#777">Reuniões ouvidas</div><div class="h cla-g" style="font-size:132px;letter-spacing:-.06em;margin-top:14px;line-height:.85">412<span style="font-size:64px;letter-spacing:-.04em">/412</span></div></div>
+  </div>
+</section>
+
+<!-- 9. Pergunte -->
+<section class="card" data-tema="esc" data-cap="Na prática">
+  <div style="position:absolute;left:64px;right:64px;top:180px">
+    <div class="h" style="font-size:80px"><span class="cz">E você não ouve mais 3.</span> Pergunta sobre as 412.</div>
+  </div>
+  <div class="painel esc" style="top:460px;bottom:130px">
+    <img class="tela" src="telas/c7-destaque.png" alt="" style="left:196px;top:40px;width:560px;box-shadow:0 40px 90px -30px rgba(0,0,0,.9)">
+  </div>
+</section>
+
+<!-- 10. Conclusão em pílulas -->
+<section class="card" data-tema="cla" data-cap="A escolha">
+  <div style="position:absolute;left:64px;right:64px;top:190px">
+    <div class="h cla-g" style="font-size:76px">Na era da IA, existem dois tipos de gestor de vendas.</div>
+    <div style="margin-top:70px">
+      <div class="pil"><i><svg width="34" height="20" viewBox="0 0 34 20" fill="none"><path d="M2 10h28M21 2l9 8-9 8" stroke="#d4f969" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></i><span>Os que gerem pelo que<br>o vendedor conta.</span></div>
+      <div class="pil"><i><svg width="34" height="20" viewBox="0 0 34 20" fill="none"><path d="M2 10h28M21 2l9 8-9 8" stroke="#d4f969" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></i><span>Os que gerem pelo que<br>o cliente disse.</span></div>
+    </div>
+    <div class="h" style="font-size:76px;margin-top:84px">Qual deles<br>é você?</div>
+  </div>
+</section>
+
+<!-- 11. Preço -->
+<section class="card" data-tema="esc" data-cap="Sales Coach" data-fim>
+  <div style="position:absolute;left:64px;right:64px;top:210px">
+    <div class="h esc-g" style="font-size:96px">Ouça todas as reuniões do seu time.</div>
+  </div>
+  <div class="painel esc" style="top:540px;bottom:150px;padding:60px 64px">
+    <div class="caps" style="color:#8a8a8a">Sales Coach · a partir de</div>
+    <div style="display:flex;align-items:flex-start;gap:10px;line-height:1;margin-top:20px"><span style="font-size:54px;font-weight:700;margin-top:26px">R$</span><span class="h" style="font-size:220px;letter-spacing:-.06em;line-height:.85">89</span><span style="font-size:80px;font-weight:800;letter-spacing:-.04em;margin-top:20px">,90</span></div>
+    <div style="font-size:32px;color:#9a9a9a;margin-top:18px">por usuário/mês</div>
+    <div style="position:absolute;left:64px;right:64px;bottom:60px;display:flex;align-items:center;justify-content:space-between">
+      <span style="display:inline-flex;align-items:center;font-size:28px;font-weight:600;padding:14px 28px;border-radius:999px;color:#d4f969;box-shadow:inset 0 0 0 2px rgba(212,249,105,.6)">Sem limites de uso</span>
+      <span style="display:inline-block;background:#fff;color:#111;font-size:28px;font-weight:700;padding:18px 40px;border-radius:999px">Cadastre-se ↗</span>
+    </div>
+  </div>
+</section>
+
+<script>
+const n = +(new URLSearchParams(location.search).get('s') || 1), cards = document.querySelectorAll('.card'), c = cards[n - 1];
+c.classList.add('on');
+const tema = c.dataset.tema; document.body.className = tema === 'cla' ? 'cla' : '';
+document.getElementById('nx').src = tema === 'cla' ? 'img/nexa.svg' : 'img/nexa-claro.svg';
+document.getElementById('cap').textContent = c.dataset.cap;
+document.getElementById('seta').style.display = c.hasAttribute('data-fim') ? 'none' : 'block';
+if (n === 2) document.getElementById('pontos').innerHTML = Array.from({ length: 412 }, (_, i) =>
+  `<span style="width:17px;height:17px;border-radius:50%;${[57, 190, 333].includes(i) ? 'background:#111' : 'box-shadow:inset 0 0 0 1.5px #a9a9a9'}"></span>`).join('');
+window.ready = Promise.all([document.fonts.ready, ...[...document.images].map(i => i.complete ? 0 : new Promise(r => { i.onload = i.onerror = r; }))]);
+</script>
+</body>
+</html>
