@@ -46,5 +46,7 @@ A chave do ElevenLabs fica só no ambiente, nunca no repositório.
 Legendas: o `narracao.py` também gera `out/legendas.srt` (narração completa, para o YouTube) e
 `legendas.json` (só as falas que não estão escritas na tela). `node legendas.mjs 330 2280 legendas`
 renderiza a camada transparente, que o ffmpeg sobrepõe ao vídeo narrado (`-itsoffset 11`, `overlay`).
+Versão clara de 2min04 narrada: `out/lancamento-sales-coach-versao-clara-narrado.mp4`, com o roteiro em
+`locucao-perguntas.md` (mesma voz e mesmo processo; comando no fim do roteiro).
 `node render.mjs still 9.2,26.5 stills` gera quadros soltos; `index.html?play` toca no navegador.
 `icones.js` traz os ícones lucide usados no app (licença ISC).

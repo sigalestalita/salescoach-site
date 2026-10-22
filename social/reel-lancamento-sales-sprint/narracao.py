@@ -8,14 +8,20 @@ música por baixo da voz e gera:
 A chave fica fora do repositório: ELEVENLABS_API_KEY no ambiente. As falas geradas ficam em cache
 (narracao-cache/, ignorado pelo git), então mudar uma fala só gera aquela de novo.
 
-Uso: ELEVENLABS_API_KEY=... python3 narracao.py [voice_id]
+Uso: ELEVENLABS_API_KEY=... python3 narracao.py [--voz ID] [--roteiro locucao.md] [--cama trilha-locucao.wav]
+         [--ganho-cama 1] [--prefixo out/] [--sem-legenda-na-imagem]
+Ex. (versão clara de 2min04): python3 narracao.py --roteiro locucao-perguntas.md --cama trilha-perguntas.wav \\
+         --ganho-cama .5 --prefixo out/perguntas- --sem-legenda-na-imagem
 """
-import hashlib, json, os, re, subprocess, sys, urllib.request
+import argparse, hashlib, json, os, re, subprocess, sys, urllib.request
 import numpy as np
 from scipy.io import wavfile
 from scipy.signal import butter, sosfilt, fftconvolve
 
-VOZ = sys.argv[1] if len(sys.argv) > 1 else 'gsZm1DPba0FTT6X1RVYW'   # voz escolhida na biblioteca do ElevenLabs
+ap = argparse.ArgumentParser(); ap.add_argument('--voz', default='gsZm1DPba0FTT6X1RVYW')   # voz escolhida na biblioteca do ElevenLabs
+ap.add_argument('--roteiro', default='locucao.md'); ap.add_argument('--cama', default='trilha-locucao.wav'); ap.add_argument('--ganho-cama', type=float, default=1.0)
+ap.add_argument('--prefixo', default='out/'); ap.add_argument('--sem-legenda-na-imagem', action='store_true'); ARG = ap.parse_args()
+VOZ = ARG.voz
 MODELO = 'eleven_multilingual_v2'
 AJUSTE = {'stability': .3, 'similarity_boost': .8, 'style': .6, 'use_speaker_boost': True}
 FF = '/usr/local/lib/python3.11/dist-packages/imageio_ffmpeg/binaries/ffmpeg-linux-x86_64-v7.0.2'
@@ -25,7 +31,7 @@ CHAVE = os.environ.get('ELEVENLABS_API_KEY', '')
 def seg(s):  # "1:58,5" -> 118.5
     m, x = s.split(':'); return int(m) * 60 + float(x.replace(',', '.'))
 falas = []
-for linha in open('locucao.md', encoding='utf-8'):
+for linha in open(ARG.roteiro, encoding='utf-8'):
     m = re.match(r'\| (\d+:\d+(?:,\d+)?)–(\d+:\d+(?:,\d+)?) \| .*? \| (.+?) \|\s*$', linha)
     if m and not m.group(3).startswith('('): falas.append((seg(m.group(1)), seg(m.group(2)), m.group(3)))
 
@@ -70,7 +76,7 @@ def subida(x):
 def nivel(x):   # cada fala no mesmo volume (RMS das partes faladas)
     e = np.abs(x); r = np.sqrt((x[e > .02] ** 2).mean()) if (e > .02).any() else 1
     return x * (.13 / r)
-sr, cama = wavfile.read('trilha-locucao.wav'); cama = cama.astype(float) / 32768
+sr, cama = wavfile.read(ARG.cama); cama = cama.astype(float) / 32768 * ARG.ganho_cama
 N = len(cama); voz = np.zeros(N); LEG = []
 for k, (a, b, texto) in enumerate(falas):
     ini, jan = a + .3, (b - a) - .5
@@ -95,9 +101,9 @@ env = np.minimum(1, media(np.abs(voz), int(.2 * SR)) / .04)
 duck = 1 - .65 * media(env, int(.35 * SR))   # música abaixa ~9 dB sob a voz
 mix = cama * duck[:, None] * 1.4 + voz[:, None]
 mix = np.tanh(mix * 1.35) * .95   # ganho final e limitador suave: segura só os picos (as pancadas), sem baixar o resto
-os.makedirs('out', exist_ok=True)
-wavfile.write('out/narracao.wav', SR, (np.stack([voz, voz], 1) * 32767).astype(np.int16))
-wavfile.write('out/trilha-com-narracao.wav', SR, (mix * 32767).astype(np.int16))
+os.makedirs(os.path.dirname(ARG.prefixo) or '.', exist_ok=True)
+wavfile.write(ARG.prefixo + 'narracao.wav', SR, (np.stack([voz, voz], 1) * 32767).astype(np.int16))
+wavfile.write(ARG.prefixo + 'trilha-com-narracao.wav', SR, (mix * 32767).astype(np.int16))
 
 # ---- Legendas: cada frase no tempo em que é falada (pelas pausas da própria voz)
 def frases(texto):  # frases e grupos: frases muito curtas vão junto com a seguinte (até ~60 caracteres)
@@ -130,9 +136,9 @@ for ini, x, texto, dur in LEG:
     for g in grupos: cues.append([round(ini + tp[g[0]], 2), round(ini + tp[g[-1] + 1] + .3, 2), ' '.join(fr[i] for i in g), x is not None])
 for k in range(len(cues) - 1): cues[k][1] = min(cues[k][1], cues[k + 1][0])   # uma legenda por vez
 def ts(t): h = int(t // 3600); m = int(t % 3600 // 60); s = t % 60; return f'{h:02d}:{m:02d}:{int(s):02d},{int(s % 1 * 1000):03d}'
-with open('out/legendas.srt', 'w', encoding='utf-8') as f:
+with open(ARG.prefixo + 'legendas.srt', 'w', encoding='utf-8') as f:
     for k, (a, b, txt, _) in enumerate(cues, 1): f.write(f'{k}\n{ts(a)} --> {ts(b)}\n{txt}\n\n')
 # na imagem, só o que não está escrito na tela: as respostas sobre as telas do produto
 TL_A, TL_B = falas[4][0], falas[-2][0]   # da primeira resposta até antes da marca
-json.dump([[a, b, txt] for a, b, txt, resp in cues if resp and TL_A <= a < TL_B], open('legendas.json', 'w', encoding='utf-8'), ensure_ascii=False, indent=0)
+if not ARG.sem_legenda_na_imagem: json.dump([[a, b, txt] for a, b, txt, resp in cues if resp and TL_A <= a < TL_B], open('legendas.json', 'w', encoding='utf-8'), ensure_ascii=False, indent=0)
 print('ok', len(falas), 'falas,', len(cues), 'legendas')
