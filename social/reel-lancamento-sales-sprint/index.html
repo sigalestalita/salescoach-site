@@ -7,7 +7,7 @@
 <link rel="stylesheet" href="poppins.css">
 <link rel="stylesheet" href="instrument.css">
 <style>
-/* Vídeo de lançamento do Sales Coach no Sales Sprint (Sales Rocket), versão impacto. 16:9, 1920×1080, 63s.
+/* Vídeo de lançamento do Sales Coach no Sales Sprint (Sales Rocket), versão thriller. 16:9, 1920×1080, 78s.
    Segue a linguagem da referência: telas pretas/azul-profundo com chamadas curtas, produto flutuando
    em 3D, close extremo que abre para a tela inteira, carrossel de frases, marca batendo, montagem
    rápida em branco, órbita de integrações, campo gigante digitando e o fecho com o horizonte aceso.
@@ -229,63 +229,52 @@ body { position: relative; font-family: 'DM Sans', sans-serif; color: var(--tint
 .logo2 img { width: 62%; }
 .wm { font-family: 'Poppins'; color: #fff; letter-spacing: -.035em; white-space: nowrap; }
 .wm b { font-weight: 600; } .wm span { font-weight: 300; }
+
+/* ---------- Versão thriller ---------- */
+.pilha { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; transform-origin: 50% 50%; }
+.sub2 { font-size: 66px; font-weight: 500; color: rgba(255,255,255,.72); line-height: 1.1; }
+.big2 { font-size: 176px; line-height: 1; }
+#grao { mix-blend-mode: overlay; opacity: .14; z-index: 6; }
 </style>
 </head>
 <body>
 <div id="fundo"></div><div id="faixa"></div>
 
-<!-- E se -->
-<div class="cena" id="sEse">
-  <div class="kt" id="ese1" style="position:absolute;left:0;right:0;top:300px;text-align:center;font-size:260px;line-height:1">E se</div>
-  <div class="kt" id="ese2" style="position:absolute;left:0;right:0;top:590px;text-align:center;font-size:66px;font-weight:500">cada reunião do seu time tivesse um <span class="lima">coach?</span></div>
-</div>
+<!-- Abertura: três cortes -->
+<div class="cena" id="sA"><div class="pilha">
+  <div class="kt sub2" id="aT1">Seu time fez</div>
+  <div class="kt big2" id="aT2"><span id="aN">0</span> reuniões</div>
+  <div class="kt sub2" id="aT3">este mês.</div></div></div>
+<div class="cena" id="sB"><div class="pilha"><div class="kt big2" id="bT">Você ouviu <span class="lima">3.</span></div></div></div>
+<div class="cena" id="sC"><div class="pilha" id="cP" style="gap:6px">
+  <div class="kt" id="cT1" style="font-size:230px;line-height:.95">E se</div>
+  <div class="kt" id="cT2" style="font-size:96px;line-height:1.05">alguém ouvisse <span class="lima">todas?</span></div></div></div>
 
-<!-- Produto em 3D (Meet, montagem, gestor) -->
+<!-- Pergunta de cada funcionalidade -->
+<div class="cena" id="sQ"><div class="pilha" id="qP">
+  <div class="mono" id="qLab" style="font-size:18px;color:#d4f969;margin-bottom:26px"></div>
+  <div class="kt" id="qL1" style="font-size:112px;line-height:1.04"></div>
+  <div class="kt" id="qL2" style="font-size:112px;line-height:1.04"></div></div></div>
+
+<!-- Produto -->
 <div id="c3d"><div id="jan" style="visibility:hidden">
   <div id="cromo"><div class="bol"><i></i><i></i><i></i></div><div class="aba"><img id="fav" alt=""><span id="abat"></span></div><div class="url"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#5f6368" stroke-width="2.2"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg><span id="url"></span></div></div>
   <div id="vp"></div>
 </div></div>
 
-<!-- Carrossel -->
-<div class="cena" id="sCar">
-  <div id="lista"></div>
-  <div id="mini"></div>
-</div>
+<!-- Clímax: cortes rápidos com uma palavra -->
+<div class="cena" id="sM"><div id="mDim" style="position:absolute;inset:0;background:radial-gradient(70% 70% at 50% 50%, rgba(2,5,11,.45), rgba(2,5,11,.85))"></div>
+  <div class="pilha"><div class="kt" id="mW" style="font-size:190px"></div></div></div>
 
 <!-- Marca -->
-<div class="cena" id="sMarca">
-  <div class="logo2" id="mlogo" style="left:430px;top:405px;width:200px;height:200px"><img src="img/mark-white.png" alt=""></div>
-  <div class="wm" id="mwm" style="position:absolute;left:680px;top:420px;font-size:150px;line-height:1.1"><b>Sales</b> <span>Coach</span></div>
-  <div class="kt" id="mtag" style="position:absolute;left:0;right:0;top:680px;text-align:center;font-size:40px;font-weight:400;color:rgba(255,255,255,.75)">Um coach em <span style="color:#fff;font-weight:600">cada reunião</span> do seu time.</div>
+<div class="cena" id="sL">
+  <div id="burst" style="position:absolute;left:50%;top:46%;width:1600px;height:1600px;margin:-800px 0 0 -800px;border-radius:50%;background:radial-gradient(circle, rgba(120,180,255,.55) 0%, rgba(30,103,200,.35) 22%, transparent 55%)"></div>
+  <div id="raios" style="position:absolute;left:50%;top:46%;width:2400px;height:2400px;margin:-1200px 0 0 -1200px;background:repeating-conic-gradient(from 0deg, rgba(140,190,255,.07) 0deg 3deg, transparent 3deg 14deg);-webkit-mask:radial-gradient(circle, #000 0%, transparent 55%)"></div>
+  <div class="pilha" style="gap:30px">
+    <div class="logo2" id="lLogo" style="position:relative;width:220px;height:220px;border-radius:52px"><img src="img/mark-white.png" alt=""></div>
+    <div class="wm" id="lWm" style="font-size:168px;line-height:1"><b>Sales</b> <span>Coach</span></div>
+    <div class="kt" id="lTag" style="font-size:46px;font-weight:400;color:rgba(255,255,255,.8)">Um coach em <span class="lima" style="font-weight:600">cada reunião</span> do seu time.</div></div>
 </div>
-
-<!-- e muito mais -->
-<div class="cena" id="sMais"><div class="kt" id="maist" style="position:absolute;left:0;right:0;top:470px;text-align:center;font-size:110px">e muito mais…</div></div>
-
-<!-- Órbita -->
-<div class="cena" id="sOrb">
-  <svg id="orbsvg" viewBox="0 0 1920 1080"></svg>
-  <div id="orbic"></div>
-  <div id="orb"><img src="img/mark-white.png" alt=""></div>
-  <div class="kt" id="orbt" style="position:absolute;left:0;right:0;top:800px;text-align:center;font-size:58px;font-weight:500">Conecta com a sua agenda, as suas chamadas e o seu <span class="lima">CRM.</span></div>
-</div>
-
-<!-- Pergunta do gestor (campo gigante) -->
-<div class="cena" id="sPerg">
-  <div id="inpw" style="position:absolute;left:210px;top:470px;width:1500px;height:140px;transform-origin:14% 50%">
-    <div class="campo2" style="inset:0;padding:0 30px 0 36px"><span class="mais">+</span><span id="inpt" style="font-size:52px;font-weight:500;white-space:nowrap"></span><span class="env" id="inpenv"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg></span></div>
-  </div>
-  <svg class="seta" id="seta" viewBox="0 0 28 28"><path d="M5 3 L5 22 L10 17.5 L13.6 25 L17 23.4 L13.5 16.2 L20 16.2 Z" fill="#fff" stroke="#071A34" stroke-width="1.6" stroke-linejoin="round"/></svg>
-</div>
-
-<!-- Metodologia -->
-<div class="cena" id="sMet"><div id="metw" style="position:absolute;inset:0;transform-origin:50% 50%">
-  <div class="kt" id="mett" style="position:absolute;left:0;right:0;top:360px;text-align:center;font-size:56px;font-weight:500;color:#071A34">Na metodologia da sua empresa</div>
-  <div class="campo2" id="metin" style="left:470px;width:980px;top:480px;height:120px;padding:0 30px"><span class="mais">+</span><span id="metchip" style="position:relative;flex:1;height:72px;overflow:hidden"></span></div>
-</div></div>
-
-<!-- É só vender -->
-<div class="cena" id="sVend"><div class="kt" id="vendt" style="position:absolute;left:0;right:0;top:440px;text-align:center;font-size:170px">É só <span class="lima">vender.</span></div></div>
 
 <!-- Fecho -->
 <div class="cena" id="sFim">
@@ -300,36 +289,35 @@ body { position: relative; font-family: 'DM Sans', sans-serif; color: var(--tint
   <div id="fcta" style="position:absolute;left:0;right:0;top:770px;display:flex;justify-content:center;align-items:center;gap:22px;font:400 24px 'DM Sans';color:rgba(255,255,255,.75)"><b style="background:#fff;color:#071A34;font:600 22px 'Poppins';padding:16px 32px;border-radius:999px">Conheça no evento</b><span>nexatech.ia.br</span></div>
 </div>
 
-<div id="rot"></div>
-<div id="pilula"></div>
+<div id="vinheta2" style="position:absolute;inset:0;pointer-events:none;background:radial-gradient(75% 75% at 50% 50%, transparent 45%, rgba(0,0,0,.55) 100%)"></div>
 <div id="demo">Telas ilustrativas, com dados de demonstração.</div>
 <div id="grao"></div>
 
 <script id="tl" type="application/json">
-{"DUR": 63.0, "BPM": 120, "Q": 0, "CAPS": [[0, 1], [0, 1], [0, 1], [0, 1], [0, 1], [0, 1], [0, 1]], 
- "CENAS": {"ese": [0, 3],
-  "grava": [3, 8],
-  "aovivo": [8, 13],
-  "carrossel": [13, 19],
-  "marca": [19, 22],
-  "analise": [22, 26],
-  "crm": [26, 30],
-  "treino": [30, 33.5],
-  "arg": [33.5, 37],
-  "mais": [37, 39],
-  "orbita": [39, 44],
-  "pergunta": [44, 47],
-  "gestor": [47, 51],
-  "metodo": [51, 55],
-  "vender": [55, 57],
-  "fim": [57, 63]}, 
- "SFX": {"golpe": [0.0, 13.0, 19.0, 47.0, 57.0],
-  "golpe_leve": [3.0, 22.0, 39.0, 51.0, 55.0],
-  "clique": [4.1, 26.6, 31.0, 32.1, 33.8, 34.3, 34.9, 46.6],
-  "tecla": [[5.8, 6.8], [8.5, 9.9], [12.2, 12.9], [24.2, 25.4], [44.15, 46.2], [47.7, 48.8]],
-  "ping": [10.2, 22.2, 27.6, 32.3, 35.7, 39.0, 47.1],
-  "toque": [27.6, 27.95, 28.3, 28.65, 29.0, 29.35, 29.7, 51.5, 52.0, 52.5, 53.0, 53.5, 39.25, 39.35, 39.45, 39.55, 39.65, 39.75, 39.85, 39.95],
-  "whoosh": [2.75, 4.25, 12.45, 14.0, 15.0, 16.0, 17.0, 22.0, 26.0, 30.0, 33.5, 37.0, 39.0, 43.8, 46.7, 51.0, 55.0, 57.0]}}
+{"DUR": 78.0,
+ "BPM": 120,
+ "Q": 0,
+ "CAPS": [[0, 1], [0, 1], [0, 1], [0, 1], [0, 1], [0, 1], [0, 1]],
+ "ABRE": [[0, 2.5], [2.5, 4.5], [4.5, 8]],
+ "CAPS2": [[8, 16], [16, 24], [24, 32], [32, 40], [40, 48], [48, 56], [56, 64]],
+ "CLIMAX": [64, 68],
+ "MARCA": [68.5, 72],
+ "FIM": [72, 78],
+ "QW": [[3, 3], [4, 4], [2, 2], [3, 3], [3, 3], [4, 4], [5, 3]],
+ "MAPA": [[0.8, 0.9], [0.3, 0.95], [1.2, 0.8], [0.5, 0.8], [2.0, 0.75], [0.4, 0.8], [1.6, 0.9]],
+ "EVL": [{"clique": [1.9],
+ "ping": [2.2],
+ "tecla": [[3.6, 4.6]]}, {"tecla": [[0.5, 1.9], [4.2, 5.4]],
+ "ping": [2.2]}, {"toque": [0.35, 0.7, 1.05],
+ "ping": [1.4, 2.4],
+ "tecla": [[3.4, 4.6]]}, {"clique": [1.2],
+ "ping": [2.2],
+ "toque": [2.2, 2.55, 2.9, 3.25, 3.6, 3.95, 4.3]}, {"tecla": [[0.3, 1.6]],
+ "clique": [1.8, 3.3, 4.4],
+ "ping": [3.8, 5.3]}, {"clique": [0.7, 1.2, 1.8],
+ "ping": [2.6, 3.0]}, {"clique": [2.0],
+ "tecla": [[2.5, 3.5], [4.2, 5.3]],
+ "ping": [3.6]}]}
 </script>
 <script src="icones.js"></script>
 <script>
@@ -627,174 +615,119 @@ function medir() { // posições sem câmera nem animação, antes do primeiro q
   POS.c5 = { chat: centro('c5', '#c5card'), mic: centro('c5', '#c5mic'), enc: centro('c5', '#c5enc') };
   POS.c6 = { d0: centro('c6', '#c6d0'), d1: centro('c6', '#c6d1'), btn: centro('c6', '#c6btn'), cards: centro('c6', '#c6cards', 0, 150) };
   POS.c7 = { hub: centro('c7', '#c7hub'), as: centro('c7', '#c7as') }; }
-/* ---------- Versão impacto: cenas ---------- */
-const C = TL.CENAS;
-const fl = document.createElement('div'); fl.id = 'flash'; fl.style.cssText = 'position:absolute;inset:0;background:#fff;pointer-events:none;opacity:0'; document.body.insertBefore(fl, $('#rot'));
+/* ---------- Versão thriller: cenas ---------- */
+const A = TL.ABRE, CAP = TL.CAPS2, CL = TL.CLIMAX, LG = TL.MARCA, FIM = TL.FIM;
 
-/* Palavras e letras que entram com desfoque */
+/* Palavras com tremulação e glitch (separação RGB) ao entrar */
 function prepPal(el) { if (el._ws) return el._ws; const out = [];
   [...el.childNodes].forEach(n => { if (n.nodeType === 3) n.textContent.split(/(\s+)/).forEach(p => { if (!p) return; if (/^\s+$/.test(p)) out.push(document.createTextNode(p)); else { const s = document.createElement('span'); s.className = 'w'; s.textContent = p; out.push(s); } });
     else { n.classList.add('w'); out.push(n); } });
   el.innerHTML = ''; out.forEach(x => el.appendChild(x)); el._ws = $$('.w', el); return el._ws; }
-function prepLet(el) { if (el._ls) return el._ls; el.innerHTML = [...el.textContent].map(c => `<span class="w">${c === ' ' ? ' ' : c}</span>`).join(''); el._ls = $$('.w', el); return el._ls; }
-function revela(ws, t, a, passo = .1, dur = .45, dy = 30, blur = 14) { ws.forEach((w, i) => { const k = eo(lin(t, a + i * passo, a + i * passo + dur));
-  w.style.opacity = k; w.style.transform = `translateY(${(1 - k) * dy}px)`; w.style.filter = k < .99 ? `blur(${(1 - k) * blur}px)` : 'none'; }); }
-function sai(el, t, a, b, esc = .15, blur = 16) { const e = eio(lin(t, a, b)); el.style.opacity = 1 - e; el.style.filter = e > .01 ? `blur(${e * blur}px)` : 'none'; return e; }
+function glitch(ws, t, a, passo = .14, dur = .32, base = 0) { ws.forEach((w, i) => { const k = lin(t, a + i * passo, a + i * passo + dur), e = eo(k), j = i + base;
+  if (k <= 0) { w.style.opacity = 0; return; }
+  const fl = k < .45 ? (rnd(j * 7 + Math.floor(t * 30)) > .4 ? 1 : .12) : 1, d = 1 - e;
+  w.style.opacity = e * fl;
+  w.style.transform = `translateX(${(rnd(j * 3 + Math.floor(t * 24)) - .5) * 26 * d}px) scale(${1.14 - .14 * e})`;
+  w.style.textShadow = d > .02 ? `${-10 * d}px 0 rgba(255,50,90,${.75 * d}), ${10 * d}px 0 rgba(40,170,255,${.75 * d})` : 'none';
+  w.style.filter = d > .02 ? `blur(${7 * d}px)` : 'none'; }); }
+function cena(id, push = 0) { const el = $('#' + id); el.style.visibility = 'visible'; if (push) el.querySelector('.pilha').style.transform = `scale(${1 + push})`; return el; }
 
-/* Fundos: preto com brilho azul embaixo, azul profundo, claro e branco */
 function fundo(tipo, t) {
   const f = $('#fundo'), s = Math.sin(t * .4), c = Math.cos(t * .33);
   f.style.background = {
-    preto: `radial-gradient(70% 55% at 50% 120%, rgba(30,103,200,.6), transparent 70%), radial-gradient(40% 28% at 50% 108%, rgba(90,160,255,.35), transparent 70%), #02050B`,
-    azul: `radial-gradient(60% 45% at ${50 + 8 * s}% 110%, rgba(110,175,255,.9), rgba(42,114,218,.55) 35%, transparent 70%), radial-gradient(130% 100% at 50% 100%, #1C5BBA 0%, #0D3170 42%, #06142C 75%, #03080F 100%)`,
-    claro: `radial-gradient(80% 55% at 50% 114%, #B9D3F8, transparent 70%), linear-gradient(180deg, #FFFFFF 0%, #F1F6FD 60%, #DCE8FB 100%)`,
-    branco: '#F5F7FA', fim: '#02050B' }[tipo];
-  const fx = $('#faixa'); fx.style.opacity = tipo === 'azul' ? 1 : tipo === 'preto' ? .4 : 0;
-  fx.style.background = `linear-gradient(${112 + 6 * c}deg, transparent 38%, rgba(140,190,255,.09) 46%, rgba(140,190,255,.15) 50%, rgba(140,190,255,.09) 54%, transparent 62%)`;
+    preto: `radial-gradient(60% 45% at 50% 125%, rgba(30,103,200,.5), transparent 70%), radial-gradient(35% 22% at 50% 110%, rgba(90,160,255,.3), transparent 70%), #010307`,
+    azul: `radial-gradient(60% 45% at ${50 + 8 * s}% 112%, rgba(110,175,255,.85), rgba(42,114,218,.5) 35%, transparent 70%), radial-gradient(130% 100% at 50% 100%, #184FA6 0%, #0B2A5E 42%, #050F22 75%, #02060D 100%)`,
+    fim: '#02050B' }[tipo];
+  const fx = $('#faixa'); fx.style.opacity = tipo === 'azul' ? .9 : tipo === 'preto' ? .5 : 0;
+  fx.style.background = `linear-gradient(${112 + 6 * c}deg, transparent 38%, rgba(140,190,255,.08) 46%, rgba(140,190,255,.14) 50%, rgba(140,190,255,.08) 54%, transparent 62%)`;
   fx.style.transform = `translateX(${(t * 46) % 460 - 230}px)`;
-  $('#demo').style.color = tipo === 'branco' ? '#9aa3b2' : 'rgba(255,255,255,.45)';
 }
-
-/* Janela do produto em 3D */
-const FULL = { s: 1.2152, rx: 0, ry: 0, tx: 0, ty: -26.7, cr: 0 };
 const mix = (p, q, k) => Object.fromEntries(Object.keys(p).map(x => [x, p[x] + (q[x] - p[x]) * k]));
 function pose(p, op = 1, blur = 0) { const j = $('#jan');
   j.style.transform = `translate(${p.tx}px, ${p.ty}px) rotateX(${p.rx}deg) rotateY(${p.ry}deg) scale(${p.s})`;
-  j.style.opacity = op; j.style.filter = blur > .05 ? `blur(${blur}px)` : 'none'; vis(j, op);
-  $('#cromo').style.opacity = p.cr; j.style.background = p.cr > .02 ? '#fff' : 'transparent'; j.style.boxShadow = p.cr > .02 ? '' : 'none'; j.style.borderRadius = (18 * p.cr) + 'px'; }
+  j.style.opacity = op; j.style.filter = blur > .05 ? `blur(${blur}px)` : 'none'; vis(j, op); }
 function tela(id) { $$('.tela').forEach(e => e.style.visibility = e.id === 't' + id ? 'visible' : 'hidden');
   const meet = id === 'c1' || id === 'c2'; $('#fav').src = meet ? 'img/googlemeet.svg' : 'img/mark-app.png';
   $('#abat').textContent = meet ? 'Demo · Grupo Alfa – Google Meet' : 'Sales Coach';
   $('#url').textContent = meet ? 'meet.google.com/xqd-fhkr-pmb' : ({ c3: 'salescoach.grougp.com.br/agendas/4f2a9c', c4: 'salescoach.grougp.com.br/agendas/4f2a9c', c5: 'salescoach.grougp.com.br/treino', c6: 'salescoach.grougp.com.br/argumentos', c7: 'salescoach.grougp.com.br' })[id]; }
-function rotulo(txt, k) { const r = $('#rot'); if (txt && r.textContent !== txt) r.textContent = txt; vista(r, txt ? k : 0, 12, 6); }
-function pilula(txt, k) { const r = $('#pilula'); if (txt && r.textContent !== txt) r.textContent = txt; vista(r, txt ? k : 0, 20, 6); }
 
-/* ---- Cenas ---- */
-function cEse(t) { const el = $('#sEse'); el.style.visibility = 'visible';
-  const k = eo(lin(t, 0, .45)), e1 = $('#ese1');
-  e1.style.opacity = k; e1.style.filter = k < .99 ? `blur(${(1 - k) * 26}px)` : 'none';
-  e1.style.transform = `translateY(${-110 * eio(lin(t, 1.0, 1.6))}px) scale(${(1.4 - .4 * k) * (1 - .1 * eio(lin(t, .45, 2.9)))})`;
-  revela(prepPal($('#ese2')), t, 1.25, .1, .45);
-  const z = eio(lin(t, 2.72, 3.0)); el.style.transform = `scale(${1 + .35 * z})`; el.style.opacity = 1 - z; el.style.filter = z > .01 ? `blur(${z * 16}px)` : 'none'; }
+/* ---- Abertura ---- */
+function cA(t) { const u = t - A[0][0]; cena('sA', .05 * u / 2.5);
+  glitch(prepPal($('#aT1')), u, .05, .12); glitch(prepPal($('#aT2')), u, .3, .12, .3, 5); glitch(prepPal($('#aT3')), u, 1.5, .12, .3, 9);
+  $('#aN').textContent = Math.round(412 * eio(lin(u, .3, 1.5))); }
+function cB(t) { const u = t - A[1][0]; cena('sB', .05 * u / 2); glitch(prepPal($('#bT')), u, .05, .28, .3); }
+function cC(t) { const u = t - A[2][0]; cena('sC', .07 * u / 3.5);
+  glitch(prepPal($('#cT1')), u, .05, .3, .35); glitch(prepPal($('#cT2')), u, .9, .2, .32, 4);
+  const z = eio(lin(u, 3.3, 3.5)); $('#sC').style.opacity = 1 - z; }
 
-function cGrava(t) { const u = t - C.grava[0], lt = u + .8; tela('c1'); R.c1(lt, t);
-  const g = POS.c1.g, sc = POS.c1.sc;
-  camera('c1', lt, [[.8, 3.0, g[0] - 20, g[1]], [2.05, 3.0, g[0] - 20, g[1]], [3.3, 1.0, 790, 373], [3.6, 1.0, 790, 373], [4.4, 1.38, sc[0] - 60, sc[1] + 10]]);
-  const P1 = { s: .9, rx: 7, ry: -11, tx: 0, ty: 14, cr: 1 }, P2 = { s: .93, rx: 5, ry: -7, tx: 0, ty: 10, cr: 1 };
-  pose(mix(mix(FULL, P1, eio(lin(u, 1.25, 2.5))), P2, eio(lin(u, 2.5, 5))));
-  rotulo('Grava no Meet, no Teams e no Zoom', eo(lin(u, 2.3, 2.8))); }
+/* ---- Capítulos: pergunta (2s) e tela (6s) ---- */
+const QS = [['Quem está <span class="lima">ouvindo</span>', 'as suas reuniões?', 'Gravação'], ['E quando o cliente', 'diz que está <span class="lima">caro?</span>', 'Coach ao vivo'],
+  ['Quanto <span class="lima">valeu</span>', 'essa reunião?', 'Análise'], ['Quem vai atualizar', 'o <span class="lima">CRM</span> hoje?', 'CRM'],
+  ['Seu time treina', 'antes de <span class="lima">errar?</span>', 'Treino'], ['Qual é o argumento', '<span class="lima">certo</span> para esse lead?', 'Argumentos'],
+  ['O que acontece nas reuniões', 'que você <span class="lima">não vê?</span>', 'Gestão']];
+const IDS = ['c1', 'c2', 'c3', 'c4', 'c5', 'c6', 'c7'];
+let qAt = -1;
+function cQ(t, i) { const [a] = CAP[i], u = t - a; cena('sQ', .06 * u / 2);
+  if (qAt !== i) { qAt = i; $('#qL1').innerHTML = QS[i][0]; $('#qL2').innerHTML = QS[i][1]; $('#qL1')._ws = $('#qL2')._ws = null; $('#qLab').textContent = `0${i + 1} · ${QS[i][2]}`; }
+  const w1 = prepPal($('#qL1')), w2 = prepPal($('#qL2')); glitch(w1, u, .12, .11); glitch(w2, u, .12 + w1.length * .11 + .05, .11, .32, 10);
+  vista($('#qLab'), eo(lin(u, 0, .3)), 10, 4); }
+function camK(id, u) { const P = POS[id];
+  return {
+    c1: () => [[0, 2.5, P.g[0] - 30, P.g[1] - 10], [1.5, 2.5, P.g[0] - 30, P.g[1] - 10], [2.3, 1.7, P.sc[0] - 40, P.sc[1] + 20], [6, 1.85, P.sc[0] - 40, P.sc[1] + 30]],
+    c2: () => [[0, 1.9, P.sc[0] - 40, P.sc[1] + 40], [1.7, 1.9, P.sc[0] - 40, P.sc[1] + 40], [2.4, 2.6, P.sc[0], P.sc[1] - 50], [6, 2.75, P.sc[0], P.sc[1] - 50]],
+    c3: () => [[0, 2.6, P.k1[0], P.k1[1]], [1.6, 2.6, P.k1[0], P.k1[1]], [2.3, 1.8, P.b[0], P.b[1] - 40], [3.4, 1.8, P.b[0], P.b[1] - 40], [4.0, 2.2, P.ps[0], P.ps[1]], [6, 2.3, P.ps[0], P.ps[1]]],
+    c4: () => [[0, 2.3, P.btn[0] - 20, P.btn[1] - 30], [1.05, 2.3, P.btn[0] - 20, P.btn[1] - 30], [1.6, 1.0, 790, 373]],
+    c5: () => [[0, 1.55, 1100, 300], [2.8, 1.6, 1100, 320], [3.6, 1.9, P.fb[0] + 120, P.fb[1] + 20], [6, 2.0, P.fb[0] + 120, P.fb[1] + 20]],
+    c6: () => [[0, 1.75, P.d0[0] + 70, P.d0[1] + 30], [1.95, 1.75, P.btn[0] + 70, P.btn[1] - 60], [2.6, 1.75, P.a0[0], P.a0[1] + 40], [6, 1.85, P.a0[0], P.a0[1] + 60]],
+    c7: () => [[0, 1.15, 900, 373], [.6, 1.15, 900, 373], [1.3, 1.8, P.as[0] - 30, P.as[1] - 20], [6, 1.9, P.as[0] - 30, P.as[1]]] }[id](); }
+function cTela(t, i) { const [a, b] = CAP[i], s = a + 2, u = t - s, id = IDS[i], m = TL.MAPA[i], lt = m[0] + u * m[1]; tela(id); R[id](lt, t);
+  camera(id, u, camK(id, u));
+  const ent = eo(lin(u, 0, .35)), dr = u / 6;
+  let p = { s: 1.04 + .04 * dr, rx: 4 - 2 * dr, ry: -5 + 3 * dr, tx: 0, ty: 4, cr: 1 };
+  if (id === 'c4') { const k = eio(lin(u, 1.25, 2.0)); p = mix(p, { s: 1.42, rx: 2, ry: -3, tx: -410, ty: 56, cr: 1 }, k); }
+  p.s *= 1 + .25 * (1 - ent); const sai = eio(lin(u, 5.75, 6)); p.s *= 1 + .12 * sai;
+  pose(p, ent, (1 - ent) * 14 + sai * 6); }
 
-function cAoVivo(t) { const u = t - C.aovivo[0], lt = u; tela('c2'); R.c2(lt, t); const sc = POS.c2.sc;
-  camera('c2', lt, [[0, 1.38, sc[0] - 60, sc[1] + 10], [.3, 1.38, sc[0] - 60, sc[1] + 10], [1.1, 2.0, sc[0] - 20, sc[1] + 40], [2.2, 2.0, sc[0] - 20, sc[1] + 40], [2.9, 2.45, sc[0], sc[1] - 50]]);
-  const P2 = { s: .93, rx: 5, ry: -7, tx: 0, ty: 10, cr: 1 }, P3 = { s: .95, rx: 3, ry: -4, tx: 0, ty: 8, cr: 1 };
-  const p = mix(P2, P3, eio(lin(u, 0, 4.4))), e = eio(lin(u, 4.45, 5.0)); p.s *= 1 + 1.5 * e;
-  pose(p, 1 - e, 18 * e); rotulo('Coach ao vivo · só o vendedor vê', (1 - e) * eo(lin(u, .1, .5))); }
+/* ---- Clímax: cortes de meio segundo ---- */
+const CORTES = [['c1', 5.5, 2.0, 'sc', 'Grava.'], ['c2', 3.2, 2.7, 'hero', 'Sopra.'], ['c3', 3.0, 2.7, 'k1', 'Avalia.'], ['c4', 5.2, 1.0, 'crm', 'Preenche.'],
+  ['c5', 5.8, 2.1, 'fb', 'Treina.'], ['c6', 4.0, 1.9, 'a0', 'Convence.'], ['c7', 6.0, 2.0, 'as', 'Revela.'], ['c3', 5.0, 2.3, 'ps', 'Orienta.']];
+function cM(t) { const [a] = CL, u = t - a, n = Math.min(CORTES.length - 1, Math.floor(u / .5)), v = u - n * .5, [id, lt, s, foco, pal] = CORTES[n], P = POS[id];
+  tela(id); R[id](lt, t);
+  const f = foco === 'hero' ? [P.sc[0], P.sc[1] - 50] : foco === 'crm' ? [790, 373] : P[foco];
+  camera(id, 0, [[0, s, f[0], f[1]]]);
+  const p = id === 'c4' ? { s: 1.45, rx: 0, ry: 0, tx: -420, ty: 56, cr: 1 } : { s: 1.08, rx: 0, ry: 0, tx: 0, ty: 0, cr: 1 };
+  p.s *= 1.12 - .12 * eo(lin(v, 0, .45)); pose(p, 1, 0);
+  const el = cena('sM'); const w = $('#mW'); if (w.textContent !== pal) { w.textContent = pal; w._ws = null; }
+  glitch(prepPal(w), v, 0, .1, .16, n * 3); el.style.opacity = 1; }
 
-const ITENS = ['Grava cada reunião', 'Sopra a resposta ao vivo', 'Dá nota a cada conversa', 'Preenche o seu CRM', 'Treina o seu time'];
-const barras = n => Array.from({ length: n }, (_, i) => `<i style="flex:1;border-radius:3px;background:${i % 2 ? '#2FA36B' : '#15498D'};height:${18 + 70 * Math.abs(Math.sin(i * 1.7) * Math.sin(i * .5 + 1))}%"></i>`).join('');
-const MINIS = [
-  `<div class="hd"><img src="img/mark-app.png" alt="">Sales Coach<span style="margin-left:auto;font-size:12px;font-weight:700;color:#D63A2B;background:rgba(214,58,43,.1);padding:3px 9px;border-radius:999px">● REC 12:04</span></div><div style="display:flex;gap:4px;align-items:center;height:96px;margin-top:18px">${barras(30)}</div><div style="font-size:12px;color:#5A6779;margin-top:8px">Você · Cliente · gravando a tela e o áudio</div>`,
-  `<div style="border-radius:14px;padding:16px;background:linear-gradient(180deg,#EAF1FC,#F3F6FA);box-shadow:inset 0 0 0 1px rgba(21,73,141,.4)"><div style="display:flex;justify-content:space-between;font-size:11px"><span style="font-weight:600;color:#15498D;background:rgba(21,73,141,.1);padding:2px 9px;border-radius:999px">objeção</span><span style="color:#6b7686">agora</span></div><div style="font-size:11px;font-weight:800;letter-spacing:.08em;color:#15498D;margin-top:10px">FALE AGORA</div><div style="font-size:16px;font-weight:600;margin-top:5px;line-height:1.35">Pergunte quanto custa hoje uma proposta que esfria.</div></div>`,
-  `<div style="border-radius:16px;padding:16px 18px;color:#fff;background:linear-gradient(135deg,#071A34,#15498D)"><div style="font-size:12px;opacity:.85">Score Geral</div><div style="font-size:44px;font-weight:700;line-height:1.1">86 <span style="font-size:14px;font-weight:500;opacity:.8">de 100</span></div></div>${['Budget', 'Authority', 'Need'].map((n, i) => `<div style="display:flex;align-items:center;gap:8px;font-size:11px;margin-top:9px"><span style="width:62px">${n}</span><div style="flex:1;height:6px;border-radius:4px;background:#EEF1F5"><i style="display:block;height:100%;width:${[88, 92, 96][i]}%;border-radius:4px;background:#15498D"></i></div></div>`).join('')}`,
-  `<div class="hd"><img src="img/hubspot.svg" alt="" style="width:20px">Grupo Alfa – Expansão</div>${[['Nota da reunião', '86'], ['Próximo passo', 'Enviar proposta'], ['Tarefa', 'criada · 24/10']].map(([l, v]) => `<div style="display:flex;justify-content:space-between;align-items:center;margin-top:11px;padding:8px 10px;border-radius:9px;background:#F3FBE3;font-size:12.5px"><span style="color:#516F90">${l}</span><b style="font-weight:600">${v} <span style="color:#237A55">✓</span></b></div>`).join('')}`,
-  `<div style="display:flex;align-items:center;gap:12px"><span style="width:44px;height:44px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#f3d2b4,#a86d4c)"></span><div><div style="font-size:14px;font-weight:600">Carlos Mendes</div><div style="font-size:11.5px;color:#5A6779">Lead simulado · Difícil</div></div></div><div style="display:flex;align-items:flex-end;gap:12px;margin-top:20px"><div style="font-size:12px;color:#5A6779">Score do treino<div style="font-size:52px;font-weight:700;color:#071A34;line-height:1">81</div></div><span style="margin-bottom:8px;font-size:15px;font-weight:700;background:#d4f969;padding:5px 12px;border-radius:999px">+19</span></div>`];
-(function () { $('#lista').innerHTML = ITENS.map(x => `<div class="it2 kt">${x}</div>`).join(''); $('#mini').innerHTML = MINIS.map(m => `<div class="mini">${m}</div>`).join(''); })();
-function cCar(t) { const el = $('#sCar'), u = t - C.carrossel[0]; el.style.visibility = 'visible';
-  const pos = [1, 2, 3, 4].reduce((s, p) => s + eio(lin(u, p, p + .42)), 0), ent = eo(lin(u, 0, .5));
-  $$('#lista .it2').forEach((e, j) => { const d = Math.abs(j - pos);
-    e.style.transform = `translateY(${540 - 39 + (j - pos) * 132 + (1 - ent) * 220}px) scale(${1 - .12 * Math.min(d, 2)})`;
-    e.style.opacity = clamp(1 - d * .6) * ent; e.style.filter = d > .05 ? `blur(${Math.min(d, 2) * 3}px)` : 'none'; });
-  $$('#mini .mini').forEach((m, j) => { const k = clamp(1 - Math.abs(j - pos) * 1.6); m.style.opacity = k * ent; m.style.transform = `translateY(${(j - pos) * 60 + (1 - ent) * 120}px) scale(${.86 + .14 * k})`; });
-  const z = eio(lin(u, 5.6, 6.0)); el.style.transform = `scale(${1 + .2 * z})`; el.style.opacity = 1 - z; el.style.filter = z > .01 ? `blur(${z * 14}px)` : 'none'; }
-
-function cMarca(t) { const el = $('#sMarca'), u = t - C.marca[0]; el.style.visibility = 'visible';
-  const k = eo(lin(u, 0, .4)), lg = $('#mlogo'); lg.style.opacity = k; lg.style.transform = `scale(${1.7 - .7 * back(k)})`; lg.style.filter = k < .99 ? `blur(${(1 - k) * 20}px)` : 'none';
-  const k2 = eo(lin(u, .15, .65)), wm = $('#mwm'); wm.style.opacity = k2; wm.style.transform = `translateX(${(1 - k2) * 90}px)`; wm.style.filter = k2 < .99 ? `blur(${(1 - k2) * 14}px)` : 'none';
-  const g = Math.max(0, 1 - Math.abs(u - 1.0) / .5); wm.style.textShadow = `0 0 ${50 * g}px rgba(150,200,255,${.9 * g})`;
-  revela(prepPal($('#mtag')), u, .95, .08, .4, 18, 10);
-  const s = 1 + .04 * u / 3; el.style.transform = `scale(${s})`; }
-
-const MONT = [['c3', 'analise', 1.2, 'Nota e diagnóstico de cada reunião'], ['c4', 'crm', .6, 'O CRM se preenche sozinho'], ['c5', 'treino', 2.3, 'Treino com um cliente simulado'], ['c6', 'arg', .4, 'O argumento certo para cada lead']];
-function cMontagem(t) { const i = MONT.findIndex(m => t >= C[m[1]][0] && t < C[m[1]][1]); if (i < 0) return;
-  const [id, nome, off, txt] = MONT[i], [a, b] = C[nome], u = t - a, lt = u + off; tela(id); R[id](lt, t);
-  if (id === 'c3') camera(id, lt, [[1.2, 2.3, POS.c3.k1[0], POS.c3.k1[1]], [2.4, 2.3, POS.c3.k1[0], POS.c3.k1[1]], [3.1, 1.25, POS.c3.row[0], POS.c3.row[1] + 120], [5.2, 1.25, POS.c3.col[0], POS.c3.col[1] - 40]]);
-  if (id === 'c4') camera(id, lt, [[.6, 1.9, POS.c4.btn[0], POS.c4.btn[1] - 40], [1.35, 1.9, POS.c4.btn[0], POS.c4.btn[1] - 40], [2.0, 1.05, 990, 373]]);
-  if (id === 'c5') camera(id, lt, [[2.3, 1.45, POS.c5.mic[0], POS.c5.mic[1] - 150], [3.6, 1.45, POS.c5.mic[0], POS.c5.mic[1] - 150], [4.4, 1.0, 790, 373]]);
-  if (id === 'c6') camera(id, lt, [[.4, 1.5, POS.c6.d0[0] + 80, POS.c6.d0[1] + 40], [1.9, 1.5, POS.c6.btn[0] + 80, POS.c6.btn[1] - 60], [2.6, 1.2, 1580, 373]]);
-  const ent = eo(lin(u, 0, .28)), sa = eio(lin(t, b - .22, b)), p = { ...FULL };
-  p.ty += (1 - ent) * 170 - sa * 170; pose(p, 1, (1 - ent) * 14 + sa * 14);
-  pilula(txt, eo(lin(u, .25, .6)) * (1 - sa)); }
-
-function cMais(t) { const el = $('#sMais'), u = t - C.mais[0]; el.style.visibility = 'visible';
-  revela(prepLet($('#maist')), u, .05, .035, .4, 20, 16); el.style.transform = `scale(${1 + .06 * u / 2})`; }
-
-const ORB = ['googlemeet.svg', 'hubspot.svg', 'microsoftteams.svg', 'rdstation.png', 'zoom.svg', 'pipedrive.png', 'googlecalendar.svg', 'kommo.png'];
-(function () { $('#orbic').innerHTML = ORB.map(f => `<div class="ic8"><img src="img/${f}" alt=""></div>`).join(''); })();
-function cOrb(t) { const el = $('#sOrb'), u = t - C.orbita[0]; el.style.visibility = 'visible';
-  const ko = eo(lin(u, 0, .45)), orb = $('#orb'); orb.style.opacity = ko; orb.style.transform = `scale(${.6 + .4 * back(ko)})`;
-  orb.style.boxShadow = `0 0 0 ${10 + 8 * Math.abs(Math.sin(u * 4))}px rgba(63,140,240,.18), 0 0 90px 20px rgba(63,140,240,.45)`;
-  let lines = ''; $$('#orbic .ic8').forEach((ic, i) => { const ang = i * Math.PI / 4 + u * .28 + .2, x = 960 + 600 * Math.cos(ang), y = 430 + 215 * Math.sin(ang);
-    const dep = (Math.sin(ang) + 1) / 2, k = lin(u, .25 + i * .1, .6 + i * .1);
-    ic.style.left = x + 'px'; ic.style.top = y + 'px'; ic.style.zIndex = dep > .5 ? 3 : 1;
-    ic.style.opacity = clamp(k * 1.6) * (.8 + .2 * dep); ic.style.transform = `scale(${(.82 + .25 * dep) * (.5 + .5 * back(clamp(k)))})`;
-    lines += `<line x1="960" y1="430" x2="${x.toFixed(1)}" y2="${y.toFixed(1)}" stroke="rgba(170,205,255,${.45 * k})" stroke-width="2.5" stroke-dasharray="2 12" stroke-linecap="round"/>`; });
-  $('#orbsvg').innerHTML = lines;
-  revela(prepPal($('#orbt')), u, .9, .09, .45);
-  const z = eio(lin(u, 4.7, 5.0)); el.style.opacity = 1 - z; el.style.filter = z > .01 ? `blur(${z * 14}px)` : 'none'; }
-
-const PERG = 'Quais objeções mais aparecem nas minhas reuniões?';
-function cPerg(t) { const el = $('#sPerg'), u = t - C.pergunta[0]; el.style.visibility = 'visible';
-  const w = $('#inpw'), s = 2.7 - 1.7 * eio(lin(u, .2, 2.4)), e = eio(lin(u, 2.7, 3.1));
-  w.style.transform = `translateY(${320 * e}px) scale(${s * (1 - .6 * e)})`; w.style.opacity = 1 - e; w.style.filter = e > .01 ? `blur(${e * 10}px)` : 'none';
-  digita($('#inpt'), PERG, lin(u, .15, 2.2)); $('#inpt').style.color = '#071A34';
-  const sx = 1643, sy = 540, [x, y] = kf(u, [[1.9, 1560, 930], [2.5, sx + 6, sy + 8]]), seta = $('#seta');
-  const cl = u - 2.6, esc = cl > -.12 && cl < .12 ? .82 + 1.5 * Math.abs(cl) : 1;
-  seta.style.transform = `translate(${x}px, ${y}px) scale(${esc})`; seta.style.opacity = clamp((u - 1.9) * 5) * (1 - e);
-  $('#inpenv').style.transform = `scale(${cl > 0 && cl < .25 ? .9 : 1})`; $('#inpenv').style.background = cl > 0 && cl < .3 ? '#1E67C8' : '#15498D'; }
-function cGestor(t) { const u = t - (C.pergunta[1] - .2), lt = Math.max(3.3, t - C.gestor[0] + 3.5); tela('c7'); R.c7(lt, t);
-  camera('c7', lt, [[0, 1.3, POS.c7.as[0] - 40, POS.c7.as[1]]]);
-  const P0 = { s: .55, rx: 28, ry: -24, tx: 0, ty: 300, cr: 1 }, P1 = { s: .9, rx: 9, ry: -12, tx: 0, ty: 10, cr: 1 }, P2 = { s: .94, rx: 6, ry: -8, tx: 0, ty: 8, cr: 1 };
-  const k = eo(lin(u, 0, .8)); pose(mix(mix(P0, P1, k), P2, eio(lin(u, .8, 4.2))), clamp(k * 2), (1 - k) * 12);
-  rotulo('O gestor pergunta sobre todas as reuniões', eo(lin(u, .7, 1.1))); }
-
-const METS = ['BANT', 'SPIN', 'MEDDIC', 'SPICED', 'A da sua empresa'];
-(function () { $('#metchip').innerHTML = METS.map(m => `<span class="chip">/${m}</span>`).join(''); })();
-function cMet(t) { const el = $('#sMet'), u = t - C.metodo[0]; el.style.visibility = 'visible';
-  revela(prepPal($('#mett')), u, .05, .07, .4, 20, 10);
-  const ki = eo(lin(u, .15, .55)), mi = $('#metin'); mi.style.opacity = ki; mi.style.transform = `translateY(${(1 - ki) * 40}px) scale(${.94 + .06 * ki})`;
-  const T0 = [.5, 1.0, 1.5, 2.0, 2.5, 99];
-  $$('#metchip .chip').forEach((c, j) => { const k = eo(lin(u, T0[j], T0[j] + .25)), e = eio(lin(u, T0[j + 1], T0[j + 1] + .22));
-    c.style.transform = `translateY(${(1 - k) * 70 - e * 70}px)`; c.style.opacity = k * (1 - e); c.style.filter = (k < .99 || e > .01) ? `blur(${(1 - k) * 8 + e * 8}px)` : 'none'; });
-  $('#metw').style.transform = `translateX(${-40 * u / 4}px) scale(${1 + .06 * u / 4})`; }
-
-function cVend(t) { const el = $('#sVend'), u = t - C.vender[0]; el.style.visibility = 'visible';
-  revela(prepPal($('#vendt')), u, .02, .22, .4, 26, 22); el.style.transform = `scale(${1 + .05 * u / 2})`; }
-
-function cFim(t) { const el = $('#sFim'), u = t - C.fim[0]; el.style.visibility = 'visible';
+/* ---- Marca e fecho ---- */
+function cL(t) { const u = t - LG[0]; cena('sL', .05 * u / 3.5);
+  const k = eo(lin(u, 0, .45)), lg = $('#lLogo'); lg.style.opacity = k; lg.style.transform = `scale(${2.2 - 1.2 * back(k)})`; lg.style.filter = k < .99 ? `blur(${(1 - k) * 24}px)` : 'none';
+  const k2 = eo(lin(u, .2, .7)), wm = $('#lWm'); wm.style.opacity = k2; wm.style.transform = `scale(${1.25 - .25 * k2})`; wm.style.filter = k2 < .99 ? `blur(${(1 - k2) * 18}px)` : 'none';
+  const g = Math.max(0, 1 - Math.abs(u - 1.0) / .6); wm.style.textShadow = `0 0 ${60 * g}px rgba(150,200,255,${.9 * g})`;
+  glitch(prepPal($('#lTag')), u, 1.2, .1, .3);
+  const bu = $('#burst'), kb = lin(u, 0, 1.2); bu.style.opacity = (1 - kb) * 1.2 + .35; bu.style.transform = `scale(${.3 + 1.2 * eo(kb)})`;
+  $('#raios').style.transform = `rotate(${u * 6}deg)`; $('#raios').style.opacity = .5 + .5 * (1 - kb); }
+function cFim(t) { const u = t - FIM[0]; const el = $('#sFim'); el.style.visibility = 'visible';
   $('#arco').style.transform = `translateY(${(1 - eo(lin(u, 0, 1.1))) * 340}px)`;
   pop($('#flogo'), lin(u, .3, .8)); vista($('#fwm'), eo(lin(u, .45, 1.0)), 0, 14); $('#fwm').style.transform = `translateX(${(1 - eo(lin(u, .45, 1.0))) * 60}px)`;
   vista($('#fnexa'), eo(lin(u, .85, 1.3)), 14, 6); vista($('#flanc'), eo(lin(u, 1.05, 1.6)), 30, 10); vista($('#fcta'), eo(lin(u, 1.4, 1.9)), 16, 6); }
 
 window.renderAt = function (t) {
-  $$('.cena').forEach(e => { e.style.visibility = 'hidden'; e.style.transform = ''; e.style.opacity = ''; e.style.filter = ''; });
-  vis($('#jan'), 0); $$('.tela').forEach(e => e.style.visibility = 'hidden'); rotulo('', 0); pilula('', 0); let tipo = 'preto', demo = 0;
-  if (t < C.ese[1]) { tipo = 'preto'; cEse(t); }
-  else if (t < C.grava[1]) { tipo = 'azul'; cGrava(t); demo = 1; }
-  else if (t < C.aovivo[1]) { tipo = 'azul'; cAoVivo(t); demo = 1; }
-  else if (t < C.carrossel[1]) { tipo = 'preto'; cCar(t); }
-  else if (t < C.marca[1]) { tipo = 'azul'; cMarca(t); }
-  else if (t < C.arg[1]) { tipo = 'branco'; cMontagem(t); demo = 1; }
-  else if (t < C.mais[1]) { tipo = 'azul'; cMais(t); }
-  else if (t < C.orbita[1]) { tipo = 'azul'; cOrb(t); }
-  else if (t < C.gestor[1]) { tipo = 'azul'; if (t < C.pergunta[1] + .2) cPerg(t); if (t >= C.pergunta[1] - .2) { cGestor(t); demo = 1; } }
-  else if (t < C.metodo[1]) { tipo = 'claro'; cMet(t); }
-  else if (t < C.vender[1]) { tipo = 'preto'; cVend(t); }
-  else { tipo = 'fim'; cFim(t); }
-  fundo(tipo, t);
-  $('#demo').style.opacity = demo * .9;
-  $('#flash').style.opacity = t < C.marca[1] ? eio(lin(t, C.marca[1] - .3, C.marca[1])) : 1 - eo(lin(t, C.marca[1], C.marca[1] + .35));
+  $$('.cena').forEach(e => { e.style.visibility = 'hidden'; e.style.opacity = ''; });
+  vis($('#jan'), 0); $$('.tela').forEach(e => e.style.visibility = 'hidden'); let tipo = 'preto', demo = 0;
+  const ci = CAP.findIndex(([a, b]) => t >= a && t < b);
+  if (t < A[0][1]) cA(t);
+  else if (t < A[1][1]) cB(t);
+  else if (t < A[2][1]) cC(t);
+  else if (ci >= 0) { if (t < CAP[ci][0] + 2) cQ(t, ci); else { tipo = 'azul'; cTela(t, ci); demo = 1; } }
+  else if (t >= CL[0] && t < CL[1]) { tipo = 'azul'; cM(t); demo = 1; }
+  else if (t >= LG[0] && t < LG[1]) cL(t);
+  else if (t >= FIM[0]) { tipo = 'fim'; cFim(t); }
+  fundo(tipo, t); $('#demo').style.opacity = demo * .9;
 };
-function medir2() { medir(); POS.c3.k1 = centro('c3', '#c3k1'); }
+function medir2() { medir(); POS.c3.k1 = centro('c3', '#c3k1'); POS.c3.b = centro('c3', '#c3b'); POS.c3.ps = centro('c3', '#c3ps');
+  POS.c5.fb = centro('c5', '#c5n'); POS.c6.a0 = centro('c6', '#c6a0'); }
 window.ready = document.fonts.ready.then(() => Promise.all([...document.images].map(i => i.complete ? 0 : new Promise(r => { i.onload = i.onerror = r; })))).then(() => { medir2(); window.renderAt(0); return true; });
 if (location.search.includes('play')) { const t0 = performance.now(); const loop = () => { window.renderAt((performance.now() - t0) / 1000 % TL.DUR); requestAnimationFrame(loop); }; requestAnimationFrame(loop); }
 </script>
