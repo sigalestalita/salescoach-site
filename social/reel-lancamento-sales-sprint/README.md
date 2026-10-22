@@ -43,5 +43,8 @@ $FF -y -framerate 30 -i frames/f_%05d.jpg -i trilha.wav -c:v libx264 -pix_fmt yu
 Troque `trilha.wav` por `trilha-locucao.wav` para a versão `-para-locucao.mp4`, ou por
 `out/trilha-com-narracao.wav` (gerada por `ELEVENLABS_API_KEY=... python3 narracao.py`) para a `-narrado.mp4`.
 A chave do ElevenLabs fica só no ambiente, nunca no repositório.
+Legendas: o `narracao.py` também gera `out/legendas.srt` (narração completa, para o YouTube) e
+`legendas.json` (só as falas que não estão escritas na tela). `node legendas.mjs 480 3150 legendas`
+renderiza a camada transparente, que o ffmpeg sobrepõe ao vídeo narrado (`-itsoffset 16`, `overlay`).
 `node render.mjs still 9.2,26.5 stills` gera quadros soltos; `index.html?play` toca no navegador.
 `icones.js` traz os ícones lucide usados no app (licença ISC).
