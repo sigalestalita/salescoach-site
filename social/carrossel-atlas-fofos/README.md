@@ -2,7 +2,7 @@
 
 Formato da referência "verdades duras com imagens fofas": foto fofa inteira (bichinhos em cenário de
 escritório, geradas no Higgsfield soul/cinema) e uma frase curta, pesada e apertada no espaço livre da
-foto: creme sobre fundo escuro, lilás acinzentado sobre fundo claro. "Atlas · um produto NEXA" em todos.
+foto: creme sobre fundo escuro, azul do Atlas (#15498D) sobre fundo claro. "Atlas · um produto NEXA" em todos.
 
 1. Capa: Verdades duras sobre RH com imagens fofas (gatinho nas pastas)
 2. Ninguém reclamar não significa que está tudo bem. (filhote embaixo da mesa)
