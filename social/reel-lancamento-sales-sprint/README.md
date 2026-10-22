@@ -8,7 +8,8 @@ momento-chave (perguntas de 4s e telas de 10s), clímax de cortes de um segundo 
 marca. Cores do Sales Coach (navy e azul) com o lima da NEXA como destaque. As telas redesenham o app
 de verdade, com dados de demonstração (dito no rodapé). Trilha thriller a 120 bpm, cortes no tempo.
 A câmera enquadra sempre o componente inteiro (cartão, painel ou janela), com margem: aproxima
-sem cortar a tela. Preparado para narração: roteiro com tempos em `locucao.md` e uma trilha-cama própria.
+sem cortar a tela. Narração pronta: `narracao.py` gera cada fala do `locucao.md` no ElevenLabs (voz David, grave, pt-BR),
+encaixa cada uma na janela da cena e mixa com a cama da trilha, abaixando a música sob a voz.
 
 | Tempo | Cena |
 |---|---|
@@ -39,6 +40,8 @@ FF=/usr/local/lib/python3.11/dist-packages/imageio_ffmpeg/binaries/ffmpeg-linux-
 $FF -y -framerate 30 -i frames/f_%05d.jpg -i trilha.wav -c:v libx264 -pix_fmt yuv420p -crf 17 -preset slow \
   -c:a aac -b:a 192k -shortest -movflags +faststart out/lancamento-sales-coach-sales-sprint.mp4
 ```
-Troque `trilha.wav` por `trilha-locucao.wav` para a versão `-para-locucao.mp4`.
+Troque `trilha.wav` por `trilha-locucao.wav` para a versão `-para-locucao.mp4`, ou por
+`out/trilha-com-narracao.wav` (gerada por `ELEVENLABS_API_KEY=... python3 narracao.py`) para a `-narrado.mp4`.
+A chave do ElevenLabs fica só no ambiente, nunca no repositório.
 `node render.mjs still 9.2,26.5 stills` gera quadros soltos; `index.html?play` toca no navegador.
 `icones.js` traz os ícones lucide usados no app (licença ISC).

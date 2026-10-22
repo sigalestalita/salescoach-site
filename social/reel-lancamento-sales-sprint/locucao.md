@@ -33,6 +33,8 @@ a marca entra com a pancada e a voz volta.
 | 2:03–2:10 | Sales Sprint e CTA | Lançamento oficial no Sales Sprint. Conheça no evento. |
 
 ## Arquivos para a edição
+- `out/lancamento-sales-coach-sales-sprint-narrado.mp4`: vídeo final já narrado (voz David, ElevenLabs).
+- `out/narracao.wav`: só a voz, no tempo do vídeo; `out/trilha-com-narracao.wav`: voz e trilha mixadas.
 - `out/lancamento-sales-coach-sales-sprint.mp4`: vídeo com a trilha completa (sem narração).
 - `out/lancamento-sales-coach-sales-sprint-para-locucao.mp4`: vídeo com a cama para narração
   (cerca de 6 dB mais baixa e com os médios abertos para a voz).
