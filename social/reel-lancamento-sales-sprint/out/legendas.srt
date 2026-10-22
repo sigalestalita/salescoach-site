@@ -1,124 +1,104 @@
 1
-00:00:00,300 --> 00:00:04,040
-Seu time fez… quatrocentas e doze reuniões este mês.
+00:00:00,300 --> 00:00:03,020
+Seu time fez quatrocentas e doze reuniões.
 
 2
-00:00:04,299 --> 00:00:06,910
+00:00:03,299 --> 00:00:05,549
 Você ouviu… três.
 
 3
-00:00:07,299 --> 00:00:10,439
+00:00:05,799 --> 00:00:07,629
 E se alguém ouvisse todas?
 
 4
-00:00:12,300 --> 00:00:16,280
+00:00:08,300 --> 00:00:10,910
 Quem está ouvindo as suas reuniões?
 
 5
-00:00:16,300 --> 00:00:17,559
-O Sales Coach.
+00:00:11,300 --> 00:00:14,529
+O Sales Coach entra no Meet, no Teams ou no Zoom…
 
 6
-00:00:17,559 --> 00:00:20,600
-Ele entra com você no Meet, no Teams ou no Zoom…
+00:00:14,529 --> 00:00:17,820
+e grava tudo. Sem robô.
 
 7
-00:00:20,600 --> 00:00:23,839
-e grava tudo. Sem robô na chamada.
-
-8
-00:00:26,300 --> 00:00:30,109
+00:00:18,300 --> 00:00:20,870
 E quando o cliente diz que está caro?
 
-9
-00:00:30,300 --> 00:00:33,259
+8
+00:00:21,300 --> 00:00:24,390
 Ele sopra a resposta certa. Na hora.
 
-10
-00:00:33,259 --> 00:00:35,020
+9
+00:00:24,390 --> 00:00:26,019
 E só o vendedor vê.
 
-11
-00:00:40,299 --> 00:00:43,280
+10
+00:00:28,300 --> 00:00:30,039
 Quanto valeu essa reunião?
 
-12
-00:00:44,299 --> 00:00:47,710
-Cada reunião ganha nota, temperatura e diagnóstico…
+11
+00:00:31,300 --> 00:00:34,100
+Nota, temperatura e diagnóstico…
 
-13
-00:00:47,710 --> 00:00:50,200
+12
+00:00:34,100 --> 00:00:37,219
 na metodologia da sua empresa.
 
-14
-00:00:50,200 --> 00:00:53,600
-E o próximo passo já vem pronto.
-
-15
-00:00:54,299 --> 00:00:58,079
+13
+00:00:38,299 --> 00:00:40,399
 Quem vai atualizar o CRM hoje?
 
+14
+00:00:41,299 --> 00:00:45,179
+Ninguém. O Sales Coach preenche sozinho…
+
+15
+00:00:45,179 --> 00:00:48,009
+com o próximo passo e a tarefa.
+
 16
-00:00:58,299 --> 00:01:01,710
-Ninguém. O Sales Coach preenche sozinho.
-
-17
-00:01:01,710 --> 00:01:03,909
-A nota, o próximo passo…
-
-18
-00:01:03,909 --> 00:01:05,680
-e a tarefa, com data.
-
-19
-00:01:08,299 --> 00:01:11,879
+00:00:48,299 --> 00:00:50,450
 Seu time treina antes de errar?
 
-20
-00:01:12,299 --> 00:01:13,549
+17
+00:00:51,299 --> 00:00:52,539
 Agora, treina.
 
-21
-00:01:13,549 --> 00:01:16,159
+18
+00:00:52,539 --> 00:00:55,189
 Com um cliente simulado, por voz…
 
-22
-00:01:16,159 --> 00:01:17,650
+19
+00:00:55,189 --> 00:00:56,649
 e nota no fim.
 
-23
-00:01:22,299 --> 00:01:26,239
+20
+00:00:58,299 --> 00:01:01,000
 Qual é o argumento certo para esse lead?
 
-24
-00:01:26,299 --> 00:01:30,099
-Ele entrega. Argumentos, ROI e frases prontas…
+21
+00:01:01,299 --> 00:01:04,959
+Ele entrega. Argumentos e frases prontas…
 
-25
-00:01:30,099 --> 00:01:33,060
+22
+00:01:04,959 --> 00:01:07,269
 com o conhecimento da sua empresa.
 
-26
-00:01:36,299 --> 00:01:40,299
+23
+00:01:08,299 --> 00:01:10,549
 O que acontece nas reuniões que você não vê?
 
-27
-00:01:40,299 --> 00:01:44,590
+24
+00:01:11,299 --> 00:01:15,359
 Pergunte. Ele ouviu… todas.
 
-28
-00:01:58,799 --> 00:02:02,659
-Sales Coach. Um coach em cada reunião do seu time.
+25
+00:01:22,799 --> 00:01:25,890
+Sales Coach. Um coach em cada reunião.
 
-29
-00:02:03,299 --> 00:02:04,700
-Lançamento oficial…
-
-30
-00:02:04,700 --> 00:02:06,480
-no Sales Sprint.
-
-31
-00:02:06,480 --> 00:02:08,360
-Conheça no evento.
+26
+00:01:26,299 --> 00:01:28,730
+Lançamento oficial no Sales Sprint.
 
