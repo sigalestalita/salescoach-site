@@ -671,31 +671,36 @@ function cQ(t, i) { const [a] = CAP[i], u = t - a; cena('sQ', .06 * u / TL.Q2);
   if (qAt !== i) { qAt = i; $('#qL1').innerHTML = QS[i][0]; $('#qL2').innerHTML = QS[i][1]; $('#qL1')._ws = $('#qL2')._ws = null; $('#qLab').textContent = `0${i + 1} · ${QS[i][2]}`; }
   const w1 = prepPal($('#qL1')), w2 = prepPal($('#qL2')); glitch(w1, u, .2, .18, .45); glitch(w2, u, .2 + w1.length * .18 + .1, .18, .45, 10);
   vista($('#qLab'), eo(lin(u, 0, .3)), 10, 4); }
-function camK(id, u) { const P = POS[id];
+/* Enquadramento: a câmera mostra o componente inteiro, com margem, nunca cortado */
+const BOX = {};
+function bx(id, sel, extra = [0, 0, 0, 0]) { const m = $('#t' + id + ' .mundo').getBoundingClientRect(), r = (typeof sel === 'string' ? $(sel) : sel).getBoundingClientRect();
+  return [r.left - m.left - extra[3], r.top - m.top - extra[0], r.width + extra[1] + extra[3], r.height + extra[0] + extra[2]]; }
+function enq(b, pad = .84, smax = 2.2) { const [x, y, w, h] = b; return [Math.min(smax, W * pad / w, H * pad / h), x + w / 2, y + h / 2]; }
+const K = (t, b, pad) => [t, ...enq(b, pad)];
+function camK(id, u) { const B = BOX[id];
   return {
-    c1: () => [[0, 2.5, P.g[0] - 30, P.g[1] - 10], [1.5, 2.5, P.g[0] - 30, P.g[1] - 10], [2.3, 1.7, P.sc[0] - 40, P.sc[1] + 20], [6, 1.85, P.sc[0] - 40, P.sc[1] + 30]],
-    c2: () => [[0, 1.9, P.sc[0] - 40, P.sc[1] + 40], [1.7, 1.9, P.sc[0] - 40, P.sc[1] + 40], [2.4, 2.6, P.sc[0], P.sc[1] - 50], [6, 2.75, P.sc[0], P.sc[1] - 50]],
-    c3: () => [[0, 2.6, P.k1[0], P.k1[1]], [1.6, 2.6, P.k1[0], P.k1[1]], [2.3, 1.8, P.b[0], P.b[1] - 40], [3.4, 1.8, P.b[0], P.b[1] - 40], [4.0, 2.2, P.ps[0], P.ps[1]], [6, 2.3, P.ps[0], P.ps[1]]],
-    c4: () => [[0, 2.3, P.btn[0] - 20, P.btn[1] - 30], [1.05, 2.3, P.btn[0] - 20, P.btn[1] - 30], [1.6, 1.0, 790, 373]],
-    c5: () => [[0, 1.55, 1100, 300], [2.8, 1.6, 1100, 320], [3.6, 1.9, P.fb[0] + 120, P.fb[1] + 20], [6, 2.0, P.fb[0] + 120, P.fb[1] + 20]],
-    c6: () => [[0, 1.75, P.d0[0] + 70, P.d0[1] + 30], [1.95, 1.75, P.btn[0] + 70, P.btn[1] - 60], [2.6, 1.75, P.a0[0], P.a0[1] + 40], [6, 1.85, P.a0[0], P.a0[1] + 60]],
-    c7: () => [[0, 1.15, 900, 373], [.6, 1.15, 900, 373], [1.3, 1.8, P.as[0] - 30, P.as[1] - 20], [6, 1.9, P.as[0] - 30, P.as[1]]] }[id](); }
+    c1: () => [K(0, B.ad, .8), K(1.5, B.ad, .8), K(2.3, B.sc, .8), K(6, B.sc, .77)],
+    c2: () => [K(0, B.sc, .8), K(6, B.sc, .76)],
+    c3: () => [K(0, B.row, .9), K(1.6, B.row, .88), K(2.3, B.b, .86), K(3.4, B.b, .84), K(4.0, B.c, .86), K(6, B.c, .83)],
+    c4: () => [K(0, B.card, .8), K(1.05, B.card, .8), [1.6, 1.0, 790, 373]],
+    c5: () => [K(0, B.card, .92), K(6, B.card, .89)],
+    c6: () => [K(0, B.dores, .86), K(1.95, B.dores, .86), K(2.6, B.cards, .88), K(6, B.cards, .85)],
+    c7: () => [[0, 1.0, 790, 373], [.6, 1.0, 790, 373], K(1.3, B.as, .86), K(6, B.as, .83)] }[id](); }
 function cTela(t, i) { const [a, b] = CAP[i], s = a + TL.Q2, u = t - s, id = IDS[i], m = TL.MAPA[i], lt = m[0] + u * m[1], uc = u * m[1] / TL.MAPA_CAM[i]; tela(id); R[id](lt, t);
   camera(id, uc, camK(id, uc));
   const ent = eo(lin(u, 0, .45)), dr = u / TL.TELA;
   let p = { s: 1.04 + .04 * dr, rx: 4 - 2 * dr, ry: -5 + 3 * dr, tx: 0, ty: 4, cr: 1 };
-  if (id === 'c4') { const k = eio(lin(uc, 1.25, 2.0)); p = mix(p, { s: 1.42, rx: 2, ry: -3, tx: -410, ty: 56, cr: 1 }, k); }
+  if (id === 'c4') { const k = eio(lin(uc, 1.25, 2.0)); p = mix(p, { s: 1.25, rx: 2, ry: -3, tx: -400, ty: -20, cr: 1 }, k); }
   p.s *= 1 + .25 * (1 - ent); const sai = eio(lin(u, TL.TELA - .3, TL.TELA)); p.s *= 1 + .12 * sai;
   pose(p, ent, (1 - ent) * 14 + sai * 6); }
 
 /* ---- Clímax: cortes de meio segundo ---- */
-const CORTES = [['c1', 5.5, 2.0, 'sc', 'Grava.'], ['c2', 3.2, 2.7, 'hero', 'Sopra.'], ['c3', 3.0, 2.7, 'k1', 'Avalia.'], ['c4', 5.2, 1.0, 'crm', 'Preenche.'],
-  ['c5', 5.8, 2.1, 'fb', 'Treina.'], ['c6', 4.0, 1.9, 'a0', 'Convence.'], ['c7', 6.0, 2.0, 'as', 'Revela.'], ['c3', 5.0, 2.3, 'ps', 'Orienta.']];
-function cM(t) { const [a] = CL, u = t - a, n = Math.min(CORTES.length - 1, Math.floor(u / TL.CORTE)), v = u - n * TL.CORTE, [id, lt, s, foco, pal] = CORTES[n], P = POS[id];
+const CORTES = [['c1', 5.5, 'sc', 'Grava.'], ['c2', 3.2, 'sc', 'Sopra.'], ['c3', 3.0, 'row', 'Avalia.'], ['c4', 5.2, 'crm', 'Preenche.'],
+  ['c5', 5.8, 'card', 'Treina.'], ['c6', 4.0, 'cards', 'Convence.'], ['c7', 6.0, 'as', 'Revela.'], ['c3', 5.0, 'c', 'Orienta.']];
+function cM(t) { const [a] = CL, u = t - a, n = Math.min(CORTES.length - 1, Math.floor(u / TL.CORTE)), v = u - n * TL.CORTE, [id, lt, foco, pal] = CORTES[n];
   tela(id); R[id](lt, t);
-  const f = foco === 'hero' ? [P.sc[0], P.sc[1] - 50] : foco === 'crm' ? [790, 373] : P[foco];
-  camera(id, 0, [[0, s, f[0], f[1]]]);
-  const p = id === 'c4' ? { s: 1.45, rx: 0, ry: 0, tx: -420, ty: 56, cr: 1 } : { s: 1.08, rx: 0, ry: 0, tx: 0, ty: 0, cr: 1 };
+  camera(id, 0, [foco === 'crm' ? [0, 1, 790, 373] : K(0, BOX[id][foco], .84)]);
+  const p = id === 'c4' ? { s: 1.25, rx: 0, ry: 0, tx: -400, ty: -20, cr: 1 } : { s: 1.06, rx: 0, ry: 0, tx: 0, ty: 0, cr: 1 };
   p.s *= 1.12 - .14 * eo(lin(v, 0, .9)); pose(p, 1, 0);
   const el = cena('sM'); const w = $('#mW'); if (w.textContent !== pal) { w.textContent = pal; w._ws = null; }
   glitch(prepPal(w), v, 0, .1, .3, n * 3); el.style.opacity = 1; }
@@ -727,7 +732,10 @@ window.renderAt = function (t) {
   fundo(tipo, t); $('#demo').style.opacity = demo * .9;
 };
 function medir2() { medir(); POS.c3.k1 = centro('c3', '#c3k1'); POS.c3.b = centro('c3', '#c3b'); POS.c3.ps = centro('c3', '#c3ps');
-  POS.c5.fb = centro('c5', '#c5n'); POS.c6.a0 = centro('c6', '#c6a0'); }
+  POS.c5.fb = centro('c5', '#c5n'); POS.c6.a0 = centro('c6', '#c6a0');
+  BOX.c1 = { ad: bx('c1', '#c1ad'), sc: bx('c1', '#c1sc', [0, 0, 40, 0]) }; BOX.c2 = { sc: bx('c2', '#c2sc', [0, 0, 190, 0]) };
+  BOX.c3 = { row: bx('c3', '#c3row'), b: bx('c3', '#c3b'), c: bx('c3', '#c3c') }; BOX.c4 = { card: bx('c4', '#c4card', [0, 0, 50, 0]) };
+  BOX.c5 = { card: bx('c5', '#c5card') }; BOX.c6 = { dores: bx('c6', $('#c6d0').parentElement), cards: bx('c6', '#c6cards') }; BOX.c7 = { as: bx('c7', '#c7as') }; }
 window.ready = document.fonts.ready.then(() => Promise.all([...document.images].map(i => i.complete ? 0 : new Promise(r => { i.onload = i.onerror = r; })))).then(() => { medir2(); window.renderAt(0); return true; });
 if (location.search.includes('play')) { const t0 = performance.now(); const loop = () => { window.renderAt((performance.now() - t0) / 1000 % TL.DUR); requestAnimationFrame(loop); }; requestAnimationFrame(loop); }
 </script>

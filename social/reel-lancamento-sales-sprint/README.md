@@ -7,7 +7,8 @@ funcionalidade (palavras entrando com tremulação e glitch), telas grandes com 
 momento-chave (perguntas de 4s e telas de 10s), clímax de cortes de um segundo com uma palavra cada, meio segundo de silêncio e a
 marca. Cores do Sales Coach (navy e azul) com o lima da NEXA como destaque. As telas redesenham o app
 de verdade, com dados de demonstração (dito no rodapé). Trilha thriller a 120 bpm, cortes no tempo.
-Preparado para narração: roteiro com tempos em `locucao.md` e uma trilha-cama própria.
+A câmera enquadra sempre o componente inteiro (cartão, painel ou janela), com margem: aproxima
+sem cortar a tela. Preparado para narração: roteiro com tempos em `locucao.md` e uma trilha-cama própria.
 
 | Tempo | Cena |
 |---|---|
