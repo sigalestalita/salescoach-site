@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <title>Carrossel · O ponto cego dos gestores de vendas</title>
 <link rel="stylesheet" href="inter.css">
+<link rel="stylesheet" href="poppins.css">
 <style>
 /* Carrossel de conteúdo (1080×1350) no estilo editorial da referência: cabeçalho de perfil, cards que
    alternam foto escura, cinza claro com painel arredondado e preto com dado; letras pesadas e
@@ -20,13 +21,14 @@ body.cla { background: #e6e6e6; color: #111; }
 
 /* Cabeçalho de perfil, rótulo do capítulo e seta */
 #perfil { position: absolute; left: 64px; top: 56px; display: flex; align-items: center; gap: 16px; z-index: 5; }
-#perfil i { width: 62px; height: 62px; border-radius: 50%; background: #fff; display: grid; place-items: center; }
-#perfil i b { width: 34px; height: 32px; background: #071A34; -webkit-mask: url(img/mark-white.png) center / contain no-repeat; }
-#perfil strong { display: block; font-size: 23px; font-weight: 700; letter-spacing: .02em; line-height: 1.1; }
+#perfil i { width: 62px; height: 62px; border-radius: 18px; background: #fff; display: grid; place-items: center; }
+#perfil i img { width: 38px; }
+#perfil strong { display: block; font-family: 'Poppins', sans-serif; font-size: 26px; font-weight: 600; letter-spacing: -.01em; line-height: 1.1; }
+#perfil strong em { font-style: normal; font-weight: 400; }
 #perfil span { display: flex; align-items: center; gap: 8px; font-size: 19px; opacity: .6; margin-top: 4px; }
 #perfil span img { height: 13px; }
-.cla #perfil i { background: #111; }
-.cla #perfil i b { background: #fff; }
+.cla #perfil i { box-shadow: 0 6px 18px -6px rgba(0,0,0,.18); }
+.cla #perfil strong { color: #071A34; }
 #tema { position: absolute; right: 64px; top: 68px; padding: 10px 20px; border-radius: 999px; font-size: 17px; z-index: 5;
   box-shadow: inset 0 0 0 1.5px rgba(255,255,255,.3); }
 .cla #tema { box-shadow: inset 0 0 0 1.5px rgba(0,0,0,.22); }
@@ -61,7 +63,7 @@ body.cla { background: #e6e6e6; color: #111; }
 </style>
 </head>
 <body>
-<div id="perfil"><i><b></b></i><div><strong>SALES COACH</strong><span>um produto <img id="nx" src="img/nexa-claro.svg" alt="NEXA"></span></div></div>
+<div id="perfil"><i><img src="img/mark.png" alt=""></i><div><strong>Sales <em>Coach</em></strong><span>um produto <img id="nx" src="img/nexa-claro.svg" alt="NEXA"></span></div></div>
 <div id="tema">Gestão de vendas</div>
 <div id="cap" class="caps"></div>
 <svg id="seta" width="74" height="30" viewBox="0 0 74 30" fill="none"><path d="M2 15h68M58 3l12 12-12 12" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
