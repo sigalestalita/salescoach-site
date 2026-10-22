@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Carrossel Atlas · Verdades duras sobre RH com imagens fofas</title>
+<link rel="stylesheet" href="inter.css">
+<link rel="stylesheet" href="poppins.css">
+<style>
+/* Carrossel no formato "verdades duras com imagens fofas" (1080×1350): foto fofa inteira em
+   cenário de escritório e uma frase curta, apertada e pesada no espaço livre da foto (creme sobre
+   fundo escuro, lilás acinzentado sobre fundo claro). O último card é o produto: tela do Atlas e o
+   preço. "Atlas · um produto NEXA" em todos os cards. ?s=1..8 escolhe o card. */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { width: 1080px; height: 1350px; overflow: hidden; }
+body { position: relative; font-family: 'Inter Tight', sans-serif; -webkit-font-smoothing: antialiased; background: #111; }
+.card { display: none; position: absolute; inset: 0; }
+.card.on { display: block; }
+.ft { position: absolute; inset: 0; background-size: cover; background-repeat: no-repeat; }
+.fr { position: absolute; font-weight: 700; font-size: 70px; line-height: .98; letter-spacing: -.05em; }
+.fr i { font-style: italic; font-weight: 300; letter-spacing: -.04em; }
+.fr small { display: block; font-size: .62em; line-height: 1.04; margin-top: 34px; opacity: .78; letter-spacing: -.03em; }
+.creme { color: #f7f1c6; text-shadow: 0 2px 24px rgba(0,0,0,.25); }
+.lilas { color: #66557f; }
+
+/* Marca: Atlas · um produto NEXA */
+#marca { position: absolute; left: 56px; top: 56px; display: flex; align-items: center; gap: 14px; z-index: 5; }
+#marca i { width: 52px; height: 52px; border-radius: 15px; background: #071A34; display: grid; place-items: center; box-shadow: 0 10px 24px -12px rgba(0,0,0,.5); }
+#marca i img { width: 30px; }
+#marca b { display: block; font-family: 'Poppins'; font-weight: 600; font-size: 24px; letter-spacing: -.01em; line-height: 1.05; }
+#marca span { display: flex; align-items: center; gap: 7px; font-size: 16px; margin-top: 3px; opacity: .8; }
+#marca span img { height: 11px; }
+#marca.claro i { box-shadow: 0 0 0 1.5px rgba(255,255,255,.45), 0 10px 24px -12px rgba(0,0,0,.5); }
+#marca.claro { color: #fff; text-shadow: 0 1px 12px rgba(0,0,0,.35); }
+#marca.escuro { color: #10120e; }
+
+/* Card do produto (tema do app Atlas: navy #071A34, primária #15498D, escala de cores do clima) */
+#prod { background:
+    radial-gradient(55% 28% at 8% 0%, rgba(212,249,105,.55), transparent 72%),
+    radial-gradient(60% 30% at 100% 2%, rgba(186,208,246,.9), transparent 70%),
+    radial-gradient(70% 26% at 20% 100%, rgba(212,249,105,.5), transparent 72%),
+    radial-gradient(60% 28% at 100% 98%, rgba(186,208,246,.9), transparent 70%),
+    linear-gradient(180deg, #ededea 0%, #e9eae6 45%, #eef0e8 100%); color: #10120e; }
+#prod h1 { position: absolute; left: 64px; right: 64px; top: 170px; font-size: 76px; font-weight: 700; line-height: .98; letter-spacing: -.05em; }
+#prod h1 span { color: #8d9188; }
+#prod .sub { position: absolute; left: 64px; right: 120px; top: 360px; font-size: 30px; line-height: 1.3; letter-spacing: -.02em; color: #4d5347; }
+#preco { position: absolute; left: 64px; top: 640px; }
+#preco .de { font-size: 26px; color: #6f7468; }
+#preco .v { display: flex; align-items: flex-start; gap: 8px; line-height: .85; margin-top: 10px; }
+#preco .v span { font-size: 44px; font-weight: 700; margin-top: 16px; }
+#preco .v b { font-size: 200px; font-weight: 800; letter-spacing: -.07em; }
+#preco .por { font-size: 30px; font-weight: 600; letter-spacing: -.02em; margin-top: 18px; }
+#preco .cta { display: inline-block; margin-top: 44px; background: #071A34; color: #fff; font-family: 'Poppins'; font-weight: 600; font-size: 24px; padding: 18px 32px; border-radius: 999px; }
+#app { position: absolute; left: 430px; top: 600px; width: 860px; height: 790px; border-radius: 26px; background: #fff; overflow: hidden; font-family: 'Poppins';
+  box-shadow: 0 0 0 6px rgba(255,255,255,.55), 0 0 0 7px rgba(16,18,14,.08), 0 60px 90px -50px rgba(20,24,40,.45);
+  --navy: #071A34; --pri: #15498D; --t1: #071A34; --t2: #64708a; --line: #e3e8f0; --c-low: hsl(18 82% 48%); --c-mid: hsl(34 90% 44%); --c-good: hsl(150 52% 38%); --c-high: hsl(158 60% 32%); }
+#app .topo { position: absolute; left: 0; right: 0; top: 0; height: 74px; background: var(--navy); display: flex; align-items: center; gap: 14px; padding-left: 28px; font-weight: 600; font-size: 21px; color: #fff; }
+#app .topo img { height: 26px; } #app .topo .hb { width: 22px; height: 14px; border-top: 2.5px solid #8aa0c4; border-bottom: 2.5px solid #8aa0c4; margin-right: 18px; }
+#app .lado { position: absolute; left: 0; top: 74px; bottom: 0; width: 78px; border-right: 1px solid var(--line); display: grid; align-content: start; justify-items: center; gap: 26px; padding-top: 30px; }
+#app .lado i { width: 22px; height: 22px; border-radius: 6px; border: 2.4px solid #9aa3b5; }
+#app .lado i.on { width: 44px; height: 44px; border: 0; border-radius: 12px; background: var(--pri); position: relative; }
+#app .lado i.on::after { content: ""; position: absolute; inset: 13px; border-radius: 50%; border: 2.4px solid #fff; }
+#app .miolo { position: absolute; left: 78px; top: 74px; right: 0; bottom: 0; background: #f4f6fa; padding: 18px 26px; color: var(--t1); }
+#app .trilha { font-size: 15px; color: #8b93a7; } #app .trilha b { color: var(--pri); font-weight: 500; }
+#app .cards { display: grid; grid-template-columns: 300px 236px 236px; gap: 16px; margin-top: 16px; }
+#app .cd { background: #fff; border-radius: 18px; border: 1px solid var(--line); padding: 18px 20px; }
+#app .cd .t { font-size: 16px; font-weight: 600; } #app .cd .v { font-size: 30px; font-weight: 500; margin-top: 6px; letter-spacing: -.02em; }
+#app .cd .s { font-size: 13px; color: var(--t2); margin-top: 2px; } #app .cd em { font-style: normal; color: var(--c-good); font-weight: 600; }
+#app .anel { display: flex; align-items: center; gap: 18px; } #app .anel svg { width: 104px; height: 104px; flex: 0 0 auto; }
+#app .anel .v { font-size: 15px; font-weight: 600; color: var(--c-good); margin-top: 6px; }
+#app .areas { margin-top: 16px; background: #fff; border-radius: 18px; border: 1px solid var(--line); padding: 20px 22px; }
+#app .areas .t { font-size: 18px; font-weight: 600; display: flex; justify-content: space-between; } #app .areas .t span { font-size: 14px; font-weight: 500; color: var(--t2); }
+#app .linha { display: grid; grid-template-columns: 150px 270px 44px; align-items: center; gap: 14px; margin-top: 15px; font-size: 15px; }
+#app .linha .b { height: 16px; border-radius: 8px; background: #eef2f8; overflow: hidden; } #app .linha .b i { display: block; height: 100%; border-radius: 8px; }
+#app .linha b { font-weight: 600; text-align: right; }
+#app .agir { margin-top: 16px; display: flex; gap: 10px; align-items: center; font-size: 15px; font-weight: 600; }
+#app .agir span { font-weight: 500; font-size: 13.5px; padding: 7px 14px; border-radius: 999px; background: #fdeee6; color: var(--c-low); } #app .agir span.m { background: #fdf3e2; color: var(--c-mid); }
+</style>
+</head>
+<body>
+<div id="marca"><i><img src="img/atlas.svg" alt=""></i><div><b>Atlas</b><span>um produto <img id="nx" src="img/nexa-claro.svg" alt="NEXA"></span></div></div>
+
+<!-- 1. Capa -->
+<section class="card" data-marca="escuro">
+  <div class="ft" style="background-image:url(fotos/f1.jpg);background-position:50% 70%"></div>
+  <div class="fr lilas" style="left:72px;top:330px;font-size:96px;line-height:.94"><i>Verdades<br>duras</i><br><i>sobre</i><br>RH<br><i>com</i><br>imagens<br>fofas</div>
+</section>
+<!-- 2 -->
+<section class="card" data-marca="escuro">
+  <div class="ft" style="background-image:url(fotos/f2.jpg);background-position:50% 100%"></div>
+  <div class="fr lilas" style="left:72px;right:160px;top:220px">Ninguém reclamar não significa que está tudo bem.</div>
+</section>
+<!-- 3 -->
+<section class="card" data-marca="claro">
+  <div class="ft" style="background-image:url(fotos/f3.jpg);background-position:50% 100%"></div>
+  <div class="fr creme" style="left:72px;right:200px;top:220px">Turnover baixo não significa time engajado.</div>
+</section>
+<!-- 4 -->
+<section class="card" data-marca="escuro">
+  <div class="ft" style="background-image:url(fotos/f4.jpg);background-position:50% 100%"></div>
+  <div class="fr lilas" style="left:72px;right:180px;top:200px">Pesquisa de clima sem plano de ação é só mais um formulário.</div>
+</section>
+<!-- 5 -->
+<section class="card" data-marca="escuro">
+  <div class="ft" style="background-image:url(fotos/f5.jpg);background-position:50% 100%"></div>
+  <div class="fr lilas" style="left:72px;right:140px;top:200px">Ninguém pede demissão do nada.<small>Os sinais estavam lá. Só faltou perguntar.</small></div>
+</section>
+<!-- 6 -->
+<section class="card" data-marca="claro">
+  <div class="ft" style="background-image:url(fotos/f6.jpg);background-position:50% 100%"></div>
+  <div class="fr creme" style="left:72px;right:72px;top:250px;text-align:center">Feedback uma vez por ano<br>não é feedback.<small style="font-style:italic;font-weight:300;font-size:1em;opacity:.9;margin-top:22px">É susto.</small></div>
+</section>
+<!-- 7. Conclusão -->
+<section class="card" data-marca="claro">
+  <div class="ft" style="background-image:url(fotos/f7.jpg);background-position:0% 60%"></div>
+  <div class="fr creme" style="left:690px;right:36px;top:330px;font-size:60px">Não existe clima bom por acaso.<small style="font-size:.86em;opacity:1;margin-top:40px">Existe escuta, leitura e ação.</small><small style="font-size:.6em;opacity:.7;margin-top:40px;letter-spacing:-.03em">Comece ouvindo o seu time.</small></div>
+</section>
+<!-- 8. Produto -->
+<section class="card" id="prod" data-marca="escuro" data-fundo="claro">
+  <h1><span>Sua empresa merece</span><br>ouvir o time de verdade.</h1>
+  <div class="sub">Pesquisa de clima, feedback 360 e eNPS, com resultado por área e por liderança.</div>
+  <div id="preco"><div class="de">por apenas</div><div class="v"><span>R$</span><b>30</b></div><div class="por">por usuário</div><div class="cta">Conheça o Atlas →</div></div>
+  <div id="app">
+    <div class="topo"><span class="hb"></span><img src="img/atlas.svg" alt="">Atlas</div>
+    <div class="lado"><i></i><i class="on"></i><i></i><i></i><i></i><i></i><i></i></div>
+    <div class="miolo">
+      <div class="trilha"><b>Pesquisas</b> / Clima 2026 · Resultado</div>
+      <div class="cards">
+        <div class="cd anel"><svg viewBox="0 0 120 120"><circle cx="60" cy="60" r="50" fill="none" stroke="#eef2f8" stroke-width="13"/><circle cx="60" cy="60" r="50" fill="none" stroke="hsl(150 52% 38%)" stroke-width="13" stroke-linecap="round" stroke-dasharray="232 314" transform="rotate(-90 60 60)"/><text x="60" y="70" text-anchor="middle" font-family="Poppins" font-size="32" font-weight="600" fill="#071A34">74</text></svg>
+          <div><div class="t">Clima geral</div><div class="v">Saudável</div><div class="s">de 0 a 100</div></div></div>
+        <div class="cd"><div class="t">Participação</div><div class="v">86%</div><div class="s"><em>↑ 14%</em> na rodada</div></div>
+        <div class="cd"><div class="t">eNPS</div><div class="v">+32</div><div class="s"><em>↑ 9</em> pontos</div></div>
+      </div>
+      <div class="areas"><div class="t">Clima por área <span>Média de 1 a 5</span></div>
+        <div class="linha"><span>Comercial</span><div class="b"><i style="width:84%;background:var(--c-high)"></i></div><b>4,2</b></div>
+        <div class="linha"><span>Atendimento</span><div class="b"><i style="width:78%;background:var(--c-good)"></i></div><b>3,9</b></div>
+        <div class="linha"><span>Operações</span><div class="b"><i style="width:70%;background:var(--c-good)"></i></div><b>3,5</b></div>
+        <div class="linha"><span>Tecnologia</span><div class="b"><i style="width:62%;background:var(--c-mid)"></i></div><b>3,1</b></div>
+        <div class="linha"><span>Financeiro</span><div class="b"><i style="width:52%;background:var(--c-low)"></i></div><b>2,6</b></div>
+      </div>
+      <div class="agir">Onde agir primeiro <span>Reconhecimento</span><span class="m">Carga de trabalho</span></div>
+      <div class="areas" style="margin-top:14px"><div class="t">Feedback 360 · Lideranças <span>12 líderes avaliados</span></div>
+        <div class="linha"><span>Comunicação</span><div class="b"><i style="width:80%;background:var(--pri)"></i></div><b>4,0</b></div></div>
+    </div>
+  </div>
+</section>
+
+<script>
+const n = +(new URLSearchParams(location.search).get('s') || 1), cards = document.querySelectorAll('.card'), c = cards[n - 1];
+c.classList.add('on');
+const m = document.getElementById('marca'); m.className = c.dataset.marca;
+document.getElementById('nx').src = c.dataset.marca === 'claro' ? 'img/nexa-claro.svg' : 'img/nexa.svg';
+window.ready = Promise.all([document.fonts.ready, ...[...document.images].map(i => i.complete ? 0 : new Promise(r => { i.onload = i.onerror = r; })),
+  ...[...c.querySelectorAll('.ft')].map(d => new Promise(r => { const i = new Image(); i.onload = i.onerror = r; i.src = d.style.backgroundImage.slice(5, -2); }))]);
+</script>
+</body>
+</html>
