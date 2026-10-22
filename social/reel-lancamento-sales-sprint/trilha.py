@@ -1,4 +1,4 @@
-"""Trilha da versão thriller (Sales Sprint, 130s): suspense que cresce até o clímax, a 120 bpm.
+"""Trilha da versão thriller (Sales Sprint, 90s): suspense que cresce até o clímax, a 120 bpm.
 Batimento cardíaco, relógio e um ostinato grave em semicolcheias que nunca para; pancada (braam) a
 cada pergunta, com um zap de glitch em cada palavra; bateria que ganha uma camada a cada
 funcionalidade (bumbo em meio tempo, caixa, cordas em staccato, bumbo 4/4, tambores, semicolcheias);
@@ -161,7 +161,7 @@ def virada(a, b, g=1, fim32=False):
         x += S16 if (k < .6 or not fim32) else S16 / 2
 # Abertura
 for i, (a, b) in enumerate(ABRE): add(FX, braam([.9, 1.05, 1.15][i]), a)
-for x in np.arange(ABRE[0][0] + .7, ABRE[0][0] + 2.4, S16 / 2): add(FX, tique(.8), x, pan=.3)   # contador 0 → 412
+for x in np.arange(ABRE[0][0] + .5, ABRE[0][0] + 1.8, S16 / 2): add(FX, tique(.8), x, pan=.3)   # contador 0 → 412
 add(FX, subida(1.6, .9), ABRE[2][1] - 1.6); virada(ABRE[2][1] - 1.0, ABRE[2][1], 1.0)
 # Capítulos: braam na pergunta, subida e virada até a tela, impacto quando a tela entra
 for i, (a, b) in enumerate(CAPS):
@@ -192,10 +192,10 @@ for i, ((a, b), ev, (off, vel)) in enumerate(zip(CAPS, TL['EVL'], TL['MAPA'])):
     for x0, x1 in ev.get('tecla', []):
         for x in np.arange(T(x0), T(x1), .08):
             if ok(x): add(FX, tecla(), x + rng.uniform(-.01, .01), pan=-.2)
-ZAP = [ABRE[0][0] + .1 + i * .22 for i in range(3)] + [ABRE[0][0] + .7 + i * .22 for i in range(2)] + [ABRE[0][0] + 2.5 + i * .22 for i in range(2)]
-ZAP += [ABRE[1][0] + .1 + i * .45 for i in range(3)] + [ABRE[2][0] + .1 + i * .45 for i in range(2)] + [ABRE[2][0] + 1.4 + i * .3 for i in range(3)]
+ZAP = [ABRE[0][0] + .1 + i * .16 for i in range(3)] + [ABRE[0][0] + .5 + i * .16 for i in range(2)] + [ABRE[0][0] + 1.9 + i * .16 for i in range(2)]
+ZAP += [ABRE[1][0] + .1 + i * .38 for i in range(3)] + [ABRE[2][0] + .1 + i * .35 for i in range(2)] + [ABRE[2][0] + .95 + i * .22 for i in range(3)]
 for (a, b), (n1, n2) in zip(CAPS, TL['QW']):
-    ZAP += [a + .2 + i * .18 for i in range(n1)] + [a + .2 + n1 * .18 + .1 + j * .18 for j in range(n2)]
+    ZAP += [a + .15 + i * .14 for i in range(n1)] + [a + .15 + n1 * .14 + .08 + j * .14 for j in range(n2)]
 ZAP += [CL[0] + n * CORTE for n in range(8)]
 for x in ZAP: add(FX, zap(1.0), x, pan=rng.uniform(-.4, .4))
 

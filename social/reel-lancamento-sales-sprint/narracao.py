@@ -33,13 +33,14 @@ def pausas(texto):  # reticências = pausa curta, fim de frase = pausa maior
     t = re.sub(r'…\s*', '… <break time="0.4s"/> ', texto.strip())
     return re.sub(r'([.?!])\s+(?=\S)', r'\1 <break time="0.6s"/> ', t)
 def pergunta(texto): return texto.strip().endswith('?')
-def gera(texto, vel=1.0, antes='', depois=''):
+PERGUNTA = {'stability': .45, 'similarity_boost': .8, 'style': .5, 'use_speaker_boost': True}
+def gera(texto, vel=1.0, antes='', depois='', seed=None):
     os.makedirs(CACHE, exist_ok=True)
-    if pergunta(texto):   # perguntas: modelo mais expressivo, frase inteira e tom dramático
-        modelo, corpo = 'eleven_v3', {'text': '[dramatic tone] [intense] ' + texto, 'model_id': 'eleven_v3', 'voice_settings': {'stability': .5, 'similarity_boost': .8, 'speed': vel}}
-    else:
-        modelo, corpo = MODELO, {'text': pausas(texto), 'model_id': MODELO, 'voice_settings': {**AJUSTE, 'speed': vel},
-                                 'previous_text': antes, 'next_text': depois}   # contexto: entonação contínua entre as falas
+    # perguntas: mesma voz e modelo, frase inteira (sem pausa no meio) e um pouco mais estável, para a entonação fechar limpa
+    corpo = {'text': texto if pergunta(texto) else pausas(texto), 'model_id': MODELO,
+             'voice_settings': {**(PERGUNTA if pergunta(texto) else AJUSTE), 'speed': vel},
+             'previous_text': antes, 'next_text': depois}   # contexto: entonação contínua entre as falas
+    if seed is not None: corpo['seed'] = seed
     h = hashlib.sha1(json.dumps([VOZ, corpo]).encode()).hexdigest()[:16]
     mp3, wav = f'{CACHE}/{h}.mp3', f'{CACHE}/{h}.wav'
     if not os.path.exists(mp3):
@@ -52,30 +53,50 @@ def gera(texto, vel=1.0, antes='', depois=''):
     i = np.flatnonzero(np.abs(x) > .01)   # tira o silêncio das pontas
     return x[max(0, i[0] - 200): i[-1] + 2400] if len(i) else x
 
+def media(x, n):  # média móvel O(N) (centrada)
+    c = np.cumsum(np.concatenate([np.zeros(n // 2 + 1), x, np.zeros(n // 2)])); return (c[n:] - c[:-n])[:len(x)] / n
+def f0s(x):
+    q, out = int(.04 * SR), []
+    for i in range(0, len(x) - q, q // 2):
+        w = x[i:i + q]
+        if np.sqrt((w ** 2).mean()) < .03: out.append(np.nan); continue
+        w = w - w.mean(); F = np.fft.rfft(w, 2 * q); ac = np.fft.irfft(F * np.conj(F))[:q]; lo, hi = int(SR / 260), int(SR / 70)   # autocorrelação via FFT
+        lag = lo + np.argmax(ac[lo:hi]); out.append(SR / lag if ac[lag] > .3 * ac[0] else np.nan)
+    return np.array(out)
+def subida(x):
+    f = f0s(x); v = f[~np.isnan(f)]
+    if len(v) < 8: return -99
+    n = len(v); return float(np.median(v[int(n * .75):]) - np.median(v[int(n * .25):int(n * .75)]))
+def nivel(x):   # cada fala no mesmo volume (RMS das partes faladas)
+    e = np.abs(x); r = np.sqrt((x[e > .02] ** 2).mean()) if (e > .02).any() else 1
+    return x * (.13 / r)
 sr, cama = wavfile.read('trilha-locucao.wav'); cama = cama.astype(float) / 32768
 N = len(cama); voz = np.zeros(N); LEG = []
 for k, (a, b, texto) in enumerate(falas):
     ini, jan = a + .3, (b - a) - .5
     antes = falas[k - 1][2] if k else ''; depois = falas[k + 1][2] if k + 1 < len(falas) else ''
-    x = gera(texto, 1.0, antes, depois)
+    if pergunta(texto):   # três tomadas; fica a que sobe mais no fim e cabe na janela
+        tomadas = [gera(texto, 1.0, antes, depois, sd) for sd in (11, 23, 37)]
+        cabem = [t for t in tomadas if len(t) / SR <= jan] or tomadas
+        x = max(cabem, key=subida); print(f'        pergunta: subida no fim {subida(x):+.0f} Hz (tomadas: {", ".join(f"{subida(t):+.0f}" for t in tomadas)})')
+    else:
+        x = gera(texto, 1.0, antes, depois)
     if len(x) / SR > jan:   # passou da janela: gera um pouco mais rápido
         x = gera(texto, round(min(1.15, len(x) / SR / jan + .02), 2), antes, depois)
-    if len(x) / SR > jan + (1.4 if pergunta(texto) else 0): print(f'AVISO: "{texto[:40]}…" ainda passa {len(x) / SR - jan:.1f}s da janela')
-    if pergunta(texto):   # impacto nas perguntas: um pouco mais alta e com cauda de eco de trailer
-        cauda = np.random.default_rng(3).standard_normal(int(1.4 * SR)) * np.exp(-np.arange(int(1.4 * SR)) / SR * 4.5) * .035
-        x = np.concatenate([x, np.zeros(len(cauda))]); x = x * 1.15 + fftconvolve(x, cauda)[:len(x)] * .5
+    x = nivel(x)
+    if len(x) / SR > jan: print(f'AVISO: "{texto[:40]}…" ainda passa {len(x) / SR - jan:.1f}s da janela')
     LEG.append((ini, x if not pergunta(texto) else None, texto, len(x) / SR))
     i = int(ini * SR); n = min(len(x), N - i); voz[i:i + n] += x[:n]
     print(f'{a:6.1f}s  {len(x) / SR:4.1f}s de {jan:4.1f}s  {texto}')
 
 voz = sosfilt(butter(2, 90, 'high', fs=SR, output='sos'), voz)
-voz = np.tanh(voz / np.percentile(np.abs(voz[np.abs(voz) > .01]), 99.5) * 1.1) * .9   # nível e leve compressão
-env = np.convolve(np.abs(voz), np.ones(int(.25 * SR)) / int(.25 * SR), 'same'); env = np.minimum(1, env / .05)
-duck = 1 - .45 * np.convolve(env, np.ones(int(.3 * SR)) / int(.3 * SR), 'same')   # música abaixa ~5 dB sob a voz
-mix = cama * duck[:, None] * 1.25 + voz[:, None] * .78
-mix = np.tanh(mix / max(1e-9, np.percentile(np.abs(mix), 99.95)) * 1.1) * .94
+voz = np.tanh(voz * 2.2) / np.tanh(2.2) * .78   # compressão: a voz fica na frente e com volume constante
+env = np.minimum(1, media(np.abs(voz), int(.2 * SR)) / .04)
+duck = 1 - .65 * media(env, int(.35 * SR))   # música abaixa ~9 dB sob a voz
+mix = cama * duck[:, None] * 1.4 + voz[:, None]
+mix = np.tanh(mix * 1.35) * .95   # ganho final e limitador suave: segura só os picos (as pancadas), sem baixar o resto
 os.makedirs('out', exist_ok=True)
-wavfile.write('out/narracao.wav', SR, (np.stack([voz, voz], 1) * .9 * 32767).astype(np.int16))
+wavfile.write('out/narracao.wav', SR, (np.stack([voz, voz], 1) * 32767).astype(np.int16))
 wavfile.write('out/trilha-com-narracao.wav', SR, (mix * 32767).astype(np.int16))
 
 # ---- Legendas: cada frase no tempo em que é falada (pelas pausas da própria voz)
@@ -111,6 +132,7 @@ for k in range(len(cues) - 1): cues[k][1] = min(cues[k][1], cues[k + 1][0])   # 
 def ts(t): h = int(t // 3600); m = int(t % 3600 // 60); s = t % 60; return f'{h:02d}:{m:02d}:{int(s):02d},{int(s % 1 * 1000):03d}'
 with open('out/legendas.srt', 'w', encoding='utf-8') as f:
     for k, (a, b, txt, _) in enumerate(cues, 1): f.write(f'{k}\n{ts(a)} --> {ts(b)}\n{txt}\n\n')
-# na imagem, só o que não está escrito na tela: as respostas sobre as telas do produto (16s a 118s)
-json.dump([[a, b, txt] for a, b, txt, resp in cues if resp and 16 <= a < 118], open('legendas.json', 'w', encoding='utf-8'), ensure_ascii=False, indent=0)
+# na imagem, só o que não está escrito na tela: as respostas sobre as telas do produto
+TL_A, TL_B = falas[4][0], falas[-2][0]   # da primeira resposta até antes da marca
+json.dump([[a, b, txt] for a, b, txt, resp in cues if resp and TL_A <= a < TL_B], open('legendas.json', 'w', encoding='utf-8'), ensure_ascii=False, indent=0)
 print('ok', len(falas), 'falas,', len(cues), 'legendas')
