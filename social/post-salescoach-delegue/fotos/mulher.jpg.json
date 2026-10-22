@@ -1,0 +1,11 @@
+{
+ "endpoint": "higgsfield-ai/soul/cinema",
+ "args": {
+  "prompt": "A Brazilian saleswoman around 33 with dark wavy hair tied back, wearing a simple navy blazer over a white t-shirt, sitting at a desk in a cozy modern office at dusk, wearing a slim wireless headset, confident and attentive while on a video sales call on a laptop, warm desk lamp light on one side and cool screen glow on her face, plants, bookshelves and soft bokeh lights in the dark background. Cinematic film still, 35mm lens, shallow depth of field, subtle teal and warm amber color grade, realistic skin texture, subject in the lower half of the frame with dark empty space above her head for a title, no text, no logos, no watermarks.",
+  "aspect_ratio": "3:4",
+  "resolution": "1080p",
+  "batch_size": 1
+ },
+ "url": "https://d3u0tzju9qaucj.cloudfront.net/266d8d97-07d5-4e92-897d-d70270f9fb4a/5e65b2b0-9657-4280-ac00-1bb7bb49699d.png",
+ "request_id": "392c0938-2560-44bf-ba8a-5b64516c0dc6"
+}

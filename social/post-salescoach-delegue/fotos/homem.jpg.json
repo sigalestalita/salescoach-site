@@ -1,0 +1,11 @@
+{
+ "endpoint": "higgsfield-ai/soul/cinema",
+ "args": {
+  "prompt": "A Brazilian salesman around 40 with short dark hair and a trimmed beard, wearing a casual olive overshirt over a t-shirt, sitting at a wooden desk in a cozy modern office at dusk, wearing a slim wireless headset, focused and calm while on a video sales call on a large desktop monitor seen from the side, warm desk lamp light on one side and cool monitor glow on his face, bookshelves and soft bokeh lights in the dark background. Cinematic film still, 35mm lens, shallow depth of field, subtle teal and warm amber color grade, realistic skin texture, subject in the lower half of the frame with dark empty space above his head for a title, no text, no logos, no watermarks.",
+  "aspect_ratio": "3:4",
+  "resolution": "1080p",
+  "batch_size": 1
+ },
+ "url": "https://d3u0tzju9qaucj.cloudfront.net/266d8d97-07d5-4e92-897d-d70270f9fb4a/64887f69-017f-47ff-af9e-af6c4377a153.png",
+ "request_id": "03c3a5eb-b4a2-4ba8-addb-c1c7798222bf"
+}
