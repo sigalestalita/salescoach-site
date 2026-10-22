@@ -424,7 +424,9 @@ let qAtual = null;
 function montaQ(linhas) { $('#q').innerHTML = linhas.map((l, li) => `<div class="l l${li + 1}">${l.split(' ').map(p => `<span class="p">${[...p].map(ch => `<span class="c">${ch}</span>`).join('')}</span>`).join(' ')}</div>`).join('');
   $$('#q .c').forEach((c, i) => { c._r = rnd(i + linhas[0].length * 3); c._i = i; });
   const q = $('#q'); q.style.letterSpacing = '-.015em'; let f = 124; q.style.fontSize = f + 'px';
-  while (f > 88 && $$('#q .p').some(p => p.scrollWidth > 940)) { f -= 4; q.style.fontSize = f + 'px'; } }
+  while (f > 88 && $$('#q .p').some(p => p.scrollWidth > 940)) { f -= 4; q.style.fontSize = f + 'px'; }
+  // trava as quebras de linha no espaçamento final: a animação do espaçamento não pode mudar a quebra
+  $$('#q .l').forEach(l => { let topo = null; $$('.p', l).forEach(p => { if (topo !== null && p.offsetTop > topo + 2) p.insertAdjacentHTML('beforebegin', '<br>'); topo = p.offsetTop; }); l.style.whiteSpace = 'nowrap'; l.style.textWrap = 'nowrap'; }); }
 function letreiro(t, linhas, a, b, encolhe = null) {
   const key = linhas.join('|'); if (qAtual !== key) { qAtual = key; montaQ(linhas); }
   const q = $('#q'), cs = $$('#q .c'), n = cs.length; q.style.visibility = '';
