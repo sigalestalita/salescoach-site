@@ -6,7 +6,7 @@ O Sales Coach é um coach de IA que entra em cada reunião do seu time. Ele grav
 
 Seu time vende. O Sales Coach faz o resto.
 
-A partir de R$ 89/mês por usuário. Um produto NEXA.
+A partir de R$ 89,90 por usuário/mês, sem limites de uso. Um produto NEXA.
 
 **Botão (CTA):** Cadastre-se · link: salescoach.grougp.com.br (ou a página do anúncio)
 
@@ -14,7 +14,7 @@ A partir de R$ 89/mês por usuário. Um produto NEXA.
 
 ---
 
-# Legenda · carrossel (10 cards, `out/carrossel/`)
+# Legenda · carrossel (11 cards, `out/carrossel/`)
 
 Seu time fez 412 reuniões este mês. Quantas você ouviu?
 
@@ -26,7 +26,7 @@ O Sales Coach é o coach de IA que entra em cada reunião do seu time:
 → Treina o time com um cliente simulado, por voz
 → E responde ao gestor sobre todas as reuniões
 
-Cada reunião vira método. A partir de R$ 89/mês por usuário.
+Cada reunião vira método. A partir de R$ 89,90 por usuário/mês, sem limites de uso.
 Arraste para o lado e conheça. Um produto NEXA.
 
 **Botão (CTA):** Cadastre-se

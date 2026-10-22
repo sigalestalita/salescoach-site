@@ -6,10 +6,11 @@
 <link rel="stylesheet" href="poppins.css">
 <link rel="stylesheet" href="fonts.css">
 <style>
-/* Carrossel de 10 cards (1080×1350) que continua o post "Seu time vende. O Sales Coach faz o resto.":
-   cards de foto, de frase e de mockup das funcionalidades, na mesma linguagem premium e minimalista:
-   quase preto com brilho azul embaixo, Poppins branca, lima só como acento, componentes do app grandes.
-   ?s=1..10 escolhe o card. */
+/* Carrossel de 11 cards (1080×1350) que continua o post "Seu time vende. O Sales Coach faz o resto.":
+   cards de foto, de frase e de funcionalidade. As funcionalidades usam as telas reais do app (as mesmas
+   do vídeo de lançamento, capturadas por ../reel-lancamento-sales-sprint/captura-telas.mjs): a janela
+   inteira para dar contexto e o elemento-chave ampliado por cima, para ler no celular.
+   "um produto NEXA" em todos os cards. ?s=1..11 escolhe o card. */
 * { margin: 0; padding: 0; box-sizing: border-box; }
 html, body { width: 1080px; height: 1350px; overflow: hidden; }
 body { position: relative; font-family: 'Poppins', sans-serif; color: #fff; -webkit-font-smoothing: antialiased;
@@ -21,37 +22,40 @@ body.foto { background: #04060A; }
 .card { display: none; position: absolute; inset: 0; }
 .card.on { display: block; }
 
-/* Moldura comum: marca à esquerda, contador à direita, seta para deslizar */
-#bar { position: absolute; left: 80px; right: 80px; top: 64px; display: flex; align-items: center; z-index: 5; }
-#bar .m { display: flex; align-items: center; gap: 14px; font-size: 26px; font-weight: 500; letter-spacing: -.02em; }
-#bar .m i { width: 44px; height: 44px; border-radius: 13px; background: #fff; display: grid; place-items: center; }
-#bar .m i b { width: 28px; height: 26px; background: #071A34; -webkit-mask: url(img/mark-white.png) center / contain no-repeat; }
-#bar .n { margin-left: auto; font-size: 18px; color: rgba(255,255,255,.55); }
-#seta { position: absolute; right: 80px; bottom: 64px; width: 64px; height: 64px; border-radius: 50%; border: 1.5px solid rgba(255,255,255,.28); display: grid; place-items: center; z-index: 5; }
+/* Moldura: marca no topo, seta para deslizar e "um produto NEXA" */
+#bar { position: absolute; left: 80px; top: 64px; display: flex; align-items: center; gap: 14px; font-size: 26px; font-weight: 500; letter-spacing: -.02em; z-index: 5; }
+#bar i { width: 44px; height: 44px; border-radius: 13px; background: #fff; display: grid; place-items: center; }
+#bar i b { width: 28px; height: 26px; background: #071A34; -webkit-mask: url(img/mark-white.png) center / contain no-repeat; }
+#seta { position: absolute; right: 80px; bottom: 50px; width: 60px; height: 60px; border-radius: 50%; border: 1.5px solid rgba(255,255,255,.28); display: grid; place-items: center; z-index: 5; }
+#nexa { position: absolute; left: 80px; bottom: 68px; display: flex; align-items: center; gap: 12px; font-size: 20px; color: rgba(255,255,255,.6); z-index: 5; }
+#nexa img { height: 16px; }
+#nexa.topo { left: 0; right: 0; bottom: auto; top: 70px; justify-content: center; text-shadow: 0 1px 12px rgba(0,0,0,.5); }
 
 /* Tipografia */
 .olho { font-size: 20px; color: #d4f969; }
-.tit { font-size: 70px; font-weight: 600; line-height: 1.06; letter-spacing: -.035em; }
+.tit { font-size: 68px; font-weight: 600; line-height: 1.06; letter-spacing: -.035em; }
 .tit .dim { font-weight: 500; }
 .txt { font-size: 30px; line-height: 1.4; color: rgba(255,255,255,.62); letter-spacing: -.01em; }
-.topo { position: absolute; left: 80px; right: 80px; top: 190px; }
+.topo { position: absolute; left: 80px; right: 80px; top: 170px; }
 
-/* Superfícies do app */
-.ui { position: absolute; background: #fff; color: #0B1B33; border-radius: 28px; box-shadow: 0 0 0 1px rgba(255,255,255,.08), 0 60px 120px -40px rgba(0,0,0,.8), 0 0 120px -20px rgba(63,140,240,.35); }
-.chip { display: inline-flex; align-items: center; gap: 8px; font-size: 18px; font-weight: 600; padding: 6px 16px; border-radius: 999px; }
-.bar { height: 12px; border-radius: 8px; background: #EEF1F5; overflow: hidden; } .bar i { display: block; height: 100%; border-radius: 8px; background: #15498D; }
+/* Telas reais: a janela do app e o destaque ampliado */
+.janela { position: absolute; left: 60px; top: 470px; width: 960px; border-radius: 12px;
+  box-shadow: 0 0 0 1px rgba(255,255,255,.1), 0 50px 100px -30px rgba(0,0,0,.85), 0 0 140px -30px rgba(63,140,240,.45); }
+.dest { position: absolute; border-radius: 22px; box-shadow: 0 0 0 1.5px rgba(212,249,105,.55), 0 50px 90px -20px rgba(0,0,0,.85), 0 0 80px -10px rgba(63,140,240,.5); }
 
 /* Fotos */
 .ft { position: absolute; inset: 0; background-size: cover; background-position: 50% 100%; }
 .ft::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(3,5,8,.75) 0%, rgba(3,5,8,.45) 28%, rgba(3,5,8,0) 55%); }
+.ft.base::after { background: linear-gradient(180deg, rgba(3,5,8,.75) 0%, rgba(3,5,8,.45) 28%, rgba(3,5,8,0) 50%, rgba(3,5,8,0) 72%, rgba(3,5,8,.7) 100%); }
 </style>
 </head>
 <body>
-<div id="bar"><div class="m"><i><b></b></i>Sales Coach</div><div class="n mono" id="num"></div></div>
-<div id="seta"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+<div id="bar"><i><b></b></i>Sales Coach</div>
+<div id="seta"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+<div id="nexa"><span>um produto</span><img src="img/nexa-claro.svg" alt="NEXA"></div>
 
-<!-- 1 · Capa (foto) -->
-<section class="card" data-foto>
+<!-- Capa (foto) -->
+<section class="card" data-foto data-nexa-topo>
   <div class="ft" style="background-image:url(fotos/homem.jpg)"></div>
   <div style="position:absolute;left:0;right:0;top:170px;text-align:center">
     <div style="display:inline-flex;align-items:center;gap:26px"><span style="width:104px;height:104px;border-radius:30px;background:#fff;display:grid;place-items:center"><b style="width:66px;height:62px;background:#071A34;-webkit-mask:url(img/mark-white.png) center/contain no-repeat"></b></span><span style="font-size:92px;font-weight:500;letter-spacing:-.03em">Sales Coach</span></div>
@@ -59,7 +63,7 @@ body.foto { background: #04060A; }
   </div>
 </section>
 
-<!-- 2 · Frase -->
+<!-- Frase -->
 <section class="card">
   <div style="position:absolute;left:80px;right:80px;top:330px">
     <div class="txt" style="font-size:40px">Seu time fez</div>
@@ -70,109 +74,51 @@ body.foto { background: #04060A; }
   </div>
 </section>
 
-<!-- 3 · Grava (mockup) -->
-<section class="card">
-  <div class="topo"><div class="olho mono">01 · Gravação</div><div class="tit" style="margin-top:22px">Grava cada reunião.<br><span class="dim">Sem robô na chamada.</span></div></div>
-  <div class="ui" style="left:150px;right:150px;top:600px;padding:0">
-    <div style="display:flex;align-items:center;gap:14px;padding:26px 30px;border-bottom:1px solid #EDF0F4">
-      <img src="img/mark-app.png" alt="" style="width:34px"><b style="font-size:26px">Sales Coach</b>
-      <span class="chip" style="margin-left:auto;color:#D63A2B;background:rgba(214,58,43,.1)">● REC 12:04</span></div>
-    <div style="padding:26px 30px">
-      <div style="display:flex;align-items:center;gap:12px;font-size:20px;color:#5A6779"><img src="img/googlemeet.svg" alt="" style="width:28px">Demo · Grupo Alfa · Google Meet</div>
-      <div style="display:grid;grid-template-columns:110px 1fr;gap:16px 18px;align-items:center;margin-top:26px;font-size:20px;color:#5A6779">
-        <span>Você</span><div class="bar"><i style="width:42%;background:#2FA36B"></i></div><span>Cliente</span><div class="bar"><i style="width:71%;background:#2FA36B"></i></div></div>
-      <div style="margin-top:26px;padding-top:20px;border-top:1px solid #EDF0F4"><div class="mono" style="font-size:15px;color:#8a94a3">Transcrição</div>
-        <div style="font-size:23px;line-height:1.45;margin-top:10px"><b>Cliente:</b> O orçamento já foi aprovado. Quem decide comigo é o Ricardo.</div></div></div></div>
-</section>
+<!-- Funcionalidades: tela real + destaque -->
+<section class="card" data-tela="c1" data-dest="500,740,520"><div class="topo"><div class="olho mono">Gravação</div><div class="tit" style="margin-top:22px">Grava cada reunião.<br><span class="dim">Sem robô na chamada.</span></div></div></section>
+<section class="card" data-tela="c2" data-dest="520,660,480"><div class="topo"><div class="olho mono">Coach ao vivo</div><div class="tit" style="margin-top:22px">A resposta certa<br><span class="dim">na hora da objeção.</span></div></div></section>
+<section class="card" data-tela="c3" data-dest="380,860,620"><div class="topo"><div class="olho mono">Análise</div><div class="tit" style="margin-top:22px">Nota e diagnóstico<br><span class="dim">de toda reunião.</span></div></div></section>
+<section class="card" data-tela="c4" data-dest="470,640,530"><div class="topo"><div class="olho mono">CRM</div><div class="tit" style="margin-top:22px">O CRM se preenche<br><span class="dim">sozinho.</span></div></div></section>
 
-<!-- 4 · Coach ao vivo (mockup) -->
-<section class="card">
-  <div class="topo"><div class="olho mono">02 · Coach ao vivo</div><div class="tit" style="margin-top:22px">A resposta certa<br><span class="dim">na hora da objeção.</span></div></div>
-  <div class="ui" style="left:150px;right:270px;top:600px;padding:22px 28px;border-radius:24px;font-size:24px;line-height:1.4"><span style="display:block;font-size:17px;color:#5A6779;margin-bottom:6px">Cliente · agora</span>Gostei, mas achei caro para o nosso momento.</div>
-  <div class="ui" style="left:150px;right:150px;top:790px;padding:30px 34px;background:linear-gradient(180deg,#EAF1FC,#F7F9FC)">
-    <div style="display:flex;justify-content:space-between;align-items:center"><span class="chip" style="color:#15498D;background:rgba(21,73,141,.1)">objeção</span><span style="font-size:18px;color:#6b7686">agora</span></div>
-    <div style="margin-top:20px;font-size:18px;font-weight:800;letter-spacing:.1em;color:#15498D">FALE AGORA</div>
-    <div style="margin-top:10px;font-size:36px;font-weight:600;line-height:1.3;letter-spacing:-.01em">Pergunte quanto custa hoje uma proposta que esfria, antes de falar em desconto.</div>
-    <div style="margin-top:16px;font-size:20px;color:#6b7686">Só o vendedor vê.</div></div>
-</section>
-
-<!-- 5 · Análise (mockup) -->
-<section class="card">
-  <div class="topo"><div class="olho mono">03 · Análise</div><div class="tit" style="margin-top:22px">Nota e diagnóstico<br><span class="dim">de toda reunião.</span></div></div>
-  <div class="ui" style="left:150px;right:150px;top:560px;padding:26px 34px;color:#fff;background:linear-gradient(135deg,#071A34,#15498D)">
-    <div style="font-size:21px;opacity:.85">Score Geral</div>
-    <div style="display:flex;align-items:baseline;gap:14px;margin-top:4px"><b style="font-size:96px;font-weight:700;letter-spacing:-.03em;line-height:1">86</b><span style="font-size:26px;opacity:.8">de 100</span><span class="chip" style="margin-left:auto;background:rgba(255,255,255,.14);color:#fff">🔥 Quente</span></div></div>
-  <div class="ui" style="left:150px;right:150px;top:790px;padding:26px 34px">
-    <div style="display:flex;justify-content:space-between;font-size:22px;font-weight:600"><span>BANT</span><span style="color:#15498D">86/100</span></div>
-    ${0}
-  </div>
-</section>
-
-<!-- 6 · CRM (mockup) -->
-<section class="card">
-  <div class="topo"><div class="olho mono">04 · CRM</div><div class="tit" style="margin-top:22px">O CRM se preenche<br><span class="dim">sozinho.</span></div></div>
-  <div class="ui" style="left:150px;right:150px;top:590px;padding:30px 34px;font-family:'DM Sans'">
-    <div style="display:flex;align-items:center;gap:12px;font-size:19px;color:#516F90"><img src="img/hubspot.svg" alt="" style="height:26px">Negócios › Grupo Alfa – Expansão</div>
-    <div style="font-size:34px;font-weight:500;color:#213343;margin-top:14px">Grupo Alfa – Expansão</div>
-    <div id="crm" style="margin-top:14px"></div>
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-top:16px;padding:16px 18px;border-radius:14px;background:#F5F8FA;font-size:21px;color:#213343"><span>Tarefa: Enviar proposta · 24/10</span><span class="chip" style="color:#237A55;background:rgba(35,122,85,.12)">criada</span></div></div>
-</section>
-
-<!-- 7 · Treino (foto + mockup) -->
+<!-- Treino (foto + tela real) -->
 <section class="card" data-foto>
-  <div class="ft" style="background-image:url(fotos/mulher.jpg)"></div>
-  <div class="topo" style="top:180px;text-align:center"><div class="olho mono">05 · Treino</div><div class="tit" style="margin-top:22px;text-shadow:0 2px 30px rgba(0,0,0,.4)">Treine antes do<br>cliente de verdade.</div></div>
-  <div class="ui" style="left:80px;bottom:150px;width:440px;padding:24px 28px;color:#fff;background:linear-gradient(135deg,#071A34,#15498D)">
-    <div style="font-size:19px;opacity:.85">Score do treino</div>
-    <div style="display:flex;align-items:baseline;gap:12px"><b style="font-size:76px;font-weight:700;line-height:1.05">81</b><span style="font-size:22px;opacity:.8">de 100</span><span class="chip" style="margin-left:auto;background:#d4f969;color:#071A34">+19</span></div>
-    <div style="font-size:18px;opacity:.8">Cliente simulado, por voz</div></div>
+  <div class="ft base" style="background-image:url(fotos/mulher.jpg)"></div>
+  <div class="topo" style="top:180px;text-align:center"><div class="olho mono">Treino</div><div class="tit" style="margin-top:22px;text-shadow:0 2px 30px rgba(0,0,0,.4)">Treine antes do<br>cliente de verdade.</div></div>
+  <img class="dest" src="telas/c5-destaque.png" alt="" style="left:80px;top:1000px;width:520px">
 </section>
 
-<!-- 8 · Gestão (mockup) -->
-<section class="card">
-  <div class="topo"><div class="olho mono">06 · Gestão</div><div class="tit" style="margin-top:22px">Pergunte sobre<br><span class="dim">todas as reuniões.</span></div></div>
-  <div class="ui" style="left:150px;right:150px;top:590px;overflow:hidden">
-    <div style="padding:24px 30px;color:#fff;background:linear-gradient(135deg,#071A34,#15498D);display:flex;align-items:center;gap:12px;font-size:24px;font-weight:600"><span id="ic-sp"></span>Assistente de vendas</div>
-    <div style="padding:28px 30px;display:flex;flex-direction:column;gap:18px">
-      <div style="align-self:flex-end;max-width:80%;padding:18px 22px;border-radius:22px 22px 6px 22px;color:#fff;background:linear-gradient(135deg,#071A34,#15498D);font-size:23px;line-height:1.4">Quais objeções mais aparecem nas reuniões do time?</div>
-      <div style="max-width:92%;padding:18px 22px;border-radius:22px 22px 22px 6px;background:#EEF1F5;font-size:23px;line-height:1.45">Preço aparece em <b>31 reuniões</b> e "já temos ferramenta" em <b>18</b>. Quem melhor contorna preço é o Bruno (nota 84).</div></div></div>
-</section>
+<section class="card" data-tela="c6" data-dest="90,880,900"><div class="topo"><div class="olho mono">Argumentos</div><div class="tit" style="margin-top:22px">O argumento certo<br><span class="dim">para cada lead.</span></div></div></section>
+<section class="card" data-tela="c7" data-dest="580,620,440"><div class="topo"><div class="olho mono">Gestão</div><div class="tit" style="margin-top:22px">Pergunte sobre<br><span class="dim">todas as reuniões.</span></div></div></section>
 
-<!-- 9 · Frase -->
+<!-- Frase -->
 <section class="card">
   <div style="position:absolute;left:80px;right:80px;top:420px">
     <div style="font-size:124px;font-weight:600;letter-spacing:-.05em;line-height:1.02">Cada reunião<br>vira <span style="background:linear-gradient(transparent 70%, rgba(212,249,105,.9) 70%, rgba(212,249,105,.9) 88%, transparent 88%)">método.</span></div>
     <div class="mono dim" style="font-size:20px;margin-top:64px;line-height:2">Grava · Sopra · Avalia · Preenche · Treina</div></div>
 </section>
 
-<!-- 10 · CTA -->
-<section class="card">
-  <div style="position:absolute;left:0;right:0;top:330px;text-align:center">
-    <span style="display:inline-grid;place-items:center;width:150px;height:150px;border-radius:42px;background:#fff;box-shadow:0 0 120px -10px rgba(63,140,240,.6)"><b style="width:94px;height:88px;background:#071A34;-webkit-mask:url(img/mark-white.png) center/contain no-repeat"></b></span>
-    <div style="font-size:96px;font-weight:500;letter-spacing:-.035em;margin-top:44px;line-height:1">Sales Coach</div>
-    <div class="txt" style="margin-top:28px;font-size:34px">Um coach em cada reunião do seu time.</div>
-    <div style="margin-top:70px;display:inline-flex;align-items:center;gap:26px">
-      <span style="background:#fff;color:#071A34;font-size:28px;font-weight:600;padding:22px 44px;border-radius:999px">Cadastre-se</span>
-      <span style="font-size:26px;color:rgba(255,255,255,.7)">a partir de <b style="color:#fff;font-weight:600">R$ 89</b>/mês por usuário</span></div>
-    <div style="margin-top:120px;display:flex;justify-content:center;align-items:center;gap:12px;font-size:20px;color:rgba(255,255,255,.5)">um produto <img src="img/nexa-claro.svg" alt="NEXA" style="height:16px"></div></div>
+<!-- Preço -->
+<section class="card" data-sem-bar>
+  <div style="position:absolute;left:0;right:0;top:220px;text-align:center">
+    <span style="display:inline-grid;place-items:center;width:120px;height:120px;border-radius:34px;background:#fff;box-shadow:0 0 120px -10px rgba(63,140,240,.6)"><b style="width:76px;height:71px;background:#071A34;-webkit-mask:url(img/mark-white.png) center/contain no-repeat"></b></span>
+    <div style="font-size:64px;font-weight:500;letter-spacing:-.03em;margin-top:30px;line-height:1">Sales Coach</div>
+    <div class="txt" style="margin-top:110px;font-size:34px">a partir de</div>
+    <div style="margin-top:8px;display:inline-flex;align-items:flex-start;gap:10px;line-height:1"><span style="font-size:58px;font-weight:500;margin-top:22px">R$</span><span style="font-size:200px;font-weight:600;letter-spacing:-.05em">89</span><span style="font-size:76px;font-weight:600;margin-top:22px">,90</span></div>
+    <div class="txt" style="font-size:34px;margin-top:6px">por usuário/mês</div>
+    <div style="margin-top:44px;display:inline-flex;align-items:center;gap:14px;font-size:30px;font-weight:500;padding:14px 30px;border-radius:999px;background:rgba(212,249,105,.12);color:#d4f969;box-shadow:inset 0 0 0 1.5px rgba(212,249,105,.5)">Sem limites de uso</div>
+    <div style="margin-top:64px"><span style="display:inline-block;background:#fff;color:#071A34;font-size:30px;font-weight:600;padding:22px 52px;border-radius:999px">Cadastre-se</span></div></div>
 </section>
 
-<script src="icones.js"></script>
 <script>
-const ic = (n, s = 26) => `<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">${ICONES[n] || ''}</svg>`;
-document.getElementById('ic-sp').innerHTML = ic('sparkles');
-// BANT do card 5
-document.querySelectorAll('.card')[4].querySelector('.ui:last-child').innerHTML = document.querySelectorAll('.card')[4].querySelector('.ui:last-child').innerHTML.replace('${0}',
-  [['Budget', 22, 'Orçamento aprovado no trimestre'], ['Authority', 23, 'O sócio que decide estava na reunião'], ['Need', 24, 'Propostas esfriam sem acompanhamento'], ['Timeline', 17, 'Quer resolver até o fim do mês']]
-  .map(([n, v, r]) => `<div style="margin-top:16px"><div style="display:flex;justify-content:space-between;font-size:20px;font-weight:500"><span>${n}</span><span>${v}/25</span></div><div class="bar" style="margin-top:8px"><i style="width:${v * 4}%"></i></div><div style="font-size:16px;color:#5A6779;font-style:italic;margin-top:5px">${r}</div></div>`).join(''));
-// Campos do CRM do card 6
-document.getElementById('crm').innerHTML = [['Nota da reunião', '86'], ['Temperatura', 'Quente'], ['Próximo passo', 'Enviar proposta ao Ricardo'], ['Data do próximo passo', '24/10/2026']]
-  .map(([l, v]) => `<div style="display:grid;grid-template-columns:260px 1fr auto;gap:14px;align-items:center;padding:15px 16px;border-radius:12px;background:#F3FBE3;margin-top:10px;font-size:21px"><span style="color:#516F90">${l}</span><b style="font-weight:500;color:#213343">${v}</b><span class="chip" style="font-size:14px;color:#237A55;background:rgba(35,122,85,.12)">Sales Coach</span></div>`).join('');
 const n = +(new URLSearchParams(location.search).get('s') || 1), cards = document.querySelectorAll('.card'), c = cards[n - 1];
 c.classList.add('on'); document.body.classList.toggle('foto', c.hasAttribute('data-foto'));
-document.getElementById('num').textContent = `${String(n).padStart(2, '0')} / ${cards.length}`;
-document.getElementById('bar').style.display = n === 1 || n === cards.length ? 'none' : 'flex';   // capa e CTA já têm a marca grande
+const id = c.dataset.tela;
+if (id) { const [x, y, w] = c.dataset.dest.split(',').map(Number);
+  c.insertAdjacentHTML('beforeend', `<img class="janela" src="telas/${id}-janela.png" alt=""><img class="dest" src="telas/${id}-destaque.png" alt="" style="left:${x}px;top:${y}px;width:${w}px">`); }
+document.getElementById('bar').style.display = n === 1 || c.hasAttribute('data-sem-bar') ? 'none' : 'flex';   // capa e preço já têm a marca grande
 document.getElementById('seta').style.display = n === cards.length ? 'none' : 'grid';
+document.getElementById('nexa').classList.toggle('topo', c.hasAttribute('data-nexa-topo'));
+if (n === cards.length) Object.assign(document.getElementById('nexa').style, { left: '0', right: '0', justifyContent: 'center' });
 window.ready = Promise.all([document.fonts.ready, ...[...document.images].map(i => i.complete ? 0 : new Promise(r => { i.onload = i.onerror = r; }))]);
 </script>
 </body>
