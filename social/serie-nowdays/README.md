@@ -40,3 +40,18 @@ node render.mjs            # out/<id>-<slug>/tela-01.jpg …  (ou: node render.m
 # serie.html?p=s1&s=3 mostra uma tela no navegador; textos em dados.js
 ```
 Legendas em `legendas.md`.
+
+## Calendário com os carrosséis "ponto cego" e "Atlas fofos"
+
+Três quadros fixos no perfil: a série editorial (base da grade), os "grandes argumentos" (ponto cego) e
+as "verdades duras com imagens fofas". As frases do a1 e do a2 não repetem as do carrossel dos animais, e
+o n2 fica a pelo menos duas semanas do ponto cego.
+
+| Semana | Seg | Qua | Sex |
+|---|---|---|---|
+| 1 | n1 | ponto cego (`../carrossel-ponto-cego`) | a1 |
+| 2 | s1 | animais (`../carrossel-atlas-fofos`) | n3 |
+| 3 | a3 | s2 | n2 |
+| 4 | a2 | s3 | n4 |
+
+Os comerciais s4 e a4 fecham o ciclo, no feed ou como anúncio.

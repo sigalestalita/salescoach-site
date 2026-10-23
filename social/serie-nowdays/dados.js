@@ -145,7 +145,7 @@ const POSTS = [
       { tipo: 'textoimg', foto: 'a1-txt',
         a: 'clima responde **onde** está o problema. 360 responde **quem** pode ajudar a resolver.',
         b: 'por isso as empresas mais maduras **usam as duas**: o clima uma ou duas vezes por ano, o 360 nos ciclos de desenvolvimento.' },
-      { tipo: 'citacao', frase: 'pesquisa sem plano de ação é só mais um formulário.', cred: 'atlas · pesquisa de clima e 360' },
+      { tipo: 'citacao', frase: 'quem pergunta assume o compromisso de ouvir a resposta.', cred: 'atlas · pesquisa de clima e 360' },
       { tipo: 'virada', titulo: 'o que mata a pesquisa não é a pergunta. é o silêncio depois dela.',
         texto: 'se o time responde e nada muda, na próxima ele não responde. ou responde o que acha que você quer ouvir.' },
       { tipo: 'fecha', texto: 'antes de escolher a pesquisa, escolha **o que você vai fazer com a resposta**.', cta: 'salva pra próxima reunião de rh' },
@@ -156,7 +156,7 @@ const POSTS = [
     id: 'a2', marca: 'atlas', slug: 'sinais-do-clima', tipo: 'conteúdo', telas: [
       { tipo: 'capa', modo: 'gig', foto: 'a2-capa', texto: 'o clima do seu time está pior do que parece?' },
       { tipo: 'cur', foto: 'a2-s1', num: 'sinal 01', titulo: 'o silêncio nas reuniões', texto: 'ninguém discorda, ninguém pergunta. não é alinhamento: é desistência.' },
-      { tipo: 'cur', foto: 'a2-s2', num: 'sinal 02', titulo: 'a demissão “do nada”', texto: 'ninguém sai do nada. os sinais estavam lá. só faltou perguntar.' },
+      { tipo: 'cur', foto: 'a2-s2', num: 'sinal 02', titulo: 'o pedido de demissão surpresa', texto: 'quase sempre houve aviso: o 1:1 cancelado, a câmera desligada, a pergunta que a pessoa parou de fazer.' },
       { tipo: 'cur', foto: 'a2-s3', num: 'sinal 03', titulo: 'a cadeira vazia', texto: 'faltas e atestados que aumentam aos poucos, sempre na mesma área.' },
       { tipo: 'cur', foto: 'a2-s4', num: 'sinal 04', titulo: 'só a liderança fala', texto: 'quando o gestor fala e o time olha para baixo, a conversa já acabou.' },
       { tipo: 'fecha', texto: 'nenhum desses sinais aparece no relatório do mês. aparecem **quando alguém pergunta do jeito certo**: anônimo, por área e com retorno.', cta: 'qual sinal você já viu aí?' },

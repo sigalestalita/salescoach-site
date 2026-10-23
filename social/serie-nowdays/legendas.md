@@ -89,7 +89,7 @@ fica a reflexão: antes de escolher a pesquisa, você já sabe o que vai fazer c
 
 ## a2 · Atlas · conteúdo · o clima do seu time está pior do que parece?
 
-silêncio nas reuniões, a demissão "do nada", a cadeira vazia que aparece cada vez mais na mesma área, a liderança falando sozinha.
+silêncio nas reuniões, o pedido de demissão que pega todo mundo de surpresa, a cadeira vazia que aparece cada vez mais na mesma área, a liderança falando sozinha.
 
 nenhum desses sinais aparece no relatório do mês. eles aparecem quando alguém pergunta do jeito certo: anônimo, por área e com retorno para o time.
 
