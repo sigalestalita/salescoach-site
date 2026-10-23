@@ -9,10 +9,11 @@ Atlas e NEXA: um carrossel de 5 imagens e 2 posts únicos por marca (21 imagens)
   `HIGGSFIELD_API_KEY`/`HIGGSFIELD_API_SECRET`), nunca no repositório.
   - `python3 cenas.py` gera as que faltam; `python3 cenas.py sc-c4` refaz uma.
   - **Confira letra por letra** cada foto: o gerador às vezes erra uma palavra (ex.: "Obj·ção"); refaça.
-- A assinatura da marca (ex.: "SALES COACH · BY NEXA") entra no acabamento, por cima da foto.
+- Acabamento: `node render.mjs [ids]` gera `out/<id>.jpg` (1080x1350) a partir de `acabamento.html`, com a
+  assinatura discreta embaixo ("SALES COACH · NEXA", com o logo da NEXA e o ponto lima).
 
 ## Situação
 
-- Prontas: `sc-c1` (metrô), `sc-c2` (relógio).
+- Prontas, com acabamento em `out/`: `sc-c1` (metrô, legenda em `legendas.md`), `sc-c2` (relógio).
 - Refazer: `sc-c4` (placa: saiu "Obj·ção").
 - Faltam as outras 18: os créditos da Higgsfield acabaram em 23/10.

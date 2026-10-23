@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8">
+<link rel="stylesheet" href="../serie-nowdays/inter.css">
+<style>
+  /* Acabamento da série "Frases na cena": a foto do Ideogram em 1080x1350 e a
+     assinatura discreta da marca embaixo, como o "INVICTUS · MENTALITY CULTURE"
+     da referência. ?f=<id da foto>&m=<sales-coach|atlas|nexa> */
+  html, body { margin: 0; width: 1080px; height: 1350px; background: #000; }
+  .foto { position: absolute; inset: 0; background: center / cover no-repeat; }
+  .sombra { position: absolute; left: 0; right: 0; bottom: 0; height: 260px; background: linear-gradient(to top, rgba(0,0,0,.55), rgba(0,0,0,0)); }
+  .assina { position: absolute; left: 0; right: 0; bottom: 56px; display: flex; align-items: center; justify-content: center; gap: 18px; color: rgba(255,255,255,.86); font-family: 'Inter Tight', system-ui, sans-serif; font-weight: 500; font-size: 15px; letter-spacing: .34em; text-transform: uppercase; text-shadow: 0 1px 6px rgba(0,0,0,.5); }
+  .assina .sep { width: 4px; height: 4px; border-radius: 50%; background: currentColor; opacity: .7; }
+  .logo { display: flex; align-items: center; gap: 7px; }
+  .logo svg { width: 88px; height: 17px; overflow: visible; filter: drop-shadow(0 1px 4px rgba(0,0,0,.5)); }
+  .logo path { fill: none; stroke: rgba(255,255,255,.92); stroke-width: 13; stroke-linecap: round; }
+  .logo i { width: 6px; height: 6px; border-radius: 50%; background: #d4f969; box-shadow: 0 0 10px #d4f969; margin-top: 10px; }
+</style></head>
+<body>
+  <div class="foto" id="foto"></div><div class="sombra"></div>
+  <div class="assina" id="assina"></div>
+<script>
+  const q = new URLSearchParams(location.search), f = q.get('f'), m = q.get('m');
+  document.getElementById('foto').style.backgroundImage = `url(fotos/${f}.jpg)`;
+  const logo = '<span class="logo"><svg viewBox="0 0 800 150"><path d="M8 139V12L175 139V12M200 12H366M200 12V139H366M200 75H366M390 12L558 139M558 12L390 139M580 139L685 12L792 139M618 95H755"/></svg><i></i></span>';
+  const produto = { 'sales-coach': 'Sales Coach', atlas: 'Atlas · Clima de time', nexa: 'IA aplicada ao negócio' }[m] || '';
+  document.getElementById('assina').innerHTML = m === 'nexa' ? `${logo}<span class="sep"></span><span>${produto}</span>` : `<span>${produto}</span><span class="sep"></span>${logo}`;
+</script>
+</body></html>
