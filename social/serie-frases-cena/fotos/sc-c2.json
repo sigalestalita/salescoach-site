@@ -1,0 +1,9 @@
+{
+ "endpoint": "ideogram/v4.0",
+ "args": {
+  "prompt": "Extreme close-up of a black smartwatch on a dark wooden desk beside a navy blue notebook and a black pen, warm low lamp light. The watch screen is filled edge to edge with large white text reading exactly: \"A call acabou. O aprendizado n\u00e3o.\" A tiny header at the top of the screen reads \"Vendas\" and \"18:42\". Moody cinematic photograph, tight close framing so the text is large and dominates the frame, natural low light, 35mm film grain, slightly desaturated tones, shallow depth of field, photorealistic, realistic textures, wear and imperfections. The text is sharp, bold and perfectly legible, spelled exactly as written in Brazilian Portuguese with correct accents. No other words, no logos, no watermark, no people facing the camera.",
+  "aspect_ratio": "4:5"
+ },
+ "url": "https://d3u0tzju9qaucj.cloudfront.net/266d8d97-07d5-4e92-897d-d70270f9fb4a/b9d9875e-b23e-494a-bc88-460ab37f4fb7/8a6f5232-5c14-4111-93db-d1504aabd524.png",
+ "request_id": "b9d9875e-b23e-494a-bc88-460ab37f4fb7"
+}
