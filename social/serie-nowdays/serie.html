@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Série editorial · NEXA, Sales Coach e Atlas</title>
+<link rel="stylesheet" href="inter.css">
+<link rel="stylesheet" href="instrument.css">
+<style>
+/* Série no ritmo do @nowdays (social/referencias/nowdays/resumo-estilo.md): capa fotográfica com frase em
+   CAIXA ALTA direto sobre a foto, telas chapadas com ruído (a cor da marca no papel do vinho, o escuro no
+   do preto, o off-white), corpo em caixa baixa, uma tela em serifa por carrossel e a assinatura pequena
+   centralizada embaixo. serie.html?p=n1&s=3 mostra a tela 3 do post n1 (dados em dados.js). */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { width: 1080px; height: 1350px; overflow: hidden; }
+body { position: relative; font-family: 'Inter Tight', 'Helvetica Neue', sans-serif; -webkit-font-smoothing: antialiased;
+  background: var(--esc); color: #fff; }
+body.nexa  { --cor: #46590a; --esc: #10120e; --cla: #f3f4ee; --tinta: #10120e; --dest: #d4f969; }
+body.sc    { --cor: #071a34; --esc: #0b0b0b; --cla: #ecebe6; --tinta: #071a34; --dest: #d4f969; }
+body.atlas { --cor: #15498d; --esc: #071a34; --cla: #eef0f2; --tinta: #15498d; --dest: #bcd6f5; }
+
+.tela { position: absolute; inset: 0; overflow: hidden; }
+.tela.cor { background: var(--cor); }
+.tela.esc { background: var(--esc); }
+.tela.cla { background: var(--cla); color: var(--tinta); }
+
+/* Ruído de filme sobre tudo (fotos e chapados) */
+.grao::after { content: ""; position: absolute; inset: -50%; pointer-events: none; z-index: 8; opacity: .22; mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .5  0 0 0 0 .5  0 0 0 0 .5  0 0 0 1.2 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>"); }
+.cla.grao::after { opacity: .5; mix-blend-mode: multiply; }
+
+.foto { position: absolute; inset: 0; background-size: cover; background-position: center; }
+.foto.escura { filter: brightness(.42) saturate(.75); }
+.foto.desbotada { filter: grayscale(1) contrast(.9) brightness(.58); }
+
+/* Tipografia */
+.caps { text-transform: uppercase; }
+p, .corpo { font-size: 33px; line-height: 1.32; letter-spacing: -.005em; }
+b { font-weight: 700; }
+em { font-style: italic; font-weight: 700; }
+.esc b, .cor b, .foto-tela b { color: var(--dest); }
+.manchete { font-weight: 800; text-transform: uppercase; letter-spacing: -.035em; line-height: .94; }
+.serifa { font-family: 'Instrument Serif', serif; font-weight: 400; letter-spacing: -.01em; }
+
+/* Capa */
+.capa-txt { position: absolute; left: 90px; right: 90px; top: 50%; transform: translateY(-50%); text-align: center; z-index: 3;
+  text-shadow: 0 2px 30px rgba(0,0,0,.35); }
+.capa-txt.peq { font-weight: 700; font-size: 48px; letter-spacing: .06em; word-spacing: .55em; line-height: 1.3; text-transform: uppercase; }
+.capa-txt.gig { font-weight: 800; font-size: 118px; letter-spacing: -.045em; line-height: .9; text-transform: uppercase; left: 60px; right: 60px; }
+
+/* Assinatura */
+.ass { position: absolute; left: 0; right: 0; bottom: 54px; display: flex; justify-content: center; align-items: center; gap: 10px;
+  font-size: 19px; letter-spacing: .02em; z-index: 9; opacity: .92; }
+.ass img.logo { height: 15px; }
+.ass img.ic { height: 24px; }
+.ass .nx { height: 11px; margin-left: 2px; }
+.ass s { text-decoration: none; opacity: .65; }
+
+/* Contexto */
+.bloco { position: absolute; left: 90px; right: 90px; z-index: 3; }
+.titulo { font-size: 50px; font-weight: 700; letter-spacing: -.03em; line-height: 1.04; margin-bottom: 30px; }
+
+/* Dado */
+.dado-foto { position: absolute; left: 50%; top: 190px; width: 380px; height: 470px; transform: translateX(-50%);
+  background-size: cover; background-position: center; filter: grayscale(1) contrast(1.15) brightness(.85); }
+.dado-txt { position: absolute; left: 90px; right: 90px; top: 720px; text-align: center; }
+.dado-txt .manchete { font-size: 64px; }
+.fonte { margin-top: 34px; font-size: 19px; letter-spacing: .14em; text-transform: uppercase; opacity: .6; }
+
+/* Infográfico */
+.info { position: absolute; left: 90px; right: 90px; top: 150px; bottom: 150px; display: flex; flex-direction: column; }
+.info .titulo { margin-bottom: 44px; font-size: 60px; }
+.itens { flex: 1; display: flex; flex-direction: column; justify-content: center; gap: 34px; position: relative; }
+.itens::before { content: ""; position: absolute; left: 44px; top: 40px; bottom: 40px; width: 2px; background: rgba(255,255,255,.55); }
+.item { position: relative; display: flex; gap: 30px; align-items: flex-start; border: 2px solid rgba(255,255,255,.85); border-radius: 28px;
+  padding: 32px 36px 34px 28px; background: var(--cor); }
+.item i { flex: none; font-style: normal; font-size: 24px; font-weight: 700; letter-spacing: .06em; padding: 9px 14px; border-radius: 999px;
+  background: #fff; color: var(--cor); margin-top: 2px; }
+.item h3 { font-size: 42px; font-weight: 700; letter-spacing: -.02em; line-height: 1.1; }
+.item p { font-size: 31px; line-height: 1.3; margin-top: 8px; opacity: .88; }
+
+/* Texto e imagem */
+.ti-a { position: absolute; left: 90px; width: 560px; top: 150px; z-index: 3; text-shadow: 0 2px 24px rgba(0,0,0,.6); }
+.ti-b { position: absolute; right: 90px; width: 560px; bottom: 170px; z-index: 3; text-shadow: 0 2px 24px rgba(0,0,0,.6); }
+.ti-linha { position: absolute; inset: 0; z-index: 2; }
+
+/* Citação */
+.cit { position: absolute; left: 90px; right: 90px; top: 50%; transform: translateY(-56%); text-align: center; }
+.cit .aspas { font-family: 'Instrument Serif', serif; font-size: 300px; line-height: .5; height: 120px; opacity: .9; }
+.cit .frase { font-family: 'Instrument Serif', serif; font-size: 104px; line-height: .98; letter-spacing: -.02em; }
+.cit .cred { margin-top: 44px; font-size: 20px; letter-spacing: .2em; font-weight: 600; }
+.rabisco { position: absolute; right: 120px; bottom: 170px; width: 220px; opacity: .8; }
+
+/* Virada */
+.vir { position: absolute; left: 90px; right: 90px; top: 50%; transform: translateY(-58%); }
+.vir .manchete { font-size: 118px; }
+.vir .just { margin-top: 60px; font-size: 29px; font-weight: 500; letter-spacing: .06em; line-height: 1.55; text-transform: uppercase; text-align: justify; opacity: .85; }
+
+/* Fechamento */
+.fecha { position: absolute; left: 110px; right: 110px; top: 50%; transform: translateY(-55%); text-align: center; }
+.fecha p { font-size: 46px; line-height: 1.25; letter-spacing: -.015em; }
+.fecha b { color: #fff; }
+.cta { margin-top: 64px; display: inline-block; font-size: 21px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase;
+  padding: 18px 30px; border: 2px solid currentColor; border-radius: 999px; }
+
+/* Marca */
+.marca { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+.marca .relevo { filter: drop-shadow(0 -2px 0 rgba(255,255,255,.18)) drop-shadow(0 3px 2px rgba(0,0,0,.55)); }
+.marca .nome { font-family: 'Inter Tight', sans-serif; font-size: 112px; font-weight: 700; letter-spacing: -.045em; line-height: 1; margin-top: 34px; }
+.marca .sub { margin-top: 24px; font-size: 24px; letter-spacing: .02em; opacity: .7; display: flex; align-items: center; gap: 10px; }
+.marca .sub img { height: 15px; }
+.marca .chamada { margin-top: 90px; font-family: 'Instrument Serif', serif; font-size: 38px; opacity: .85; }
+
+/* Curadoria */
+.cur { position: absolute; left: 90px; right: 90px; top: 50%; transform: translateY(-50%); text-align: center; z-index: 3; text-shadow: 0 2px 26px rgba(0,0,0,.45); }
+.cur .num { font-size: 22px; letter-spacing: .3em; font-weight: 600; opacity: .8; margin-bottom: 26px; }
+.cur h2 { font-size: 64px; font-weight: 800; letter-spacing: -.03em; line-height: .98; text-transform: uppercase; }
+.cur p { margin: 22px auto 0; max-width: 760px; font-size: 31px; }
+
+/* Produto */
+.prod-txt { position: absolute; left: 90px; right: 90px; top: 140px; }
+.prod-txt .kick { font-size: 20px; letter-spacing: .2em; font-weight: 700; text-transform: uppercase; opacity: .7; margin-bottom: 22px; }
+.prod-img { position: absolute; left: 90px; width: 1400px; bottom: 150px; border-radius: 22px; overflow: hidden;
+  box-shadow: 0 50px 90px -30px rgba(0,0,0,.6), 0 0 0 1px rgba(255,255,255,.08); }
+.prod-img img { display: block; width: 100%; }
+
+/* Preço */
+.preco { position: absolute; left: 90px; right: 90px; top: 50%; transform: translateY(-55%); text-align: center; }
+.preco .de { font-family: 'Instrument Serif', serif; font-size: 52px; opacity: .85; }
+.preco .v { font-weight: 800; font-size: 250px; letter-spacing: -.06em; line-height: .9; margin-top: 10px; }
+.preco .v small { font-size: 90px; letter-spacing: -.03em; vertical-align: .9em; margin-right: 14px; }
+.preco .por { font-size: 34px; margin-top: 18px; }
+</style>
+</head>
+<body>
+<div id="raiz"></div>
+<script src="dados.js"></script>
+<script>
+const q = new URLSearchParams(location.search);
+const post = POSTS.find((p) => p.id === (q.get('p') || 'n1'));
+const n = +(q.get('s') || 1);
+const t = post.telas[n - 1];
+document.body.className = post.marca;
+
+// **negrito** e *negrito itálico*
+const md = (s) => (s || '').replace(/\*\*(.+?)\*\*/g, '<b>$1</b>').replace(/\*(.+?)\*/g, '<em>$1</em>');
+const foto = (f, cls = '') => `<div class="foto ${cls}" style="background-image:url(fotos/${f}.jpg)"></div>`;
+
+// Assinatura: NEXA sozinha; Sales Coach e Atlas com "um produto NEXA"
+function assinatura(claro) {
+  const nx = `<img class="nx" src="img/${claro ? 'nexa' : 'nexa-claro'}.svg" alt="NEXA">`;
+  if (post.marca === 'nexa') return `<div class="ass"><img class="logo" src="img/${claro ? 'nexa' : 'nexa-claro'}.svg" alt="NEXA"></div>`;
+  if (post.marca === 'sc') return `<div class="ass"><img class="ic" src="img/${claro ? 'sc-mark' : 'sc-mark-white'}.png" alt="">sales coach <s>·</s> um produto ${nx}</div>`;
+  return `<div class="ass"><img class="ic" src="img/${claro ? 'atlas-azul' : 'atlas'}.svg" alt="">atlas <s>·</s> um produto ${nx}</div>`;
+}
+
+const R = {
+  capa: () => [`tela grao`, `${foto(t.foto)}<div class="capa-txt ${t.modo || 'peq'}">${t.modo === 'gig' ? t.texto
+    : t.texto.split('\n').join('<br>')}</div>`],
+  contexto: () => [`tela esc grao`, `${t.foto ? foto(t.foto, 'escura') : ''}<div class="bloco" style="bottom:170px"><div class="titulo">${md(t.titulo)}</div><p>${md(t.texto)}</p></div>`],
+  dado: () => [`tela esc grao`, `${t.foto ? `<div class="dado-foto" style="background-image:url(fotos/${t.foto}.jpg)"></div>` : ''}
+    <div class="dado-txt" style="${t.foto ? '' : 'top:50%;transform:translateY(-55%)'}"><div class="manchete">${md(t.texto)}</div><div class="fonte">${t.fonte}</div></div>`],
+  info: () => [`tela cor grao`, `<div class="info"><div class="titulo">${md(t.titulo)}</div><div class="itens">${t.itens.map((it, i) =>
+    `<div class="item"><i>${String(i + 1).padStart(2, '0')}</i><div><h3>${md(it[0])}</h3><p>${md(it[1])}</p></div></div>`).join('')}</div></div>`],
+  textoimg: () => [`tela esc grao foto-tela`, `${foto(t.foto, 'desbotada')}
+    <svg class="ti-linha" viewBox="0 0 1080 1350"><path d="M330 ${t.y1 || 560} L760 ${t.y2 || 820}" stroke="#fff" stroke-width="2" opacity=".8"/></svg>
+    <p class="ti-a">${md(t.a)}</p><p class="ti-b">${md(t.b)}</p>`],
+  citacao: () => [`tela cla grao`, `<div class="cit"><div class="aspas">“</div><div class="frase">${md(t.frase)}</div><div class="cred caps">${t.cred}</div></div>
+    <svg class="rabisco" viewBox="0 0 220 120" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M10 92 C40 40, 70 108, 104 64 S 160 22, 186 58 C 200 78, 190 100, 168 96 C 150 92, 156 70, 176 66 C 196 62, 210 74, 212 80"/></svg>`],
+  virada: () => [`tela esc grao`, `<div class="vir"><div class="manchete">${md(t.titulo)}</div><div class="just">${md(t.texto)}</div></div>`],
+  fecha: () => [`tela cor grao`, `<div class="fecha"><p>${md(t.texto)}</p><div class="cta">${t.cta}</div></div>`],
+  marca: () => {
+    const m = post.marca;
+    const logo = m === 'nexa' ? `<img class="relevo" src="img/nexa-claro.svg" style="width:560px" alt="NEXA">`
+      : m === 'sc' ? `<img class="relevo" src="img/sc-mark-white.png" style="width:170px" alt=""><div class="nome relevo">Sales Coach</div>`
+      : `<img class="relevo" src="img/atlas.svg" style="width:170px" alt=""><div class="nome relevo">Atlas</div>`;
+    const sub = m === 'nexa' ? `<div class="sub">${t.sub || 'sales coach · atlas'}</div>` : `<div class="sub">um produto <img src="img/nexa-claro.svg" alt="NEXA"></div>`;
+    return [`tela esc grao`, `<div class="marca">${logo}${sub}<div class="chamada">${t.cta}</div></div>`, true];
+  },
+  cur: () => [`tela grao`, `${foto(t.foto)}<div class="foto" style="background:rgba(0,0,0,.32)"></div><div class="cur">${t.num ? `<div class="num">${t.num}</div>` : ''}<h2>${md(t.titulo)}</h2><p>${md(t.texto)}</p></div>`],
+  produto: () => [`tela ${t.fundo || 'cla'} grao`, `<div class="prod-txt"><div class="kick">${t.kick}</div><div class="titulo">${md(t.titulo)}</div><p>${md(t.texto)}</p></div>
+    <div class="prod-img ${t.inteira ? 'inteira' : ''}" style="${t.estilo || ''}"><img src="telas/${t.img}" alt=""></div>`],
+  preco: () => [`tela cla grao`, `<div class="preco"><div class="de">${t.de}</div><div class="v"><small>R$</small>${t.valor}</div><div class="por">${md(t.por)}</div><div class="cta" style="margin-top:70px">${t.cta}</div></div>`],
+};
+
+const [cls, html, semAss] = R[t.tipo]();
+const claro = /\bcla\b/.test(cls);
+document.getElementById('raiz').innerHTML = `<div class="${cls}">${html}${semAss ? '' : assinatura(claro)}</div>`;
+window.ready = document.fonts.ready.then(() => Promise.all([...document.images].map((i) => i.decode().catch(() => {}))))
+  .then(() => new Promise((r) => {
+    // fotos de fundo: espera carregar
+    const urls = [...document.querySelectorAll('[style*="background-image"]')].map((e) => e.style.backgroundImage.slice(5, -2));
+    Promise.all(urls.map((u) => new Promise((ok) => { const im = new Image(); im.onload = im.onerror = ok; im.src = u; }))).then(r);
+  }));
+</script>
+</body>
+</html>

@@ -1,0 +1,11 @@
+{
+ "endpoint": "higgsfield-ai/soul/cinema",
+ "args": {
+  "prompt": "A tired woman rubbing her eyes with her glasses in hand, sitting at a desk, close-up, harsh light. Editorial documentary photograph shot on 35mm film, heavy natural film grain, slight chromatic aberration, Kodak Portra colors, earthy muted tones, imperfect candid framing, realistic skin texture, Brazilian people and setting, no text, no letters, no logos, no watermark.",
+  "aspect_ratio": "3:4",
+  "resolution": "1080p",
+  "batch_size": 1
+ },
+ "url": "https://d3u0tzju9qaucj.cloudfront.net/266d8d97-07d5-4e92-897d-d70270f9fb4a/8eb8ae37-a3c5-40b6-b437-b041c8a7e674/52a5080b-603b-4c4c-ba7b-7f99cbf481f1.png",
+ "request_id": "8eb8ae37-a3c5-40b6-b437-b041c8a7e674"
+}

@@ -1,0 +1,11 @@
+{
+ "endpoint": "higgsfield-ai/soul/cinema",
+ "args": {
+  "prompt": "Hands carrying a cardboard box with a mug, a notebook and a small plant out of an office door, close-up, no readable text. Editorial documentary photograph shot on 35mm film, heavy natural film grain, slight chromatic aberration, Kodak Portra colors, earthy muted tones, imperfect candid framing, realistic skin texture, Brazilian people and setting, no text, no letters, no logos, no watermark.",
+  "aspect_ratio": "3:4",
+  "resolution": "1080p",
+  "batch_size": 1
+ },
+ "url": "https://d3u0tzju9qaucj.cloudfront.net/266d8d97-07d5-4e92-897d-d70270f9fb4a/7fc22178-197d-49e3-a5e9-20b6e11bbdd3/1be9bfef-7293-48a2-9b37-b2604f50b728.png",
+ "request_id": "7fc22178-197d-49e3-a5e9-20b6e11bbdd3"
+}

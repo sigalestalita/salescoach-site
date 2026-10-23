@@ -1,0 +1,11 @@
+{
+ "endpoint": "higgsfield-ai/soul/cinema",
+ "args": {
+  "prompt": "An exhausted office worker resting his head on his hands at his desk late at night, laptop glow, empty office. Editorial documentary photograph shot on 35mm film, heavy natural film grain, slight chromatic aberration, Kodak Portra colors, earthy muted tones, imperfect candid framing, realistic skin texture, Brazilian people and setting, no text, no letters, no logos, no watermark.",
+  "aspect_ratio": "3:4",
+  "resolution": "1080p",
+  "batch_size": 1
+ },
+ "url": "https://d3u0tzju9qaucj.cloudfront.net/266d8d97-07d5-4e92-897d-d70270f9fb4a/45f0814a-31b2-4b41-97d2-1955f5788385/4069f177-2d74-41ab-8b8e-e6fa126a684f.png",
+ "request_id": "45f0814a-31b2-4b41-97d2-1955f5788385"
+}
