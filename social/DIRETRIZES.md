@@ -7,3 +7,7 @@
   redesenhada em HTML em vez de print de tela.
 - Cores de produto (azul-marinho do Sales Coach, marca do Atlas) aparecem dentro da interface,
   não no fundo.
+
+- **Todo conteúdo novo entra no acervo** (`site-nexa-v2/acervo`, área interna do site): salve a
+  legenda num `.md` dentro da pasta do post, inclua o post em `site-nexa-v2/_gerar/acervo_catalogo.py`
+  e rode `python3 acervo.py` em `site-nexa-v2/_gerar/`.
