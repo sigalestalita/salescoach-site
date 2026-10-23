@@ -81,7 +81,7 @@ def contato(base, titulo='Qual desafio do seu negócio vira o <span class="tom">
 def rodape(base):
     return f'''<footer class="rodape"><div class="wrap">
   <div class="cols">
-    <div><span class="kick">Produtos</span><a href="{base}sales-coach/index.html">Sales Coach</a><a href="{base}atlas/index.html">Atlas Clima</a><a href="{base}atlas/index.html#atlas-360">Atlas 360</a></div>
+    <div><span class="kick">Produtos</span><a href="{base}sales-coach/index.html">Sales Coach</a><a href="{base}atlas/index.html">Atlas Clima</a><a href="{base}atlas/index.html#atlas-360">Atlas 360</a><a href="/sales-coach/privacidade/">Privacidade do Sales Coach</a></div>
     <div><span class="kick">NEXA</span><a href="{base}index.html#fabrica">Fábrica de soluções</a><a href="{base}index.html#metodo">Como criamos</a><a href="{base}index.html#contato">Contato</a></div>
     <div><span class="kick">Redes</span><a href="https://instagram.com/nexatech_ia" target="_blank" rel="noopener">Instagram · @nexatech_ia</a><a href="{WA}" target="_blank" rel="noopener">WhatsApp</a></div>
   </div>
