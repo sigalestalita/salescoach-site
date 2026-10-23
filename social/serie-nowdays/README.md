@@ -32,7 +32,7 @@ Dados citados nas telas, com fonte na própria arte: Salesforce State of Sales 7
 (326 mil chamadas) e Meetime Inside Sales Benchmark Brasil 2022. O post da NR-1 cita a Portaria MTE
 nº 1.419/2024; a legenda indica buscar SST e jurídico para a adequação.
 
-Fotos geradas na Higgsfield (soul/cinema, estilo filme 35 mm granulado) a partir de `fotos/prompts.tsv`;
+Fotos geradas na Higgsfield (soul/cinema): ambientação atual (escritórios, aparelhos e roupas de hoje) com grão leve de filme, a partir de `fotos/prompts.tsv`;
 cada `fotos/<nome>.json` guarda o pedido. Telas do produto em `telas/` (as mesmas dos posts anteriores).
 
 ```bash

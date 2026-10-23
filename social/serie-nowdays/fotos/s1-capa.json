@@ -1,11 +1,11 @@
 {
  "endpoint": "higgsfield-ai/soul/cinema",
  "args": {
-  "prompt": "Extreme close-up of a salesman's mouth mid-sentence speaking into a slim headset microphone, warm direct flash, shallow depth of field. Editorial documentary photograph shot on 35mm film, heavy natural film grain, slight chromatic aberration, Kodak Portra colors, earthy muted tones, imperfect candid framing, realistic skin texture, Brazilian people and setting, no text, no letters, no logos, no watermark.",
+  "prompt": "Extreme close-up of a salesman's mouth mid-sentence speaking into a slim headset microphone, warm direct flash, shallow depth of field. Contemporary editorial photograph taken in 2025, modern Brazilian workplace with current design, slim modern laptops and recent smartphones, contemporary clothing, people aged 25 to 45, shot on a modern camera with subtle 35mm film grain, natural true-to-life colors, soft contrast, candid documentary framing, realistic skin texture. Not vintage, not retro, no 1980s or 1990s look, no old computers, no CRT, no old phones. No text, no letters, no logos, no watermark.",
   "aspect_ratio": "3:4",
   "resolution": "1080p",
   "batch_size": 1
  },
- "url": "https://d3u0tzju9qaucj.cloudfront.net/266d8d97-07d5-4e92-897d-d70270f9fb4a/880df540-4574-48d7-85d6-cd6b251fcd44/f7316121-5953-4524-97ef-3fa2664d8ecb.png",
- "request_id": "880df540-4574-48d7-85d6-cd6b251fcd44"
+ "url": "https://d3u0tzju9qaucj.cloudfront.net/266d8d97-07d5-4e92-897d-d70270f9fb4a/b971bd1b-c2e5-439b-acab-c6c26cff88a9/ad130b7b-cc30-4027-8cc2-2336e36ae1f6.png",
+ "request_id": "b971bd1b-c2e5-439b-acab-c6c26cff88a9"
 }

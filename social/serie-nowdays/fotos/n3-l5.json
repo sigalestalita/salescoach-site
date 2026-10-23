@@ -1,11 +1,11 @@
 {
  "endpoint": "higgsfield-ai/soul/cinema",
  "args": {
-  "prompt": "A closed book with a pencil on top on a dark desk next to a burning incense stick with a thin line of smoke, no readable text. Editorial documentary photograph shot on 35mm film, heavy natural film grain, slight chromatic aberration, Kodak Portra colors, earthy muted tones, imperfect candid framing, realistic skin texture, Brazilian people and setting, no text, no letters, no logos, no watermark.",
+  "prompt": "A closed book with a pencil on top on a dark desk next to a burning incense stick with a thin line of smoke, no readable text. Contemporary editorial photograph taken in 2025, modern Brazilian workplace with current design, slim modern laptops and recent smartphones, contemporary clothing, people aged 25 to 45, shot on a modern camera with subtle 35mm film grain, natural true-to-life colors, soft contrast, candid documentary framing, realistic skin texture. Not vintage, not retro, no 1980s or 1990s look, no old computers, no CRT, no old phones. No text, no letters, no logos, no watermark.",
   "aspect_ratio": "3:4",
   "resolution": "1080p",
   "batch_size": 1
  },
- "url": "https://d3u0tzju9qaucj.cloudfront.net/266d8d97-07d5-4e92-897d-d70270f9fb4a/cebf3e86-96c8-44fb-a7f0-f18db7c2cf2d/7a12c663-bf9e-4809-9b02-17c3c48404ad.png",
- "request_id": "cebf3e86-96c8-44fb-a7f0-f18db7c2cf2d"
+ "url": "https://d3u0tzju9qaucj.cloudfront.net/266d8d97-07d5-4e92-897d-d70270f9fb4a/a01a6a0f-6b12-4159-890a-db9b6d7dbd09/bbaa1cc1-fcb9-44f5-a2b4-ecdcb04d2ed6.png",
+ "request_id": "a01a6a0f-6b12-4159-890a-db9b6d7dbd09"
 }

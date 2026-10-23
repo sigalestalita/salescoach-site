@@ -1,11 +1,11 @@
 {
  "endpoint": "higgsfield-ai/soul/cinema",
  "args": {
-  "prompt": "A smartphone lying face up on a wooden table between two coffee cups during a conversation, nobody touching it, top-down view. Editorial documentary photograph shot on 35mm film, heavy natural film grain, slight chromatic aberration, Kodak Portra colors, earthy muted tones, imperfect candid framing, realistic skin texture, Brazilian people and setting, no text, no letters, no logos, no watermark.",
+  "prompt": "A smartphone lying face up on a wooden table between two coffee cups during a conversation, nobody touching it, top-down view. Contemporary editorial photograph taken in 2025, modern Brazilian workplace with current design, slim modern laptops and recent smartphones, contemporary clothing, people aged 25 to 45, shot on a modern camera with subtle 35mm film grain, natural true-to-life colors, soft contrast, candid documentary framing, realistic skin texture. Not vintage, not retro, no 1980s or 1990s look, no old computers, no CRT, no old phones. No text, no letters, no logos, no watermark.",
   "aspect_ratio": "3:4",
   "resolution": "1080p",
   "batch_size": 1
  },
- "url": "https://d3u0tzju9qaucj.cloudfront.net/266d8d97-07d5-4e92-897d-d70270f9fb4a/e14b3cc3-ac40-4f3b-b713-36eceab76ed6/eee29e1b-1740-49bc-b33b-ecc6b61d6488.png",
- "request_id": "e14b3cc3-ac40-4f3b-b713-36eceab76ed6"
+ "url": "https://d3u0tzju9qaucj.cloudfront.net/266d8d97-07d5-4e92-897d-d70270f9fb4a/a25a7ffb-fb25-41b9-9fff-c75d225e983e/ff892c74-e7b2-473a-8f62-e647c11d3586.png",
+ "request_id": "a25a7ffb-fb25-41b9-9fff-c75d225e983e"
 }

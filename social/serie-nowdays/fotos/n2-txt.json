@@ -1,11 +1,11 @@
 {
  "endpoint": "higgsfield-ai/soul/cinema",
  "args": {
-  "prompt": "A man in a shirt walking away down a long office corridor, slight motion blur, back to camera. Editorial documentary photograph shot on 35mm film, heavy natural film grain, slight chromatic aberration, Kodak Portra colors, earthy muted tones, imperfect candid framing, realistic skin texture, Brazilian people and setting, no text, no letters, no logos, no watermark.",
+  "prompt": "A man in a shirt walking away down a long office corridor, slight motion blur, back to camera. Contemporary editorial photograph taken in 2025, modern Brazilian workplace with current design, slim modern laptops and recent smartphones, contemporary clothing, people aged 25 to 45, shot on a modern camera with subtle 35mm film grain, natural true-to-life colors, soft contrast, candid documentary framing, realistic skin texture. Not vintage, not retro, no 1980s or 1990s look, no old computers, no CRT, no old phones. No text, no letters, no logos, no watermark.",
   "aspect_ratio": "3:4",
   "resolution": "1080p",
   "batch_size": 1
  },
- "url": "https://d3u0tzju9qaucj.cloudfront.net/266d8d97-07d5-4e92-897d-d70270f9fb4a/d31a6de3-9510-4dc8-9d22-188b46b6567a/9d329d42-a81d-4a31-a34d-3fd0e3546b86.png",
- "request_id": "d31a6de3-9510-4dc8-9d22-188b46b6567a"
+ "url": "https://d3u0tzju9qaucj.cloudfront.net/266d8d97-07d5-4e92-897d-d70270f9fb4a/9a85a76e-5ef8-4c22-b9e0-0ab2dfbac904/95b0a4ae-2143-4a55-a428-5f50c991d301.png",
+ "request_id": "9a85a76e-5ef8-4c22-b9e0-0ab2dfbac904"
 }

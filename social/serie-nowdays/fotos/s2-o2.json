@@ -1,11 +1,11 @@
 {
  "endpoint": "higgsfield-ai/soul/cinema",
  "args": {
-  "prompt": "A cluttered desk with several laptops, tablets and phones piled together, cables everywhere, overhead view. Editorial documentary photograph shot on 35mm film, heavy natural film grain, slight chromatic aberration, Kodak Portra colors, earthy muted tones, imperfect candid framing, realistic skin texture, Brazilian people and setting, no text, no letters, no logos, no watermark.",
+  "prompt": "A modern desk crowded with two laptops, a tablet and a phone all open with different apps, overhead view, screens blurred and unreadable. Contemporary editorial photograph taken in 2025, modern Brazilian workplace with current design, slim modern laptops and recent smartphones, contemporary clothing, people aged 25 to 45, shot on a modern camera with subtle 35mm film grain, natural true-to-life colors, soft contrast, candid documentary framing, realistic skin texture. Not vintage, not retro, no 1980s or 1990s look, no old computers, no CRT, no old phones. No text, no letters, no logos, no watermark.",
   "aspect_ratio": "3:4",
   "resolution": "1080p",
   "batch_size": 1
  },
- "url": "https://d3u0tzju9qaucj.cloudfront.net/266d8d97-07d5-4e92-897d-d70270f9fb4a/51073bba-1826-4aa3-882f-b21796548f83/d8ac15fd-f303-4a9a-bdb7-c8d98f7994bc.png",
- "request_id": "51073bba-1826-4aa3-882f-b21796548f83"
+ "url": "https://d3u0tzju9qaucj.cloudfront.net/266d8d97-07d5-4e92-897d-d70270f9fb4a/71c24cd3-7e3d-4784-97d3-5e383d14daa4/9b9a2367-32e6-4f7b-ad61-0a30664f909b.png",
+ "request_id": "71c24cd3-7e3d-4784-97d3-5e383d14daa4"
 }

@@ -1,11 +1,11 @@
 {
  "endpoint": "higgsfield-ai/soul/cinema",
  "args": {
-  "prompt": "Close-up of hands typing on a laptop keyboard next to a paper notebook full of scribbles, warm light, no readable text. Editorial documentary photograph shot on 35mm film, heavy natural film grain, slight chromatic aberration, Kodak Portra colors, earthy muted tones, imperfect candid framing, realistic skin texture, Brazilian people and setting, no text, no letters, no logos, no watermark.",
+  "prompt": "Close-up of hands typing on a laptop keyboard next to a paper notebook full of scribbles, warm light, no readable text. Contemporary editorial photograph taken in 2025, modern Brazilian workplace with current design, slim modern laptops and recent smartphones, contemporary clothing, people aged 25 to 45, shot on a modern camera with subtle 35mm film grain, natural true-to-life colors, soft contrast, candid documentary framing, realistic skin texture. Not vintage, not retro, no 1980s or 1990s look, no old computers, no CRT, no old phones. No text, no letters, no logos, no watermark.",
   "aspect_ratio": "3:4",
   "resolution": "1080p",
   "batch_size": 1
  },
- "url": "https://d3u0tzju9qaucj.cloudfront.net/266d8d97-07d5-4e92-897d-d70270f9fb4a/e95c549b-7fb7-4841-847a-d40fe45f6c62/0c80b1e8-d7a3-4567-98fa-8f4d6b3146a0.png",
- "request_id": "e95c549b-7fb7-4841-847a-d40fe45f6c62"
+ "url": "https://d3u0tzju9qaucj.cloudfront.net/266d8d97-07d5-4e92-897d-d70270f9fb4a/45a7604d-a37d-42b5-abad-75d8f63e635a/e837e0e5-0c34-4672-b58d-960dfc8ab52f.png",
+ "request_id": "45a7604d-a37d-42b5-abad-75d8f63e635a"
 }

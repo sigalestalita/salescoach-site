@@ -1,11 +1,11 @@
 {
  "endpoint": "higgsfield-ai/soul/cinema",
  "args": {
-  "prompt": "Close-up of two pairs of hands on a wooden meeting table, one holding a coffee cup, the other gesturing mid-conversation, an open notebook between them, direct on-camera flash at dusk. Editorial documentary photograph shot on 35mm film, heavy natural film grain, slight chromatic aberration, Kodak Portra colors, earthy muted tones, imperfect candid framing, realistic skin texture, Brazilian people and setting, no text, no letters, no logos, no watermark.",
+  "prompt": "Close-up of two pairs of hands on a wooden meeting table, one holding a coffee cup, the other gesturing mid-conversation, an open notebook between them, direct on-camera flash at dusk. Contemporary editorial photograph taken in 2025, modern Brazilian workplace with current design, slim modern laptops and recent smartphones, contemporary clothing, people aged 25 to 45, shot on a modern camera with subtle 35mm film grain, natural true-to-life colors, soft contrast, candid documentary framing, realistic skin texture. Not vintage, not retro, no 1980s or 1990s look, no old computers, no CRT, no old phones. No text, no letters, no logos, no watermark.",
   "aspect_ratio": "3:4",
   "resolution": "1080p",
   "batch_size": 1
  },
- "url": "https://d3u0tzju9qaucj.cloudfront.net/266d8d97-07d5-4e92-897d-d70270f9fb4a/a3d7d482-1bcd-4399-a3d4-1181b3994520/7d804c62-8fbf-4ee9-9a1f-1d13116c6b23.png",
- "request_id": "a3d7d482-1bcd-4399-a3d4-1181b3994520"
+ "url": "https://d3u0tzju9qaucj.cloudfront.net/266d8d97-07d5-4e92-897d-d70270f9fb4a/0d8fcc14-d4c1-4169-aa5b-6c20590ab2fa/e727b0d7-1cbe-4607-aaff-b04ad9d91d38.png",
+ "request_id": "0d8fcc14-d4c1-4169-aa5b-6c20590ab2fa"
 }

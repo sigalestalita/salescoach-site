@@ -1,11 +1,11 @@
 {
  "endpoint": "higgsfield-ai/soul/cinema",
  "args": {
-  "prompt": "A Brazilian woman manager in her 40s listening intently with her chin resting on her hand, sitting across a table, soft window light. Editorial documentary photograph shot on 35mm film, heavy natural film grain, slight chromatic aberration, Kodak Portra colors, earthy muted tones, imperfect candid framing, realistic skin texture, Brazilian people and setting, no text, no letters, no logos, no watermark.",
+  "prompt": "A Brazilian woman manager in her 40s listening intently with her chin resting on her hand, sitting across a table, soft window light. Contemporary editorial photograph taken in 2025, modern Brazilian workplace with current design, slim modern laptops and recent smartphones, contemporary clothing, people aged 25 to 45, shot on a modern camera with subtle 35mm film grain, natural true-to-life colors, soft contrast, candid documentary framing, realistic skin texture. Not vintage, not retro, no 1980s or 1990s look, no old computers, no CRT, no old phones. No text, no letters, no logos, no watermark.",
   "aspect_ratio": "3:4",
   "resolution": "1080p",
   "batch_size": 1
  },
- "url": "https://d3u0tzju9qaucj.cloudfront.net/266d8d97-07d5-4e92-897d-d70270f9fb4a/3cfc7349-731d-4b30-b6f2-cfad9c4173c3/22cbb414-4959-4c27-96a3-2cbd6a3cb2be.png",
- "request_id": "3cfc7349-731d-4b30-b6f2-cfad9c4173c3"
+ "url": "https://d3u0tzju9qaucj.cloudfront.net/266d8d97-07d5-4e92-897d-d70270f9fb4a/e0069b94-f9a5-4193-98c4-c7fd3e343dfe/697f9089-b9da-4b14-a258-536cbe8bcf73.png",
+ "request_id": "e0069b94-f9a5-4193-98c4-c7fd3e343dfe"
 }

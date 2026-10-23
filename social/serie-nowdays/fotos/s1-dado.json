@@ -1,11 +1,11 @@
 {
  "endpoint": "higgsfield-ai/soul/cinema",
  "args": {
-  "prompt": "A wireless headset resting on a desk next to a laptop and a glass of water, nobody in frame, dim light. Editorial documentary photograph shot on 35mm film, heavy natural film grain, slight chromatic aberration, Kodak Portra colors, earthy muted tones, imperfect candid framing, realistic skin texture, Brazilian people and setting, no text, no letters, no logos, no watermark.",
+  "prompt": "A wireless headset resting on a desk next to a laptop and a glass of water, nobody in frame, dim light. Contemporary editorial photograph taken in 2025, modern Brazilian workplace with current design, slim modern laptops and recent smartphones, contemporary clothing, people aged 25 to 45, shot on a modern camera with subtle 35mm film grain, natural true-to-life colors, soft contrast, candid documentary framing, realistic skin texture. Not vintage, not retro, no 1980s or 1990s look, no old computers, no CRT, no old phones. No text, no letters, no logos, no watermark.",
   "aspect_ratio": "3:4",
   "resolution": "1080p",
   "batch_size": 1
  },
- "url": "https://d3u0tzju9qaucj.cloudfront.net/266d8d97-07d5-4e92-897d-d70270f9fb4a/3db4a9f7-746e-40b9-90a4-9cfbea453e6d/3627a95e-5526-4903-a6cd-2b12b556e437.png",
- "request_id": "3db4a9f7-746e-40b9-90a4-9cfbea453e6d"
+ "url": "https://d3u0tzju9qaucj.cloudfront.net/266d8d97-07d5-4e92-897d-d70270f9fb4a/e3ec201a-93f4-40ff-896e-d0873a086b76/11bb4c18-049e-4784-a928-8efec6b352a6.png",
+ "request_id": "e3ec201a-93f4-40ff-896e-d0873a086b76"
 }
