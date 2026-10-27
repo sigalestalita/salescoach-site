@@ -145,6 +145,10 @@ add(dict(id='atlas-fofos', titulo='Verdades duras sobre RH com imagens fofas', p
 add(dict(id='atlas-verdades', titulo='Verdades que o RH precisa ouvir', produto='atlas', editoria='Conteúdo', formato='Carrossel',
          pasta=S + 'carrossel-atlas-verdades', telas=[S + 'carrossel-atlas-verdades/out/atlas-verdades-*.jpg'], medida='4:5 · 7 telas',
          legenda=_arq('carrossel-atlas-verdades/legenda.md')))
+add(dict(id='atlas-saude-mental', titulo='Saúde mental passou o câncer (NR-1 e riscos psicossociais)', produto='atlas', editoria='Educativo', formato='Carrossel',
+         pasta=S + 'carrossel-atlas-saude-mental', telas=[S + 'carrossel-atlas-saude-mental/out/atlas-saude-mental-*.jpg'], medida='4:5 · 8 telas',
+         legenda=_arq('carrossel-atlas-saude-mental/legenda.md'),
+         nota='Fontes no rodapé de cada tela e no README da pasta (Ipsos 2026, Previdência Social 2025, NR-1).'))
 add(dict(id='reel-atlas-pulso', titulo='Reel: Como sua equipe está, de verdade? (NR-1)', produto='atlas', editoria='Educativo', formato='Reel',
          pasta=S + 'reel-atlas', video=S + 'reel-atlas/out/reel-atlas-clima-pulso.mp4', poster=2, medida='9:16 · 40s',
          legenda=_arq('reel-atlas/legenda.md'), nota='Pessoas geradas por IA: ative o rótulo "Conteúdo feito com IA" ao publicar.'))

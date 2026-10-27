@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Carrossel Atlas · Saúde mental passou o câncer</title>
+<link rel="stylesheet" href="inter.css">
+<link rel="stylesheet" href="poppins.css">
+<style>
+/* Carrossel educativo (8 telas, 1080×1350) na versão clara da NEXA: fundo osso, texto tinta,
+   lima e oliva de destaque, marca Atlas no cabeçalho. Uma tela escura (o número dos afastamentos)
+   como exceção. Todos os números têm fonte no rodapé da tela; ver README.md. */
+:root { --osso: #f3f4ee; --tinta: #10120e; --lima: #d4f969; --oliva: #587406; --navy: #071A34;
+  --cinza: #6b6e66; --linha: #dcded5; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: #888; font-family: 'Inter Tight', sans-serif; -webkit-font-smoothing: antialiased; }
+.s { position: relative; width: 1080px; height: 1350px; overflow: hidden; margin-bottom: 20px;
+  background: var(--osso); color: var(--tinta); padding: 0 88px; }
+.s.esc { background: var(--tinta); color: #f3f4ee; }
+
+/* Cabeçalho: marca, contador e o traço lima no topo */
+.s::before { content: ""; position: absolute; left: 88px; top: 0; width: 96px; height: 8px; background: var(--lima); }
+.perfil { position: absolute; left: 88px; top: 88px; display: flex; align-items: center; gap: 18px; }
+.perfil i { width: 72px; height: 72px; border-radius: 50%; background: var(--navy); display: grid; place-items: center; }
+.perfil i img { width: 38px; }
+.perfil strong { display: block; font-family: 'Poppins', sans-serif; font-size: 27px; font-weight: 600; letter-spacing: -.01em; line-height: 1.1; }
+.perfil span { display: flex; align-items: center; gap: 8px; font-size: 20px; color: var(--cinza); margin-top: 5px; }
+.perfil span img { height: 13px; }
+.esc .perfil i { box-shadow: 0 0 0 2px rgba(243,244,238,.18); }
+.esc .perfil span { color: rgba(243,244,238,.6); }
+.cont { position: absolute; right: 88px; top: 112px; font-size: 22px; color: var(--cinza); font-variant-numeric: tabular-nums; }
+.esc .cont { color: rgba(243,244,238,.55); }
+
+/* Corpo e rodapé */
+.corpo { position: absolute; left: 88px; right: 88px; top: 250px; bottom: 210px; display: flex; flex-direction: column; justify-content: center; }
+.fonte { position: absolute; left: 88px; right: 300px; bottom: 92px; font-size: 18px; line-height: 1.45; color: var(--cinza); }
+.esc .fonte { color: rgba(243,244,238,.5); }
+.arrasta { position: absolute; right: 88px; bottom: 92px; font-size: 22px; font-weight: 600; color: var(--oliva); }
+.esc .arrasta { color: var(--lima); }
+
+/* Tipografia */
+.h { font-weight: 800; letter-spacing: -.04em; line-height: 1.02; }
+.h1 { font-size: 86px; }
+.h2 { font-size: 76px; }
+.ol { color: var(--oliva); }
+.li { color: var(--lima); }
+.sub { font-size: 34px; line-height: 1.38; letter-spacing: -.01em; color: #3b3e37; margin-top: 34px; }
+.esc .sub { color: rgba(243,244,238,.78); }
+.sub b { font-weight: 700; color: var(--tinta); }
+.esc .sub b { color: #f3f4ee; }
+.caps { font-size: 20px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--oliva); }
+
+/* Barras */
+.barras { margin-top: 64px; display: grid; grid-template-columns: 230px 1fr; gap: 22px 26px; align-items: center; }
+.barras dt { font-size: 28px; font-weight: 600; text-align: right; color: #4a4d45; }
+.barras dt.top { color: var(--tinta); font-weight: 800; }
+.barras dd { display: flex; align-items: center; gap: 18px; }
+.barras dd i { display: block; height: 58px; border-radius: 10px; background: #d9dbd2; }
+.barras dd.top i { background: var(--lima); box-shadow: inset 0 0 0 2px rgba(16,18,14,.08); }
+.barras dd b { font-size: 32px; font-weight: 800; letter-spacing: -.02em; color: #4a4d45; }
+.barras dd.top b { font-size: 40px; color: var(--tinta); }
+
+/* Antes e depois (Brasil) */
+.vs { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; margin-top: 60px; }
+.vs > div { border-radius: 28px; padding: 40px 38px; background: #e6e8df; }
+.vs > div.agora { background: var(--tinta); color: #f3f4ee; }
+.vs .ano { font-size: 24px; font-weight: 700; letter-spacing: .1em; color: var(--cinza); }
+.vs .agora .ano { color: rgba(243,244,238,.6); }
+.vs .n { font-size: 120px; font-weight: 800; letter-spacing: -.05em; line-height: 1; margin-top: 18px; }
+.vs .agora .n { color: var(--lima); }
+.vs .o { font-size: 28px; line-height: 1.3; margin-top: 12px; font-weight: 600; }
+.vs .p { font-size: 24px; line-height: 1.4; margin-top: 18px; color: var(--cinza); }
+.vs .agora .p { color: rgba(243,244,238,.65); }
+
+/* Número grande e quebra */
+.grande { font-size: 210px; font-weight: 800; letter-spacing: -.06em; line-height: .95; color: var(--lima); margin-top: 24px; }
+.quebra { margin-top: 56px; border-top: 1.5px solid rgba(243,244,238,.18); padding-top: 34px; display: grid; grid-template-columns: 1fr 1fr; gap: 26px; }
+.quebra b { display: block; font-size: 52px; font-weight: 800; letter-spacing: -.03em; color: #f3f4ee; }
+.quebra span { font-size: 24px; line-height: 1.35; color: rgba(243,244,238,.65); }
+
+/* Listas */
+.lista { margin-top: 54px; display: grid; gap: 18px; }
+.lista li { list-style: none; display: flex; align-items: center; gap: 22px; padding: 24px 30px; border-radius: 22px;
+  background: #e6e8df; font-size: 32px; font-weight: 600; letter-spacing: -.015em; line-height: 1.2; }
+.lista li i { flex: none; width: 14px; height: 14px; border-radius: 50%; background: var(--oliva); }
+.passos { margin-top: 50px; display: grid; gap: 0; }
+.passos li { list-style: none; display: grid; grid-template-columns: 76px 1fr; gap: 24px; padding: 24px 0; border-top: 1.5px solid var(--linha); }
+.passos li:last-child { border-bottom: 1.5px solid var(--linha); }
+.passos li > b { width: 60px; height: 60px; border-radius: 50%; background: var(--lima); display: grid; place-items: center; font-size: 28px; font-weight: 800; }
+.passos strong { display: block; font-size: 32px; font-weight: 700; letter-spacing: -.015em; line-height: 1.2; }
+.passos span { display: block; font-size: 24px; line-height: 1.4; color: #4a4d45; margin-top: 6px; }
+
+/* Ciclo NR-1 */
+.ciclo { margin-top: 56px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+.ciclo div { border-radius: 24px; padding: 30px 22px 28px; background: #e6e8df; }
+.ciclo div b { display: block; font-size: 20px; font-weight: 700; color: var(--oliva); letter-spacing: .08em; }
+.ciclo div strong { display: block; font-size: 34px; font-weight: 800; letter-spacing: -.03em; margin-top: 12px; }
+.ciclo div span { display: block; font-size: 21px; line-height: 1.38; color: #4a4d45; margin-top: 10px; }
+.nota { margin-top: 40px; border-left: 6px solid var(--lima); padding: 6px 0 6px 26px; font-size: 28px; line-height: 1.42; color: #3b3e37; }
+.nota b { color: var(--tinta); }
+
+/* Fecho */
+.atlas-card { margin-top: 56px; border-radius: 32px; background: var(--navy); color: #fff; padding: 46px 48px; display: flex; gap: 32px; align-items: flex-start; }
+.atlas-card i { flex: none; width: 92px; height: 92px; border-radius: 26px; background: rgba(255,255,255,.1); display: grid; place-items: center; }
+.atlas-card i img { width: 50px; }
+.atlas-card strong { display: block; font-family: 'Poppins', sans-serif; font-size: 34px; font-weight: 600; }
+.atlas-card p { font-size: 26px; line-height: 1.45; color: rgba(255,255,255,.78); margin-top: 12px; }
+.atlas-card small { display: block; font-size: 20px; line-height: 1.45; color: rgba(255,255,255,.55); margin-top: 18px; }
+.salve { margin-top: 44px; display: inline-flex; align-items: center; gap: 16px; padding: 20px 30px; border-radius: 999px; background: var(--lima); font-size: 28px; font-weight: 700; align-self: flex-start; }
+</style>
+</head>
+<body>
+
+<!-- 1 · Capa com o dado global -->
+<section class="s">
+  <div class="perfil"><i><img src="img/atlas.svg" alt=""></i><div><strong>Atlas Clima</strong><span>um produto <img src="img/nexa.svg" alt="NEXA"></span></div></div>
+  <div class="cont">01/08</div>
+  <div class="corpo" style="top:230px">
+    <div class="h h1">Saúde mental passou o câncer como a <span class="ol">maior preocupação de saúde</span> do mundo.</div>
+    <dl class="barras">
+      <dt class="top">Saúde mental</dt><dd class="top"><i style="width:460px"></i><b>48%</b></dd>
+      <dt>Câncer</dt><dd><i style="width:383px"></i><b>40%</b></dd>
+      <dt>Estresse</dt><dd><i style="width:307px"></i><b>32%</b></dd>
+      <dt>Obesidade</dt><dd><i style="width:240px"></i><b>25%</b></dd>
+    </dl>
+  </div>
+  <p class="fonte">% que aponta cada tema entre os maiores problemas de saúde do país · média de 32 países · Ipsos Health Service Report 2026 (jul–ago/2026)</p>
+  <div class="arrasta">arrasta →</div>
+</section>
+
+<!-- 2 · Brasil: a virada -->
+<section class="s">
+  <div class="perfil"><i><img src="img/atlas.svg" alt=""></i><div><strong>Atlas Clima</strong><span>um produto <img src="img/nexa.svg" alt="NEXA"></span></div></div>
+  <div class="cont">02/08</div>
+  <div class="corpo">
+    <div class="h h2">No Brasil, a virada foi <span class="ol">ainda maior.</span></div>
+    <div class="vs">
+      <div>
+        <div class="ano">2018</div>
+        <div class="n">18%</div>
+        <div class="o">citavam a saúde mental</div>
+        <div class="p">5º lugar. O câncer liderava, com 57%.</div>
+      </div>
+      <div class="agora">
+        <div class="ano">2026</div>
+        <div class="n">58%</div>
+        <div class="o">citam a saúde mental</div>
+        <div class="p">1º lugar, acima da média mundial (48%).</div>
+      </div>
+    </div>
+  </div>
+  <p class="fonte">Ipsos Health Service Report 2018 e 2026 · cerca de mil entrevistados no Brasil em 2026 · mede a percepção, não a quantidade de casos</p>
+  <div class="arrasta">arrasta →</div>
+</section>
+
+<!-- 3 · Não é só percepção: afastamentos (tela escura) -->
+<section class="s esc">
+  <div class="perfil"><i><img src="img/atlas.svg" alt=""></i><div><strong>Atlas Clima</strong><span>um produto <img src="img/nexa-claro.svg" alt="NEXA"></span></div></div>
+  <div class="cont">03/08</div>
+  <div class="corpo">
+    <div class="h h2">E não é só percepção.<br>Os afastamentos <span class="li">batem recorde.</span></div>
+    <div class="grande">546 mil</div>
+    <div class="sub" style="margin-top:20px">afastamentos do trabalho por <b>transtornos mentais</b> em 2025, <b>16% a mais</b> que em 2024.</div>
+    <div class="quebra">
+      <div><b>166 mil</b><span>por ansiedade</span></div>
+      <div><b>127 mil</b><span>por episódios depressivos</span></div>
+    </div>
+  </div>
+  <p class="fonte">Benefícios por incapacidade temporária concedidos em 2025 (546.254; 472.328 em 2024) · Previdência Social, jan/2026 · contam afastamentos, não pessoas</p>
+  <div class="arrasta">arrasta →</div>
+</section>
+
+<!-- 4 · O que são riscos psicossociais -->
+<section class="s">
+  <div class="perfil"><i><img src="img/atlas.svg" alt=""></i><div><strong>Atlas Clima</strong><span>um produto <img src="img/nexa.svg" alt="NEXA"></span></div></div>
+  <div class="cont">04/08</div>
+  <div class="corpo">
+    <div class="caps">Entenda o termo</div>
+    <div class="h h2" style="margin-top:22px">Riscos psicossociais nascem do jeito como o trabalho <span class="ol">é organizado.</span></div>
+    <ul class="lista">
+      <li><i></i>Excesso de demanda e prazos impossíveis</li>
+      <li><i></i>Pouca autonomia e papéis confusos</li>
+      <li><i></i>Assédio e conflitos sem tratamento</li>
+      <li><i></i>Liderança ausente e falta de reconhecimento</li>
+    </ul>
+  </div>
+  <p class="fonte">Exemplos do Manual de Interpretação do capítulo 1.5 da NR-1 (MTE, mar/2026) e da ISO 45003</p>
+  <div class="arrasta">arrasta →</div>
+</section>
+
+<!-- 5 · NR-1: virou obrigação -->
+<section class="s">
+  <div class="perfil"><i><img src="img/atlas.svg" alt=""></i><div><strong>Atlas Clima</strong><span>um produto <img src="img/nexa.svg" alt="NEXA"></span></div></div>
+  <div class="cont">05/08</div>
+  <div class="corpo">
+    <div class="caps">NR-1 atualizada</div>
+    <div class="h h2" style="margin-top:22px">Desde 26 de maio de 2026, isso é <span class="ol">obrigação da empresa.</span></div>
+    <div class="ciclo">
+      <div><b>01</b><strong>Identificar</strong><span>onde estão os riscos</span></div>
+      <div><b>02</b><strong>Avaliar</strong><span>o tamanho de cada um</span></div>
+      <div><b>03</b><strong>Agir</strong><span>com medidas de prevenção</span></div>
+      <div><b>04</b><strong>Acompanhar</strong><span>se o risco caiu</span></div>
+    </div>
+    <p class="nota">Os riscos psicossociais entram no <b>gerenciamento de riscos ocupacionais</b> (GRO) e no <b>PGR</b>, com fiscalização.</p>
+  </div>
+  <p class="fonte">Portaria MTE nº 1.419/2024 · prazo prorrogado pela Portaria MTE nº 765/2025 até 26/05/2026</p>
+  <div class="arrasta">arrasta →</div>
+</section>
+
+<!-- 6 · Campanha x gestão -->
+<section class="s">
+  <div class="perfil"><i><img src="img/atlas.svg" alt=""></i><div><strong>Atlas Clima</strong><span>um produto <img src="img/nexa.svg" alt="NEXA"></span></div></div>
+  <div class="cont">06/08</div>
+  <div class="corpo">
+    <div class="h h2">Uma palestra no Setembro Amarelo <span class="ol">não acompanha nada.</span></div>
+    <div class="sub">Ela é bem-vinda, mas não mostra <b>onde</b> está o risco, <b>se</b> ele caiu depois da ação, nem <b>qual time</b> precisa de atenção agora.</div>
+    <p class="nota" style="margin-top:48px">O que a NR-1 pede é um ciclo: <b>medir, agir e medir de novo.</b> O ano todo.</p>
+  </div>
+  <div class="arrasta">arrasta →</div>
+</section>
+
+<!-- 7 · Como medir na prática -->
+<section class="s">
+  <div class="perfil"><i><img src="img/atlas.svg" alt=""></i><div><strong>Atlas Clima</strong><span>um produto <img src="img/nexa.svg" alt="NEXA"></span></div></div>
+  <div class="cont">07/08</div>
+  <div class="corpo" style="top:220px;bottom:170px">
+    <div class="h h2" style="font-size:68px">Como medir, <span class="ol">na prática</span></div>
+    <ol class="passos">
+      <li><b>1</b><div><strong>Escute todo mundo, com frequência</strong><span>Pesquisas curtas e anônimas, não um questionário por ano.</span></div></li>
+      <li><b>2</b><div><strong>Olhe por área e por liderança</strong><span>A média da empresa esconde o time que está no limite.</span></div></li>
+      <li><b>3</b><div><strong>Cruze com os sinais que já existem</strong><span>Afastamentos, faltas, horas extras e pedidos de demissão.</span></div></li>
+      <li><b>4</b><div><strong>Vire plano de ação</strong><span>Com responsável e prazo, e meça de novo para ver se mudou.</span></div></li>
+    </ol>
+  </div>
+  <div class="arrasta" style="bottom:80px">arrasta →</div>
+</section>
+
+<!-- 8 · Fecho -->
+<section class="s">
+  <div class="perfil"><i><img src="img/atlas.svg" alt=""></i><div><strong>Atlas Clima</strong><span>um produto <img src="img/nexa.svg" alt="NEXA"></span></div></div>
+  <div class="cont">08/08</div>
+  <div class="corpo">
+    <div class="h h1">Saúde mental não é campanha. <span class="ol">É indicador.</span></div>
+    <div class="atlas-card">
+      <i><img src="img/atlas.svg" alt=""></i>
+      <div>
+        <strong>Atlas Clima</strong>
+        <p>Pesquisa de clima com respostas anônimas e resultado por área e por liderança, para o RH saber onde agir e repetir a medição para ver se melhorou.</p>
+        <small>Alimenta o seu PGR com a escuta das pessoas. Não substitui a avaliação técnica de saúde e segurança do trabalho.</small>
+      </div>
+    </div>
+    <div class="salve">Salve e mande para o seu RH →</div>
+  </div>
+</section>
+
+</body>
+</html>
