@@ -1,8 +1,10 @@
-# Legenda · Notícia "Itaú compra a NeoSpace" (carrossel de 4 cenas, NEXA)
+# Legenda · Notícia "Itaú compra a NeoSpace" (carrossel de 8 telas, NEXA)
 
 O maior banco privado do país acabou de pagar R$ 2,9 bilhões por uma startup de IA fundada em 2023.
 
-O Itaú anunciou a compra de 100% da NeoSpace, que desenvolve modelos de IA para crédito, CRM e prevenção a fraude. O banco já era sócio desde 2025. Agora trouxe a empresa inteira para dentro.
+O Itaú anunciou a compra de 100% da NeoSpace. Diferente do ChatGPT, que é treinado em texto, a NeoSpace cria modelos treinados em dados: transações, histórico de consumo, registros operacionais. Eles já rodam em crédito, relacionamento com o cliente e prevenção a fraude. O banco era sócio desde 2025. Agora trouxe a empresa inteira para dentro.
+
+Por que comprar em vez de contratar? A nossa leitura: dado o banco já tem. Faltava ser dono da IA que transforma esse dado em decisão, com o time e o que vem depois.
 
 Leia de novo: não foi um piloto. Não foi um comitê de inovação. Foram R$ 2,9 bilhões.
 

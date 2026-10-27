@@ -20,7 +20,12 @@ Atlas e NEXA: um carrossel de 5 imagens e 2 posts únicos por marca (21 imagens)
 
 ## Notícia: Itaú compra a NeoSpace (out/2026, NEXA)
 
-Carrossel de 4 cenas (`nx-n1` a `nx-n4`), legenda em `legenda-itau-neospace.md`.
+Carrossel de 8 telas, na ordem de `out/itau-neospace/` (01 a 08): `nx-n1`, os 4 cards explicativos `nx-i1` a `nx-i4`
+(`info.html`, `node render-info.mjs`) e as cenas `nx-n2` a `nx-n4`. Legenda em `legenda-itau-neospace.md`.
+
+Cards explicativos (foto da série desfocada ao fundo, assinatura NEXA): `nx-i1` o negócio em números, `nx-i2` o que é
+a NeoSpace, `nx-i3` modelo de linguagem x modelo de dados, `nx-i4` por que o Itaú comprou (marcado como leitura da
+NEXA). Fontes no rodapé de cada card: fato relevante do Itaú, Tecnoblog, Times Brasil, InfoMoney, Oracle e NVIDIA.
 
 1. `nx-n1`: letreiro de LED na torre ("ITAÚ COMPRA A NEOSPACE POR R$ 2,9 BILHÕES") com um painel do Itaú.
    O painel não é da IA: `montagem/nx-n1.html` aplica o **logo oficial de 2023** (Wikimedia Commons,
