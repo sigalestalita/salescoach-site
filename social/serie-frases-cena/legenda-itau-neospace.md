@@ -1,4 +1,4 @@
-# Legenda · Notícia "Itaú compra a NeoSpace" (carrossel de 8 telas, NEXA)
+# Legenda · Notícia "Itaú compra a NeoSpace" (carrossel de 9 telas, NEXA)
 
 O maior banco privado do país acabou de pagar R$ 2,9 bilhões por uma startup brasileira de IA com poucos anos de vida.
 

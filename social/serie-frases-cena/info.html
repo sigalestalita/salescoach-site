@@ -35,6 +35,8 @@
   .vs .nova small { color: #d4f969; }
   .vs strong { display: block; font-size: 42px; font-weight: 800; letter-spacing: -.035em; margin-top: 14px; line-height: 1.05; }
   .vs p { margin: 18px 0 0; font-size: 25px; line-height: 1.4; color: rgba(255,255,255,.74); }
+  /* Logo da NeoSpace (branco sobre preto): "screen" some com o fundo preto do recorte. */
+  .marca { width: 420px; align-self: flex-start; mix-blend-mode: screen; margin-left: -10px; }
   .fonte { position: absolute; left: 84px; right: 84px; bottom: 112px; font-size: 16px; line-height: 1.45; color: rgba(255,255,255,.5); }
   .assina { position: absolute; left: 0; right: 0; bottom: 56px; display: flex; align-items: center; justify-content: center; gap: 18px; color: rgba(255,255,255,.86); font-weight: 500; font-size: 15px; letter-spacing: .34em; text-transform: uppercase; }
   .assina .sep { width: 4px; height: 4px; border-radius: 50%; background: currentColor; opacity: .7; }
@@ -61,7 +63,8 @@
 
   <!-- 2. O que é a NeoSpace -->
   <section class="card" data-fundo="nx-n2" data-fonte="Fato relevante do Itaú (26/10/2026) · Times Brasil · Tecnoblog · Oracle (mar/2025) · NVIDIA (estudo de caso)">
-    <div class="kick">Afinal, o que é a NeoSpace?</div>
+    <img class="marca" src="montagem/neospace-logo.png" alt="NeoSpace">
+    <div class="kick" style="margin-top:44px">Afinal, o que é a NeoSpace?</div>
     <h1>Uma IA brasileira que não lê texto. <em>Lê dados.</em></h1>
     <ul class="lista">
       <li><i>01</i><div>Cria <b>modelos fundacionais</b> treinados em transações, histórico de consumo e registros operacionais. Ela chama isso de <b>Large Data Model</b>.</div></li>
@@ -92,12 +95,24 @@
     </ul>
   </section>
 
+  <!-- 5. Ponte para o fecho: e a sua empresa? -->
+  <section class="card" data-fundo="nx-n4" data-fonte="">
+    <div class="kick">E a sua empresa?</div>
+    <h1>O Itaú pagou bilhões para transformar dado em decisão. <em>O seu dado já existe.</em></h1>
+    <ul class="lista">
+      <li><i>01</i><div><b>Cada reunião de vendas</b> diz por que o cliente compra ou some.</div></li>
+      <li><i>02</i><div><b>Cada atendimento</b> mostra onde o cliente trava.</div></li>
+      <li><i>03</i><div><b>Cada pesquisa com o time</b> aponta o risco antes do pedido de demissão.</div></li>
+    </ul>
+    <div class="lead" style="margin-top:40px">A diferença é usar. <b>E isso não começa com um cheque.</b></div>
+  </section>
+
   <div class="fonte" id="fonte"></div>
   <div class="assina"><span class="logo"><svg viewBox="0 0 800 150"><path d="M8 139V12L175 139V12M200 12H366M200 12V139H366M200 75H366M390 12L558 139M558 12L390 139M580 139L685 12L792 139M618 95H755"/></svg><i></i></span><span class="sep"></span><span>IA aplicada ao negócio</span></div>
 <script>
   const n = +(new URLSearchParams(location.search).get('c') || 1), c = document.querySelectorAll('.card')[n - 1];
   c.classList.add('on');
   document.getElementById('fundo').style.backgroundImage = `url(fotos/${c.dataset.fundo}.jpg)`;
-  document.getElementById('fonte').textContent = 'Fonte: ' + c.dataset.fonte;
+  document.getElementById('fonte').textContent = c.dataset.fonte ? 'Fonte: ' + c.dataset.fonte : '';
 </script>
 </body></html>
