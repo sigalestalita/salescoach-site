@@ -17,3 +17,18 @@ Atlas e NEXA: um carrossel de 5 imagens e 2 posts únicos por marca (21 imagens)
 - Prontas, com acabamento em `out/`: `sc-c1` (metrô, legenda em `legendas.md`), `sc-c2` (relógio).
 - Refazer: `sc-c4` (placa: saiu "Obj·ção").
 - Faltam as outras 18: os créditos da Higgsfield acabaram em 23/10.
+
+## Notícia: Itaú compra a NeoSpace (out/2026, NEXA)
+
+Carrossel de 4 cenas (`nx-n1` a `nx-n4`), legenda em `legenda-itau-neospace.md`.
+
+1. `nx-n1`: letreiro de LED na torre ("ITAÚ COMPRA A NEOSPACE POR R$ 2,9 BILHÕES") com um painel do Itaú.
+   O painel não é da IA: `montagem/nx-n1.html` aplica o **logo oficial de 2023** (Wikimedia Commons,
+   "Itaú Unibanco logo 2023.svg", em `montagem/itau-2023.svg`) sobre a foto `montagem/nx-n1-base.jpg`.
+   `node montagem/render.mjs` gera `fotos/nx-n1.jpg`; depois `node render.mjs nx-n1`.
+2. `nx-n2`: placa no cofre ("IA NÃO É MAIS TESTE. É PATRIMÔNIO.").
+3. `nx-n3`: estêncil no estacionamento ("QUEM ESPERA A IA FICAR PRONTA, COMPRA DE QUEM NÃO ESPEROU.").
+4. `nx-n4`: quadro branco ("VOCÊ NÃO PRECISA DE R$ 2,9 BI. PRECISA COMEÇAR.").
+
+Fonte: fato relevante do Itaú Unibanco de 26/10/2026 (R$ 2,925 bilhões por 100% das ações; depende de Cade e Banco Central).
+Imagens geradas por IA: ative o rótulo "Conteúdo feito com IA". A marca do Itaú aparece em contexto de notícia.

@@ -1,0 +1,9 @@
+{
+ "endpoint": "ideogram/v4.0",
+ "args": {
+  "prompt": "A huge rooftop billboard on top of a building on Avenida Faria Lima in S\u00e3o Paulo at dusk, seen from street level, the billboard has a solid bright orange background with bold white uppercase letters in three lines reading exactly: \"ITA\u00da\" / \"COMPRA A NEOSPACE\" / \"POR R$ 2,9 BILH\u00d5ES\" No other logos or icons. Glass skyscrapers around, blurred traffic lights below, deep blue sky, the billboard lit from below. Moody cinematic photograph, tight close framing so the text is large and dominates the frame, natural low light, 35mm film grain, slightly desaturated tones, shallow depth of field, photorealistic, realistic textures, wear and imperfections. The text is sharp, bold and perfectly legible, spelled exactly as written in Brazilian Portuguese with correct accents. No other words, no logos, no watermark, no people facing the camera.",
+  "aspect_ratio": "4:5"
+ },
+ "url": "https://d3u0tzju9qaucj.cloudfront.net/266d8d97-07d5-4e92-897d-d70270f9fb4a/01a17dec-0a9f-7908-a551-bd3afea3041a/11294297-b431-43e8-a7b5-c4e8affa1db6.png",
+ "request_id": "01a17dec-0a9f-7908-a551-bd3afea3041a"
+}

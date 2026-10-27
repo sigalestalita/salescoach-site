@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8">
+<style>
+  /* Capa da notícia Itaú/NeoSpace: a foto do letreiro (Ideogram) com um outdoor do Itaú montado na
+     fachada da torre, com o logo oficial de 2023 (Wikimedia Commons, "Itaú Unibanco logo 2023.svg").
+     O logo não é redesenhado pela IA: vai o arquivo da marca. 1792×2240, igual à foto. */
+  html, body { margin: 0; width: 1792px; height: 2240px; background: #000; overflow: hidden; }
+  .foto { position: absolute; inset: 0; background: url(nx-n1-base.jpg) 0 0 / 1792px 2240px no-repeat; }
+  /* Painel de LED na fachada, como o letreiro: tela escura, logo aceso, grade de pixels e o
+     reflexo laranja nos vidros em volta. */
+  .luz { position: absolute; left: 520px; top: 430px; width: 860px; height: 640px; border-radius: 50%;
+    background: radial-gradient(closest-side, rgba(255,110,20,.30), rgba(255,110,20,0)); mix-blend-mode: screen; }
+  .painel { position: absolute; left: 738px; top: 588px; width: 486px; height: 286px; background: #0e0f10;
+    padding: 8px; box-shadow: 0 20px 34px -14px rgba(0,0,0,.75), 0 0 0 1px rgba(255,255,255,.05); filter: blur(.6px); }
+  .tela { position: relative; width: 100%; height: 100%; overflow: hidden;
+    background: radial-gradient(90% 80% at 50% 50%, #1b1410 0%, #0a0a0a 75%); }
+  /* O logo de 2023 tem as letras vazadas: um fundo branco por trás, menor que o quadrado laranja,
+     acende as letras sem aparecer nos cantos. */
+  .logo { position: absolute; left: 50%; top: 50%; width: 214px; height: 214px; transform: translate(-50%, -50%);
+    filter: drop-shadow(0 0 10px rgba(255,98,0,.7)) drop-shadow(0 0 28px rgba(255,98,0,.4)); }
+  .logo::before { content: ""; position: absolute; left: 13%; top: 13%; width: 76%; height: 76%; border-radius: 14%; background: #fff6ee; }
+  .logo img { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .tela::after { content: ""; position: absolute; inset: 0;
+    background-image: linear-gradient(rgba(0,0,0,.38) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,.38) 1px, transparent 1px);
+    background-size: 4px 4px; }
+  .tela::before { content: ""; position: absolute; inset: 0; z-index: 1;
+    background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,0) 40%); }
+  .grao { position: absolute; left: 738px; top: 588px; width: 486px; height: 286px; opacity: .18; mix-blend-mode: overlay; }
+</style></head>
+<body>
+  <div class="foto"></div>
+  <div class="luz"></div>
+  <div class="painel"><div class="tela"><div class="logo"><img src="itau-2023.svg" alt="Itaú"></div></div></div>
+  <svg class="grao" viewBox="0 0 486 286"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="1.6" numOctaves="2"/></filter><rect width="486" height="286" filter="url(#n)"/></svg>
+</body></html>

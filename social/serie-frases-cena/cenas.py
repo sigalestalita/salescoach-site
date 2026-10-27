@@ -53,6 +53,11 @@ CENAS = [
     # ── NEXA · posts únicos ──
     ('nx-p1', 'nexa', 'post', 'A natural canvas tote bag hanging on a hook against a dark wall, with large bold black screen-printed letters reading exactly: "Menos ferramenta. Mais resultado." A small lime green tag on the handle, soft side light.'),
     ('nx-p2', 'nexa', 'post', 'Close-up of a red LED dot matrix display above an elevator door in a dark modern building lobby, the glowing dots spell exactly: "SEU CONCORRENTE JÁ AUTOMATIZOU ISSO." Brushed steel doors, reflections.'),
+    # ── NEXA · notícia: Itaú compra a NeoSpace (26/10/2026) ──
+    ('nx-n1', 'nexa', 'noticia', 'A huge rooftop billboard on top of a building on Avenida Faria Lima in São Paulo at dusk, seen from street level, the billboard has a solid bright orange background with bold white uppercase letters in three lines reading exactly: "ITAÚ" / "COMPRA A NEOSPACE" / "POR R$ 2,9 BILHÕES" No other logos or icons. Glass skyscrapers around, blurred traffic lights below, deep blue sky, the billboard lit from below.'),
+    ('nx-n2', 'nexa', 'noticia', 'Close-up of a heavy round polished steel bank vault door in a dark marble basement, with a brass plaque riveted to the door engraved in bold uppercase letters reading exactly: "IA NÃO É MAIS TESTE. É PATRIMÔNIO." Warm spotlight from above, reflections on the steel, bolts and hinges visible.'),
+    ('nx-n3', 'nexa', 'noticia', 'Huge bold black stencil letters spray-painted on a raw concrete wall of an empty underground parking garage, clean industrial stencil typeface, reading exactly in three lines: "QUEM ESPERA A IA" / "FICAR PRONTA, COMPRA" / "DE QUEM NÃO ESPEROU." A single lime green parking line on the floor, cold fluorescent light.'),
+    ('nx-n4', 'nexa', 'noticia', 'Close-up of a used whiteboard in a small company meeting room, neatly written in clean block capital letters with a black marker reading exactly: "VOCÊ NÃO PRECISA DE R$ 2,9 BI." and below, in lime green marker, clean block capital letters reading exactly: "PRECISA COMEÇAR." A marker resting on the tray, laptop corner blurred, soft daylight.'),
 ]
 
 

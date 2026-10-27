@@ -138,6 +138,10 @@ for d, capa, nome, k in DESTAQUES:
              telas=[S + f'instagram-nexa/jpg/stories/{d}-*.jpg'], medida='9:16 · 6 stories', serie='Destaques do perfil',
              texto=_sec('instagram-nexa/destaques/roteiro.md', f'## {k} · {nome}')))
 
+add(dict(id='noticia-itau-neospace', titulo='Notícia: Itaú compra a NeoSpace por R$ 2,9 bi', produto='nexa', editoria='Notícias', formato='Carrossel',
+         pasta=S + 'serie-frases-cena', telas=[S + 'serie-frases-cena/out/nx-n*.jpg'], medida='4:5 · 4 telas',
+         legenda=_arq('serie-frases-cena/legenda-itau-neospace.md'),
+         nota='Imagens geradas por IA (ative o rótulo). Logo do Itaú oficial, aplicado em montagem/nx-n1.html.'))
 # ── Atlas ─────────────────────────────────────────────────────────────────
 add(dict(id='atlas-fofos', titulo='Verdades duras sobre RH com imagens fofas', produto='atlas', editoria='Conteúdo', formato='Carrossel',
          pasta=S + 'carrossel-atlas-fofos', telas=[S + 'carrossel-atlas-fofos/out/carrossel/card-*.jpg'], medida='4:5 · 8 telas',

@@ -1,0 +1,9 @@
+{
+ "endpoint": "ideogram/v4.0",
+ "args": {
+  "prompt": "Close-up of a used whiteboard in a small company meeting room, neatly written in clean block capital letters with a black marker reading exactly: \"VOC\u00ca N\u00c3O PRECISA DE R$ 2,9 BI.\" and below, in lime green marker, clean block capital letters reading exactly: \"PRECISA COME\u00c7AR.\" A marker resting on the tray, laptop corner blurred, soft daylight. Moody cinematic photograph, tight close framing so the text is large and dominates the frame, natural low light, 35mm film grain, slightly desaturated tones, shallow depth of field, photorealistic, realistic textures, wear and imperfections. The text is sharp, bold and perfectly legible, spelled exactly as written in Brazilian Portuguese with correct accents. No other words, no logos, no watermark, no people facing the camera.",
+  "aspect_ratio": "4:5"
+ },
+ "url": "https://d3u0tzju9qaucj.cloudfront.net/266d8d97-07d5-4e92-897d-d70270f9fb4a/01a17dea-f3fe-7667-81b5-ae171a36ff43/d33d109c-8b03-4293-90be-8d30c798a33e.png",
+ "request_id": "01a17dea-f3fe-7667-81b5-ae171a36ff43"
+}
