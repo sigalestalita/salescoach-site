@@ -1,14 +1,16 @@
 # Legenda · Carrossel Atlas "Saúde mental passou o câncer" (estilo Ponto cego)
 
-A saúde mental passou o câncer como a maior preocupação de saúde do mundo. Na pesquisa da Ipsos deste ano, em 32 países, 48% das pessoas apontam a saúde mental entre os maiores problemas de saúde do país. O câncer vem em segundo, com 40%.
+A saúde mental passou o câncer como a maior preocupação de saúde do mundo.
 
-No Brasil, a virada foi ainda maior. Em 2018, só 18% citavam a saúde mental, e o câncer liderava. Em 2026, são 58%.
+Na pesquisa da Ipsos deste ano, em 32 países, 48% das pessoas apontam a saúde mental entre os maiores problemas de saúde do país. O câncer vem em segundo, com 40%. No Brasil, são 58%. Em 2018, eram 18%.
 
 E isso não fica na pesquisa. Em 2025, o Brasil teve 546 mil afastamentos do trabalho por transtornos mentais, um recorde, puxado por ansiedade e depressão.
 
-Desde maio, a NR-1 trata os riscos psicossociais como risco ocupacional: a empresa precisa identificar, avaliar, agir e acompanhar. Uma palestra no Setembro Amarelo é bem-vinda, mas não mostra onde está o risco nem se ele caiu.
+Só que o afastamento é o sintoma. A causa vem antes: excesso de demanda, prazos impossíveis, pouca autonomia, assédio, liderança ausente. É o jeito como o trabalho é organizado.
 
-No carrossel: o que são riscos psicossociais e 4 passos para medir na prática.
+Desde maio, a NR-1 trata esses riscos psicossociais como risco ocupacional: a empresa precisa identificar, avaliar, agir e acompanhar. Uma palestra no Setembro Amarelo é bem-vinda, mas não mostra onde está o risco nem se ele caiu.
+
+No carrossel, 4 passos para medir na prática.
 
 Salve e mande para o seu RH.
 
