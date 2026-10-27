@@ -1,0 +1,630 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Raio-X das reuniões de vendas · diagnóstico gratuito · Sales Coach</title>
+<meta name="description" content="Em 3 minutos, veja com os números do seu time quantas reuniões de vendas acontecem sem ninguém acompanhar, onde o processo vaza e o que fazer nos próximos 30 dias.">
+<meta name="robots" content="index,follow">
+<meta property="og:title" content="Raio-X das reuniões de vendas (diagnóstico gratuito)">
+<meta property="og:description" content="Quantas reuniões do seu time você realmente vê? Descubra em 3 minutos, com os seus números.">
+<meta property="og:image" content="https://nexatech.ia.br/raio-x-reunioes/img/og.jpg">
+<meta name="theme-color" content="#0c0e0a">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400..600&family=Space+Grotesk:wght@300;400;500&family=Poppins:wght@300;700&display=swap">
+<script>
+/* Configuração. Preencha o ID do Pixel da Meta para ativar o rastreamento.
+   gate: true pede o contato antes do relatório completo (a nota e o número principal aparecem antes). */
+window.LP = { pixel: '', material: 'raio-x-reunioes', gate: true, api: 'https://atzwinvlemkyttkrdumn.supabase.co/functions/v1/lead-material',
+  whatsapp: '5551981736796' };
+// UTMs e ids de clique: guardados na sessão para não se perderem.
+(function () { try { var q = new URLSearchParams(location.search), u = JSON.parse(sessionStorage.getItem('lp-utm') || '{}');
+  ['utm_source','utm_medium','utm_campaign','utm_content','utm_term','fbclid','gclid','gbraid','wbraid','li_fat_id'].forEach(function (k) { if (q.get(k)) u[k] = q.get(k); });
+  if (!u.referrer && document.referrer && document.referrer.indexOf(location.host) < 0) u.referrer = document.referrer;
+  sessionStorage.setItem('lp-utm', JSON.stringify(u)); } catch (e) {} })();
+</script>
+<script>
+if (window.LP.pixel) { !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', window.LP.pixel); fbq('track', 'PageView'); fbq('track', 'ViewContent', { content_name: 'Raio-X das reuniões' }); }
+</script>
+<style>
+/* Diagnóstico interativo do Sales Coach. Cada ponto do painel é uma reunião do mês:
+   os números do time desenham o painel, as respostas apagam o que a liderança não vê.
+   Prévia sem cadastro; o relatório completo pede o contato (LP.gate). */
+:root { --fundo: #0c0e0a; --fundo2: #13160f; --cartao: #171a13; --linha: #2a2e24; --linha2: #3a3f33;
+  --texto: #f1f3ea; --dim: #a3a996; --dim2: #767c6b; --lima: #d4f969; --lima2: #b8e03c; --tinta: #10120e;
+  --ruim: #ff8a6b; --medio: #f5c84c; --bom: #d4f969; --gut: 20px; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+body { font-family: 'DM Sans', system-ui, sans-serif; color: var(--texto); background: var(--fundo); -webkit-font-smoothing: antialiased; line-height: 1.5; min-height: 100vh; }
+button, input, select { font: inherit; color: inherit; }
+.disp { font-family: 'Space Grotesk', system-ui, sans-serif; letter-spacing: -.04em; }
+.mono { font-family: ui-monospace, 'SFMono-Regular', Menlo, monospace; letter-spacing: .14em; text-transform: uppercase; font-size: 11px; }
+.wrap { width: 100%; max-width: 1180px; margin: 0 auto; padding: 0 var(--gut); }
+.oculto { display: none !important; }
+
+/* Topo */
+.topo { padding: 16px 0; position: relative; z-index: 2; }
+.topo .wrap { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.marca { display: flex; align-items: center; gap: 9px; font-family: 'Poppins', sans-serif; font-size: 18px; color: var(--texto); text-decoration: none; }
+.marca img { width: 26px; height: auto; filter: brightness(0) invert(1); } .marca b { font-weight: 700; } .marca span { font-weight: 300; }
+.nexa { display: flex; align-items: center; gap: 7px; font-size: 12px; color: var(--dim2); }
+.nexa svg { height: 10px; width: auto; } .nexa path { stroke: var(--dim); }
+
+/* Estrutura: conteúdo à esquerda, painel do raio-x à direita (no celular, o painel fica em cima). */
+.app { display: grid; gap: 18px; padding-top: 6px; padding-bottom: 56px; }
+.painel { position: relative; border-radius: 22px; background: radial-gradient(120% 80% at 50% 0%, #1b2013, var(--fundo2) 70%); box-shadow: inset 0 0 0 1px var(--linha); overflow: hidden; }
+.painel canvas { display: block; width: 100%; height: 150px; }
+.painel .leg { display: flex; justify-content: space-between; gap: 10px; padding: 0 16px 14px; font-size: 12px; color: var(--dim2); }
+.painel .leg i { display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: var(--lima); margin-right: 6px; vertical-align: 1px; box-shadow: 0 0 8px var(--lima); }
+.painel .leg i.apag { background: #3a3f33; box-shadow: none; }
+.nums { display: grid; grid-template-columns: 1fr 1fr; border-bottom: 1px solid var(--linha); }
+.nums div { padding: 13px 16px 12px; }
+.nums div + div { border-left: 1px solid var(--linha); }
+.nums b { display: block; font-family: 'Space Grotesk', sans-serif; font-weight: 400; font-size: 26px; letter-spacing: -.04em; line-height: 1.05; font-variant-numeric: tabular-nums; }
+.nums span { display: block; font-size: 12px; color: var(--dim2); margin-top: 3px; line-height: 1.3; }
+.nums .vis b { color: var(--lima); }
+
+/* Telas */
+.tela { animation: entra .45s cubic-bezier(.2,.7,.2,1) both; }
+@keyframes entra { from { opacity: 0; transform: translateY(14px); } }
+.selo { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 500; color: var(--lima); background: rgba(212,249,105,.08); box-shadow: inset 0 0 0 1px rgba(212,249,105,.3); padding: 6px 13px; border-radius: 99px; }
+.selo i { width: 7px; height: 7px; border-radius: 50%; background: var(--lima); box-shadow: 0 0 10px var(--lima); animation: pisca 1.6s ease-in-out infinite; }
+@keyframes pisca { 50% { opacity: .35; } }
+h1 { font-family: 'Space Grotesk', sans-serif; font-weight: 300; letter-spacing: -.045em; font-size: clamp(34px, 8.4vw, 64px); line-height: 1.02; margin-top: 18px; }
+h1 em, h2 em, .hl em { font-style: normal; color: var(--lima); font-weight: 400; }
+.sub { font-size: 16.5px; color: var(--dim); margin-top: 16px; max-width: 540px; }
+.lista-hero { list-style: none; display: grid; gap: 9px; margin-top: 22px; }
+.lista-hero li { display: flex; gap: 10px; font-size: 15px; color: #d7dbcd; }
+.lista-hero li::before { content: ''; flex: 0 0 auto; width: 16px; height: 16px; margin-top: 3px; border-radius: 50%; background: rgba(212,249,105,.14) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4.5 8.3l2.2 2.2 4.8-5' fill='none' stroke='%23d4f969' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/16px no-repeat; }
+.cta { display: inline-flex; align-items: center; justify-content: center; gap: 12px; height: 58px; padding: 0 28px; border: 0; border-radius: 16px; background: var(--lima); color: var(--tinta); font-size: 17px; font-weight: 600; cursor: pointer; text-decoration: none; transition: transform .15s, background .15s, box-shadow .2s; box-shadow: 0 14px 40px -14px rgba(212,249,105,.6); }
+.cta:hover { transform: translateY(-1px); background: #e2ff86; }
+.cta:active { transform: translateY(0); }
+.cta:disabled { opacity: .6; cursor: progress; transform: none; }
+.cta svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+.nota-cta { font-size: 13px; color: var(--dim2); margin-top: 12px; }
+.hero-cta { margin-top: 28px; }
+
+/* Passos */
+.passo-topo { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 18px; }
+.voltar { background: none; border: 0; color: var(--dim); font-size: 14px; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; padding: 6px 0; }
+.voltar:hover { color: var(--texto); }
+.voltar[disabled] { visibility: hidden; }
+.prog { flex: 1; max-width: 260px; height: 4px; border-radius: 4px; background: var(--linha); overflow: hidden; }
+.prog i { display: block; height: 100%; background: var(--lima); border-radius: 4px; transition: width .4s; }
+.contador { font-size: 12px; color: var(--dim2); font-variant-numeric: tabular-nums; }
+.pergunta { font-family: 'Space Grotesk', sans-serif; font-weight: 400; letter-spacing: -.035em; font-size: clamp(25px, 5.6vw, 36px); line-height: 1.1; }
+.ajuda { color: var(--dim); font-size: 15px; margin-top: 10px; max-width: 560px; }
+.ops { display: grid; gap: 10px; margin-top: 24px; }
+.op { display: grid; grid-template-columns: 30px 1fr; gap: 12px; align-items: center; width: 100%; text-align: left; padding: 15px 16px; border-radius: 14px; border: 0; background: var(--cartao); box-shadow: inset 0 0 0 1px var(--linha); cursor: pointer; transition: box-shadow .15s, background .15s, transform .1s; font-size: 16px; line-height: 1.35; }
+.op:hover { box-shadow: inset 0 0 0 1px var(--linha2); background: #1c2017; }
+.op:active { transform: scale(.995); }
+.op kbd { display: grid; place-items: center; width: 28px; height: 28px; border-radius: 8px; background: var(--fundo); box-shadow: inset 0 0 0 1px var(--linha2); font-family: ui-monospace, Menlo, monospace; font-size: 12px; color: var(--dim); }
+.op small { display: block; color: var(--dim2); font-size: 13.5px; margin-top: 2px; }
+.op[aria-pressed="true"] { background: rgba(212,249,105,.1); box-shadow: inset 0 0 0 1.5px var(--lima); }
+.op[aria-pressed="true"] kbd { background: var(--lima); color: var(--tinta); box-shadow: none; }
+.insight { margin-top: 16px; padding: 13px 15px; border-radius: 12px; background: rgba(212,249,105,.06); box-shadow: inset 0 0 0 1px rgba(212,249,105,.18); font-size: 14.5px; color: #dfe4cf; display: flex; gap: 10px; animation: entra .3s both; }
+.insight::before { content: '→'; color: var(--lima); }
+
+/* Números do time */
+.campos-num { display: grid; gap: 14px; margin-top: 22px; }
+.cnum { padding: 16px 16px 14px; border-radius: 16px; background: var(--cartao); box-shadow: inset 0 0 0 1px var(--linha); }
+.cnum .l { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
+.cnum label { font-size: 15px; font-weight: 500; }
+.cnum .val { display: flex; align-items: baseline; gap: 6px; }
+.cnum .val input { width: 92px; text-align: right; background: none; border: 0; border-bottom: 1px dashed var(--linha2); font-family: 'Space Grotesk', sans-serif; font-size: 24px; letter-spacing: -.03em; color: var(--lima); padding: 0 2px; font-variant-numeric: tabular-nums; }
+.cnum .val input:focus { outline: none; border-bottom-color: var(--lima); }
+.cnum .val span { font-size: 13px; color: var(--dim2); }
+.cnum .dica { font-size: 13px; color: var(--dim2); margin-top: 4px; }
+input[type=range] { -webkit-appearance: none; appearance: none; width: 100%; height: 28px; background: none; margin-top: 8px; cursor: pointer; }
+input[type=range]::-webkit-slider-runnable-track { height: 6px; border-radius: 6px; background: linear-gradient(90deg, var(--lima) var(--p, 50%), var(--linha2) var(--p, 50%)); }
+input[type=range]::-moz-range-track { height: 6px; border-radius: 6px; background: linear-gradient(90deg, var(--lima) var(--p, 50%), var(--linha2) var(--p, 50%)); }
+input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 24px; height: 24px; margin-top: -9px; border-radius: 50%; background: var(--texto); border: 4px solid var(--lima); box-shadow: 0 2px 10px rgba(0,0,0,.5); }
+input[type=range]::-moz-range-thumb { width: 18px; height: 18px; border-radius: 50%; background: var(--texto); border: 4px solid var(--lima); }
+input[type=range]:focus-visible { outline: 2px solid var(--lima); outline-offset: 4px; border-radius: 6px; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+.chips button { border: 0; border-radius: 99px; padding: 7px 12px; background: var(--fundo); box-shadow: inset 0 0 0 1px var(--linha2); color: var(--dim); font-size: 13.5px; cursor: pointer; }
+.chips button:hover { color: var(--texto); }
+.chips button.on { background: rgba(212,249,105,.12); box-shadow: inset 0 0 0 1px var(--lima); color: var(--lima); }
+.avancar { margin-top: 24px; }
+
+/* Prévia e formulário */
+.nota-anel { display: flex; align-items: center; gap: 18px; margin-top: 22px; }
+.anel { position: relative; width: 112px; height: 112px; flex: 0 0 auto; }
+.anel svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+.anel circle { fill: none; stroke-width: 9; }
+.anel .f { stroke: var(--linha); } .anel .v { stroke: var(--lima); stroke-linecap: round; transition: stroke-dashoffset 1.4s cubic-bezier(.2,.7,.2,1); }
+.anel b { position: absolute; inset: 0; display: grid; place-items: center; font-family: 'Space Grotesk', sans-serif; font-weight: 400; font-size: 34px; letter-spacing: -.04em; }
+.anel b small { display: block; font-size: 12px; color: var(--dim2); letter-spacing: 0; margin-top: -4px; text-align: center; }
+.nivel { font-family: 'Space Grotesk', sans-serif; font-size: 25px; letter-spacing: -.03em; line-height: 1.1; }
+.nivel-txt { color: var(--dim); font-size: 15px; margin-top: 4px; }
+.hl { font-family: 'Space Grotesk', sans-serif; font-weight: 300; letter-spacing: -.04em; font-size: clamp(28px, 6.4vw, 46px); line-height: 1.06; }
+.hl-sub { color: var(--dim); font-size: 16px; margin-top: 12px; max-width: 560px; }
+.form { margin-top: 28px; padding: 22px 18px; border-radius: 20px; background: #f4f5ef; color: var(--tinta); }
+.form h2 { font-family: 'Space Grotesk', sans-serif; font-weight: 400; font-size: 24px; letter-spacing: -.03em; line-height: 1.15; }
+.form ul { list-style: none; display: grid; gap: 6px; margin: 12px 0 16px; }
+.form li { font-size: 14.5px; color: #3c4135; display: flex; gap: 8px; }
+.form li::before { content: '✓'; color: #587406; font-weight: 700; }
+.form .campos { display: grid; gap: 12px; }
+.form .dois { display: grid; gap: 12px; }
+.form label { display: grid; gap: 5px; font-size: 13px; font-weight: 500; color: #2a2e25; }
+.form input:not([type=checkbox]), .form select { width: 100%; height: 48px; border-radius: 12px; border: 1px solid #d6d9cf; background: #fbfbf8; padding: 0 14px; font-size: 16px; color: var(--tinta); }
+.form input:focus, .form select:focus { outline: none; border-color: #587406; box-shadow: 0 0 0 3px rgba(212,249,105,.6); }
+.form .invalido { border-color: #c2412c !important; box-shadow: 0 0 0 3px rgba(194,65,44,.15) !important; }
+.form .marcar { display: flex; gap: 10px; align-items: flex-start; font-weight: 400; font-size: 14px; color: #2a2e25; padding: 12px; border-radius: 12px; background: rgba(212,249,105,.35); box-shadow: inset 0 0 0 1px rgba(88,116,6,.3); cursor: pointer; }
+.form .marcar input { width: 18px; height: 18px; margin-top: 2px; accent-color: #587406; flex: 0 0 auto; }
+.form .marcar b { font-weight: 600; }
+.form .cta { width: 100%; background: var(--tinta); color: #fff; box-shadow: none; }
+.form .cta:hover { background: #262a20; }
+.form .msg { font-size: 13.5px; color: #c2412c; }
+.form .lgpd { font-size: 12px; color: #8b9080; line-height: 1.45; }
+.form .lgpd a { color: inherit; }
+.hp { position: absolute !important; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+
+/* Relatório */
+.rel { display: grid; gap: 18px; }
+.bloco { padding: 22px 18px; border-radius: 20px; background: var(--cartao); box-shadow: inset 0 0 0 1px var(--linha); }
+.bloco > .mono { color: var(--lima); }
+.bloco h2 { font-family: 'Space Grotesk', sans-serif; font-weight: 400; font-size: clamp(23px, 5vw, 30px); letter-spacing: -.035em; line-height: 1.12; margin-top: 8px; }
+.bloco .p { color: var(--dim); font-size: 15px; margin-top: 8px; }
+.rel-topo { display: grid; gap: 18px; }
+.dims { display: grid; gap: 16px; margin-top: 18px; }
+.dim .t { display: flex; justify-content: space-between; gap: 10px; align-items: baseline; }
+.dim .t b { font-weight: 600; font-size: 15.5px; }
+.dim .t span { font-family: 'Space Grotesk', sans-serif; font-size: 20px; letter-spacing: -.03em; font-variant-numeric: tabular-nums; }
+.dim .barra { height: 8px; border-radius: 8px; background: var(--linha); margin-top: 8px; overflow: hidden; }
+.dim .barra i { display: block; height: 100%; border-radius: 8px; width: 0; transition: width 1.2s cubic-bezier(.2,.7,.2,1); }
+.dim p { font-size: 14.5px; color: var(--dim); margin-top: 8px; }
+.cards { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 18px; }
+.card { padding: 15px 14px; border-radius: 14px; background: var(--fundo); box-shadow: inset 0 0 0 1px var(--linha); }
+.card b { display: block; font-family: 'Space Grotesk', sans-serif; font-weight: 400; font-size: 25px; letter-spacing: -.04em; line-height: 1.05; font-variant-numeric: tabular-nums; }
+.card span { display: block; font-size: 12.5px; color: var(--dim2); margin-top: 5px; line-height: 1.35; }
+.sim { margin-top: 18px; padding: 18px 16px; border-radius: 16px; background: linear-gradient(160deg, rgba(212,249,105,.12), rgba(212,249,105,.03)); box-shadow: inset 0 0 0 1px rgba(212,249,105,.28); }
+.sim .l { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; font-size: 15px; }
+.sim .l b { color: var(--lima); font-family: 'Space Grotesk', sans-serif; font-size: 22px; letter-spacing: -.03em; }
+.sim .res { font-family: 'Space Grotesk', sans-serif; font-weight: 300; font-size: clamp(30px, 7vw, 44px); letter-spacing: -.045em; line-height: 1.05; margin-top: 10px; font-variant-numeric: tabular-nums; }
+.sim .res em { font-style: normal; color: var(--lima); font-weight: 400; }
+.sim small { display: block; font-size: 12.5px; color: var(--dim2); margin-top: 10px; }
+.plano { display: grid; gap: 12px; margin-top: 18px; counter-reset: p; }
+.acao { padding: 18px 16px; border-radius: 16px; background: var(--fundo); box-shadow: inset 0 0 0 1px var(--linha); counter-increment: p; }
+.acao h3 { font-family: 'Space Grotesk', sans-serif; font-weight: 400; font-size: 20px; letter-spacing: -.03em; line-height: 1.15; display: flex; gap: 10px; }
+.acao h3::before { content: counter(p, decimal-leading-zero); font-family: ui-monospace, Menlo, monospace; font-size: 12px; color: var(--lima); letter-spacing: 0; padding-top: 6px; }
+.acao ol { list-style: none; display: grid; gap: 8px; margin-top: 12px; }
+.acao li { font-size: 14.5px; color: #d7dbcd; display: grid; grid-template-columns: 86px 1fr; gap: 10px; }
+.acao li span { font-size: 12px; color: var(--dim2); padding-top: 2px; }
+.acao .sc { margin-top: 12px; padding-top: 12px; border-top: 1px dashed var(--linha2); font-size: 13.5px; color: var(--dim); }
+.acao .sc b { color: var(--lima); font-weight: 500; }
+.oferta { padding: 26px 20px; border-radius: 22px; background: var(--lima); color: var(--tinta); }
+.oferta .mono { color: #587406; }
+.oferta h2 { font-family: 'Space Grotesk', sans-serif; font-weight: 400; font-size: clamp(26px, 6vw, 38px); letter-spacing: -.04em; line-height: 1.05; margin-top: 8px; }
+.oferta p { font-size: 15.5px; color: #2a2e25; margin-top: 10px; max-width: 600px; }
+.oferta ul { list-style: none; display: grid; gap: 7px; margin-top: 14px; }
+.oferta li { font-size: 15px; display: flex; gap: 9px; } .oferta li::before { content: '✓'; font-weight: 700; color: #587406; }
+.oferta .cta { margin-top: 20px; background: var(--tinta); color: #fff; box-shadow: none; }
+.oferta .cta:hover { background: #262a20; }
+.oferta .ok { margin-top: 18px; padding: 14px; border-radius: 14px; background: rgba(16,18,14,.08); font-size: 15px; }
+.oferta .ok a { color: inherit; font-weight: 600; }
+.acoes-fim { display: flex; flex-wrap: wrap; gap: 10px; }
+.btn2 { display: inline-flex; align-items: center; gap: 8px; height: 46px; padding: 0 18px; border-radius: 12px; border: 0; background: var(--cartao); box-shadow: inset 0 0 0 1px var(--linha2); color: var(--texto); font-size: 14.5px; cursor: pointer; text-decoration: none; }
+.btn2:hover { box-shadow: inset 0 0 0 1px var(--dim2); }
+.rodape { padding: 26px 0 40px; font-size: 12.5px; color: var(--dim2); }
+.rodape .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px; }
+.rodape a { color: inherit; }
+
+@media (min-width: 560px) { .form .dois { grid-template-columns: 1fr 1fr; } .cards { grid-template-columns: repeat(4, 1fr); } }
+@media (min-width: 960px) {
+  :root { --gut: 40px; }
+  .app { grid-template-columns: minmax(0, 1fr) 420px; gap: 48px; align-items: start; padding-top: 28px; }
+  .conteudo { grid-column: 1; grid-row: 1; padding-bottom: 20px; }
+  .lateral { grid-column: 2; grid-row: 1; position: sticky; top: 24px; }
+  .painel canvas { height: 330px; }
+  .bloco, .form { padding: 28px 26px; }
+  .oferta { padding: 34px 32px; }
+  .rel-topo { grid-template-columns: auto 1fr; align-items: center; }
+}
+@media (max-width: 959px) { .lateral { position: sticky; top: 0; z-index: 3; margin: 0 calc(var(--gut) * -1); padding: 0 var(--gut) 4px; background: linear-gradient(var(--fundo) 85%, transparent); } .painel canvas { height: 86px; } .lateral.inicio { position: static; order: 2; background: none; } .lateral.inicio .painel canvas { height: 150px; } .nums div { padding: 10px 14px 9px; } .nums b { font-size: 22px; } .nums span { font-size: 11.5px; } .painel .leg { padding-bottom: 10px; font-size: 11.5px; } .lateral.fim { position: static; } }
+@media (prefers-reduced-motion: reduce) { *, *::before { animation: none !important; transition: none !important; } }
+
+/* Impressão: o relatório em fundo branco, sem botões. */
+@media print {
+  body { background: #fff; color: #10120e; }
+  .topo, .lateral, .acoes-fim, .oferta .cta, .rodape, .voltar { display: none !important; }
+  .app { display: block; padding: 0; }
+  .bloco, .acao, .card, .sim { background: #fff !important; box-shadow: inset 0 0 0 1px #ccc !important; break-inside: avoid; color: #10120e; }
+  .bloco .p, .dim p, .acao li, .card span, .sim small, .acao .sc { color: #444 !important; }
+  .bloco > .mono, .acao .sc b, .sim .l b, .sim .res em, .acao h3::before { color: #587406 !important; }
+  .oferta { box-shadow: inset 0 0 0 2px #10120e; }
+}
+</style>
+</head>
+<body>
+<header class="topo"><div class="wrap">
+  <span class="marca"><img src="img/mark.png" alt="" width="26" height="24"><b>Sales</b><span>Coach</span></span>
+  <span class="nexa">um produto <svg viewBox="0 0 800 150" aria-label="NEXA"><path fill="none" stroke-width="13" stroke-linecap="round" d="M8 139V12L175 139V12M200 12H366M200 12V139H366M200 75H366M390 12L558 139M558 12L390 139M580 139L685 12L792 139M618 95H755"/></svg></span>
+</div></header>
+
+<main class="wrap app" id="app">
+  <aside class="lateral inicio" id="lateral" aria-label="Painel do raio-x">
+    <div class="painel">
+      <div class="nums">
+        <div><b id="nReun">0</b><span>reuniões de vendas por mês</span></div>
+        <div class="vis"><b id="nVis">?</b><span id="nVisTxt">acompanhadas pela liderança</span></div>
+      </div>
+      <canvas id="tela" aria-hidden="true"></canvas>
+      <div class="leg"><span><i></i><span id="legA">cada ponto é uma reunião</span></span><span id="legB"></span></div>
+    </div>
+  </aside>
+  <div class="conteudo" id="conteudo" aria-live="polite"></div>
+</main>
+
+<footer class="rodape"><div class="wrap"><span>Sales Coach é um produto da NEXA · nexatech.ia.br</span><a href="/privacidade/">Política de privacidade</a></div></footer>
+
+<script>
+(function () {
+  'use strict';
+  var $ = function (s, r) { return (r || document).querySelector(s); };
+  var esc = function (v) { return String(v == null ? '' : v).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); };
+  var fmt = function (n) { return Math.round(n).toLocaleString('pt-BR'); };
+  var brl = function (n) { return 'R$ ' + Math.round(n).toLocaleString('pt-BR'); };
+  var brlCurto = function (n) {
+    n = Math.round(n);
+    if (n >= 1e6) return 'R$ ' + (n / 1e6).toLocaleString('pt-BR', { maximumFractionDigits: n >= 1e7 ? 0 : 1 }) + ' mi';
+    if (n >= 1e4) return 'R$ ' + Math.round(n / 1e3).toLocaleString('pt-BR') + ' mil';
+    return brl(n);
+  };
+  var SEMANAS = 4.3, MIN_REUNIAO = 45;
+  var VIS = [0.03, 0.10, 0.25, 0.5];
+
+  /* Perguntas. Cada opção vale de 0 a 3; a dimensão é a média das perguntas dela. */
+  var QS = [
+    { id: 'vis', dim: 'vis', t: 'Das reuniões do time, quantas a liderança acompanha de verdade?', s: 'Ao vivo ou ouvindo a gravação inteira. Ler o resumo no CRM não conta.',
+      ops: [['Quase nenhuma', 'menos de 5%'], ['Algumas por mês', '5% a 15%'], ['Boa parte', '15% a 40%'], ['A maioria', 'mais de 40%']],
+      ins: function (i) { var n = reunioes(); return 'Na prática, cerca de ' + fmt(n * VIS[i]) + ' de ' + fmt(n) + ' reuniões por mês. As outras ' + fmt(n * (1 - VIS[i])) + ' ficam só com quem estava na chamada.'; } },
+    { id: 'reg', dim: 'vis', t: 'O que sobra de uma reunião depois que a chamada termina?',
+      ops: [['Só a memória do vendedor'], ['Anotações soltas ou um resumo digitado depois no CRM'], ['A gravação, mas quase ninguém assiste'], ['Gravação, resumo e próximos passos no CRM, sempre']],
+      ins: function (i) { return ['Quando o vendedor sai, o histórico do cliente sai junto.', 'Resumo escrito de memória costuma guardar o que o vendedor achou, não o que o cliente disse.', 'Gravação sem análise vira arquivo: ' + fmt(horasTudo()) + ' horas por mês que ninguém tem para ouvir.', 'Base sólida. O desafio passa a ser tirar padrão de tudo isso.'][i]; } },
+    { id: 'fb', dim: 'coach', t: 'Com que frequência cada vendedor recebe feedback sobre uma reunião específica que fez?',
+      ops: [['Raramente ou nunca'], ['Quando algo dá errado'], ['Uma vez por mês'], ['Toda semana, com trechos reais da conversa']],
+      ins: function (i) { return ['Sem feedback, cada vendedor treina no lead de verdade.', 'Feedback só no erro ensina a evitar o pior, não a repetir o melhor.', 'Um feedback por mês é uma reunião comentada em cada ' + fmt(reunioesVendedor()) + ' que o vendedor faz.', 'É o ritmo dos times que mais evoluem. O difícil é manter com o time crescendo.'][i]; } },
+    { id: 'ramp', dim: 'coach', t: 'Quanto tempo um vendedor novo leva para vender sem ajuda?',
+      ops: [['Mais de 6 meses'], ['3 a 6 meses'], ['1 a 3 meses'], ['Menos de 1 mês']],
+      ins: function (i) { return ['Meio ano aprendendo com clientes reais custa negócio perdido no caminho.', 'Boa parte da rampagem é ouvir as mesmas objeções pela primeira vez.', 'Rampagem razoável. Dá para encurtar treinando com as objeções reais do seu mercado.', 'Rampagem curta. O conhecimento do time já circula bem.'][i]; } },
+    { id: 'met', dim: 'met', t: 'O time segue uma metodologia nas reuniões?', s: 'BANT, SPIN, MEDDIC ou um roteiro próprio.',
+      ops: [['Não, cada um vende do seu jeito'], ['Existe, mas ninguém confere se é seguida'], ['Existe e é conferida de vez em quando'], ['Existe e cada reunião é avaliada por ela']],
+      ins: function (i) { return ['Sem régua, não dá para saber o que funciona nem replicar o melhor vendedor.', 'Metodologia que ninguém confere vira sugestão.', 'Conferir de vez em quando mostra a regra, mas esconde as exceções.', 'Régua viva. Dá para medir quais critérios mais pesam no fechamento.'][i]; } },
+    { id: 'perda', dim: 'int', t: 'Você sabe por que as últimas 10 negociações perdidas foram perdidas?',
+      ops: [['Não sei'], ['Sei o que o vendedor contou'], ['Tenho motivos no CRM, mas genéricos, como "preço"'], ['Sei, pelo que o cliente disse na reunião']],
+      ins: function (i) { return ['Perda sem motivo se repete.', 'A versão do vendedor é uma parte da história.', '"Preço" e "timing" costumam esconder o que o cliente realmente disse.', 'Você aprende com cada perda. Pouca gente chega aqui.'][i]; } },
+    { id: 'prev', dim: 'int', t: 'No fim do mês, a previsão de vendas bate?',
+      ops: [['Raramente'], ['Erra bastante'], ['Erra pouco'], ['Quase sempre']],
+      ins: function (i) { return ['Previsão que não bate costuma vir de oportunidades que parecem quentes só no relato.', 'O CRM mostra a etapa; a reunião mostra se o cliente está mesmo andando.', 'Bom sinal: as etapas do funil refletem o que acontece nas conversas.', 'Previsibilidade alta. Proteja isso enquanto o time cresce.'][i]; } },
+  ];
+  var DIMS = {
+    vis: { nome: 'Visibilidade', txt: ['Quase tudo o que o time fala com clientes some quando a chamada termina. As decisões de gestão saem do que o vendedor lembra e conta.', 'Você vê uma parte, escolhida pelo acaso ou pelo próprio vendedor. Os problemas costumam estar nas reuniões que ninguém ouviu.', 'Boa visibilidade. O próximo passo é aplicar a mesma régua a todas as reuniões, não só às acompanhadas.'] },
+    coach: { nome: 'Coaching', txt: ['Feedback raro ou genérico. Cada vendedor aprende sozinho, no lead de verdade, e o novato leva meses para chegar lá.', 'Existe feedback, mas sem ritmo ou sem a conversa na mão. Sem trechos reais, o um a um vira opinião.', 'Coaching frequente e concreto. O desafio é manter o mesmo nível para todo o time, toda semana.'] },
+    met: { nome: 'Método', txt: ['Cada um vende do seu jeito. Fica difícil saber o que funciona, replicar o melhor vendedor ou cobrar critério.', 'A metodologia existe no papel. Sem conferir reunião a reunião, ela vira sugestão.', 'Metodologia viva, conferida nas reuniões. O ganho agora é medir quais critérios mais pesam no fechamento.'] },
+    int: { nome: 'Inteligência de vendas', txt: ['As perdas ficam sem explicação e a previsão não bate. O funil mostra o quê, mas não o porquê.', 'Há motivos registrados, mas genéricos. "Preço" e "timing" escondem o que o cliente realmente disse.', 'Você sabe por que ganha e por que perde. Use isso para ajustar o discurso e o treino do time.'] },
+  };
+  var PLANO = {
+    vis: { t: 'Ouça uma amostra justa das reuniões', p: [['Semana 1', 'Sorteie 2 reuniões por vendedor. Sorteadas, não indicadas por eles.'], ['Semanas 2 a 4', 'Ouça com uma ficha de 5 critérios e anote o que se repete no time inteiro.']], sc: 'ouve todas as reuniões do Meet e do Teams e entrega a nota de cada uma. Você ouve só os trechos que importam.' },
+    coach: { t: 'Crie o ritual de 20 minutos por semana', p: [['Semana 1', 'Para cada vendedor, separe um trecho real de reunião: o que foi bem e uma pergunta que faltou.'], ['Semanas 2 a 4', 'Registre a evolução numa planilha simples: critério, nota e data. O um a um passa a ter dado.']], sc: 'entrega cada reunião com nota, critérios justificados com o que foi dito e a pergunta que faltou.' },
+    met: { t: 'Escolha uma régua e use em toda reunião', p: [['Semana 1', 'Defina 5 critérios: dor, decisor, orçamento, prazo e próximo passo com data.'], ['Semanas 2 a 4', 'Ao fim de cada reunião, o vendedor marca o que cobriu. Você confere uma amostra por semana.']], sc: 'aplica BANT, MEDDIC, SPIN ou a metodologia da sua empresa a todas as reuniões, sem ninguém preencher nada.' },
+    int: { t: 'Pare de aceitar "preço" como motivo de perda', p: [['Semana 1', 'Para cada perda, registre a frase do cliente que mais pesou na decisão.'], ['Semanas 2 a 4', 'No fim do mês, junte as frases e ajuste o discurso e o treino do time.']], sc: 'responde "o que travou essa negociação?" citando a reunião, a data e o trecho da conversa.' },
+  };
+  var NIVEIS = [
+    [0, 'Às cegas', 'A maior parte do que decide as vendas acontece sem ninguém ver, e o que é visto não vira padrão.'],
+    [35, 'No retrovisor', 'Você enxerga os resultados, mas tarde: quando a venda já foi perdida ou o mês já fechou.'],
+    [60, 'Com faróis', 'Boa base de gestão. O que falta é escala: ver tudo, com a mesma régua, sem depender do seu tempo.'],
+    [80, 'Com radar', 'Operação madura. O ganho agora está nos detalhes: quais critérios e frases mais pesam no fechamento.'],
+  ];
+
+  /* Estado (guardado no navegador para quem recarregar a página). */
+  var S = { passo: -1, nums: { v: 8, r: 8, c: 6, t: 15000 }, resp: {}, lead: null, analise: false, sim: 10 };
+  try { var salvo = JSON.parse(localStorage.getItem('raio-x') || 'null'); if (salvo && salvo.nums) S = Object.assign(S, salvo); } catch (e) {}
+  var guardar = function () { try { localStorage.setItem('raio-x', JSON.stringify(S)); } catch (e) {} };
+
+  var reunioes = function () { return S.nums.v * S.nums.r * SEMANAS; };
+  var reunioesVendedor = function () { return S.nums.r * SEMANAS; };
+  var horasTudo = function () { return reunioes() * MIN_REUNIAO / 60; };
+  var visFrac = function () { return S.resp.vis == null ? null : VIS[S.resp.vis]; };
+  var dimNota = function (d) { var qs = QS.filter(function (q) { return q.dim === d && S.resp[q.id] != null; }); if (!qs.length) return 0; return Math.round(qs.reduce(function (a, q) { return a + S.resp[q.id]; }, 0) / qs.length / 3 * 100); };
+  var nota = function () { var ds = Object.keys(DIMS); return Math.round(ds.reduce(function (a, d) { return a + dimNota(d); }, 0) / ds.length); };
+  var nivel = function (n) { var r = NIVEIS[0]; NIVEIS.forEach(function (x) { if (n >= x[0]) r = x; }); return r; };
+  var faixa = function (n) { return n < 40 ? 0 : n < 70 ? 1 : 2; };
+  var cor = function (n) { return n < 40 ? 'var(--ruim)' : n < 70 ? 'var(--medio)' : 'var(--bom)'; };
+  var tamanhoTime = function (v) { return v <= 1 ? 'Só eu' : v <= 5 ? '2 a 5' : v <= 15 ? '6 a 15' : v <= 50 ? '16 a 50' : 'Mais de 50'; };
+
+  /* ───── Painel: um ponto por reunião (ou por grupo de reuniões, se forem muitas) ───── */
+  var cv = $('#tela'), ctx = cv.getContext('2d'), pontos = [], porPonto = 1, alvoVis = 1, raf = 0;
+  function semente(i) { var x = Math.sin(i * 12.9898) * 43758.5453; return x - Math.floor(x); }
+  function montarPontos() {
+    var w = cv.clientWidth, h = cv.clientHeight, dpr = Math.min(2, window.devicePixelRatio || 1);
+    cv.width = Math.round(w * dpr); cv.height = Math.round(h * dpr); ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    var total = Math.max(1, Math.round(reunioes()));
+    var max = Math.max(60, Math.floor(w * h / (w < 500 ? 170 : 150)));
+    porPonto = Math.max(1, Math.ceil(total / max));
+    var n = Math.ceil(total / porPonto), ratio = w / h, cols = Math.max(1, Math.round(Math.sqrt(n * ratio))), rows = Math.ceil(n / cols);
+    var gx = w / (cols + 1), gy = h / (rows + 1), raio = Math.max(1.4, Math.min(gx, gy) * 0.3);
+    var antigos = pontos; pontos = [];
+    for (var i = 0; i < n; i++) {
+      var c = i % cols, r = Math.floor(i / cols);
+      var p = { x: gx * (c + 1), y: gy * (r + 1), r: raio, ordem: semente(i + 1), a: antigos[i] ? antigos[i].a : 0, nasce: antigos[i] ? 1 : 0, atraso: antigos[i] ? 0 : (i / n) * 0.6 };
+      pontos.push(p);
+    }
+    $('#legA').textContent = porPonto > 1 ? 'cada ponto são ' + porPonto + ' reuniões' : 'cada ponto é uma reunião';
+    animar();
+  }
+  function desenhar() {
+    var w = cv.clientWidth, h = cv.clientHeight, ativo = false;
+    ctx.clearRect(0, 0, w, h);
+    for (var i = 0; i < pontos.length; i++) {
+      var p = pontos[i];
+      if (p.atraso > 0) { p.atraso -= 0.016; ativo = true; continue; }
+      if (p.nasce < 1) { p.nasce = Math.min(1, p.nasce + 0.06); ativo = true; }
+      var alvo = p.ordem < alvoVis ? 1 : 0;
+      if (Math.abs(p.a - alvo) > 0.01) { p.a += (alvo - p.a) * (0.05 + p.ordem * 0.08); ativo = true; } else p.a = alvo;
+      var rr = p.r * (0.4 + 0.6 * p.nasce);
+      if (p.a > 0.02) { ctx.beginPath(); ctx.arc(p.x, p.y, rr * 2.6, 0, 6.283); ctx.fillStyle = 'rgba(212,249,105,' + (0.10 * p.a * p.nasce) + ')'; ctx.fill(); }
+      ctx.beginPath(); ctx.arc(p.x, p.y, rr, 0, 6.283);
+      var g = Math.round(58 + (212 - 58) * p.a), gg = Math.round(63 + (249 - 63) * p.a), b = Math.round(51 + (105 - 51) * p.a);
+      ctx.fillStyle = 'rgba(' + g + ',' + gg + ',' + b + ',' + p.nasce + ')'; ctx.fill();
+    }
+    raf = ativo ? requestAnimationFrame(desenhar) : 0;
+  }
+  function animar() { if (!raf) raf = requestAnimationFrame(desenhar); }
+  function atualizarPainel() {
+    var n = reunioes(), f = visFrac();
+    $('#nReun').textContent = fmt(n);
+    $('#nVis').textContent = f == null ? '?' : fmt(n * f);
+    $('#nVisTxt').textContent = f == null ? 'acompanhadas pela liderança' : 'acompanhadas · ' + fmt(n * (1 - f)) + ' no escuro';
+    $('#legB').innerHTML = f == null ? '' : '<i class="apag"></i>ninguém acompanhou';
+    alvoVis = f == null ? 1 : f;
+    animar();
+  }
+  var redimensionar = 0;
+  window.addEventListener('resize', function () { clearTimeout(redimensionar); redimensionar = setTimeout(montarPontos, 150); });
+
+  /* ───── Telas ───── */
+  var C = $('#conteudo'), TOTAL = 1 + QS.length;
+  function topoPasso(i) {
+    return '<div class="passo-topo"><button class="voltar" type="button" data-voltar ' + (i <= 0 ? 'disabled' : '') + '>← Voltar</button>'
+      + '<div class="prog"><i style="width:' + Math.round((i + 1) / TOTAL * 100) + '%"></i></div><span class="contador">' + (i + 1) + ' de ' + TOTAL + '</span></div>';
+  }
+  function ir(passo, rolar) {
+    S.passo = passo; guardar();
+    $('#lateral').classList.toggle('inicio', passo < 0);
+    $('#lateral').classList.toggle('fim', passo > QS.length);
+    if (passo < 0) telaInicio(); else if (passo === 0) telaNumeros(); else if (passo <= QS.length) telaPergunta(passo - 1);
+    else if (S.lead || !window.LP.gate) telaRelatorio(); else telaPrevia();
+    setTimeout(montarPontos, 0);
+    atualizarPainel();
+    if (rolar !== false) { var y = C.getBoundingClientRect().top + window.scrollY - (window.innerWidth < 960 ? 150 : 20); if (window.scrollY > y || passo > 0) window.scrollTo({ top: Math.max(0, y), behavior: 'smooth' }); }
+  }
+
+  function telaInicio() {
+    C.innerHTML = '<section class="tela">'
+      + '<span class="selo"><i></i>Diagnóstico gratuito · 3 minutos</span>'
+      + '<h1>Seu time faz centenas de reuniões por mês. <em>Quantas você realmente vê?</em></h1>'
+      + '<p class="sub">Responda 8 perguntas e veja, com os números do seu time, quanto da receita passa por conversas que ninguém acompanha, onde o processo vaza e o que fazer nos próximos 30 dias.</p>'
+      + '<ul class="lista-hero"><li>Nota de 0 a 100 em visibilidade, coaching, método e inteligência de vendas</li><li>Simulação do que está em jogo, com os seus números</li><li>Plano de 30 dias com 3 prioridades, que você aplica com ou sem ferramenta</li></ul>'
+      + '<div class="hero-cta"><button class="cta" type="button" data-comecar>' + (Object.keys(S.resp).length ? 'Continuar o raio-x' : 'Começar o raio-x') + '<svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>'
+      + '<p class="nota-cta">Sem cadastro para começar. A nota aparece na hora.</p></div></section>';
+  }
+
+  function campoNum(id, rot, min, max, passo, dica, sufixo) {
+    var v = S.nums[id];
+    return '<div class="cnum"><div class="l"><label for="n-' + id + '">' + rot + '</label><span class="val"><input id="n-' + id + '-txt" data-txt="' + id + '" inputmode="numeric" value="' + fmt(v) + '" aria-label="' + rot + '">' + (sufixo ? '<span>' + sufixo + '</span>' : '') + '</span></div>'
+      + '<input type="range" id="n-' + id + '" data-num="' + id + '" min="' + min + '" max="' + max + '" step="' + passo + '" value="' + Math.min(max, v) + '">'
+      + (dica ? '<p class="dica">' + dica + '</p>' : '') + '</div>';
+  }
+  function telaNumeros() {
+    var t = S.nums.t, chips = [3000, 10000, 30000, 100000];
+    C.innerHTML = '<section class="tela">' + topoPasso(0)
+      + '<h2 class="pergunta">Primeiro, os números do seu time.</h2>'
+      + '<p class="ajuda">Vale estimativa. Mexa e veja o painel mudar: cada ponto é uma reunião com cliente no mês.</p>'
+      + '<div class="campos-num">'
+      + campoNum('v', 'Vendedores que fazem reuniões', 1, 100, 1, '', 'pessoas')
+      + campoNum('r', 'Reuniões por vendedor, por semana', 1, 30, 1, 'Primeiras reuniões, demonstrações e negociações.', 'por semana')
+      + campoNum('c', 'Contratos fechados por mês, no time todo', 0, 100, 1, '', 'por mês')
+      + '<div class="cnum"><div class="l"><label for="n-t-txt">Valor médio de um contrato</label><span class="val"><span>R$</span><input id="n-t-txt" data-txt="t" inputmode="numeric" value="' + fmt(t) + '" style="width:130px"></span></div>'
+      + '<p class="dica">O que um cliente novo paga no primeiro ano.</p>'
+      + '<div class="chips">' + chips.map(function (c) { return '<button type="button" data-chip="' + c + '" class="' + (c === t ? 'on' : '') + '">' + brlCurto(c) + '</button>'; }).join('') + '</div></div>'
+      + '</div><div class="avancar"><button class="cta" type="button" data-proximo>Continuar<svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button></div></section>';
+    C.querySelectorAll('input[type=range]').forEach(pintarRange);
+  }
+  function pintarRange(el) { el.style.setProperty('--p', ((el.value - el.min) / (el.max - el.min) * 100) + '%'); }
+  function setNum(id, v, origem) {
+    var lim = { v: [1, 500], r: [1, 60], c: [0, 5000], t: [0, 1e9] }[id];
+    v = Math.max(lim[0], Math.min(lim[1], Math.round(+v || 0)));
+    S.nums[id] = v; guardar();
+    var r = $('#n-' + id), tx = $('#n-' + id + '-txt');
+    if (r && origem !== 'range') { r.value = Math.min(+r.max, v); pintarRange(r); }
+    if (tx && origem !== 'txt') tx.value = fmt(v);
+    C.querySelectorAll('[data-chip]').forEach(function (b) { b.classList.toggle('on', +b.dataset.chip === S.nums.t); });
+    if (id === 'v' || id === 'r') { clearTimeout(setNum.t); setNum.t = setTimeout(montarPontos, 60); }
+    atualizarPainel();
+  }
+
+  function telaPergunta(k) {
+    var q = QS[k], sel = S.resp[q.id];
+    C.innerHTML = '<section class="tela">' + topoPasso(k + 1)
+      + '<h2 class="pergunta">' + esc(q.t) + '</h2>' + (q.s ? '<p class="ajuda">' + esc(q.s) + '</p>' : '')
+      + '<div class="ops" role="group" aria-label="' + esc(q.t) + '">' + q.ops.map(function (o, i) {
+        return '<button type="button" class="op" data-op="' + i + '" aria-pressed="' + (sel === i) + '"><kbd>' + 'ABCD'[i] + '</kbd><span>' + esc(o[0]) + (o[1] ? '<small>' + esc(o[1]) + '</small>' : '') + '</span></button>';
+      }).join('') + '</div><div id="ins"></div></section>';
+  }
+  function responder(i) {
+    var k = S.passo - 1, q = QS[k]; if (!q || telaPergunta.trava) return;
+    S.resp[q.id] = i; guardar();
+    C.querySelectorAll('[data-op]').forEach(function (b) { b.setAttribute('aria-pressed', +b.dataset.op === i); });
+    $('#ins').innerHTML = '<p class="insight">' + esc(q.ins(i)) + '</p>';
+    atualizarPainel();
+    if (window.fbq && k === QS.length - 1) fbq('trackCustom', 'RaioXConcluido');
+    telaPergunta.trava = true;
+    setTimeout(function () { telaPergunta.trava = false; ir(S.passo + 1); }, q.id === 'vis' ? 2300 : 1500);
+  }
+
+  /* Prévia: nota e número principal, sem cadastro. O formulário libera o relatório completo. */
+  function anelHtml(n) {
+    var c = 2 * Math.PI * 46;
+    return '<div class="anel"><svg viewBox="0 0 112 112"><circle class="f" cx="56" cy="56" r="46"/><circle class="v" cx="56" cy="56" r="46" stroke-dasharray="' + c.toFixed(1) + '" stroke-dashoffset="' + c.toFixed(1) + '" data-alvo="' + (c * (1 - n / 100)).toFixed(1) + '" style="stroke:' + cor(n) + '"/></svg><b><span>' + n + '<small>de 100</small></span></b></div>';
+  }
+  function animarAneis() { setTimeout(function () { C.querySelectorAll('.anel .v').forEach(function (el) { el.style.strokeDashoffset = el.dataset.alvo; }); C.querySelectorAll('.dim .barra i').forEach(function (el) { el.style.width = el.dataset.w + '%'; }); }, 80); }
+  function manchete() {
+    var n = reunioes(), f = visFrac() || 0, rec = S.nums.c * S.nums.t;
+    return '<p class="hl">De <em>' + fmt(n) + '</em> reuniões por mês, a liderança acompanha cerca de <em>' + fmt(n * f) + '</em>.</p>'
+      + '<p class="hl-sub">As outras ' + fmt(n * (1 - f)) + ' acontecem sem ninguém além do vendedor ouvir.' + (rec > 0 ? ' É nelas que se decide boa parte dos ' + brlCurto(rec) + ' que o time fecha por mês.' : '') + '</p>';
+  }
+  function telaPrevia() {
+    var n = nota(), nv = nivel(n);
+    C.innerHTML = '<section class="tela">'
+      + '<div class="passo-topo"><button class="voltar" type="button" data-voltar>← Revisar respostas</button></div>'
+      + manchete()
+      + '<div class="nota-anel">' + anelHtml(n) + '<div><span class="mono" style="color:var(--dim2)">Seu nível</span><p class="nivel">' + nv[1] + '</p><p class="nivel-txt">' + nv[2] + '</p></div></div>'
+      + '<form class="form" id="form" novalidate><h2>Seu raio-x completo está pronto</h2>'
+      + '<ul><li>Nota em cada dimensão e o que ela significa</li><li>Simulação do que está em jogo, com os seus números</li><li>Plano de 30 dias com 3 prioridades</li><li>Versão para salvar em PDF e levar para o time</li></ul>'
+      + '<div class="campos"><label>Nome<input name="nome" autocomplete="name" required maxlength="80"></label>'
+      + '<div class="dois"><label>E-mail de trabalho<input name="email" type="email" autocomplete="email" inputmode="email" required maxlength="120"></label>'
+      + '<label>WhatsApp<input name="whatsapp" type="tel" autocomplete="tel" inputmode="tel" placeholder="(00) 00000-0000" required maxlength="16"></label></div>'
+      + '<div class="dois"><label>Empresa<input name="empresa" autocomplete="organization" required maxlength="120"></label>'
+      + '<label>Seu cargo<select name="cargo" required><option value="" disabled selected>Selecione</option><option>Sócio(a) ou CEO</option><option>Diretor(a) comercial</option><option>Gerente ou coordenador(a) comercial</option><option>Vendedor(a), SDR ou closer</option><option>Outro</option></select></label></div>'
+      + '<label class="marcar"><input type="checkbox" name="analise"' + (S.analise ? ' checked' : '') + '><span><b>Quero a análise gratuita de 3 agendas reais do meu time.</b> O Sales Coach avalia 3 reuniões de verdade e a gente apresenta o resultado em 30 minutos.</span></label>'
+      + '<label class="hp" aria-hidden="true">Site<input name="site" tabindex="-1" autocomplete="off"></label>'
+      + '<p class="msg" id="msg" role="alert"></p>'
+      + '<button class="cta" type="submit" id="enviar"><span>Ver meu raio-x completo</span><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>'
+      + '<p class="lgpd">Ao enviar, você aceita ser contatado pela NEXA sobre o Sales Coach. Sem spam: pode pedir para sair quando quiser. <a href="/privacidade/">Política de privacidade</a>.</p></div></form></section>';
+    animarAneis(); ligarForm();
+  }
+
+  function resumoDiag() {
+    var o = { nota: nota(), nivel: nivel(nota())[1], vendedores: S.nums.v, reunioesSemana: S.nums.r, contratosMes: S.nums.c, ticket: S.nums.t,
+      reunioesMes: Math.round(reunioes()), acompanhadasMes: Math.round(reunioes() * (visFrac() || 0)), dims: {}, respostas: {}, analise: !!S.analise };
+    Object.keys(DIMS).forEach(function (d) { o.dims[d] = dimNota(d); });
+    QS.forEach(function (q) { if (S.resp[q.id] != null) o.respostas[q.id] = q.ops[S.resp[q.id]][0]; });
+    return o;
+  }
+  function enviar(corpo) {
+    var utm = {}; try { utm = JSON.parse(sessionStorage.getItem('lp-utm') || '{}'); } catch (e) {}
+    utm.pagina = location.pathname;
+    corpo.material = window.LP.material; corpo.utm = utm; corpo.diagnostico = resumoDiag();
+    return fetch(window.LP.api, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(corpo) })
+      .then(function (r) { return r.json().catch(function () { return {}; }).then(function (j) { if (!r.ok || !j.ok) throw { msg: j.erro, campo: j.campo }; return j; }); });
+  }
+  function ligarForm() {
+    var f = $('#form'), msg = $('#msg'), bt = $('#enviar'), tel = f.whatsapp;
+    tel.addEventListener('input', function () {
+      var d = tel.value.replace(/\D/g, '').slice(0, 11), s = d;
+      if (d.length > 2) s = '(' + d.slice(0, 2) + ') ' + d.slice(2);
+      if (d.length > 7) s = '(' + d.slice(0, 2) + ') ' + d.slice(2, d.length - 4) + '-' + d.slice(-4);
+      tel.value = s;
+    });
+    var regras = {
+      nome: function (v) { return v.trim().length >= 2 || 'Informe seu nome.'; },
+      email: function (v) { return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim()) || 'Confira o e-mail.'; },
+      whatsapp: function (v) { return v.replace(/\D/g, '').length >= 10 || 'Informe o WhatsApp com DDD.'; },
+      empresa: function (v) { return v.trim().length >= 2 || 'Informe a empresa.'; },
+      cargo: function (v) { return !!v || 'Selecione seu cargo.'; },
+    };
+    Object.keys(regras).forEach(function (k) { f[k].addEventListener('input', function () { f[k].classList.remove('invalido'); msg.textContent = ''; }); });
+    f.analise.addEventListener('change', function () { S.analise = f.analise.checked; guardar(); });
+    f.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var primeiro = null;
+      Object.keys(regras).forEach(function (k) { var r = regras[k](f[k].value); if (r !== true) { f[k].classList.add('invalido'); if (!primeiro) { primeiro = f[k]; msg.textContent = r; } } });
+      if (primeiro) { primeiro.focus(); return; }
+      S.analise = f.analise.checked;
+      bt.disabled = true; bt.firstChild.textContent = 'Montando seu raio-x…'; msg.textContent = '';
+      enviar({ nome: f.nome.value, email: f.email.value, whatsapp: f.whatsapp.value, empresa: f.empresa.value, cargo: f.cargo.value, tamanho: tamanhoTime(S.nums.v), site: f.site.value })
+        .then(function () {
+          var id = 'lead-' + Date.now() + '-' + Math.random().toString(36).slice(2, 8);
+          if (window.fbq) fbq('track', 'Lead', { content_name: 'Raio-X das reuniões', value: 0, currency: 'BRL' }, { eventID: id });
+          try { (window.dataLayer = window.dataLayer || []).push({ event: 'generate_lead', formulario: 'raio-x-reunioes', event_id: id }); } catch (er) {}
+          S.lead = { nome: f.nome.value.trim().split(/\s+/)[0], email: f.email.value.trim(), empresa: f.empresa.value.trim(), em: new Date().toISOString() }; S.analisePedida = S.analise;
+          ir(QS.length + 1);
+        })
+        .catch(function (er) {
+          bt.disabled = false; bt.firstChild.textContent = 'Ver meu raio-x completo';
+          msg.textContent = (er && er.msg) || 'Não foi possível enviar agora. Confira a conexão e tente de novo.';
+          if (er && er.campo && f[er.campo]) { f[er.campo].classList.add('invalido'); f[er.campo].focus(); }
+        });
+    });
+  }
+
+  /* Relatório completo. */
+  function simHtml() {
+    var p = S.sim, extra = S.nums.c * p / 100, ano = extra * S.nums.t * 12;
+    return '<div class="sim"><div class="l"><label for="simR">Se as mesmas reuniões convertessem</label><b id="simP">+' + p + '%</b></div>'
+      + '<input type="range" id="simR" min="5" max="40" step="5" value="' + p + '" style="--p:' + ((p - 5) / 35 * 100) + '%">'
+      + '<p class="res" id="simRes">' + (S.nums.c > 0 && S.nums.t > 0 ? '<em>+' + brlCurto(ano) + '</em> por ano' : 'Preencha contratos e valor médio para simular') + '</p>'
+      + '<small id="simTxt">' + (S.nums.c > 0 ? '+' + extra.toLocaleString('pt-BR', { maximumFractionDigits: 1 }) + ' contratos por mês, sem nenhuma reunião a mais. ' : '') + 'Conta simples com os seus números: mesma quantidade de reuniões, taxa de conversão ' + p + '% maior. É uma simulação, não uma promessa de resultado.</small></div>';
+  }
+  function telaRelatorio() {
+    var n = nota(), nv = nivel(n), r = reunioes(), f = visFrac() || 0, dims = Object.keys(DIMS);
+    var piores = dims.slice().sort(function (a, b) { return dimNota(a) - dimNota(b); }).slice(0, 3);
+    var porContrato = S.nums.c > 0 ? r / S.nums.c : 0, nome = S.lead && S.lead.nome ? S.lead.nome : '';
+    var hoje = new Date().toLocaleDateString('pt-BR');
+    C.innerHTML = '<section class="tela rel">'
+      + '<div class="passo-topo"><button class="voltar" type="button" data-voltar>← Revisar respostas</button><span class="contador">' + hoje + '</span></div>'
+      + '<div><span class="mono" style="color:var(--lima)">Raio-X das reuniões' + (S.lead && S.lead.empresa ? ' · ' + esc(S.lead.empresa) : '') + '</span>' + manchete().replace('<p class="hl">', '<p class="hl" style="margin-top:10px">') + '</div>'
+      + '<div class="bloco"><div class="rel-topo">' + anelHtml(n) + '<div><span class="mono" style="color:var(--dim2)">Nível</span><p class="nivel">' + nv[1] + '</p><p class="nivel-txt">' + nv[2] + '</p></div></div>'
+      + '<div class="dims">' + dims.map(function (d) { var v = dimNota(d); return '<div class="dim"><div class="t"><b>' + DIMS[d].nome + '</b><span>' + v + '</span></div><div class="barra"><i data-w="' + Math.max(3, v) + '" style="background:' + cor(v) + '"></i></div><p>' + DIMS[d].txt[faixa(v)] + '</p></div>'; }).join('') + '</div></div>'
+      + '<div class="bloco"><span class="mono">O que está em jogo</span><h2>Os seus números, <em>de outro ângulo.</em></h2>'
+      + '<div class="cards">'
+      + '<div class="card"><b>' + fmt(r) + '</b><span>reuniões por mês com clientes</span></div>'
+      + '<div class="card"><b>' + fmt(r * (1 - f)) + '</b><span>sem ninguém da liderança ouvir</span></div>'
+      + '<div class="card"><b>' + (porContrato ? fmt(porContrato) : '—') + '</b><span>reuniões para fechar 1 contrato</span></div>'
+      + '<div class="card"><b>' + fmt(horasTudo()) + ' h</b><span>para ouvir tudo, todo mês (' + MIN_REUNIAO + ' min cada)</span></div>'
+      + '</div>' + simHtml() + '</div>'
+      + '<div class="bloco"><span class="mono">Plano de 30 dias</span><h2>' + (nome ? esc(nome) + ', comece ' : 'Comece ') + '<em>por aqui.</em></h2><p class="p">As 3 dimensões com a nota mais baixa, em ações que você aplica com ou sem ferramenta.</p>'
+      + '<div class="plano">' + piores.map(function (d) { var a = PLANO[d]; return '<div class="acao"><h3>' + a.t + '</h3><ol>' + a.p.map(function (x) { return '<li><span>' + x[0] + '</span>' + x[1] + '</li>'; }).join('') + '</ol><p class="sc"><b>Com o Sales Coach:</b> ' + a.sc + '</p></div>'; }).join('') + '</div></div>'
+      + '<div class="oferta" id="oferta"><span class="mono">Grátis · para o seu time</span><h2>Análise de 3 agendas reais do seu time.</h2>'
+      + '<p>O raio-x mostra onde olhar. A análise mostra o que está acontecendo de verdade: o Sales Coach avalia 3 reuniões do seu time e a gente apresenta o resultado com você em 30 minutos.</p>'
+      + '<ul><li>Nota de 0 a 100 em cada reunião, com a metodologia que você escolher</li><li>Os critérios justificados com o que foi dito na conversa</li><li>Objeções, temperatura da oportunidade e próximos passos</li><li>Gravações do Meet, Teams ou Zoom, sem bot na sala</li></ul>'
+      + (S.analisePedida ? '<p class="ok">Pedido recebido. A Dandara, executiva da NEXA, te chama no WhatsApp em até 1 dia útil para combinar as 3 agendas. <a href="https://wa.me/' + window.LP.whatsapp + '?text=' + encodeURIComponent('Oi, Dandara! Fiz o Raio-X das reuniões e pedi a análise gratuita de 3 agendas.') + '" target="_blank" rel="noopener">Prefere chamar agora?</a></p>'
+        : '<button class="cta" type="button" data-analise>Quero a análise gratuita<svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button><p class="msg" id="msgAn" style="margin-top:10px;color:#9a2b18"></p>')
+      + '</div>'
+      + '<div class="acoes-fim"><button class="btn2" type="button" data-imprimir>Salvar em PDF</button><button class="btn2" type="button" data-refazer>Refazer o raio-x</button></div>'
+      + '</section>';
+    animarAneis();
+  }
+  function pedirAnalise(bt) {
+    if (!S.lead) return;
+    bt.disabled = true; bt.firstChild.textContent = 'Enviando…';
+    S.analise = true;
+    enviar({ atualizar: true, nome: S.lead.nome, email: S.lead.email, empresa: S.lead.empresa })
+      .then(function () { S.analisePedida = true; guardar(); if (window.fbq) fbq('track', 'Contact', { content_name: 'Análise de 3 agendas' }); telaRelatorio(); $('#oferta').scrollIntoView({ behavior: 'smooth', block: 'center' }); })
+      .catch(function (er) { bt.disabled = false; bt.firstChild.textContent = 'Quero a análise gratuita'; $('#msgAn').textContent = (er && er.msg) || 'Não foi possível enviar agora. Tente de novo.'; });
+  }
+
+  /* ───── Eventos ───── */
+  C.addEventListener('click', function (e) {
+    var b = e.target.closest('button'); if (!b) return;
+    if (b.hasAttribute('data-comecar')) { var faltam = QS.findIndex(function (q) { return S.resp[q.id] == null; }); ir(Object.keys(S.resp).length ? (faltam < 0 ? QS.length + 1 : faltam + 1) : 0); }
+    else if (b.hasAttribute('data-proximo')) ir(S.passo + 1);
+    else if (b.hasAttribute('data-voltar')) ir(S.passo > QS.length ? QS.length : S.passo - 1);
+    else if (b.dataset.op != null) responder(+b.dataset.op);
+    else if (b.dataset.chip) setNum('t', +b.dataset.chip);
+    else if (b.hasAttribute('data-analise')) pedirAnalise(b);
+    else if (b.hasAttribute('data-imprimir')) window.print();
+    else if (b.hasAttribute('data-refazer')) { S.resp = {}; S.analisePedida = false; ir(0); }
+  });
+  C.addEventListener('input', function (e) {
+    var el = e.target;
+    if (el.dataset.num) { pintarRange(el); setNum(el.dataset.num, el.value, 'range'); }
+    else if (el.dataset.txt) { var d = el.value.replace(/\D/g, ''); setNum(el.dataset.txt, d, 'txt'); }
+    else if (el.id === 'simR') { S.sim = +el.value; guardar(); pintarRange(el); var tmp = document.createElement('div'); tmp.innerHTML = simHtml(); $('#simP').textContent = '+' + S.sim + '%'; $('#simRes').innerHTML = $('#simRes', tmp).innerHTML; $('#simTxt').textContent = $('#simTxt', tmp).textContent; }
+  });
+  C.addEventListener('focusout', function (e) { if (e.target.dataset && e.target.dataset.txt) e.target.value = fmt(S.nums[e.target.dataset.txt]); });
+  document.addEventListener('keydown', function (e) {
+    if (e.target.closest('input, select, textarea') || e.metaKey || e.ctrlKey || e.altKey) return;
+    if (S.passo >= 1 && S.passo <= QS.length) { var i = 'abcd1234'.indexOf(e.key.toLowerCase()); if (i >= 0) { e.preventDefault(); responder(i % 4); } }
+    if (e.key === 'Enter' && S.passo === 0) ir(1);
+  });
+
+  ir(S.passo > QS.length && !S.lead && window.LP.gate ? QS.length + 1 : Math.max(-1, Math.min(S.passo, QS.length + 1)), false);
+  if (S.passo >= 0) setTimeout(function () { window.scrollTo(0, 0); }, 0);
+})();
+</script>
+</body>
+</html>
