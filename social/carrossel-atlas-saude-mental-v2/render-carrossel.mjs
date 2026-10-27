@@ -5,7 +5,7 @@ const root = path.resolve('.');
 const srv = http.createServer((q, r) => { const f = path.join(root, decodeURIComponent(q.url.split('?')[0])); fs.readFile(f, (e, d) => { if (e) { r.writeHead(404); r.end(); return; } r.writeHead(200, { 'content-type': ({ '.svg': 'image/svg+xml', '.png': 'image/png', '.jpg': 'image/jpeg', '.css': 'text/css', '.js': 'text/javascript', '.woff2': 'font/woff2', '.ttf': 'font/ttf', '.html': 'text/html' })[path.extname(f)] || 'application/octet-stream' }); r.end(d); }); });
 await new Promise(r => srv.listen(0, r));
 const br = await chromium.launch({ executablePath: '/opt/pw-browsers/chromium' }); fs.mkdirSync('out/carrossel', { recursive: true });
-const N = +(process.env.N || 11);
+const N = +(process.env.N || 10);
 for (let s = 1; s <= N; s++) {
   const pg = await br.newPage({ viewport: { width: 1080, height: 1350 } });
   pg.on('pageerror', e => console.log('erro', s, e.message));

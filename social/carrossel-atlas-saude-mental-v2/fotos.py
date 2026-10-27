@@ -10,10 +10,6 @@ import hf
 ESTILO = ('Cinematic editorial photograph, deep black background, single soft key light, 35mm film grain, '
           'slightly desaturated, shallow depth of field, photorealistic skin texture, no text, no logos.')
 FOTOS = {
-    'capa': 'Head and shoulders portrait of a Brazilian man in his early 40s wearing a white dress shirt and a dark blazer, '
-            'looking down with a quiet, tired, serious expression, eyes half closed, dry face, mouth relaxed, '
-            'soft side light from the left, face in the upper half of the frame, lots of dark empty space below. '
-            'Calm and dignified, not crying, no tears, no sweat.',
     'carro': 'A Brazilian woman in her early 30s in a beige blazer sitting still in the driver seat of a parked car in a dim '
              'underground parking garage early in the morning, both hands resting on the steering wheel, eyes closed, '
              'calm neutral face, slow deep breath before going into work, cold fluorescent light, seen from the passenger '

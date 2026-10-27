@@ -150,7 +150,7 @@ add(dict(id='atlas-saude-mental', titulo='Saúde mental passou o câncer (NR-1 e
          legenda=_arq('carrossel-atlas-saude-mental/legenda.md'),
          nota='Fontes no rodapé de cada tela e no README da pasta (Ipsos 2026, Previdência Social 2025, NR-1).'))
 add(dict(id='atlas-saude-mental-v2', titulo='Saúde mental passou o câncer (estilo Ponto cego)', produto='atlas', editoria='Educativo', formato='Carrossel',
-         pasta=S + 'carrossel-atlas-saude-mental-v2', telas=[S + 'carrossel-atlas-saude-mental-v2/out/carrossel/card-*.jpg'], medida='4:5 · 11 telas',
+         pasta=S + 'carrossel-atlas-saude-mental-v2', telas=[S + 'carrossel-atlas-saude-mental-v2/out/carrossel/card-*.jpg'], medida='4:5 · 10 telas',
          legenda=_arq('carrossel-atlas-saude-mental-v2/legenda.md'),
          nota='Pessoas geradas por IA: ative o rótulo "Conteúdo feito com IA" ao publicar. Fontes no rodapé dos cards e no README.'))
 add(dict(id='reel-atlas-pulso', titulo='Reel: Como sua equipe está, de verdade? (NR-1)', produto='atlas', editoria='Educativo', formato='Reel',
