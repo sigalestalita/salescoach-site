@@ -1,0 +1,11 @@
+{
+ "endpoint": "higgsfield-ai/soul/cinema",
+ "args": {
+  "prompt": "A Brazilian woman in her early 30s in a beige blazer sitting still in the driver seat of a parked car in a dim underground parking garage early in the morning, both hands resting on the steering wheel, eyes closed, calm neutral face, slow deep breath before going into work, cold fluorescent light, seen from the passenger side in profile, natural relaxed hands. Cinematic editorial photograph, deep black background, single soft key light, 35mm film grain, slightly desaturated, shallow depth of field, photorealistic skin texture, no text, no logos.",
+  "aspect_ratio": "3:4",
+  "resolution": "1080p",
+  "batch_size": 1
+ },
+ "url": "https://d3u0tzju9qaucj.cloudfront.net/266d8d97-07d5-4e92-897d-d70270f9fb4a/01a17dcc-dc3c-73ea-9515-745c6d05fa05/93217a0e-869b-4382-9dbd-c0670637a4e1.png",
+ "request_id": "01a17dcc-dc3c-73ea-9515-745c6d05fa05"
+}

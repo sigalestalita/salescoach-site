@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Carrossel Atlas · Saúde mental passou o câncer</title>
+<link rel="stylesheet" href="inter.css">
+<link rel="stylesheet" href="poppins.css">
+<style>
+/* Carrossel educativo da Atlas no estilo editorial do "Ponto cego" (1080×1350): cabeçalho de perfil,
+   cards alternando foto escura, cinza claro com painel e preto com dado; letras pesadas com degradê;
+   iceberg em traço; conclusão em pílulas; telas reais do Atlas Clima no fecho. Fontes no rodapé de
+   cada card (.src) e no README. ?s=1..11 escolhe o card. */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { width: 1080px; height: 1350px; overflow: hidden; }
+body { position: relative; font-family: 'Inter Tight', sans-serif; -webkit-font-smoothing: antialiased; background: #0b0b0b; color: #fff; }
+body.cla { background: #e6e6e6; color: #111; }
+.card { display: none; position: absolute; inset: 0; }
+.card.on { display: block; }
+.caps { font-size: 19px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; }
+
+/* Cabeçalho de perfil, rótulo do capítulo e seta */
+#perfil { position: absolute; left: 64px; top: 56px; display: flex; align-items: center; gap: 16px; z-index: 5; }
+#perfil i { width: 62px; height: 62px; border-radius: 18px; background: #fff; display: grid; place-items: center; }
+#perfil i img { width: 38px; }
+#perfil strong { display: block; font-family: 'Poppins', sans-serif; font-size: 26px; font-weight: 600; letter-spacing: -.01em; line-height: 1.1; }
+#perfil strong em { font-style: normal; font-weight: 400; }
+#perfil span { display: flex; align-items: center; gap: 8px; font-size: 19px; opacity: .6; margin-top: 4px; }
+#perfil span img { height: 13px; }
+.cla #perfil i { box-shadow: 0 6px 18px -6px rgba(0,0,0,.18); }
+.cla #perfil strong { color: #071A34; }
+#tema { position: absolute; right: 64px; top: 68px; padding: 10px 20px; border-radius: 999px; font-size: 17px; z-index: 5;
+  box-shadow: inset 0 0 0 1.5px rgba(255,255,255,.3); }
+.cla #tema { box-shadow: inset 0 0 0 1.5px rgba(0,0,0,.22); }
+#cap { position: absolute; left: 64px; bottom: 56px; padding: 11px 22px; border-radius: 999px; font-size: 16px; z-index: 5; background: rgba(255,255,255,.1); }
+.cla #cap { background: rgba(0,0,0,.07); }
+#seta { position: absolute; right: 64px; bottom: 64px; z-index: 5; }
+.cla #seta path { stroke: #111; }
+
+/* Tipografia */
+.h { font-weight: 800; letter-spacing: -.045em; line-height: .98; }
+.esc-g { background: linear-gradient(180deg, #6d6d6d 0%, #8a8a8a 25%, #fff 70%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.cla-g { background: linear-gradient(180deg, #a8a8a8 0%, #9a9a9a 25%, #111 70%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.cz { color: #9a9a9a; }
+.esc .cz { color: #6f6f6f; }
+.lima { color: #d4f969; }
+.painel { position: absolute; left: 64px; right: 64px; border-radius: 36px; background: #d9d9d9; overflow: hidden; }
+.painel.esc { background: #161616; }
+
+/* Fotos */
+.ft { position: absolute; inset: 0; background-size: cover; }
+.ft::after { content: ""; position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(0,0,0,.6) 0%, rgba(0,0,0,0) 22%, rgba(0,0,0,0) 42%, rgba(0,0,0,.88) 74%, #000 100%); }
+.base { position: absolute; left: 64px; right: 64px; bottom: 150px; }
+
+/* Telas reais */
+.tela { position: absolute; border-radius: 24px; box-shadow: 0 40px 80px -30px rgba(0,0,0,.55), 0 0 0 1px rgba(0,0,0,.06); }
+
+/* Conclusão: pílulas */
+.pil { display: flex; align-items: center; gap: 26px; padding: 22px 34px 22px 22px; border-radius: 999px; box-shadow: inset 0 0 0 2px #111; font-size: 36px; font-weight: 600; letter-spacing: -.02em; line-height: 1.15; }
+.pil + .pil { margin-top: 24px; }
+.pil i { flex: none; width: 74px; height: 74px; border-radius: 50%; background: #111; display: grid; place-items: center; }
+
+/* Fonte do dado, discreta, acima do rótulo do capítulo */
+.src { position: absolute; left: 64px; right: 64px; bottom: 118px; font-size: 15px; line-height: 1.45; color: #8a8a8a; letter-spacing: .01em; }
+.cla .src { color: #7a7a7a; }
+/* Barras do card 2 */
+.bar { display: grid; grid-template-columns: 250px 1fr; align-items: center; gap: 24px; }
+.bar + .bar { margin-top: 22px; }
+.bar span { font-size: 30px; font-weight: 600; letter-spacing: -.02em; color: #555; text-align: right; }
+.bar.top span { color: #111; font-weight: 800; }
+.bar div { display: flex; align-items: center; gap: 18px; }
+.bar i { display: block; height: 64px; border-radius: 12px; background: #bdbdbd; }
+.bar.top i { background: #111; }
+.bar b { font-size: 34px; font-weight: 800; letter-spacing: -.03em; color: #666; }
+.bar.top b { font-size: 44px; color: #111; }
+/* Passos do card 10 */
+.passo { display: grid; grid-template-columns: 84px 1fr; gap: 26px; padding: 30px 0; border-top: 1.5px solid rgba(0,0,0,.12); }
+.passo b { width: 66px; height: 66px; border-radius: 50%; background: #111; color: #d4f969; display: grid; place-items: center; font-size: 30px; font-weight: 800; }
+.passo strong { display: block; font-size: 36px; font-weight: 700; letter-spacing: -.025em; line-height: 1.15; }
+.passo em { display: block; font-style: normal; font-size: 26px; line-height: 1.4; color: #666; margin-top: 8px; letter-spacing: -.01em; }
+</style>
+</head>
+<body>
+<div id="perfil"><i><img src="img/atlas-navy.svg" alt=""></i><div><strong>Atlas <em>Clima</em></strong><span>um produto <img id="nx" src="img/nexa-claro.svg" alt="NEXA"></span></div></div>
+<div id="tema">Saúde mental e trabalho</div>
+<div id="cap" class="caps"></div>
+<svg id="seta" width="74" height="30" viewBox="0 0 74 30" fill="none"><path d="M2 15h68M58 3l12 12-12 12" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+
+<!-- 1. Capa -->
+<section class="card" data-tema="foto" data-cap="Deslize">
+  <div class="ft" style="background-image:url(fotos/capa.jpg);background-size:1080px auto;background-position:50% 90px;background-repeat:no-repeat;background-color:#000"></div>
+  <div class="base">
+    <div class="caps lima">Saúde mental no trabalho</div>
+    <div class="h" style="font-size:112px;margin-top:26px">Saúde mental passou o câncer.</div>
+    <div style="font-size:34px;line-height:1.3;margin-top:30px;color:rgba(255,255,255,.7);letter-spacing:-.01em">Virou a maior preocupação de saúde do mundo.<br>E chega à sua empresa todo dia.</div>
+  </div>
+</section>
+
+<!-- 2. O mundo: barras -->
+<section class="card" data-tema="cla" data-cap="O mundo">
+  <div class="painel" style="top:170px;bottom:170px;padding:64px 60px">
+    <div class="h" style="font-size:80px"><span class="cz">A maior preocupação de saúde do mundo</span> já não é o câncer.</div>
+    <div style="margin-top:80px">
+      <div class="bar top"><span>Saúde mental</span><div><i style="width:470px"></i><b>48%</b></div></div>
+      <div class="bar"><span>Câncer</span><div><i style="width:392px"></i><b>40%</b></div></div>
+      <div class="bar"><span>Estresse</span><div><i style="width:313px"></i><b>32%</b></div></div>
+      <div class="bar"><span>Obesidade</span><div><i style="width:245px"></i><b>25%</b></div></div>
+    </div>
+    <div class="caps" style="position:absolute;left:60px;bottom:54px;font-size:15px;color:#777;line-height:1.6">% que aponta cada tema entre os maiores problemas<br>de saúde do país · média de 32 países</div>
+  </div>
+  <div class="src" style="bottom:120px">Ipsos Health Service Report 2026 · 22.528 adultos, jul–ago/2026</div>
+</section>
+
+<!-- 3. O Brasil: dado -->
+<section class="card" data-tema="esc" data-cap="O Brasil">
+  <div class="painel esc" style="top:200px;bottom:170px;padding:70px 64px">
+    <div class="caps" style="color:#8a8a8a;line-height:1.6">No Brasil, apontam a saúde mental<br>como o maior problema de saúde</div>
+    <div class="h esc-g" style="font-size:330px;letter-spacing:-.065em;margin-top:40px;line-height:.9">58%</div>
+    <div style="height:1.5px;background:rgba(255,255,255,.12);margin:60px 0 44px"></div>
+    <div style="font-size:44px;font-weight:600;letter-spacing:-.03em;line-height:1.15">Em 2018, eram 18%.<br><span class="cz">O câncer liderava, com 57%.</span></div>
+    <div class="caps" style="position:absolute;left:64px;bottom:56px;font-size:15px;color:#5f5f5f">Média mundial: 48%</div>
+  </div>
+  <div class="src">Ipsos Health Service Report 2018 e 2026 · mede a percepção, não a quantidade de casos</div>
+</section>
+
+<!-- 4. Foto: o estacionamento -->
+<section class="card" data-tema="foto" data-cap="Onde ela chega">
+  <div class="ft" style="background-image:url(fotos/carro.jpg);background-size:1080px auto;background-position:50% -120px;background-repeat:no-repeat;background-color:#000"></div>
+  <div class="base">
+    <div class="h" style="font-size:88px">Ninguém deixa a cabeça no estacionamento.</div>
+    <div style="font-size:40px;font-weight:600;letter-spacing:-.025em;line-height:1.2;margin-top:30px;color:rgba(255,255,255,.62)">O que pesa em casa sobe para a reunião das 8h. E o que pesa no trabalho volta para casa.</div>
+  </div>
+</section>
+
+<!-- 5. Tipografia grande: afastamentos -->
+<section class="card" data-tema="cla" data-cap="O custo">
+  <div class="h cla-g" style="position:absolute;left:58px;right:40px;top:200px;font-size:150px;letter-spacing:-.06em;line-height:.92">546 mil afastamentos.</div>
+  <div style="position:absolute;left:64px;right:64px;top:580px;display:flex;gap:22px;align-items:flex-start">
+    <span style="flex:none;width:14px;height:14px;border-radius:50%;background:#111;margin-top:6px"></span>
+    <div class="caps" style="font-size:20px;line-height:1.55;color:#555">Por transtornos mentais em 2025, no INSS.<br>16% a mais que em 2024. Recorde.</div>
+  </div>
+  <div style="position:absolute;left:64px;right:64px;top:760px;padding-top:56px;border-top:1.5px solid rgba(0,0,0,.12);display:grid;grid-template-columns:1fr 1fr;gap:28px">
+    <div><div class="h cla-g" style="font-size:92px;letter-spacing:-.05em">166 mil</div><div style="font-size:26px;color:#666;margin-top:10px">por ansiedade</div></div>
+    <div><div class="h cla-g" style="font-size:92px;letter-spacing:-.05em">127 mil</div><div style="font-size:26px;color:#666;margin-top:10px">por episódios depressivos</div></div>
+  </div>
+  <div class="src">Previdência Social, dados de 2025 divulgados em jan/2026 (546.254; 472.328 em 2024) · contam afastamentos, não pessoas</div>
+</section>
+
+<!-- 6. Iceberg -->
+<section class="card" data-tema="cla" data-cap="O mapa">
+  <div class="h cla-g" style="position:absolute;left:64px;right:64px;top:180px;font-size:84px">O que o RH vê é só a ponta.</div>
+  <svg style="position:absolute;left:64px;top:390px" width="952" height="820" viewBox="0 0 952 820" fill="none" font-family="Inter Tight" stroke-linecap="round" stroke-linejoin="round">
+    <g stroke="#111" stroke-width="2">
+      <path d="M392 236 L420 160 L452 128 L480 96 L512 122 L540 168 L572 236"/>
+      <path d="M392 236 L330 300 L268 410 L246 520 L282 640 L380 732 L520 760 L652 700 L716 580 L706 440 L650 320 L572 236"/>
+      <path d="M452 128 L470 190 M512 122 L500 200" stroke-width="1.2" opacity=".5"/>
+    </g>
+    <path d="M0 236 H952" stroke="#111" stroke-width="1.2" stroke-dasharray="2 9" opacity=".7"/>
+    <path d="M40 262 H180 M760 262 H912 M90 288 H220 M720 288 H870" stroke="#111" stroke-width="1.2" opacity=".25"/>
+    <g fill="#111" font-size="17" font-weight="600" letter-spacing="2.4">
+      <text x="0" y="192">SUPERFÍCIE</text><text x="0" y="216" fill="#888">O QUE CHEGA AO RH</text>
+      <text x="0" y="330">PROFUNDIDADE</text><text x="0" y="354" fill="#888">RISCOS PSICOSSOCIAIS</text>
+    </g>
+    <g fill="#111" font-size="25" font-weight="600" letter-spacing="-.4">
+      <text x="610" y="96">Afastamentos</text><text x="610" y="134">Faltas</text><text x="610" y="172">Pedidos de demissão</text>
+      <path d="M582 126 H600" stroke="#111" stroke-width="1.5"/>
+    </g>
+    <g fill="#111" font-size="27" font-weight="600" letter-spacing="-.4" text-anchor="middle">
+      <text x="481" y="380">Excesso de demanda</text>
+      <text x="481" y="440">Prazos impossíveis</text>
+      <text x="481" y="500">Pouca autonomia</text>
+      <text x="481" y="560">Papéis confusos</text>
+      <text x="481" y="620">Assédio e conflitos</text>
+      <text x="481" y="680" fill="#888">Liderança ausente</text>
+    </g>
+  </svg>
+  <div class="src">Riscos psicossociais: exemplos do Manual do capítulo 1.5 da NR-1 (MTE, mar/2026) e da ISO 45003</div>
+</section>
+
+<!-- 7. A regra -->
+<section class="card" data-tema="esc" data-cap="A regra">
+  <div style="position:absolute;left:64px;right:64px;top:240px">
+    <div class="h esc-g" style="font-size:100px">Desde 26 de maio de 2026, cuidar disso não é opcional.</div>
+    <div class="h" style="font-size:100px;margin-top:56px">É <span class="lima">NR-1</span>.</div>
+    <div style="font-size:32px;line-height:1.4;color:rgba(255,255,255,.62);margin-top:56px;letter-spacing:-.01em">Os riscos psicossociais entraram no gerenciamento de riscos da empresa (GRO e PGR): identificar, avaliar, agir e acompanhar.</div>
+  </div>
+  <div class="src">Portaria MTE nº 1.419/2024 · prazo da Portaria MTE nº 765/2025</div>
+</section>
+
+<!-- 8. Pílulas -->
+<section class="card" data-tema="cla" data-cap="A escolha">
+  <div style="position:absolute;left:64px;right:64px;top:190px">
+    <div class="h cla-g" style="font-size:76px">Existem dois jeitos de cuidar da saúde mental no trabalho.</div>
+    <div style="margin-top:70px">
+      <div class="pil"><i><svg width="34" height="20" viewBox="0 0 34 20" fill="none"><path d="M2 10h28M21 2l9 8-9 8" stroke="#d4f969" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></i><span>Uma palestra no<br>Setembro Amarelo.</span></div>
+      <div class="pil"><i><svg width="34" height="20" viewBox="0 0 34 20" fill="none"><path d="M2 10h28M21 2l9 8-9 8" stroke="#d4f969" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></i><span>Um indicador acompanhado<br>o ano todo.</span></div>
+    </div>
+    <div class="h" style="font-size:76px;margin-top:84px">Qual é o da<br>sua empresa?</div>
+  </div>
+</section>
+
+<!-- 9. Como medir -->
+<section class="card" data-tema="cla" data-cap="Na prática">
+  <div style="position:absolute;left:64px;right:64px;top:180px">
+    <div class="h" style="font-size:84px"><span class="cz">Como medir,</span> na prática.</div>
+    <div style="margin-top:56px;border-bottom:1.5px solid rgba(0,0,0,.12)">
+      <div class="passo"><b>1</b><div><strong>Escute todo mundo, com frequência</strong><em>Pesquisas curtas e anônimas, não um questionário por ano.</em></div></div>
+      <div class="passo"><b>2</b><div><strong>Olhe por área e por liderança</strong><em>A média da empresa esconde o time que está no limite.</em></div></div>
+      <div class="passo"><b>3</b><div><strong>Cruze com os sinais que já existem</strong><em>Afastamentos, faltas, horas extras e pedidos de demissão.</em></div></div>
+      <div class="passo"><b>4</b><div><strong>Vire plano de ação e meça de novo</strong><em>Com responsável e prazo, para ver se o risco caiu.</em></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 10. O produto: telas reais -->
+<section class="card" data-tema="cla" data-cap="Como">
+  <div style="position:absolute;left:64px;right:64px;top:180px">
+    <div class="h" style="font-size:84px"><span class="cz">O Atlas Clima</span> mostra onde olhar.</div>
+    <div style="font-size:30px;line-height:1.35;color:#555;margin-top:24px;letter-spacing:-.01em">Pesquisa de clima com respostas anônimas e<br>resultado por área e por liderança.</div>
+  </div>
+  <div class="painel" style="top:500px;bottom:130px">
+    <img class="tela" src="telas/ac-liderancas.webp" alt="" style="left:424px;top:48px;width:500px">
+    <img class="tela" src="telas/ac-areas.webp" alt="" style="left:28px;top:48px;width:380px;clip-path:inset(0 0 17% 0 round 24px)">
+  </div>
+</section>
+
+<!-- 11. Fecho -->
+<section class="card" data-tema="esc" data-cap="Atlas Clima" data-fim>
+  <div style="position:absolute;left:64px;right:64px;top:210px">
+    <div class="h esc-g" style="font-size:104px">Saúde mental não é campanha.</div>
+    <div class="h" style="font-size:104px;margin-top:20px">É <span class="lima">indicador</span>.</div>
+  </div>
+  <div class="painel esc" style="top:640px;bottom:150px;padding:56px 64px">
+    <div class="caps" style="color:#8a8a8a">Atlas Clima · um produto NEXA</div>
+    <div style="font-size:38px;font-weight:600;letter-spacing:-.025em;line-height:1.25;margin-top:26px">Escuta o time, mostra onde agir e mede de novo para ver se melhorou.</div>
+    <div style="font-size:24px;line-height:1.45;color:#8a8a8a;margin-top:22px">Alimenta o seu PGR com a escuta das pessoas. Não substitui a avaliação técnica de saúde e segurança do trabalho.</div>
+    <div style="position:absolute;left:64px;right:64px;bottom:56px;display:flex;align-items:center;justify-content:space-between">
+      <span style="display:inline-flex;align-items:center;font-size:26px;font-weight:600;padding:14px 26px;border-radius:999px;color:#d4f969;box-shadow:inset 0 0 0 2px rgba(212,249,105,.6)">Salve e mande para o RH</span>
+      <span style="display:inline-block;background:#fff;color:#111;font-size:26px;font-weight:700;padding:16px 34px;border-radius:999px">Link na bio ↗</span>
+    </div>
+  </div>
+</section>
+
+<script>
+const n = +(new URLSearchParams(location.search).get('s') || 1), cards = document.querySelectorAll('.card'), c = cards[n - 1];
+c.classList.add('on');
+const tema = c.dataset.tema; document.body.className = tema === 'cla' ? 'cla' : '';
+document.getElementById('nx').src = tema === 'cla' ? 'img/nexa.svg' : 'img/nexa-claro.svg';
+document.getElementById('cap').textContent = c.dataset.cap;
+document.getElementById('seta').style.display = c.hasAttribute('data-fim') ? 'none' : 'block';
+window.ready = Promise.all([document.fonts.ready, ...[...document.images].map(i => i.complete ? 0 : new Promise(r => { i.onload = i.onerror = r; }))]);
+</script>
+</body>
+</html>
