@@ -8,7 +8,7 @@
 <style>
 /* Carrossel educativo da Atlas no estilo editorial do "Ponto cego" (1080×1350): cabeçalho de perfil,
    cards alternando foto escura, cinza claro com painel e preto com dado; letras pesadas com degradê;
-   iceberg em traço; conclusão em pílulas; telas reais do Atlas Clima no fecho. Fontes no rodapé de
+   sintoma e causa em painéis; conclusão em pílulas; telas reais do Atlas Clima no fecho. Fontes no rodapé de
    cada card (.src) e no README. ?s=1..11 escolhe o card. */
 * { margin: 0; padding: 0; box-sizing: border-box; }
 html, body { width: 1080px; height: 1350px; overflow: hidden; }
@@ -79,6 +79,13 @@ body.cla { background: #e6e6e6; color: #111; }
 .bar.esc.top i { background: #d4f969; }
 .bar.esc b { color: #8a8a8a; }
 .bar.esc.top b { color: #fff; }
+/* Sintoma e causa */
+.sint { display: inline-flex; align-items: center; padding: 16px 26px; border-radius: 999px; box-shadow: inset 0 0 0 2px #9a9a9a; font-size: 28px; font-weight: 600; letter-spacing: -.02em; color: #555; }
+.causas { position: absolute; left: 44px; right: 44px; top: 74px; bottom: 36px; display: grid; grid-template-columns: 1fr 1fr; grid-auto-rows: 1fr; }
+.causas div { display: flex; align-items: center; gap: 20px; font-size: 33px; font-weight: 700; letter-spacing: -.025em; color: #fff; border-top: 1.5px solid rgba(255,255,255,.1); }
+.causas div:nth-child(odd) { padding-right: 20px; }
+.causas div:nth-child(even) { padding-left: 24px; border-left: 1.5px solid rgba(255,255,255,.1); }
+.causas b { flex: none; width: 30px; font-size: 18px; font-weight: 700; letter-spacing: .08em; color: #6f6f6f; }
 /* Passos */
 .passo { display: grid; grid-template-columns: 84px 1fr; gap: 26px; padding: 30px 0; border-top: 1.5px solid rgba(0,0,0,.12); }
 .passo b { width: 66px; height: 66px; border-radius: 50%; background: #111; color: #d4f969; display: grid; place-items: center; font-size: 30px; font-weight: 800; }
@@ -142,35 +149,28 @@ body.cla { background: #e6e6e6; color: #111; }
   <div class="src">Previdência Social, dados de 2025 divulgados em jan/2026 (546.254; 472.328 em 2024) · contam afastamentos, não pessoas</div>
 </section>
 
-<!-- 6. Iceberg -->
-<section class="card" data-tema="cla" data-cap="O mapa">
-  <div class="h cla-g" style="position:absolute;left:64px;right:64px;top:180px;font-size:84px">O que o RH vê é só a ponta.</div>
-  <svg style="position:absolute;left:64px;top:390px" width="952" height="820" viewBox="0 0 952 820" fill="none" font-family="Inter Tight" stroke-linecap="round" stroke-linejoin="round">
-    <g stroke="#111" stroke-width="2">
-      <path d="M392 236 L420 160 L452 128 L480 96 L512 122 L540 168 L572 236"/>
-      <path d="M392 236 L330 300 L268 410 L246 520 L282 640 L380 732 L520 760 L652 700 L716 580 L706 440 L650 320 L572 236"/>
-      <path d="M452 128 L470 190 M512 122 L500 200" stroke-width="1.2" opacity=".5"/>
-    </g>
-    <path d="M0 236 H952" stroke="#111" stroke-width="1.2" stroke-dasharray="2 9" opacity=".7"/>
-    <path d="M40 262 H180 M760 262 H912 M90 288 H220 M720 288 H870" stroke="#111" stroke-width="1.2" opacity=".25"/>
-    <g fill="#111" font-size="17" font-weight="600" letter-spacing="2.4">
-      <text x="0" y="192">SUPERFÍCIE</text><text x="0" y="216" fill="#888">O QUE CHEGA AO RH</text>
-      <text x="0" y="330">PROFUNDIDADE</text><text x="0" y="354" fill="#888">RISCOS PSICOSSOCIAIS</text>
-    </g>
-    <g fill="#111" font-size="25" font-weight="600" letter-spacing="-.4">
-      <text x="610" y="96">Afastamentos</text><text x="610" y="134">Faltas</text><text x="610" y="172">Pedidos de demissão</text>
-      <path d="M582 126 H600" stroke="#111" stroke-width="1.5"/>
-    </g>
-    <g fill="#111" font-size="27" font-weight="600" letter-spacing="-.4" text-anchor="middle">
-      <text x="481" y="380">Excesso de demanda</text>
-      <text x="481" y="440">Prazos impossíveis</text>
-      <text x="481" y="500">Pouca autonomia</text>
-      <text x="481" y="560">Papéis confusos</text>
-      <text x="481" y="620">Assédio e conflitos</text>
-      <text x="481" y="680" fill="#888">Liderança ausente</text>
-    </g>
-  </svg>
-  <div class="src">Riscos psicossociais: exemplos do Manual do capítulo 1.5 da NR-1 (MTE, mar/2026) e da ISO 45003</div>
+<!-- 5. Sintoma e causa -->
+<section class="card" data-tema="cla" data-cap="A causa">
+  <div class="h" style="position:absolute;left:64px;right:64px;top:180px;font-size:84px"><span class="cz">O afastamento é o sintoma.</span> A causa vem antes.</div>
+  <div class="painel" style="top:460px;height:190px;padding:40px 44px">
+    <div class="caps" style="font-size:16px;color:#777">O que chega ao RH</div>
+    <div style="display:flex;gap:14px;margin-top:22px">
+      <span class="sint">Afastamentos</span><span class="sint">Faltas</span><span class="sint">Pedidos de demissão</span>
+    </div>
+  </div>
+  <div style="position:absolute;left:64px;right:64px;top:668px;display:flex;align-items:center;gap:16px">
+    <svg width="22" height="34" viewBox="0 0 22 34" fill="none"><path d="M11 32V3M3 11l8-8 8 8" stroke="#111" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <span class="caps" style="font-size:16px;color:#555">nasce de como o trabalho é organizado</span>
+  </div>
+  <div class="painel esc" style="top:730px;bottom:166px;padding:0">
+    <div class="causas">
+      <div><b>01</b>Excesso de demanda</div><div><b>02</b>Prazos impossíveis</div>
+      <div><b>03</b>Pouca autonomia</div><div><b>04</b>Papéis confusos</div>
+      <div><b>05</b>Assédio e conflitos</div><div><b>06</b>Liderança ausente</div>
+    </div>
+    <div class="caps" style="position:absolute;right:44px;top:30px;font-size:14px;color:#d4f969">Riscos psicossociais</div>
+  </div>
+  <div class="src">Exemplos do Manual do capítulo 1.5 da NR-1 (MTE, mar/2026) e da ISO 45003</div>
 </section>
 
 <!-- 7. A regra -->
