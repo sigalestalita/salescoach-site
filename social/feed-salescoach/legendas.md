@@ -41,3 +41,17 @@ Use antes da reunião, no treino do time e durante a conversa.
 #SalesCoach #NEXA #Vendas #VendasB2B #Objecoes #TimeComercial #GestaoComercial
 
 > O post promete o guia com 12 objeções a quem comentar GUIA: ele precisa estar pronto antes de publicar.
+
+---
+
+## Anúncio "Analise todas as reuniões" (`saida/post-anuncio-reunioes.jpg`)
+
+Seu time faz dezenas de reuniões por semana. Quantas alguém realmente analisa?
+
+O Sales Coach grava e analisa cada reunião no Meet e no Teams: nota com BANT, MEDDIC e SPIN, temperatura do lead, próximos passos e a dica certa na hora da objeção.
+
+💰 A partir de R$ 19,90 por usuário/mês.
+
+👉 Saiba mais pelo link.
+
+#SalesCoach #NEXA #Vendas #VendasB2B #CoachDeVendas

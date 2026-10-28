@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Anúncio Sales Coach · analise todas as reuniões</title>
+<link rel="stylesheet" href="fonts.css">
+<link rel="stylesheet" href="poppins.css">
+<style>
+/* Anúncio de feed 4:5 (1080×1350) do Sales Coach, no molde de anúncio de
+   produto: marca, promessa em duas linhas, tela do produto com cartões
+   flutuando, balão de conversa, ícone do app, selo de preço e "Saiba mais". */
+:root { --tinta: #10131c; --dim: #6b7080; --linha: #e7e8ec; --azul: #1d4f9a; --navy: #0f2c5c; --lima: #d4f969; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { width: 1080px; height: 1350px; overflow: hidden; }
+body { position: relative; font-family: 'DM Sans', sans-serif; color: var(--tinta); -webkit-font-smoothing: antialiased;
+  background:
+    radial-gradient(55% 32% at 50% 0%, rgba(40,86,190,.55), transparent 75%),
+    radial-gradient(70% 40% at 0% 42%, rgba(38,92,214,.75), transparent 72%),
+    radial-gradient(60% 45% at 100% 55%, rgba(30,70,170,.6), transparent 72%),
+    radial-gradient(65% 40% at 18% 100%, rgba(120,170,245,.95), transparent 70%),
+    radial-gradient(60% 42% at 100% 100%, rgba(170,236,140,.95), transparent 70%),
+    linear-gradient(180deg, #0a1022 0%, #0e1e48 38%, #1a45a8 70%, #5f93e6 100%); }
+.abs { position: absolute; }
+
+/* Marca */
+#marca { position: absolute; left: 0; right: 0; top: 66px; display: flex; justify-content: center; align-items: center; gap: 14px; }
+#marca img { height: 50px; }
+#marca span { font-family: 'Poppins'; font-size: 44px; letter-spacing: -.01em; color: #fff; font-weight: 300; }
+#marca span b { font-weight: 600; }
+
+/* Promessa */
+h1 { position: absolute; left: 0; right: 0; top: 150px; text-align: center; font-family: 'Space Grotesk'; letter-spacing: -.045em; line-height: 1.04; }
+h1 .l1 { display: block; font-size: 82px; font-weight: 500;
+  background: linear-gradient(90deg, #b7c3ff 0%, #e9edff 45%, #ffffff 70%, #dfe6ff 100%); -webkit-background-clip: text; color: transparent; }
+h1 .l2 { display: block; font-size: 82px; font-weight: 300; font-style: italic; color: #f1f4ff; }
+
+/* Cartões de reunião (no lugar dos produtos) */
+.card { position: absolute; top: 392px; width: 300px; background: #fff; border-radius: 20px; padding: 12px 12px 4px;
+  box-shadow: 0 30px 60px -30px rgba(5,12,40,.7); }
+.card .foto { width: 100%; height: 168px; border-radius: 12px; object-fit: cover; display: block; }
+.card .t { font-size: 19px; color: #3a3f4c; padding: 12px 6px 10px; border-bottom: 1.5px solid var(--linha); white-space: nowrap; overflow: hidden; }
+.card .a { display: flex; align-items: center; justify-content: center; gap: 10px; font-size: 19px; color: #3d63c9; padding: 10px 0; }
+.card .a + .a { border-top: 1.5px solid var(--linha); }
+.card .a svg { width: 20px; height: 20px; }
+#c1 { left: 498px; }
+#c2 { left: 806px; }
+#c2 .foto { filter: saturate(.9) brightness(1.05); }
+
+/* Balão */
+#quem { position: absolute; left: 84px; top: 600px; width: 88px; height: 88px; border-radius: 50%; overflow: hidden;
+  box-shadow: 0 0 0 4px #ffd36b, 0 14px 30px -12px rgba(0,0,0,.6); }
+#quem img { width: 100%; height: 100%; object-fit: cover; object-position: 48% 18%; transform: scale(1.9); transform-origin: 48% 26%; }
+#balao { position: absolute; left: 192px; top: 610px; padding: 18px 34px; border-radius: 22px; background: #e8f8cf;
+  font-size: 30px; color: #16200a; box-shadow: 0 18px 36px -20px rgba(0,0,0,.6); white-space: nowrap; }
+
+/* Janela do produto */
+#janela { position: absolute; left: 34px; top: 700px; width: 1012px; height: 700px; border-radius: 26px; overflow: hidden;
+  background: #f6f6f8; box-shadow: 0 40px 80px -40px rgba(5,12,40,.8), inset 0 0 0 1.5px rgba(255,255,255,.6);
+  -webkit-mask: linear-gradient(180deg, #000 62%, rgba(0,0,0,.25) 86%, transparent 100%); }
+#topo { height: 76px; display: flex; align-items: center; padding: 0 22px; gap: 26px; border-bottom: 1.5px solid var(--linha); background: #f1f1f4; }
+#topo .t { font-family: 'Poppins'; font-weight: 600; font-size: 25px; color: var(--navy); width: 228px; display: flex; align-items: center; gap: 10px; }
+#topo .t img { height: 26px; }
+.pilha { display: flex; align-items: center; }
+.pilha img, .pilha i { width: 34px; height: 34px; border-radius: 50%; object-fit: cover; box-shadow: 0 0 0 2.5px #f1f1f4; margin-left: -9px; }
+.pilha img:first-child { margin-left: 0; }
+.pilha i { display: grid; place-items: center; font-style: normal; font-size: 11px; color: #fff; background: #6e7fd6; }
+#corpo { display: grid; grid-template-columns: 260px 290px 1fr; height: 624px; }
+#lado { border-right: 1.5px solid var(--linha); padding: 18px 0 0; background: #f3f3f6; }
+#lado h3 { display: flex; justify-content: space-between; align-items: center; padding: 0 22px 18px; font-family: 'Poppins'; font-weight: 600; font-size: 25px; color: var(--navy); }
+#lado h3 svg { width: 24px; height: 24px; color: #5b6070; }
+.sec { display: flex; justify-content: space-between; padding: 12px 22px 8px; font-family: 'JetBrains Mono'; font-size: 13px; letter-spacing: .06em; color: #8a8fa0; text-transform: uppercase; border-top: 1.5px solid var(--linha); }
+.sec:first-of-type { border-top: 0; }
+.it { display: flex; justify-content: space-between; align-items: center; padding: 11px 22px 11px 30px; font-size: 18px; color: #2f3442; }
+.it b { font-weight: 400; font-size: 15px; color: #6b7080; }
+.it b.r { display: grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; background: #d64545; color: #fff; font-size: 13px; }
+.it .q { display: inline-block; width: 18px; height: 18px; border-radius: 5px; margin-right: 12px; vertical-align: -3px; }
+
+#lista { border-right: 1.5px solid var(--linha); background: #f8f8fa; }
+#lista .cab { padding: 20px 20px 14px; border-bottom: 1.5px solid var(--linha); }
+#lista .cab small { font-family: 'JetBrains Mono'; font-size: 12.5px; letter-spacing: .06em; color: #8a8fa0; text-transform: uppercase; }
+#lista .cab div { font-family: 'Poppins'; font-weight: 500; font-size: 22px; color: var(--navy); margin-top: 4px; }
+#lista .filtro { display: flex; justify-content: space-between; align-items: center; padding: 14px 20px; font-size: 17px; color: #3a3f4c; border-bottom: 1.5px solid var(--linha); }
+#lista .filtro svg { width: 18px; height: 18px; }
+.reu { padding: 16px 20px 18px; border-bottom: 1.5px solid var(--linha); position: relative; }
+.reu .n { display: flex; align-items: center; gap: 12px; font-size: 18px; font-weight: 500; color: #2a2e3a; }
+.reu .n img { width: 46px; height: 46px; border-radius: 50%; object-fit: cover; }
+.reu .ok { position: absolute; right: 20px; top: 74px; width: 20px; color: #6b7080; }
+.sk { height: 13px; border-radius: 7px; background: #e6e7ec; margin-top: 10px; }
+.tag { display: inline-flex; align-items: center; gap: 7px; margin-top: 14px; padding: 6px 12px; border-radius: 8px; font-size: 14.5px; font-weight: 500; }
+.tag.q { background: #d94848; color: #fff; }
+.tag.p { background: #f0c64a; color: #5a4300; }
+.reu.fraca { opacity: .45; }
+
+#det { background: #fafafc; padding: 18px 22px; }
+#det .barra { display: flex; justify-content: flex-end; align-items: center; gap: 16px; }
+#det .btn { padding: 10px 18px; border-radius: 10px; font-size: 16.5px; font-weight: 500; color: #2f5bc8; box-shadow: inset 0 0 0 1.8px #2f5bc8; background: #fff; }
+#det .cor { width: 26px; height: 26px; color: #4a4f5c; }
+#det .av { width: 40px; height: 40px; border-radius: 50%; background: var(--navy); color: #fff; display: grid; place-items: center; font-size: 14px; font-weight: 500; }
+#det .lead { display: flex; align-items: center; gap: 12px; margin-top: 18px; padding-bottom: 14px; border-bottom: 1.5px solid var(--linha); }
+#det .chip { display: inline-flex; align-items: center; gap: 7px; padding: 6px 12px; border-radius: 8px; font-size: 15px; color: #3a3f4c; box-shadow: inset 0 0 0 1.5px #e0e1e6; background: #fff; }
+#det .chip i { width: 9px; height: 9px; border-radius: 50%; background: #d94848; }
+#det .lead svg { width: 18px; color: #2f5bc8; }
+#det .lead b { font-weight: 500; font-size: 18px; color: #1d2130; }
+.bl { border-radius: 14px; background: #fff; box-shadow: inset 0 0 0 1.5px #ececf0; padding: 16px; margin-top: 18px; }
+.bl.az { background: #dfe8fb; box-shadow: none; margin-left: 90px; }
+.bl .sk { background: #eceef2; }
+.bl.az .sk { background: #c9d7f6; }
+
+/* Ícone do app */
+#app { position: absolute; left: 706px; top: 606px; width: 168px; height: 168px; border-radius: 34px;
+  background: linear-gradient(140deg, #7c95ff 0%, #4d6fe6 45%, #2f55c9 100%);
+  box-shadow: 0 0 0 5px rgba(255,255,255,.85), 0 30px 50px -20px rgba(5,12,40,.75); display: grid; place-items: center; }
+#app img { width: 92px; }
+
+/* Selo de preço */
+#selo { position: absolute; left: 652px; top: 858px; width: 400px; height: 400px; }
+#selo svg { position: absolute; inset: 0; filter: drop-shadow(0 26px 30px rgba(5,12,40,.45)); }
+#selo .tx { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center;
+  rotate: -12deg; color: #fff; font-family: 'Poppins'; font-weight: 600; text-align: center; line-height: 1.04; }
+#selo .tx span { font-size: 34px; }
+#selo .tx b { font-size: 58px; font-weight: 700; letter-spacing: -.02em; }
+
+/* Saiba mais */
+#cta { position: absolute; left: 50%; translate: -63% 0; top: 1132px; display: flex; align-items: center; gap: 26px;
+  padding: 26px 56px 26px 44px; border-radius: 40px; background: #fff; box-shadow: 0 30px 60px -24px rgba(5,12,40,.6); white-space: nowrap; }
+#cta svg { width: 70px; height: 70px; }
+#cta span { font-size: 70px; font-weight: 500; color: #0d0f14; letter-spacing: -.01em; }
+</style>
+</head>
+<body>
+
+<div id="marca"><img src="../serie-nowdays/img/sc-mark-white.png" alt=""><span><b>Sales</b> Coach</span></div>
+
+<h1><span class="l1">Analise todas as reuniões</span><span class="l2">Feche mais vendas</span></h1>
+
+<div class="card" id="c1">
+  <img class="foto" src="../serie-nowdays/fotos/a1-txt.jpg" alt="" style="object-position: 50% 45%">
+  <div class="t">Demo · Distribuidora Aliança</div>
+  <div class="a"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg>Ver análise</div>
+  <div class="a"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 14 4 9l5-5"/><path d="M4 9h10a6 6 0 0 1 0 12h-2"/></svg>Usar a dica</div>
+</div>
+<div class="card" id="c2">
+  <img class="foto" src="../serie-nowdays/fotos/n1-txt.jpg" alt="" style="object-position: 40% 40%">
+  <div class="t">Diagnóstico · Grupo Vértice</div>
+  <div class="a"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg>Ver análise</div>
+  <div class="a"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 14 4 9l5-5"/><path d="M4 9h10a6 6 0 0 1 0 12h-2"/></svg>Usar a dica</div>
+</div>
+
+<div id="janela">
+  <div id="topo">
+    <div class="t"><img src="img/mark.png" alt="">Vendas</div>
+    <div class="pilha">
+      <img src="../serie-nowdays/fotos/s4-capa.jpg" alt="" style="object-position: 50% 20%">
+      <img src="../serie-nowdays/fotos/s2-o3.jpg" alt="" style="object-position: 40% 20%">
+      <img src="../serie-nowdays/fotos/n1-txt.jpg" alt="" style="object-position: 38% 38%">
+      <img src="../serie-nowdays/fotos/a1-txt.jpg" alt="" style="object-position: 72% 30%">
+      <i>+100</i>
+    </div>
+  </div>
+  <div id="corpo">
+    <div id="lado">
+      <h3>Agendas <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3.5" y="4.5" width="17" height="15" rx="2.5"/><path d="M9 4.5v15"/></svg></h3>
+      <div class="sec">Minhas reuniões <span>⌃</span></div>
+      <div class="it">Hoje <b class="r">3</b></div>
+      <div class="it">Com o robô <b>55</b></div>
+      <div class="it">Analisadas <b>67</b></div>
+      <div class="it">Favoritas <b>0</b></div>
+      <div class="it">Para revisar <b class="r">3</b></div>
+      <div class="it">Treinos <b>0</b></div>
+      <div class="sec">Temperatura <span>⌃</span></div>
+      <div class="it"><span><span class="q" style="background:#d94848"></span>Muito quente</span> <b class="r" style="background:#7b4ad6">2</b></div>
+      <div class="it"><span><span class="q" style="background:#e58a3a"></span>Quente</span></div>
+      <div class="it"><span><span class="q" style="background:#3b62d8"></span>Morno</span></div>
+    </div>
+    <div id="lista">
+      <div class="cab"><small>Agendas · hoje</small><div>Minhas reuniões</div></div>
+      <div class="filtro">Analisadas (240) <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></div>
+      <div class="reu">
+        <div class="n"><img src="../serie-nowdays/fotos/s2-o3.jpg" alt="" style="object-position: 40% 22%">Ricardo Souza</div>
+        <div class="sk" style="width:88%"></div><div class="sk" style="width:62%"></div>
+        <svg class="ok" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m5 12 5 5 9-10"/></svg>
+        <span class="tag q">● Muito quente</span>
+      </div>
+      <div class="reu">
+        <div class="n"><img src="../serie-nowdays/fotos/n1-txt.jpg" alt="" style="object-position: 38% 38%">Patrícia Alves</div>
+        <div class="sk" style="width:80%"></div><div class="sk" style="width:55%"></div>
+        <span class="tag p">✓ Próximo passo agendado</span>
+      </div>
+      <div class="reu fraca">
+        <div class="n"><img src="../serie-nowdays/fotos/a1-txt.jpg" alt="" style="object-position: 72% 30%">Marcos Lima</div>
+        <div class="sk" style="width:70%"></div>
+      </div>
+    </div>
+    <div id="det">
+      <div class="barra">
+        <span class="btn">Gravar reunião</span>
+        <svg class="cor" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg>
+        <span class="av">AR</span>
+      </div>
+      <div class="lead"><span class="chip"><i></i>Nota 91</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="m9 6 6 6-6 6"/></svg><b>Ricardo Souza</b></div>
+      <div class="bl"><div class="sk" style="width:92%;margin-top:0"></div><div class="sk" style="width:58%"></div></div>
+      <div class="bl az"><div class="sk" style="width:86%;margin-top:0"></div><div class="sk" style="width:64%"></div></div>
+      <div class="bl"><div class="sk" style="width:76%;margin-top:0"></div><div class="sk" style="width:50%"></div></div>
+    </div>
+  </div>
+</div>
+
+<div id="quem"><img src="../serie-nowdays/fotos/s4-capa.jpg" alt=""></div>
+<div id="balao">Uou! Fechei a venda!</div>
+
+<div id="app"><img src="../serie-nowdays/img/sc-mark-white.png" alt=""></div>
+
+<div id="selo">
+  <svg viewBox="-200 -200 400 400"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7d93ff"/><stop offset="1" stop-color="#3556d6"/></linearGradient></defs><path id="estrela" fill="url(#g)"/></svg>
+  <div class="tx"><span>A partir de</span><b>R$ 19,90</b><span>por usuário</span></div>
+</div>
+
+<div id="cta">
+  <svg viewBox="0 0 24 24" fill="none" stroke="url(#gl)" stroke-width="2.2" stroke-linecap="round"><defs><linearGradient id="gl" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#2f6bff"/><stop offset="1" stop-color="#5aa8ff"/></linearGradient></defs><path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.7 1.7"/><path d="M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.7-1.7"/></svg>
+  <span>Saiba mais</span>
+</div>
+
+<script>
+// Selo em estrela de pontas arredondadas (12 pontas).
+const n = 12, R = 196, r = 168, pts = [];
+for (let i = 0; i < n * 2; i++) {
+  const a = (Math.PI * i) / n - Math.PI / 2, raio = i % 2 ? r : R;
+  pts.push([raio * Math.cos(a), raio * Math.sin(a)]);
+}
+let d = '';
+for (let i = 0; i < pts.length; i++) {
+  const p = pts[i], q = pts[(i + 1) % pts.length];
+  const m = [(p[0] + q[0]) / 2, (p[1] + q[1]) / 2];
+  d += (i ? ' Q ' : 'M ') + (i ? `${p[0].toFixed(1)} ${p[1].toFixed(1)} ` : '') + `${m[0].toFixed(1)} ${m[1].toFixed(1)}`;
+}
+const p0 = pts[0], m0 = [(pts.at(-1)[0] + p0[0]) / 2, (pts.at(-1)[1] + p0[1]) / 2];
+d = `M ${m0[0].toFixed(1)} ${m0[1].toFixed(1)}`;
+for (let i = 0; i < pts.length; i++) {
+  const p = pts[i], q = pts[(i + 1) % pts.length];
+  d += ` Q ${p[0].toFixed(1)} ${p[1].toFixed(1)} ${((p[0] + q[0]) / 2).toFixed(1)} ${((p[1] + q[1]) / 2).toFixed(1)}`;
+}
+document.getElementById('estrela').setAttribute('d', d + ' Z');
+</script>
+</body>
+</html>
