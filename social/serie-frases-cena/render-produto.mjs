@@ -3,10 +3,10 @@ import { chromium } from '/home/user/salescoach-grou/node_modules/playwright/ind
 import path from 'path'; import { fileURLToPath } from 'url';
 const aqui = path.dirname(fileURLToPath(import.meta.url));
 const b = await chromium.launch({ executablePath: '/opt/pw-browsers/chromium' });
-const pg = await b.newPage({ viewport: { width: 1080, height: 1350 } });
+const pg = await b.newPage({ viewport: { width: 1080, height: 1350 }, deviceScaleFactor: 2 });
 for (let c = 1; c <= 5; c++) {
   await pg.goto(`file://${aqui}/produto.html?c=${c}`); await pg.evaluate(async () => { await document.fonts.ready; await window.pronto; }); await pg.waitForTimeout(300);
-  await pg.screenshot({ path: path.join(aqui, 'out', `sc-r${c}.jpg`), type: 'jpeg', quality: 92 });
+  await pg.screenshot({ path: path.join(aqui, 'out', `sc-r${c}.jpg`), type: 'jpeg', quality: 92, scale: 'css' });
   console.log('ok', c);
 }
 await b.close();
