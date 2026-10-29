@@ -1,0 +1,9 @@
+{
+ "endpoint": "ideogram/v4.0",
+ "args": {
+  "prompt": "Close-up of an old black split-flap departure board in a dim train station, the white flaps spell exactly, in two lines: \"A REUNI\u00c3O ACABA.\" / \"A AN\u00c1LISE COME\u00c7A.\" Slight motion blur of travelers far behind, warm and cold light mixed. Moody cinematic photograph, tight close framing so the text is large and dominates the frame, natural low light, 35mm film grain, slightly desaturated tones, shallow depth of field, photorealistic, realistic textures, wear and imperfections. The text is sharp, bold and perfectly legible, spelled exactly as written in Brazilian Portuguese with correct accents. No other words, no logos, no watermark, no people facing the camera.",
+  "aspect_ratio": "4:5"
+ },
+ "url": "https://d3u0tzju9qaucj.cloudfront.net/266d8d97-07d5-4e92-897d-d70270f9fb4a/01a18503-ad12-79bf-8323-2be8f30719ad/556cf671-5b96-4358-8549-a6a0d89fe614.png",
+ "request_id": "01a18503-ad12-79bf-8323-2be8f30719ad"
+}

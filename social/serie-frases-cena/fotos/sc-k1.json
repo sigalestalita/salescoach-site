@@ -1,0 +1,9 @@
+{
+ "endpoint": "ideogram/v4.0",
+ "args": {
+  "prompt": "Close-up of an illuminated rectangular lightbox sign mounted above the glass door of a dark modern meeting room, warm white light behind frosted acrylic, large bold black uppercase letters reading exactly, in two lines: \"QUEM ANOTA\" / \"N\u00c3O ESCUTA.\" Blurred office corridor, cool night tones, reflections on the glass. Moody cinematic photograph, tight close framing so the text is large and dominates the frame, natural low light, 35mm film grain, slightly desaturated tones, shallow depth of field, photorealistic, realistic textures, wear and imperfections. The text is sharp, bold and perfectly legible, spelled exactly as written in Brazilian Portuguese with correct accents. No other words, no logos, no watermark, no people facing the camera.",
+  "aspect_ratio": "4:5"
+ },
+ "url": "https://d3u0tzju9qaucj.cloudfront.net/266d8d97-07d5-4e92-897d-d70270f9fb4a/01a18503-aced-756e-97be-469500ca8d45/7e6e5cc3-28e9-4184-8d9e-f570eafa7d6a.png",
+ "request_id": "01a18503-aced-756e-97be-469500ca8d45"
+}

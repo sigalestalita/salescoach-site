@@ -142,6 +142,10 @@ add(dict(id='noticia-itau-neospace', titulo='Notícia: Itaú compra a NeoSpace p
          pasta=S + 'serie-frases-cena', telas=[S + 'serie-frases-cena/out/itau-neospace/*.jpg'], medida='4:5 · 9 telas',
          legenda=_arq('serie-frases-cena/legenda-itau-neospace.md'),
          nota='Imagens geradas por IA (ative o rótulo). Logo do Itaú oficial, aplicado em montagem/nx-n1.html.'))
+add(dict(id='sc-robo-extensao', titulo='Robô e extensão: quem anota não escuta', produto='sales-coach', editoria='Produto', formato='Carrossel',
+         pasta=S + 'serie-frases-cena', telas=[S + 'serie-frases-cena/out/robo-extensao/*.jpg'], medida='4:5 · 8 telas',
+         legenda=_arq('serie-frases-cena/legenda-robo-extensao.md'),
+         nota='Cenas e pessoas geradas por IA (ative o rótulo). Telas reais do app e da extensão, com dados de demonstração.'))
 # ── Atlas ─────────────────────────────────────────────────────────────────
 add(dict(id='atlas-fofos', titulo='Verdades duras sobre RH com imagens fofas', produto='atlas', editoria='Conteúdo', formato='Carrossel',
          pasta=S + 'carrossel-atlas-fofos', telas=[S + 'carrossel-atlas-fofos/out/carrossel/card-*.jpg'], medida='4:5 · 8 telas',

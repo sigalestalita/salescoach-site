@@ -38,3 +38,14 @@ pública da marca (LatamList), branco sobre preto. Fontes no rodapé de cada car
 
 Fonte: fato relevante do Itaú Unibanco de 26/10/2026 (R$ 2,925 bilhões por 100% das ações; depende de Cade e Banco Central).
 Imagens geradas por IA: ative o rótulo "Conteúdo feito com IA". A marca do Itaú aparece em contexto de notícia.
+
+## Carrossel "Robô e extensão" (Sales Coach, produto)
+
+8 telas em `out/robo-extensao/` (01 a 08): as cenas `sc-k1` ("QUEM ANOTA NÃO ESCUTA."), `sc-k2` ("A REUNIÃO ACABA. A ANÁLISE
+COMEÇA.") e `sc-k3` ("Menos achismo. Mais método."), e os cards de produto `sc-r1` a `sc-r5` (`produto.html`,
+`node render-produto.mjs`): o robô na agenda, o cartão da extensão quando o robô está na chamada, o coach ao vivo, o vídeo
+da reunião analisado e a nota com BANT/MEDDIC/SPIN. Legenda em `legenda-robo-extensao.md`.
+
+As telas em `telas/sc-*.jpg` são o app (build do main) e a extensão de verdade, capturados com o Supabase simulado e dados
+de demonstração; a chamada usa duas fotos geradas na Higgsfield (soul/cinema, visão de webcam) como os vídeos dos
+participantes, e o vídeo da reunião na análise é um quadro parado dessas duas fotos.
