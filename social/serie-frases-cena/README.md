@@ -41,8 +41,9 @@ Imagens geradas por IA: ative o rótulo "Conteúdo feito com IA". A marca do Ita
 
 ## Carrossel "Robô e extensão" (Sales Coach, produto)
 
-8 telas em `out/robo-extensao/` (01 a 08): as cenas `sc-k1` ("QUEM ANOTA NÃO ESCUTA."), `sc-k2` ("A REUNIÃO ACABA. A ANÁLISE
-COMEÇA.") e `sc-k3` ("Menos achismo. Mais método."), e os cards de produto `sc-r1` a `sc-r5` (`produto.html`,
+8 telas em `out/robo-extensao/` (01 a 08). A capa é `sc-k3-capa` ("Menos achismo. Mais método." com "Conheça o Sales Coach ·
+um produto NEXA" logo abaixo: `node render.mjs sc-k3-capa`); depois as cenas `sc-k1` ("QUEM ANOTA NÃO ESCUTA.") e `sc-k2`
+("A REUNIÃO ACABA. A ANÁLISE COMEÇA."), e os cards de produto `sc-r1` a `sc-r5` (`produto.html`,
 `node render-produto.mjs`): o robô na agenda, o cartão da extensão quando o robô está na chamada, o coach ao vivo, o vídeo
 da reunião analisado e a nota com BANT/MEDDIC/SPIN. Cada card mostra a tela inteira (1200x780), numa janela de navegador. Legenda em `legenda-robo-extensao.md`.
 
