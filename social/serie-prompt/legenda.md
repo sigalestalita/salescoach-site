@@ -2,7 +2,7 @@
 
 O Sales Coach percorreu um longo caminho.
 
-Hoje, você pede e ele faz: entra na reunião, grava, devolve o vídeo já analisado, com nota, temperatura e onde a venda travou.
+Hoje, o gestor pede e ele faz: entra na reunião no lugar dele, devolve o vídeo já analisado e mostra onde a venda travou, de onde ele estiver.
 
 Mas ele nasceu de um problema bem concreto, dentro da Grou: 300 reuniões por mês e nenhuma ideia do que acontecia nelas. A gente marcava, o executivo ia, e depois só sobrava o que alguém lembrava de contar.
 

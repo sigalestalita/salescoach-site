@@ -11,6 +11,6 @@ const CAFE = foto('fotos/cafew3.jpg', 993, [[666, 240], [1320, 236], [1318, 659]
 window.CARDS = {
   1: { ...MESA, tela: 'fotos/sc-full-ext-1-cartao.jpg', prompt: 'entra nessa reunião e grava pra mim', prompt_y: 300, tela_filtro: 'brightness(.93) contrast(1.02)' },
   2: { ...MESA, tela: 'fotos/sc-full-app-3-analise.jpg', prompt: 'agora me manda o vídeo já analisado', prompt_y: 300, tela_filtro: 'brightness(.93) contrast(1.02)' },
-  3: { ...CAFE, tela: 'fotos/sc-full-app-4-nota.jpg', legenda: 'ok, agora me lembra como era antes', legenda_y: 112, tela_filtro: 'brightness(1.02)' },
+  3: { ...CAFE, tela: 'fotos/sc-full-app-4-nota.jpg', prompt: 'e me fala onde essa venda travou', prompt_y: 70, tela_filtro: 'brightness(1.02)' },
   4: { foto: 'fotos/caos1.jpg', nota: true },
 };
