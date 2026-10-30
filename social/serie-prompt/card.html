@@ -16,18 +16,21 @@ body { position: relative; font-family: 'DM Sans', sans-serif; -webkit-font-smoo
 /* Brilho e sombra da tela, para casar com a luz da foto */
 #tela::after { content: ""; position: absolute; inset: 0; pointer-events: none;
   background: linear-gradient(115deg, rgba(255,255,255,.10) 0%, rgba(255,255,255,0) 38%), linear-gradient(180deg, rgba(0,0,0,0) 60%, rgba(0,0,0,.08)); }
-#prompt { position: absolute; left: 50%; translate: -50% 0; width: 800px; padding: 24px 28px 20px; border-radius: 34px;
-  background: rgba(255,255,255,.97); box-shadow: 0 30px 60px -24px rgba(5,10,30,.55), 0 2px 0 rgba(255,255,255,.8) inset; }
-#prompt p { font-size: 32px; line-height: 1.3; color: #16192a; letter-spacing: -.012em; min-height: 43px; }
-#prompt .barra { display: flex; align-items: center; justify-content: space-between; margin-top: 22px; }
-#prompt .mais { width: 38px; height: 38px; color: #2c3044; }
-#prompt .dir { display: flex; align-items: center; gap: 20px; }
-#prompt .mic { width: 30px; height: 30px; color: #2c3044; }
-#prompt .env { width: 58px; height: 58px; border-radius: 50%; display: grid; place-items: center; background: linear-gradient(150deg, #5d7bff, #2f4fd8); box-shadow: 0 6px 14px -6px rgba(47,79,216,.8); }
-#prompt .env svg { width: 26px; height: 26px; color: #fff; }
-#prompt .quem { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; font-size: 19px; color: #6a6f84; letter-spacing: .01em; }
-#prompt .quem .ic { width: 28px; height: 28px; border-radius: 8px; background: linear-gradient(150deg, #6f8cff, #2f4fd8); display: grid; place-items: center; }
-#prompt .quem .ic img { width: 17px; filter: brightness(0) invert(1); }
+#prompt { position: absolute; left: 50%; translate: -50% 0; width: 640px; padding: 22px 24px 16px; border-radius: 30px;
+  background: rgba(255,255,255,.96); border: 1px solid rgba(255,255,255,.7); backdrop-filter: blur(14px);
+  box-shadow: 0 24px 48px -20px rgba(5,10,30,.45), 0 1px 2px rgba(5,10,30,.12); }
+#prompt p { text-wrap: balance; font-size: 25px; line-height: 1.32; color: #15171f; letter-spacing: -.01em; padding: 0 4px; }
+#prompt p::after { content: ""; display: inline-block; width: 2px; height: 1.05em; margin-left: 3px; vertical-align: -3px; background: #2f4fd8; border-radius: 1px; }
+#prompt .barra { display: flex; align-items: center; justify-content: space-between; margin-top: 18px; }
+#prompt .esq { display: flex; align-items: center; gap: 12px; }
+#prompt .mais { width: 34px; height: 34px; padding: 7px; border-radius: 50%; color: #3a3e52; background: #f1f2f6; }
+#prompt .quem { display: flex; align-items: center; gap: 7px; padding: 5px 11px 5px 6px; border-radius: 999px; background: #eef1ff; font-size: 15px; font-weight: 500; color: #2f4fd8; }
+#prompt .quem .ic { width: 22px; height: 22px; border-radius: 50%; background: linear-gradient(150deg, #6f8cff, #2f4fd8); display: grid; place-items: center; }
+#prompt .quem .ic img { width: 12px; filter: brightness(0) invert(1); }
+#prompt .dir { display: flex; align-items: center; gap: 14px; }
+#prompt .mic { width: 24px; height: 24px; color: #3a3e52; }
+#prompt .env { width: 42px; height: 42px; border-radius: 50%; display: grid; place-items: center; background: linear-gradient(150deg, #5d7bff, #2f4fd8); box-shadow: 0 4px 10px -4px rgba(47,79,216,.8); }
+#prompt .env svg { width: 20px; height: 20px; color: #fff; }
 #legenda { position: absolute; left: 60px; right: 60px; text-align: center; color: #fff; font-size: 54px; line-height: 1.16; letter-spacing: -.02em; font-weight: 500;
   text-shadow: 0 2px 18px rgba(0,0,0,.45), 0 1px 2px rgba(0,0,0,.35); }
 /* Card do começo */
@@ -50,13 +53,15 @@ body { position: relative; font-family: 'DM Sans', sans-serif; -webkit-font-smoo
 <div id="escuro" hidden></div>
 <div id="tela" hidden><img alt=""></div>
 <div id="prompt" hidden>
-  <div class="quem"><span class="ic"><img src="fotos/mark.png" alt=""></span>Sales Coach</div>
   <p></p>
   <div class="barra">
-    <svg class="mais" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+    <div class="esq">
+      <svg class="mais" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+      <span class="quem"><span class="ic"><img src="fotos/mark.png" alt=""></span>Sales Coach</span>
+    </div>
     <div class="dir">
       <svg class="mic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg>
-      <span class="env"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M6 11l6-6 6 6"/></svg></span>
+      <span class="env"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M6 11l6-6 6 6"/></svg></span>
     </div>
   </div>
 </div>
