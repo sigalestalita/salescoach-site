@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Capa LinkedIn NEXA</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300..600&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f3f4ee; --bg2: #e8eae1; --card: #fff; --txt: #10120e; --dim: #4f5547; --dim2: #7a8070;
+    --tom: #8b9479; --lime: #d4f969; --acento: #587406; --line: rgba(14,16,13,.1);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 1128px; height: 191px; overflow: hidden; background: var(--bg); }
+  .capa { position: relative; width: 1128px; height: 191px; overflow: hidden; color: var(--txt);
+    background:
+      radial-gradient(250px 120px at 864px 96px, rgba(212,249,105,.42), transparent 70%),
+      radial-gradient(520px 260px at 864px 96px, #ffffff, transparent 72%),
+      linear-gradient(180deg, #f6f7f2, var(--bg));
+  }
+  /* grão sutil */
+  .capa::after { content: ""; position: absolute; inset: 0; opacity: .06; mix-blend-mode: multiply; pointer-events: none;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>"); }
+
+  /* texto */
+  .txt { position: absolute; left: 262px; top: 34px; width: 420px; }
+  .kick { font: 500 8.6px/1 'JetBrains Mono', monospace; letter-spacing: .22em; text-transform: uppercase; color: var(--dim2);
+    display: flex; align-items: center; gap: 8px; }
+  .kick i { width: 5px; height: 5px; border-radius: 50%; background: var(--lime); box-shadow: 0 0 0 2px rgba(212,249,105,.35), 0 0 8px var(--lime); }
+  h1 { margin-top: 12px; font: 300 43px/.98 'Space Grotesk', sans-serif; letter-spacing: -.05em; }
+  h1 .tom { color: var(--tom); }
+  p { margin-top: 13px; font: 400 11.4px/1.45 'DM Sans', sans-serif; color: var(--dim); max-width: 330px; letter-spacing: -.005em; }
+
+  /* linha fina de separação */
+  .fio { position: absolute; left: 262px; right: 0; bottom: 22px; height: 1px; background: linear-gradient(90deg, var(--line), transparent 40%); }
+
+  /* anel */
+  .orbita { position: absolute; left: 864px; top: 92px; width: 0; height: 0; }
+  .orbita .el { position: absolute; border: 1px solid rgba(14,16,13,.09); border-radius: 50%; transform: translate(-50%, -50%); }
+  .anel2 { position: absolute; inset: 0; }
+  .c { position: absolute; width: 124px; height: 88px; border-radius: 10px; overflow: hidden;
+    background: var(--card); box-shadow: 0 0 0 1px rgba(14,16,13,.07), 0 14px 26px -14px rgba(14,16,13,.38), 0 3px 8px -4px rgba(14,16,13,.18); }
+  .c img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .c::after { content: ""; position: absolute; inset: 0; border-radius: inherit;
+    background: linear-gradient(180deg, rgba(255,255,255,.18), transparent 35%); }
+  .c .rot { position: absolute; left: 6px; bottom: 5px; z-index: 2; display: flex; align-items: center; gap: 4px;
+    font: 500 6.4px/1 'DM Sans', sans-serif; color: #fff; padding: 3px 5px; border-radius: 99px; background: rgba(16,18,14,.55); backdrop-filter: blur(4px); }
+  .c .rot i { width: 3.5px; height: 3.5px; border-radius: 50%; background: var(--lime); }
+
+  /* marca discreta à direita */
+  .marca { position: absolute; right: 26px; bottom: 11px; display: flex; align-items: center; gap: 6px; opacity: .55; }
+  .marca svg { width: 46px; height: 9px; } .marca path { fill: none; stroke: var(--txt); stroke-width: 13; stroke-linecap: round; }
+  .marca i { width: 3.5px; height: 3.5px; border-radius: 50%; background: var(--acento); margin-top: 5px; }
+</style>
+</head>
+<body>
+<div class="capa">
+  <div class="orbita">
+    <div class="el" style="width:396px;height:68px"></div>
+    <div class="el" style="width:520px;height:118px;border-color:rgba(14,16,13,.05)"></div>
+  </div>
+
+  <div class="anel2" id="giro"></div>
+
+  <div class="txt">
+    <div class="kick"><i></i>Fábrica de soluções digitais</div>
+    <h1>Inteligência<br><span class="tom">que vira solução.</span></h1>
+    <p>Produtos prontos para vender e cuidar de pessoas. E uma fábrica para os desafios que ainda não têm produto.</p>
+  </div>
+  <div class="fio"></div>
+</div>
+
+<script>
+  const cards = ['sc-analise','pessoa-4','ac-painel','plate-neural','a3-painel','pessoa-3','sc-treino','ac-liderancas','sc-gestor'];
+  const N = cards.length, cx = 864, cy = 92, Rx = 198, Ry = 34, off = 0;
+  const anel = document.getElementById('giro');
+  cards.forEach((img, i) => {
+    const t = (i * 360 / N + off) * Math.PI / 180;
+    const z = Math.cos(t);                       // 1 = frente
+    const k = (z + 1) / 2;
+    const s = 0.5 + 0.5 * Math.pow(k, 1.15);
+    const d = document.createElement('div');
+    d.className = 'c';
+    d.style.left = (cx + Rx * Math.sin(t)) + 'px';
+    d.style.top = (cy + Ry * z) + 'px';
+    d.style.transform = `translate(-50%,-50%) scale(${s.toFixed(3)})`;
+    d.style.zIndex = Math.round(100 + z * 100);
+    d.style.opacity = (0.32 + 0.68 * Math.pow(k, 1.4)).toFixed(2);
+    if (z < -0.2) d.style.filter = 'saturate(.55)';
+    d.innerHTML = `<img src="img/${img}.webp" alt="">`;
+    anel.appendChild(d);
+  });
+</script>
+</body>
+</html>
