@@ -1,0 +1,18 @@
+{
+  "origem": "https://trello.com/b/GVeD32fx/lumi-produto (conta talitasigalesgrou, workspace Growth Marketing), copiado em 2026-11-06",
+  "listas": ["ACESSOS", "BACKLOG", "ROADMAP - MELHORIAS", "TESTES", "PROBLEMAS"],
+  "cards": [
+    { "lista": "ACESSOS", "nome": "ferramentas e logins",
+      "desc": "ferramentas e logins https://docs.google.com/document/d/1Zt8piGkTEziGtVfQgTiuyUetIqDzv3FI2wDpDrfFzyw/edit?usp=sharing\n\ndrive do produto https://drive.google.com/drive/folders/1JjD0bh_Ps3CI_QkY1BlhTMkE3P1EuAEe?usp=sharing" },
+    { "lista": "ACESSOS", "nome": "pasta de testes e guias de produto - laon",
+      "desc": "https://drive.google.com/drive/folders/1BVCKNH4J4kyESxfPXdf1TmLivd4lKNAJ?usp=sharing" },
+    { "lista": "BACKLOG", "nome": "REVISÃO DO CÓDIGO PRA EVOLUIR INTEGRAÇÕES COM OUTRAS PLATAFORMAS DE RH", "responsavel": "Lucas Vieira",
+      "desc": "quando recebermos o código, precisamos entender a viabilidade do que já é construído hoje em lumi x integração/API key pra outras plataformas de RH que queiram integrar os dados com suas ferramentas internas\n\nhoje, nada disso é previsto no produto e, até então, a resposta era negativa em relação a isso" },
+    { "lista": "BACKLOG", "nome": "INTEGRAÇÃO DA AGENDA DO ESPECIALISTA NO PAINEL COM GOOGLE CALENDAR PESSOAL", "responsavel": "Lucas Vieira", "desc": "" },
+    { "lista": "ROADMAP - MELHORIAS", "nome": "REVISÃO - TELEPSICOLOGIA E MELHORIAS", "responsavel": "Lucas Vieira", "desc": "" },
+    { "lista": "ROADMAP - MELHORIAS", "nome": "ROADMAP (antigo) - verificar o que rodou ou não",
+      "desc": "https://docs.google.com/spreadsheets/d/12Msqvt_mjeJFHYj2Ss3vlEj1wLv3WHe-R11gwBADzAg/edit?usp=sharing" },
+    { "lista": "PROBLEMAS", "nome": "Lumi - problemas de seguranca explicados.pdf",
+      "desc": "Anexo PDF no card original (https://trello.com/c/RfIJ5Mjl): reenviar o arquivo à mão." }
+  ]
+}
