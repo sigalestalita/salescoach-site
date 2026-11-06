@@ -146,6 +146,14 @@ add(dict(id='sc-robo-extensao', titulo='Robô e extensão: quem anota não escut
          pasta=S + 'serie-frases-cena', telas=[S + 'serie-frases-cena/out/robo-extensao/*.jpg'], medida='4:5 · 8 telas',
          legenda=_arq('serie-frases-cena/legenda-robo-extensao.md'),
          nota='Cenas e pessoas geradas por IA (ative o rótulo). Telas reais do app e da extensão, com dados de demonstração.'))
+add(dict(id='sc-frase-pergunta', titulo='Frase: toda venda começa numa boa pergunta.', produto='sales-coach', editoria='Conteúdo', formato='Post',
+         pasta=S + 'post-frase-sc-blur', telas=[S + 'post-frase-sc-blur/out/sc-frase-pergunta.jpg'], medida='4:5 · 1 tela', serie='Silhueta em movimento',
+         legenda=_sec('post-frase-sc-blur/legenda.md', '## Versão 1'),
+         nota='Foto gerada por IA (ative o rótulo).'))
+add(dict(id='sc-frase-escuta', titulo='Frase: quem escuta melhor, vende melhor.', produto='sales-coach', editoria='Conteúdo', formato='Post',
+         pasta=S + 'post-frase-sc-blur', telas=[S + 'post-frase-sc-blur/out/sc-frase-escuta.jpg'], medida='4:5 · 1 tela', serie='Silhueta em movimento',
+         legenda=_sec('post-frase-sc-blur/legenda.md', '## Versão 2'),
+         nota='Foto gerada por IA (ative o rótulo).'))
 # ── Atlas ─────────────────────────────────────────────────────────────────
 add(dict(id='atlas-fofos', titulo='Verdades duras sobre RH com imagens fofas', produto='atlas', editoria='Conteúdo', formato='Carrossel',
          pasta=S + 'carrossel-atlas-fofos', telas=[S + 'carrossel-atlas-fofos/out/carrossel/card-*.jpg'], medida='4:5 · 8 telas',

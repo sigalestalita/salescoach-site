@@ -15,7 +15,9 @@ AQUI = os.path.dirname(os.path.abspath(__file__))
 SITE = os.path.dirname(AQUI)
 REPO = os.path.dirname(SITE)
 DEST = os.path.join(SITE, 'acervo')
-FF = '/usr/local/lib/python3.11/dist-packages/imageio_ffmpeg/binaries/ffmpeg-linux-x86_64-v7.0.2'
+import shutil
+_FF_IMAGEIO = '/usr/local/lib/python3.11/dist-packages/imageio_ffmpeg/binaries/ffmpeg-linux-x86_64-v7.0.2'
+FF = _FF_IMAGEIO if os.path.exists(_FF_IMAGEIO) else (shutil.which('ffmpeg') or 'ffmpeg')
 
 PRODUTOS = {'nexa': 'NEXA', 'sales-coach': 'Sales Coach', 'atlas': 'Atlas'}
 EDITORIAS = ['Educativo', 'Conteúdo', 'Dados', 'Notícias', 'Produto', 'Comercial', 'Institucional']
