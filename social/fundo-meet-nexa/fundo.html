@@ -16,13 +16,26 @@
  .sc{display:flex;align-items:center;gap:12px;font:400 30px/1 'Space Grotesk',sans-serif;letter-spacing:-.02em;color:#10120e}
  .sc img{width:38px;height:auto}
  .tag{position:absolute;right:96px;top:150px;font:400 14px/1 'JetBrains Mono',monospace;letter-spacing:.32em;text-transform:uppercase;color:#6d7363}
+
+ .tinta{position:absolute;inset:0;pointer-events:none}
+ .vinheta{position:absolute;inset:0;pointer-events:none;background:radial-gradient(120% 95% at 50% 45%, transparent 55%, rgba(60,45,30,.18) 100%)}
+ .luz{position:absolute;left:50%;top:38%;width:1100px;height:900px;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(closest-side, rgba(255,236,205,.55), transparent);pointer-events:none}
 </style></head><body>
 <div class="f grao">
  <img class="seda" src="img/seda.png" alt="">
+ <div class="tinta" id="tinta"></div><div class="luz" id="luz"></div><div class="vinheta" id="vin"></div>
  <div class="lock">
   <div class="nexa"><svg viewBox="0 0 800 150"><path d="M8 139V12L175 139V12M200 12H366M200 12V139H366M200 75H366M390 12L558 139M558 12L390 139M580 139L685 12L792 139M618 95H755"/></svg><i></i></div>
   <div class="sep"></div>
   <div class="sc"><img src="img/sc-icon.png" alt="">Sales Coach</div>
  </div>
  <div class="tag">Inteligência que vira solução</div>
-</div></body></html>
+</div><script>
+const v=new URLSearchParams(location.search).get('v');
+const f=document.querySelector('.f'), t=document.getElementById('tinta');
+if(!v){document.getElementById('luz').remove();document.getElementById('vin').remove();}
+if(v==='quente'){f.style.background='radial-gradient(900px 700px at 82% 70%, rgba(212,249,105,.10), transparent 70%),radial-gradient(1200px 900px at 45% 40%, #f4ede2, transparent 70%),#e9e1d4';
+  document.querySelector('.seda').style.opacity='.6'; t.style.background='rgba(214,190,150,.16)'; t.style.mixBlendMode='multiply';}
+if(v==='suave'){f.style.background='radial-gradient(900px 700px at 82% 70%, rgba(212,249,105,.08), transparent 70%),radial-gradient(1200px 900px at 45% 40%, #e6ddcf, transparent 70%),#d6ccbd';
+  document.querySelector('.seda').style.opacity='.5'; t.style.background='rgba(170,145,110,.22)'; t.style.mixBlendMode='multiply';}
+</script></body></html>
