@@ -215,7 +215,6 @@ body { position: relative; font-family: 'DM Sans', sans-serif; color: var(--tint
   <div class="lema serif" style="top:780px;font-size:72px">Um coach em <i>cada reunião</i><br>do seu time.</div>
   <div class="nexa"><span>um produto</span><img src="img/nexa.svg" alt="NEXA"></div>
   <div class="lanc"><small class="mono">a partir de</small><b>R$ 89,90</b><span>por usuário/mês · sem limites de uso</span></div>
-  <div class="cta"><b>Conheça o Sales Coach</b><span>link na bio</span></div>
 </div>
 <div id="grao"></div>
 
@@ -490,7 +489,7 @@ function fecho(t) {
   if (t >= a - .05 && t < b + .05) { letreiro(t, FECHO_Q, a, b); usou = true; }
   const fm = $('#fim'), on = t > f - .05; vis(fm, on ? 1 : 0);
   if (on) { pop($('#fim .logo'), lin(t, f, f + .6)); vista($('#fim .nome'), eo(lin(t, f + .25, f + .8)), 40, 12); vista($('#fim .lema'), eo(lin(t, f + .55, f + 1.2)), 24, 10);
-    vista($('#fim .nexa'), eo(lin(t, f + .9, f + 1.4)), 16, 6); vista($('#fim .lanc'), eo(lin(t, f + 1.2, f + 1.8)), 40, 8); vista($('#fim .cta'), eo(lin(t, f + 1.6, f + 2.1)), 16, 6); }
+    vista($('#fim .nexa'), eo(lin(t, f + .9, f + 1.4)), 16, 6); vista($('#fim .lanc'), eo(lin(t, f + 1.2, f + 1.8)), 40, 8); }
   return usou;
 }
 

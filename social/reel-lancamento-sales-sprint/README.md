@@ -55,5 +55,8 @@ pé e a câmera enquadra o componente em uso. Roteiro e comandos em `locucao-ree
 `PAGE=reel-claro.html W=1080 H=1920 node render.mjs seq 0 3480 frames`, depois o ffmpeg com
 `out/reel-trilha-com-narracao.wav` (narrado) ou `trilha-reel.wav` (só a trilha) gera
 `out/reel-sales-coach-versao-clara-narrado.mp4` e `out/reel-sales-coach-versao-clara.mp4`.
+Versão para mandar a leads no WhatsApp, sem o botão "Conheça o Sales Coach · link na bio" no fecho:
+`out/reel-sales-coach-versao-clara-narrado-whatsapp.mp4` e `out/reel-sales-coach-versao-clara-whatsapp.mp4`
+(o `reel-claro.html` já está sem o botão; os MP4s acima, para o Instagram, continuam com ele).
 `node render.mjs still 9.2,26.5 stills` gera quadros soltos; `index.html?play` toca no navegador.
 `icones.js` traz os ícones lucide usados no app (licença ISC).
