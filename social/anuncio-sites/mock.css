@@ -1,0 +1,34 @@
+/* Sites de exemplo (mock.js). Tamanho controlado por --mk (largura da janela, em px). */
+.mk { --mk: 640px; width: var(--mk); max-width: none; font-size: calc(var(--mk) / 64); border-radius: 1.1em; overflow: hidden; background: #fff; color: var(--t);
+  box-shadow: 0 2.4em 5em -1.6em rgba(16,18,14,.35), 0 0 0 1px rgba(16,18,14,.08); font-family: var(--fn); }
+.mk-barra { height: 2.6em; background: #eceee8; display: flex; align-items: center; gap: .5em; padding: 0 1.1em; }
+.mk-barra i { width: .75em; height: .75em; border-radius: 50%; background: #d3d6cd; }
+.mk-barra span { margin-left: 1.2em; flex: 1; max-width: 26em; height: 1.6em; border-radius: .8em; background: #fff; display: flex; align-items: center; padding: 0 1em;
+  font: 500 .95em/1 'DM Sans', system-ui, sans-serif; color: #6f7368; }
+.mk-tela { background: var(--f); }
+.mk-nav { display: flex; align-items: center; justify-content: space-between; gap: 1em; padding: 1.3em 2.2em; }
+.mk-nav b { white-space: nowrap; font-weight: 600; font-size: 1.5em; letter-spacing: -.02em; display: flex; flex-direction: column; line-height: 1.05; }
+.mk-nav b small { font: 500 .5em/1.3 'DM Sans', system-ui, sans-serif; letter-spacing: .08em; text-transform: uppercase; opacity: .6; margin-top: .2em; }
+.mk-nav span { display: flex; gap: 1.6em; font: 500 1em/1 'DM Sans', system-ui, sans-serif; opacity: .7; }
+.mk-nav span em { font-style: normal; }
+.mk-nav a { display: inline-flex; align-items: center; gap: .4em; background: var(--c); color: #fff; border-radius: 99em; padding: .65em 1.1em; font: 600 .95em/1 'DM Sans', system-ui, sans-serif; }
+.mk-nav a svg { width: 1.1em; height: 1.1em; }
+.mk-hero { display: grid; grid-template-columns: 1.05fr 1fr; gap: 2em; padding: 1.2em 2.2em 2.2em; align-items: center; }
+.mk-k { font: 600 .85em/1 'DM Sans', system-ui, sans-serif; letter-spacing: .14em; text-transform: uppercase; color: var(--c); margin: 0 0 .9em; }
+.mk-txt h3 { margin: 0; font-weight: 500; font-size: 2.85em; line-height: 1.02; letter-spacing: -.03em; }
+.mk-txt p:not(.mk-k) { margin: .8em 0 1.2em; font: 400 1.08em/1.45 'DM Sans', system-ui, sans-serif; opacity: .75; }
+.mk-txt a { display: inline-block; background: var(--t); color: var(--f); border-radius: 99em; padding: .85em 1.4em; font: 600 1em/1 'DM Sans', system-ui, sans-serif; }
+.mk-foto { aspect-ratio: 4 / 3.3; border-radius: .9em; background: center / cover no-repeat #ddd; }
+.mk-form { display: grid; grid-template-columns: 1fr 1fr auto; gap: .7em; margin: 0 2.2em 2.2em; padding: .8em; background: #fff; border-radius: .9em; box-shadow: 0 .4em 1.6em rgba(0,0,0,.06); }
+.mk-form span { border: 1px solid rgba(0,0,0,.1); border-radius: .6em; padding: .75em .9em; font: 400 .95em/1 'DM Sans', system-ui, sans-serif; color: rgba(0,0,0,.45); }
+.mk-form a { background: var(--c); color: #fff; border-radius: .6em; padding: .75em 1.4em; font: 600 .95em/1 'DM Sans', system-ui, sans-serif; }
+.mk-aviso { --s: 1; display: grid; grid-template-columns: auto 1fr auto; gap: .9em; align-items: center; width: 25em; padding: 1em 1.1em; border-radius: 1.1em; background: #fff;
+  box-shadow: 0 1.2em 3em -1em rgba(16,18,14,.35), 0 0 0 1px rgba(16,18,14,.06); font-family: 'DM Sans', system-ui, sans-serif; color: #10120e; }
+.mk-aviso i { width: 2.6em; height: 2.6em; border-radius: .8em; background: #25d366; color: #fff; display: grid; place-items: center; }
+.mk-aviso i svg { width: 1.6em; height: 1.6em; }
+.mk-aviso b { display: block; font-size: 1em; font-weight: 600; } .mk-aviso span { font-size: .95em; color: #4f5547; }
+.mk-aviso small { align-self: start; font-size: .8em; color: #7a8070; }
+
+/* Sites pequenos (cards): sem os links do menu. */
+.mk.pequeno .mk-nav span { display: none; }
+.mk.pequeno .mk-txt h3 { font-size: 2.6em; }

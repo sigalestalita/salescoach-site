@@ -29,6 +29,10 @@ add(dict(id='nexa-prazer', titulo='Prazer, NEXA (vídeo de lançamento)', produt
 add(dict(id='ia-outubro', titulo='O que rolou na IA em outubro (1ª quinzena)', produto='nexa', editoria='Notícias', formato='Carrossel',
          pasta=S + 'carrossel-ia-outubro', telas=[S + 'carrossel-ia-outubro/saida/IA-outubro-*.jpg'], medida='4:5 · 8 telas',
          legenda=_arq('carrossel-ia-outubro/legenda.md'), serie='IA sem tecniquês'))
+add(dict(id='anuncios-sites', titulo='Sites e landing pages a partir de R$ 1.500 (9 anúncios)', produto='nexa', editoria='Comercial', formato='Anúncio',
+         pasta=S + 'anuncio-sites', telas=[S + 'anuncio-sites/out/*-feed.jpg', S + 'anuncio-sites/out/*-story.jpg'], medida='4:5 e 9:16 · 18 peças',
+         legenda=_arq('anuncio-sites/anuncios.md'),
+         nota='Destino: nexatech.ia.br/sites, com utm_content = id do anúncio. Marcas dos sites de exemplo fictícias; fotos do Unsplash.'))
 add(dict(id='destaque-fabrica', titulo='Destaque · Fábrica de soluções', produto='nexa', editoria='Institucional', formato='Destaque',
          pasta=S + 'instagram-nexa/destaques', capa=S + 'instagram-nexa/jpg/capas/c9-fabrica.jpg',
          telas=[S + 'instagram-nexa/jpg/stories/d9-*.jpg'], medida='9:16 · 6 stories', serie='Destaques do perfil',

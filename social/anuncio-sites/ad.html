@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300..600&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@300;400;500&family=Fraunces:opsz,wght@9..144,400..600&family=Manrope:wght@400..700&display=swap">
+<link rel="stylesheet" href="mock.css">
+<style>
+  /* Anúncios de sites e landing pages da NEXA. ?id=<conceito>&f=<feed|story> */
+  :root { --osso: #f3f4ee; --tinta: #10120e; --lima: #d4f969; --oliva: #587406; --tom: #7c8669; --dim: #4f5547; }
+  html, body { margin: 0; background: var(--osso); }
+  body { width: 1080px; height: 1350px; position: relative; overflow: hidden; font-family: 'DM Sans', sans-serif; color: var(--tinta); }
+  body.story { height: 1920px; }
+  .brilho { position: absolute; left: 50%; top: 58%; width: 1300px; height: 900px; translate: -50% -50%; background: radial-gradient(closest-side, rgba(212,249,105,.55), rgba(212,249,105,0) 72%); }
+  .story .brilho { top: 55%; height: 1200px; }
+  .topo { position: absolute; left: 72px; right: 72px; top: 64px; display: flex; justify-content: space-between; align-items: center; }
+  .story .topo { top: 210px; }
+  .kick { font-family: 'JetBrains Mono', monospace; font-size: 19px; letter-spacing: .2em; text-transform: uppercase; color: var(--oliva); }
+  .logo { display: flex; align-items: flex-end; gap: 8px; } .logo svg { width: 118px; height: 23px; fill: none; stroke: var(--tinta); stroke-width: 9; }
+  .logo i { width: 9px; height: 9px; border-radius: 50%; background: var(--lima); box-shadow: 0 0 0 1.5px #c3e94f; }
+  h1 { position: absolute; left: 72px; right: 72px; top: 122px; margin: 0; font-family: 'Space Grotesk', sans-serif; font-weight: 300; font-size: var(--hs, 74px); line-height: 1.02; letter-spacing: -.045em; }
+  .story h1 { top: 280px; font-size: var(--hss, 92px); }
+  h1 .tom { color: var(--tom); }
+  .palco { position: absolute; left: 0; right: 0; top: var(--pt, 430px); bottom: 210px; display: grid; place-items: center; }
+  .story .palco { top: 620px; bottom: 640px; }
+  .vis { position: relative; }
+  .vis .mk { --mk: 936px; }
+  .story .vis .mk { --mk: 900px; }
+  .vis .av { position: absolute; right: -36px; bottom: -58px; font-size: 21px; }
+  .story .vis .av { font-size: 23px; bottom: -70px; right: -20px; }
+  .oferta { position: absolute; left: 72px; right: 72px; bottom: 64px; display: flex; align-items: center; gap: 14px; }
+  .story .oferta { bottom: 300px; flex-direction: column; align-items: stretch; gap: 16px; }
+  .preco { background: var(--lima); border-radius: 999px; padding: 22px 30px; font-size: 30px; font-weight: 600; letter-spacing: -.01em; white-space: nowrap; }
+  .preco small { font-weight: 400; font-size: 22px; margin-right: 6px; }
+  .chips { display: flex; gap: 10px; }
+  .chips span { border: 1.5px solid rgba(16,18,14,.18); border-radius: 999px; padding: 16px 18px; font-size: 19.5px; white-space: nowrap; background: rgba(255,255,255,.55); }
+  .story .preco { text-align: center; font-size: 36px; padding: 28px; }
+  .story .chips { justify-content: center; flex-wrap: wrap; } .story .chips span { font-size: 22px; padding: 18px 22px; }
+  .cta { display: none; }
+  .story .cta { display: block; text-align: center; font-family: 'JetBrains Mono', monospace; font-size: 20px; letter-spacing: .2em; text-transform: uppercase; color: var(--dim); margin-top: 6px; }
+  /* Comparativo de preço */
+  .comp { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; width: 936px; }
+  .story .comp { grid-template-columns: 1fr; width: 860px; }
+  .comp > div { border-radius: 30px; padding: 40px; display: flex; flex-direction: column; gap: 18px; }
+  .comp .eles { background: rgba(255,255,255,.6); border: 1.5px solid rgba(16,18,14,.1); color: var(--dim); }
+  .comp .nos { background: var(--tinta); color: var(--osso); box-shadow: 0 40px 80px -30px rgba(16,18,14,.5); }
+  .comp .kick { font-size: 17px; } .comp .nos .kick { color: var(--lima); }
+  .comp b { font-family: 'Space Grotesk', sans-serif; font-weight: 300; font-size: 64px; letter-spacing: -.05em; line-height: 1; }
+  .comp .eles b { text-decoration: line-through; text-decoration-thickness: 3px; text-decoration-color: rgba(16,18,14,.35); }
+  .comp ul { list-style: none; margin: 6px 0 0; padding: 0; display: flex; flex-direction: column; gap: 12px; font-size: 24px; }
+  .comp li::before { content: "– "; } .comp .nos li::before { content: "✓ "; color: var(--lima); }
+  /* Fluxo de integrações */
+  .flx { display: grid; grid-template-columns: 400px 150px 340px; align-items: center; }
+  .story .flx { grid-template-columns: 1fr; justify-items: center; gap: 0; }
+  .flx .form { background: #fff; border-radius: 30px; padding: 32px; display: flex; flex-direction: column; gap: 14px; box-shadow: 0 30px 70px -30px rgba(16,18,14,.35); }
+  .flx .form i { font-style: normal; font-size: 22px; color: #8a8f82; border: 1.5px solid rgba(16,18,14,.12); border-radius: 16px; padding: 18px 20px; }
+  .flx .form a { align-self: flex-start; background: var(--lima); border-radius: 999px; padding: 16px 28px; font-size: 22px; font-weight: 600; }
+  .flx svg.l { width: 150px; height: 420px; } .flx svg.l path { fill: none; stroke: var(--oliva); stroke-width: 2.5; stroke-dasharray: 8 9; }
+  .story .flx svg.l { width: 520px; height: 150px; }
+  .flx .dest { display: flex; flex-direction: column; gap: 16px; }
+  .story .flx .dest { display: grid; grid-template-columns: 1fr 1fr; width: 860px; }
+  .flx .dest span { display: flex; align-items: center; gap: 14px; background: #fff; border-radius: 22px; padding: 20px 24px; font-size: 25px; font-weight: 500; box-shadow: 0 16px 40px -24px rgba(16,18,14,.35); }
+  .flx .dest img { width: 34px; height: 34px; object-fit: contain; }
+  .gs { display: inline-block; width: 30px; height: 34px; border-radius: 4px; background: #0f9d58; position: relative; }
+  .gs::after { content: ""; position: absolute; inset: 9px 6px 8px; border: 2px solid #fff; background: linear-gradient(#fff, #fff) 50% 0 / 2px 100% no-repeat, linear-gradient(#fff, #fff) 0 50% / 100% 2px no-repeat; }
+  /* Semana */
+  .sem { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; width: 936px; }
+  .story .sem { grid-template-columns: 1fr; width: 860px; gap: 12px; }
+  .sem div { background: #fff; border-radius: 24px; padding: 26px 22px; display: flex; flex-direction: column; gap: 14px; min-height: 300px; box-shadow: 0 20px 50px -30px rgba(16,18,14,.35); }
+  .story .sem div { min-height: 0; flex-direction: row; align-items: center; gap: 22px; padding: 26px 30px; }
+  .sem .kick { font-size: 16px; color: var(--tom); } .story .sem .kick { width: 70px; flex: none; }
+  .sem b { font-family: 'Space Grotesk', sans-serif; font-weight: 400; font-size: 28px; letter-spacing: -.02em; line-height: 1.1; }
+  .sem p { margin: 0; font-size: 19px; color: var(--dim); line-height: 1.4; } .story .sem p { display: none; }
+  .sem .fim { background: var(--tinta); color: var(--osso); } .sem .fim .kick { color: var(--lima); } .sem .fim p { color: #c9ccbf; }
+</style></head><body>
+<div class="brilho"></div>
+<div class="topo"><span class="kick" id="kick"></span><span class="logo"><svg viewBox="0 0 800 150"><path d="M8 139V12L175 139V12M200 12H366M200 12V139H366M200 75H366M390 12L558 139M558 12L390 139M580 139L685 12L792 139M618 95H755"/></svg><i></i></span></div>
+<h1 id="h"></h1>
+<div class="palco"><div class="vis" id="vis"></div></div>
+<div class="oferta"><span class="preco"><small>a partir de</small>R$ 1.500</span><div class="chips"><span>No ar na mesma semana</span><span id="chip3">Contatos no WhatsApp ou CRM</span></div><span class="cta">Toque e peça o seu orçamento</span></div>
+<script src="mock.js"></script>
+<script>
+  const q = new URLSearchParams(location.search), id = q.get('id') || 'psi', story = q.get('f') === 'story';
+  if (story) document.body.classList.add('story');
+  const A = {
+    psi: { k: 'Para psicólogos e terapeutas', h: 'Seu consultório merece um site <span class="tom">que agenda sessões.</span>' },
+    clinica: { k: 'Para clínicas e consultórios', h: 'Avaliações marcadas pelo site <span class="tom">enquanto você atende.</span>' },
+    escritorio: { k: 'Para advocacia e contabilidade', h: 'Quem procura no Google <span class="tom">precisa achar o seu escritório.</span>' },
+    mentora: { k: 'Para mentores, consultores e cursos', h: 'Sua próxima turma começa <span class="tom">numa página que capta.</span>' },
+    imovel: { k: 'Para imobiliárias e corretores', h: 'Cada visita agendada <span class="tom">vira um contato no seu CRM.</span>', chip: 'Integra com o seu CRM' },
+    cafe: { k: 'Para comércio e serviços locais', h: 'Encomendas chegando <span class="tom">direto no seu WhatsApp.</span>' },
+    preco: { k: 'Sites e landing pages', h: 'O mercado cobra até R$&nbsp;15&nbsp;mil. <span class="tom">A gente entrega na mesma semana.</span>', hs: 70, hss: 88 },
+    integra: { k: 'Sites e landing pages', h: 'Seu site recebe contatos. <span class="tom">Eles vão parar onde?</span>', chip: 'WhatsApp, e-mail, planilha ou CRM' },
+    semana: { k: 'Sites e landing pages', h: 'Segunda, a conversa. <span class="tom">Sexta, o site no ar.</span>' },
+  };
+  const a = A[id];
+  document.getElementById('kick').textContent = a.k; document.getElementById('h').innerHTML = a.h;
+  if (a.hs) document.documentElement.style.setProperty('--hs', a.hs + 'px'); if (a.hss) document.documentElement.style.setProperty('--hss', a.hss + 'px');
+  if (a.chip) document.getElementById('chip3').textContent = a.chip;
+  const vis = document.getElementById('vis');
+  if (NexaMock.SITES[id]) vis.innerHTML = NexaMock.site(id, { img: 'img/' }) + `<div class="av">${NexaMock.aviso(id, 'agora')}</div>`;
+  else if (id === 'preco') vis.innerHTML = `<div class="comp"><div class="eles"><span class="kick">O orçamento comum</span><b>R$ 3 a 15 mil</b><ul><li>Semanas até a primeira versão</li><li>Formulário que cai no e-mail</li><li>Sem saber de onde veio o cliente</li></ul></div>
+    <div class="nos"><span class="kick">Com a NEXA</span><b>R$ 1.500</b><ul><li>No ar em até 5 dias úteis</li><li>Contato no WhatsApp ou CRM</li><li>Pixel e Analytics instalados</li></ul></div></div>`;
+  else if (id === 'integra') vis.innerHTML = `<div class="flx"><div class="form"><span class="kick" style="font-size:16px">Formulário do seu site</span><i>Nome</i><i>WhatsApp</i><i>Como podemos ajudar?</i><a>Enviar</a></div>
+    <svg class="l" viewBox="0 0 150 420" preserveAspectRatio="none">${story ? '' : '<path d="M0 210 C75 210 75 40 150 40"/><path d="M0 210 C75 210 75 160 150 160"/><path d="M0 210 C75 210 75 270 150 270"/><path d="M0 210 C75 210 75 385 150 385"/>'}</svg>
+    <div class="dest"><span><img src="img/whatsapp.svg" alt="">WhatsApp</span><span><img src="img/gmail.svg" alt="">E-mail</span><span><i class="gs"></i>Planilha</span><span><img src="img/hubspot.svg" alt="">Seu CRM</span></div></div>`;
+  else if (id === 'semana') vis.innerHTML = `<div class="sem"><div><span class="kick">Seg</span><b>Conversa de 30 min</b><p>O negócio, o cliente e o objetivo do site.</p></div><div><span class="kick">Ter</span><b>Design</b><p>No seu visual, pensado para o celular.</p></div><div><span class="kick">Qua</span><b>Texto</b><p>A gente escreve com você.</p></div><div><span class="kick">Qui</span><b>Ajustes</b><p>Você revisa e pede mudanças.</p></div><div class="fim"><span class="kick">Sex</span><b>No ar</b><p>Com os contatos chegando no WhatsApp ou no CRM.</p></div></div>`;
+  if (id === 'integra' && story) { const s = vis.querySelector('svg.l'); s.setAttribute('viewBox', '0 0 520 150'); s.innerHTML = '<path d="M260 0 C260 75 130 75 130 150"/><path d="M260 0 C260 75 390 75 390 150"/>'; }
+</script>
+</body></html>

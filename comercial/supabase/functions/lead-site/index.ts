@@ -1,4 +1,4 @@
-// Recebe o formulário de contato do site da NEXA (home, Sales Coach e Atlas), grava o
+// Recebe o formulário de contato do site da NEXA (home, Sales Coach, Atlas e Sites), grava o
 // lead em public.leads_inbound com todo o rastreio da conversão (página, UTMs, ids de
 // clique, primeiro e último toque) e cria ou atualiza a conta no CRM, na fila.
 // Pública (sem login): protege com honeypot, limite por IP e lista de origens.
@@ -12,6 +12,7 @@ const PAGINAS: Record<string, { origem: string; produto: string }> = {
   'home': { origem: 'Site · Home', produto: '' },
   'sales-coach': { origem: 'Site · Sales Coach', produto: 'Sales Coach' },
   'atlas': { origem: 'Site · Atlas', produto: 'Atlas Clima' },
+  'sites': { origem: 'Site · Sites e LPs', produto: 'Fábrica de soluções' },
 };
 const FUNCIONARIOS: Record<string, number> = { '1 a 10': 5, '11 a 50': 30, '51 a 200': 120, '201 a 500': 350, '501 a 1.000': 750, 'Mais de 1.000': 1500 };
 const VENDEDORES: Record<string, number> = { '1 a 5': 3, '6 a 15': 10, '16 a 50': 30, '51 a 100': 75, 'Mais de 100': 150 };
@@ -78,7 +79,7 @@ Deno.serve(async (req) => {
 
   const nome = txt(c.nome, 80), email = txt(c.email, 120).toLowerCase();
   const whatsapp = String(c.whatsapp ?? '').replace(/\D/g, '').slice(0, 15);
-  const empresa = txt(c.empresa, 120), cargo = txt(c.cargo, 80), interesse = txt(c.interesse, 60);
+  const empresa = txt(c.empresa, 120), cargo = txt(c.cargo, 80), interesse = txt(c.interesse, 60), segmento = txt(c.segmento, 60);
   const funcionarios = FUNCIONARIOS[txt(c.funcionarios, 20)] ? txt(c.funcionarios, 20) : '';
   const vendedores = VENDEDORES[txt(c.vendedores, 20)] ? txt(c.vendedores, 20) : '';
   if (nome.length < 2) return resp({ erro: 'Informe seu nome.', campo: 'nome' }, 422);
@@ -95,7 +96,7 @@ Deno.serve(async (req) => {
     fbp: txt(r.fbp, 80), fbc: txt(r.fbc, 300), ga: txt(r.ga, 80), event_id: txt(r.event_id, 60),
     visitas: Number(r.visitas) || null, segundos_na_pagina: Number(r.segundos) || null,
     dispositivo: txt(r.dispositivo, 20), tela: txt(r.tela, 20), idioma: txt(r.idioma, 20),
-    navegador: txt(req.headers.get('user-agent'), 300),
+    segmento: segmento || undefined, navegador: txt(req.headers.get('user-agent'), 300),
     pais: txt(req.headers.get('cf-ipcountry'), 4),
   };
   const utm: Record<string, string> = {};
@@ -114,7 +115,7 @@ Deno.serve(async (req) => {
   // Conta no CRM: atualiza se o e-mail já existe, senão cria na fila.
   const campanha = ultimo.utm_campaign ? ` · campanha ${ultimo.utm_campaign}${ultimo.utm_content ? ' / ' + ultimo.utm_content : ''}` : '';
   const origemTxt = `Inbound ${hoje()}: formulário ${pg.origem} (${canal}${campanha}).` +
-    ` Cargo: ${cargo || '—'}. Funcionários: ${funcionarios || '—'}.` + (vendedores ? ` Vendedores: ${vendedores}.` : '') + (interesse ? ` Interesse: ${interesse}.` : '');
+    ` Cargo: ${cargo || '—'}. Funcionários: ${funcionarios || '—'}.` + (vendedores ? ` Vendedores: ${vendedores}.` : '') + (interesse ? ` Interesse: ${interesse}.` : '') + (segmento ? ` Segmento: ${segmento}.` : '');
   let contaPath: string | null = null;
   try {
     const { data: existentes } = await db.from('docs').select('path, data').eq('col', 'contas').eq('data->>email', email).limit(1);
