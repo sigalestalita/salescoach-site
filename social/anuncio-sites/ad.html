@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="pt-BR"><head><meta charset="utf-8">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300..600&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@300;400;500&family=Fraunces:opsz,wght@9..144,400..600&family=Manrope:wght@400..700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300..600&family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@300;400;500&family=Instrument+Serif:ital@0;1&family=Inter+Tight:wght@300..700&family=Unbounded:wght@400..800&display=swap">
 <link rel="stylesheet" href="mock.css">
 <style>
   /* Anúncios de sites e landing pages da NEXA. ?id=<conceito>&f=<feed|story> */
@@ -9,23 +9,34 @@
   html, body { margin: 0; background: var(--osso); }
   body { width: 1080px; height: 1350px; position: relative; overflow: hidden; font-family: 'DM Sans', sans-serif; color: var(--tinta); }
   body.story { height: 1920px; }
+  .fundo-grade { position: absolute; inset: 0; background-image: linear-gradient(rgba(16,18,14,.05) 1px, transparent 1px), linear-gradient(90deg, rgba(16,18,14,.05) 1px, transparent 1px); background-size: 54px 54px;
+    -webkit-mask-image: radial-gradient(70% 60% at 50% 55%, #000 30%, transparent 80%); mask-image: radial-gradient(70% 60% at 50% 55%, #000 30%, transparent 80%); }
+  .cena3d { position: relative; width: 1000px; height: 700px; perspective: 2200px; }
+  .story .cena3d { width: 980px; height: 740px; }
+  .cena3d .d { position: absolute; left: 0; top: 30px; transform: rotateY(16deg) rotateX(7deg) rotateZ(-1.5deg); transform-origin: 0 50%; }
+  .cena3d .d .mk { --mk: 900px; box-shadow: 40px 60px 90px -40px rgba(16,18,14,.55), 0 0 0 1px rgba(16,18,14,.12); }
+  .story .cena3d .d { top: 40px; } .story .cena3d .d .mk { --mk: 880px; }
+  .cena3d .c { position: absolute; right: 0; bottom: -10px; transform: rotateY(-12deg) rotateX(5deg) rotateZ(2deg); }
+  .cena3d .c .cel { --cel: 262px; } .story .cena3d .c .cel { --cel: 270px; } .story .cena3d .c { bottom: 0; }
+  .cena3d .av { position: absolute; left: 30px; bottom: -6px; font-size: 20px; z-index: 5; }
+  .story .cena3d .av { font-size: 22px; bottom: 10px; }
   .brilho { position: absolute; left: 50%; top: 58%; width: 1300px; height: 900px; translate: -50% -50%; background: radial-gradient(closest-side, rgba(212,249,105,.55), rgba(212,249,105,0) 72%); }
   .story .brilho { top: 55%; height: 1200px; }
   .topo { position: absolute; left: 72px; right: 72px; top: 64px; display: flex; justify-content: space-between; align-items: center; }
   .story .topo { top: 210px; }
-  .kick { font-family: 'JetBrains Mono', monospace; font-size: 19px; letter-spacing: .2em; text-transform: uppercase; color: var(--oliva); }
-  .logo { display: flex; align-items: flex-end; gap: 8px; } .logo svg { width: 118px; height: 23px; fill: none; stroke: var(--tinta); stroke-width: 9; }
-  .logo i { width: 9px; height: 9px; border-radius: 50%; background: var(--lima); box-shadow: 0 0 0 1.5px #c3e94f; }
-  h1 { position: absolute; left: 72px; right: 72px; top: 122px; margin: 0; font-family: 'Space Grotesk', sans-serif; font-weight: 300; font-size: var(--hs, 74px); line-height: 1.02; letter-spacing: -.045em; }
-  .story h1 { top: 280px; font-size: var(--hss, 92px); }
-  h1 .tom { color: var(--tom); }
-  .palco { position: absolute; left: 0; right: 0; top: var(--pt, 430px); bottom: 210px; display: grid; place-items: center; }
-  .story .palco { top: 620px; bottom: 640px; }
+  .topo .kick, .comp .kick, .flx .kick, .sem .kick { font-family: 'JetBrains Mono', monospace; font-size: 19px; letter-spacing: .2em; text-transform: uppercase; color: var(--oliva); }
+  .topo .logo { display: flex; align-items: flex-end; gap: 8px; } .topo .logo svg { width: 118px; height: 23px; fill: none; stroke: var(--tinta); stroke-width: 9; }
+  .topo .logo i { width: 9px; height: 9px; border-radius: 50%; background: var(--lima); box-shadow: 0 0 0 1.5px #c3e94f; }
+  #h { position: absolute; left: 72px; right: 72px; top: 122px; margin: 0; font-family: 'Space Grotesk', sans-serif; font-weight: 300; font-size: var(--hs, 74px); line-height: 1.02; letter-spacing: -.045em; }
+  .story #h { top: 280px; font-size: var(--hss, 92px); }
+  #h .tom { color: var(--tom); }
+  .palco { position: absolute; left: 0; right: 0; top: var(--pt, 300px); bottom: 150px; display: grid; place-items: center; }
+  .story .palco { top: 600px; bottom: 560px; }
   .vis { position: relative; }
-  .vis .mk { --mk: 936px; }
-  .story .vis .mk { --mk: 900px; }
-  .vis .av { position: absolute; right: -36px; bottom: -58px; font-size: 21px; }
-  .story .vis .av { font-size: 23px; bottom: -70px; right: -20px; }
+
+
+
+
   .oferta { position: absolute; left: 72px; right: 72px; bottom: 64px; display: flex; align-items: center; gap: 14px; }
   .story .oferta { bottom: 300px; flex-direction: column; align-items: stretch; gap: 16px; }
   .preco { background: var(--lima); border-radius: 999px; padding: 22px 30px; font-size: 30px; font-weight: 600; letter-spacing: -.01em; white-space: nowrap; }
@@ -71,7 +82,7 @@
   .sem p { margin: 0; font-size: 19px; color: var(--dim); line-height: 1.4; } .story .sem p { display: none; }
   .sem .fim { background: var(--tinta); color: var(--osso); } .sem .fim .kick { color: var(--lima); } .sem .fim p { color: #c9ccbf; }
 </style></head><body>
-<div class="brilho"></div>
+<div class="brilho"></div><div class="fundo-grade"></div>
 <div class="topo"><span class="kick" id="kick"></span><span class="logo"><svg viewBox="0 0 800 150"><path d="M8 139V12L175 139V12M200 12H366M200 12V139H366M200 75H366M390 12L558 139M558 12L390 139M580 139L685 12L792 139M618 95H755"/></svg><i></i></span></div>
 <h1 id="h"></h1>
 <div class="palco"><div class="vis" id="vis"></div></div>
@@ -96,7 +107,7 @@
   if (a.hs) document.documentElement.style.setProperty('--hs', a.hs + 'px'); if (a.hss) document.documentElement.style.setProperty('--hss', a.hss + 'px');
   if (a.chip) document.getElementById('chip3').textContent = a.chip;
   const vis = document.getElementById('vis');
-  if (NexaMock.SITES[id]) vis.innerHTML = NexaMock.site(id, { img: 'img/' }) + `<div class="av">${NexaMock.aviso(id, 'agora')}</div>`;
+  if (NexaMock.SITES[id]) vis.innerHTML = `<div class="cena3d"><div class="d">${NexaMock.site(id, { img: 'img/' })}</div><div class="c">${NexaMock.celular(id, { img: 'img/' })}</div><div class="av">${NexaMock.aviso(id, 'agora')}</div></div>`;
   else if (id === 'preco') vis.innerHTML = `<div class="comp"><div class="eles"><span class="kick">O orçamento comum</span><b>R$ 3 a 15 mil</b><ul><li>Semanas até a primeira versão</li><li>Formulário que cai no e-mail</li><li>Sem saber de onde veio o cliente</li></ul></div>
     <div class="nos"><span class="kick">Com a NEXA</span><b>R$ 1.500</b><ul><li>No ar em até 5 dias úteis</li><li>Contato no WhatsApp ou CRM</li><li>Pixel e Analytics instalados</li></ul></div></div>`;
   else if (id === 'integra') vis.innerHTML = `<div class="flx"><div class="form"><span class="kick" style="font-size:16px">Formulário do seu site</span><i>Nome</i><i>WhatsApp</i><i>Como podemos ajudar?</i><a>Enviar</a></div>

@@ -1,34 +1,200 @@
-/* Sites de exemplo (mock.js). Tamanho controlado por --mk (largura da janela, em px). */
-.mk { --mk: 640px; width: var(--mk); max-width: none; font-size: calc(var(--mk) / 64); border-radius: 1.1em; overflow: hidden; background: #fff; color: var(--t);
-  box-shadow: 0 2.4em 5em -1.6em rgba(16,18,14,.35), 0 0 0 1px rgba(16,18,14,.08); font-family: var(--fn); }
-.mk-barra { height: 2.6em; background: #eceee8; display: flex; align-items: center; gap: .5em; padding: 0 1.1em; }
-.mk-barra i { width: .75em; height: .75em; border-radius: 50%; background: #d3d6cd; }
-.mk-barra span { margin-left: 1.2em; flex: 1; max-width: 26em; height: 1.6em; border-radius: .8em; background: #fff; display: flex; align-items: center; padding: 0 1em;
-  font: 500 .95em/1 'DM Sans', system-ui, sans-serif; color: #6f7368; }
-.mk-tela { background: var(--f); }
-.mk-nav { display: flex; align-items: center; justify-content: space-between; gap: 1em; padding: 1.3em 2.2em; }
-.mk-nav b { white-space: nowrap; font-weight: 600; font-size: 1.5em; letter-spacing: -.02em; display: flex; flex-direction: column; line-height: 1.05; }
-.mk-nav b small { font: 500 .5em/1.3 'DM Sans', system-ui, sans-serif; letter-spacing: .08em; text-transform: uppercase; opacity: .6; margin-top: .2em; }
-.mk-nav span { display: flex; gap: 1.6em; font: 500 1em/1 'DM Sans', system-ui, sans-serif; opacity: .7; }
-.mk-nav span em { font-style: normal; }
-.mk-nav a { display: inline-flex; align-items: center; gap: .4em; background: var(--c); color: #fff; border-radius: 99em; padding: .65em 1.1em; font: 600 .95em/1 'DM Sans', system-ui, sans-serif; }
-.mk-nav a svg { width: 1.1em; height: 1.1em; }
-.mk-hero { display: grid; grid-template-columns: 1.05fr 1fr; gap: 2em; padding: 1.2em 2.2em 2.2em; align-items: center; }
-.mk-k { font: 600 .85em/1 'DM Sans', system-ui, sans-serif; letter-spacing: .14em; text-transform: uppercase; color: var(--c); margin: 0 0 .9em; }
-.mk-txt h3 { margin: 0; font-weight: 500; font-size: 2.85em; line-height: 1.02; letter-spacing: -.03em; }
-.mk-txt p:not(.mk-k) { margin: .8em 0 1.2em; font: 400 1.08em/1.45 'DM Sans', system-ui, sans-serif; opacity: .75; }
-.mk-txt a { display: inline-block; background: var(--t); color: var(--f); border-radius: 99em; padding: .85em 1.4em; font: 600 1em/1 'DM Sans', system-ui, sans-serif; }
-.mk-foto { aspect-ratio: 4 / 3.3; border-radius: .9em; background: center / cover no-repeat #ddd; }
-.mk-form { display: grid; grid-template-columns: 1fr 1fr auto; gap: .7em; margin: 0 2.2em 2.2em; padding: .8em; background: #fff; border-radius: .9em; box-shadow: 0 .4em 1.6em rgba(0,0,0,.06); }
-.mk-form span { border: 1px solid rgba(0,0,0,.1); border-radius: .6em; padding: .75em .9em; font: 400 .95em/1 'DM Sans', system-ui, sans-serif; color: rgba(0,0,0,.45); }
-.mk-form a { background: var(--c); color: #fff; border-radius: .6em; padding: .75em 1.4em; font: 600 .95em/1 'DM Sans', system-ui, sans-serif; }
-.mk-aviso { --s: 1; display: grid; grid-template-columns: auto 1fr auto; gap: .9em; align-items: center; width: 25em; padding: 1em 1.1em; border-radius: 1.1em; background: #fff;
-  box-shadow: 0 1.2em 3em -1em rgba(16,18,14,.35), 0 0 0 1px rgba(16,18,14,.06); font-family: 'DM Sans', system-ui, sans-serif; color: #10120e; }
+/* Sites de exemplo (mock.js). Tamanho: --mk = largura da janela do navegador; --cel = largura do celular.
+   Fontes: Instrument Serif, Inter Tight, Unbounded, JetBrains Mono e DM Sans (Google Fonts). */
+.mk { --mk: 640px; width: var(--mk); max-width: none; font-size: calc(var(--mk) / 64); border-radius: 1em; overflow: hidden; background: #fff;
+  box-shadow: 0 3em 6em -2em rgba(16,18,14,.45), 0 0 0 1px rgba(16,18,14,.1); font-family: 'DM Sans', system-ui, sans-serif; }
+.mk-barra { height: 2.4em; background: #ebece7; display: flex; align-items: center; gap: .5em; padding: 0 1.1em; }
+.mk-barra i { width: .7em; height: .7em; border-radius: 50%; background: #d1d4cb; }
+.mk-barra span { margin: 0 auto; width: 24em; height: 1.5em; border-radius: .75em; background: #fff; display: flex; align-items: center; justify-content: center; font-size: .9em; color: #6f7368; }
+.mk-tela { position: relative; height: 38em; overflow: hidden; }
+.mk-tela *, .cel-tela * { box-sizing: border-box; }
+.mk-tela h1, .mk-tela p, .cel-tela h1, .cel-tela p { margin: 0; }
+.mk-tela a, .cel-tela a { text-decoration: none; cursor: default; }
+.mk-tela nav { position: absolute; left: 0; right: 0; top: 0; z-index: 5; display: flex; align-items: center; justify-content: space-between; padding: 1.5em 2.4em; }
+.mk-tela nav span { display: flex; gap: 2em; font-size: .95em; } .mk-tela nav em { font-style: normal; }
+.mk-tela .logo { display: flex; align-items: center; gap: .5em; font-weight: 600; font-size: 1.25em; letter-spacing: -.02em; }
+.mk-tela .logo small { display: block; font-size: .55em; font-weight: 500; letter-spacing: .14em; text-transform: uppercase; opacity: .65; }
+.mk-tela .nb { display: inline-flex; align-items: center; gap: .4em; border-radius: 99em; padding: .7em 1.2em; font-size: .9em; font-weight: 600; }
+.mk-tela svg, .cel-tela svg { width: 1.15em; height: 1.15em; flex: none; }
+.mk-tela .b1, .cel-tela .b1 { display: inline-flex; align-items: center; gap: .6em; border-radius: 99em; padding: 1em 1.6em; font-weight: 600; font-size: 1em; }
+.mk-tela .b2 { display: inline-flex; align-items: center; border-radius: 99em; padding: 1em 1.5em; font-weight: 600; }
+.mk-tela .card, .cel-tela .card { position: absolute; z-index: 6; border-radius: 1.1em; background: #fff; box-shadow: 0 1.6em 3.2em -1em rgba(0,0,0,.35); }
+.est { font-style: normal; letter-spacing: .1em; color: #f5b301; }
+.foto, .bg, .arco, .mfoto, .th { background: center / cover no-repeat #ccc; }
+
+/* Utilitários de linguagem tech */
+.mk-tela .mono, .cel-tela .mono { font-family: 'JetBrains Mono', ui-monospace, monospace; letter-spacing: .08em; }
+.mk-tela .grade { position: absolute; inset: 0; background-image: linear-gradient(var(--gl, rgba(0,0,0,.05)) 1px, transparent 1px), linear-gradient(90deg, var(--gl, rgba(0,0,0,.05)) 1px, transparent 1px); background-size: 4em 4em; }
+.mk-tela .selo { position: absolute; z-index: 7; width: 7.5em; height: 7.5em; border-radius: 50%; display: grid; place-items: center; }
+.mk-tela .selo svg:first-child { position: absolute; inset: 0; width: 100%; height: 100%; animation: mk-gira 14s linear infinite; }
+.mk-tela .selo text { font: 600 9.4px 'JetBrains Mono', monospace; letter-spacing: 1.6px; text-transform: uppercase; }
+.mk-tela .selo > svg:last-child { width: 1.8em; height: 1.8em; }
+@keyframes mk-gira { to { transform: rotate(360deg); } }
+.mk-tela .ticker, .cel-tela .ticker { position: absolute; left: 0; right: 0; bottom: 0; overflow: hidden; white-space: nowrap; padding: .9em 0; font-size: .85em; }
+.mk-tela .ticker span { display: inline-block; padding-left: 2.4em; }
+
+/* ── Psicóloga: aura, cápsula e bento de vidro ── */
+.t-psi { background: #f6f1ec; color: #2b1d16; }
+.mk-tela.t-psi .aura { position: absolute; right: 2em; top: -4em; width: 34em; height: 34em; border-radius: 50%; filter: blur(3.2em);
+  background: conic-gradient(from 200deg, #c9b6ff, #ffc7a8, #cfe8d4, #ffd6e8, #c9b6ff); opacity: .9; }
+.mk-tela.t-psi nav .logo { font-family: 'Instrument Serif', serif; font-weight: 400; font-size: 1.7em; }
+.mk-tela.t-psi nav .mono { font-size: .75em; color: #8b7466; } .mk-tela.t-psi .nb { background: rgba(255,255,255,.6); border: 1px solid rgba(43,29,22,.15); backdrop-filter: blur(8px); }
+.mk-tela.t-psi .hero { position: absolute; left: 2.4em; top: 6.4em; width: 33em; z-index: 4; }
+.mk-tela.t-psi h1 { font-family: 'Instrument Serif', serif; font-weight: 400; font-size: 7.2em; line-height: .86; letter-spacing: -.035em; }
+.mk-tela.t-psi h1 em { color: #a64b2a; }
+.mk-tela.t-psi .sub { font-size: 1.15em; line-height: 1.45; color: #5a463b; max-width: 22em; margin: 1em 0 1.3em; }
+.mk-tela.t-psi .bento { display: grid; grid-template-columns: 1.2fr 1fr 1fr; gap: .6em; margin-bottom: 1.4em; }
+.mk-tela.t-psi .g, .cel-tela.t-psi .g { position: relative; border-radius: 1em; padding: .8em .95em; background: rgba(255,255,255,.55); border: 1px solid rgba(255,255,255,.8); backdrop-filter: blur(10px); box-shadow: 0 .6em 1.6em -1em rgba(43,29,22,.3); }
+.mk-tela.t-psi .g small, .cel-tela.t-psi .g small { display: block; font-size: .75em; color: #8b7466; } .mk-tela.t-psi .g b, .cel-tela.t-psi .g b { font-size: 1.15em; letter-spacing: -.02em; }
+.mk-tela.t-psi .g .est { font-size: .7em; }
+.mk-tela.t-psi .vaga .pulso, .cel-tela.t-psi .vaga .pulso { position: absolute; right: .8em; top: .9em; }
+.mk-tela.t-psi .b1 { background: #2b1d16; color: #f6f1ec; }
+.mk-tela.t-psi .capsula { position: absolute; right: 5.5em; top: 5.2em; width: 17em; height: 30em; border-radius: 9em; overflow: hidden; z-index: 2; box-shadow: 0 2em 4em -1.5em rgba(43,29,22,.45); }
+.mk-tela.t-psi .capsula .foto { width: 100%; height: 100%; }
+.mk-tela.t-psi .selo { right: 2.6em; bottom: 3em; background: #2b1d16; color: #f6f1ec; } .mk-tela.t-psi .selo text { fill: #f6f1ec; }
+.pulso { width: .7em; height: .7em; border-radius: 50%; background: #10b981; box-shadow: 0 0 0 .32em rgba(16,185,129,.2); flex: none; display: inline-block; }
+
+/* ── Clínica: grade, bento e planejamento digital ── */
+.t-clinica { --gl: rgba(11,18,32,.05); background: #f5f8fb; color: #0b1220; font-family: 'Inter Tight', sans-serif; }
+.mk-tela.t-clinica .logo { font-weight: 700; letter-spacing: -.04em; } .mk-tela.t-clinica .logo small { display: none; }
+.mk-tela.t-clinica .mono-l { display: grid; place-items: center; width: 1.6em; height: 1.6em; border-radius: .45em; background: linear-gradient(135deg, #00c2a8, #2563eb); color: #fff; font-style: normal; font-size: .85em; }
+.mk-tela.t-clinica nav span { color: #4a5568; } .mk-tela.t-clinica .nb { background: #0b1220; color: #fff; }
+.mk-tela.t-clinica .hero { position: absolute; left: 2.4em; top: 7.2em; width: 27em; z-index: 3; }
+.mk-tela.t-clinica .rot { font-size: .75em; color: #2563eb; }
+.mk-tela.t-clinica h1 { font-weight: 600; font-size: 4.2em; line-height: .98; letter-spacing: -.055em; margin: .45em 0 .55em; }
+.grad-c { background: linear-gradient(90deg, #00c2a8, #2563eb); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.mk-tela.t-clinica .b1 { background: linear-gradient(90deg, #00c2a8, #2563eb); color: #fff; box-shadow: 0 .8em 1.8em -.8em rgba(37,99,235,.7); }
+.mk-tela.t-clinica .bento { position: absolute; right: 2.4em; top: 5.6em; bottom: 2.4em; width: 30em; display: grid; grid-template-columns: 1.25fr 1fr; grid-template-rows: 1.35fr 1fr .8fr; gap: .7em; }
+.mk-tela.t-clinica .bento > div { position: relative; border-radius: 1.3em; background: #fff; border: 1px solid rgba(11,18,32,.07); box-shadow: 0 1em 2em -1.4em rgba(11,18,32,.35); overflow: hidden; }
+.mk-tela.t-clinica .t1 { grid-row: 1 / 3; } .mk-tela.t-clinica .t1 .foto { position: absolute; inset: 0; }
+.mk-tela.t-clinica .chip { position: absolute; left: .8em; top: .8em; background: rgba(255,255,255,.85); backdrop-filter: blur(6px); border-radius: 99em; padding: .4em .8em; font-size: .8em; font-weight: 600; }
+.mk-tela.t-clinica .arco3d { position: absolute; left: 8%; right: 8%; bottom: 6%; width: 84%; } .mk-tela.t-clinica .arco3d path { fill: none; stroke: #00e0c2; stroke-width: 1.4; stroke-dasharray: 3 3; filter: drop-shadow(0 0 3px #00e0c2); }
+.mk-tela.t-clinica .t2 { padding: 1em; display: flex; flex-direction: column; justify-content: space-between; }
+.mk-tela.t-clinica .t2 small { font-size: .65em; color: #2563eb; }
+.mk-tela.t-clinica .slider { position: relative; height: 3.4em; border-radius: .8em; background: linear-gradient(90deg, #e9e4d8 50%, #ffffff 50%); border: 1px solid #e2e8f0; }
+.mk-tela.t-clinica .slider i { position: absolute; left: 50%; top: -.4em; bottom: -.4em; width: 2px; background: #0b1220; }
+.mk-tela.t-clinica .slider i::after { content: "‹ ›"; position: absolute; top: 50%; left: 50%; translate: -50% -50%; width: 2em; height: 2em; border-radius: 50%; background: #0b1220; color: #fff; display: grid; place-items: center; font-size: .8em; }
+.mk-tela.t-clinica .t2 span { display: flex; justify-content: space-between; font-size: .8em; color: #4a5568; } .mk-tela.t-clinica .t2 em { font-style: normal; }
+.mk-tela.t-clinica .t3 { padding: 1em; background: #0b1220 !important; color: #fff; display: flex; flex-direction: column; justify-content: flex-end; }
+.mk-tela.t-clinica .t3 b { font-size: 2.6em; letter-spacing: -.05em; line-height: 1; } .mk-tela.t-clinica .t3 small { font-size: .8em; color: #9fb0c8; }
+.mk-tela.t-clinica .t4, .cel-tela.t-clinica .t4 { grid-column: 1 / 3; display: flex; align-items: center; gap: .9em; padding: 0 1.2em; }
+.mk-tela.t-clinica .t4 b, .cel-tela.t-clinica .t4 b { display: block; font-size: 1.05em; } .mk-tela.t-clinica .t4 small, .cel-tela.t-clinica .t4 small { font-size: .75em; color: #4a5568; }
+
+/* ── Advocacia e contabilidade: luxo + dado ao vivo ── */
+.t-escritorio { --gl: rgba(201,164,106,.07); background: radial-gradient(80% 90% at 75% 30%, #1b2a47, #0a1120); color: #eef0f4; }
+.mk-tela.t-escritorio .mega { position: absolute; right: -1em; top: 1.5em; font-family: 'Instrument Serif', serif; font-size: 22em; line-height: 1; color: transparent; -webkit-text-stroke: 1px rgba(201,164,106,.28); letter-spacing: -.04em; }
+.mk-tela.t-escritorio .logo { font-family: 'Instrument Serif', serif; font-weight: 400; font-size: 1.6em; }
+.mk-tela.t-escritorio nav .mono { font-size: .72em; color: #8a94a8; } .mk-tela.t-escritorio .nb { border: 1px solid #c9a46a; color: #c9a46a; }
+.mk-tela.t-escritorio .hero { position: absolute; left: 2.4em; top: 8.4em; width: 36em; z-index: 3; }
+.mk-tela.t-escritorio h1 { font-family: 'Instrument Serif', serif; font-weight: 400; font-size: 4.7em; line-height: .92; letter-spacing: -.02em; }
+.mk-tela.t-escritorio h1 em { color: #c9a46a; }
+.mk-tela.t-escritorio .sub { font-size: 1.1em; color: #aab3c5; margin: 1em 0 1.5em; }
+.mk-tela.t-escritorio .b1 { background: #c9a46a; color: #0a1120; }
+.mk-tela.t-escritorio .painel, .cel-tela.t-escritorio .painel { position: absolute; z-index: 4; right: 2.4em; top: 7.5em; width: 21em; padding: 1.3em; border-radius: 1.2em; background: rgba(255,255,255,.06); border: 1px solid rgba(201,164,106,.35); backdrop-filter: blur(12px); box-shadow: 0 2em 4em -1.5em rgba(0,0,0,.6); }
+.mk-tela.t-escritorio .painel small { font-size: .7em; color: #c9a46a; } .mk-tela.t-escritorio .painel p { font-size: .9em; color: #aab3c5; margin: .6em 0 .2em; }
+.mk-tela.t-escritorio .painel b, .cel-tela.t-escritorio .painel b { display: block; font-family: 'Instrument Serif', serif; font-weight: 400; font-size: 3em; letter-spacing: -.02em; color: #fff; }
+.mk-tela.t-escritorio .painel b span, .cel-tela.t-escritorio .painel b span { font-size: .4em; color: #8a94a8; }
+.mk-tela.t-escritorio .barras { display: flex; align-items: flex-end; gap: .5em; height: 6em; margin: 1em 0 .5em; }
+.mk-tela.t-escritorio .barras i { flex: 1; border-radius: .3em .3em 0 0; background: linear-gradient(180deg, #e2c48f, rgba(201,164,106,.25)); }
+.mk-tela.t-escritorio .leg { display: flex; justify-content: space-between; font-size: .65em; color: #8a94a8; }
+.mk-tela.t-escritorio .ticker { padding: .7em 0; color: #c9a46a; border-top: 1px solid rgba(201,164,106,.25); background: rgba(10,17,32,.6); }
+
+/* ── Mentora: tipografia cinética e adesivos ── */
+.t-mentora { background: #0f0a14; color: #fff; }
+.mk-tela.t-mentora .ruido { position: absolute; inset: 0; background: radial-gradient(40% 55% at 85% 20%, rgba(255,46,136,.75), transparent 70%), radial-gradient(35% 45% at 60% 95%, rgba(255,138,0,.55), transparent 70%); }
+.mk-tela.t-mentora .vazado { position: absolute; left: -.2em; bottom: 1.6em; font-family: 'Unbounded', sans-serif; font-weight: 800; font-size: 13em; line-height: .8; letter-spacing: -.06em; color: transparent; -webkit-text-stroke: 1.5px rgba(255,255,255,.12); white-space: nowrap; }
+.mk-tela.t-mentora .logo { font-family: 'Unbounded', sans-serif; font-weight: 600; font-size: 1em; }
+.mk-tela.t-mentora nav span { color: #cdbfd4; } .mk-tela.t-mentora .nb { background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.25); }
+.mk-tela.t-mentora .hero { position: absolute; left: 2.4em; top: 6.4em; width: 34em; z-index: 3; }
+.mk-tela.t-mentora h1 { font-family: 'Unbounded', sans-serif; font-weight: 700; font-size: 4.1em; line-height: .98; letter-spacing: -.05em; margin-bottom: .45em; }
+.grad { background: linear-gradient(90deg, #ff2e88, #ff8a00); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.mk-tela.t-mentora .cont, .cel-tela.t-mentora .cont { display: flex; gap: .5em; margin-bottom: 1.5em; }
+.mk-tela.t-mentora .cont span, .cel-tela.t-mentora .cont span { display: flex; flex-direction: column; align-items: center; min-width: 4.2em; padding: .55em .4em; border-radius: .8em; background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.16); font-size: .78em; color: #cdbfd4; }
+.mk-tela.t-mentora .cont b, .cel-tela.t-mentora .cont b { font-family: 'Unbounded'; font-size: 1.9em; color: #fff; line-height: 1.1; }
+.mk-tela.t-mentora .b1, .cel-tela.t-mentora .b1 { background: linear-gradient(90deg, #ff2e88, #ff8a00); color: #fff; box-shadow: 0 .8em 2em -.6em rgba(255,46,136,.8); }
+.mk-tela.t-mentora .retrato { position: absolute; right: 3.4em; top: 5em; width: 20em; height: 27em; border-radius: 1.6em; padding: 3px; background: linear-gradient(160deg, #ff2e88, #ff8a00); transform: rotate(4deg); z-index: 2; }
+.mk-tela.t-mentora .retrato .foto { width: 100%; height: 100%; border-radius: 1.5em; }
+.mk-tela.t-mentora .adesivo { position: absolute; z-index: 4; font-family: 'Unbounded'; font-weight: 600; font-size: .85em; padding: .7em 1.1em; border-radius: 99em; }
+.mk-tela.t-mentora .a1 { right: 19.5em; top: 9em; background: #d4f969; color: #0f0a14; transform: rotate(-9deg); }
+.mk-tela.t-mentora .a2 { right: 1.6em; top: 27em; background: #fff; color: #0f0a14; transform: rotate(7deg); }
+.mk-tela.t-mentora .ticker { background: linear-gradient(90deg, #ff2e88, #ff8a00); font-family: 'Unbounded'; font-weight: 600; font-size: .8em; padding: .8em 0; }
+
+/* ── Imobiliária: mapa com preços ── */
+.t-imovel { background: #f3f5f2; color: #0f241b; font-family: 'Inter Tight', sans-serif; }
+.mk-tela.t-imovel .logo { font-weight: 300; font-size: 1.5em; letter-spacing: -.03em; } .mk-tela.t-imovel .logo i { font-style: normal; font-weight: 700; }
+.mk-tela.t-imovel nav span { color: #4b5d54; } .mk-tela.t-imovel .nb { background: #0f241b; color: #fff; }
+.mk-tela.t-imovel .hero { position: absolute; left: 2.4em; top: 7em; width: 29em; z-index: 3; }
+.mk-tela.t-imovel .hero .mono { font-size: .72em; color: #1f8a5b; }
+.mk-tela.t-imovel h1 { font-weight: 500; font-size: 4.6em; line-height: .95; letter-spacing: -.055em; margin: .4em 0 .6em; }
+.mk-tela.t-imovel .busca, .cel-tela.t-imovel .busca { display: flex; align-items: center; background: #fff; border-radius: 1.1em; padding: .45em .45em .45em 1.2em; box-shadow: 0 1em 2.4em -1.2em rgba(15,36,27,.35); border: 1px solid #e3e8e5; }
+.mk-tela.t-imovel .busca span, .cel-tela.t-imovel .busca span { flex: 1; display: flex; flex-direction: column; font-weight: 600; font-size: .95em; border-right: 1px solid #e3e8e5; margin-right: .9em; }
+.mk-tela.t-imovel .busca span:nth-last-child(2), .cel-tela.t-imovel .busca span { border: 0; }
+.mk-tela.t-imovel .busca small, .cel-tela.t-imovel .busca small { font-weight: 500; font-size: .7em; color: #6b7d74; text-transform: uppercase; letter-spacing: .06em; }
+.mk-tela.t-imovel .busca a, .cel-tela.t-imovel .busca a { display: grid; place-items: center; width: 3em; height: 3em; border-radius: .8em; background: #1f5a43; color: #fff; }
+.mk-tela.t-imovel .filtros { display: flex; gap: .4em; margin-top: .8em; } .mk-tela.t-imovel .filtros em { font-style: normal; font-size: .82em; padding: .45em .8em; border-radius: 99em; background: #e3ebe6; color: #1f5a43; }
+.mk-tela.t-imovel .mapa { position: absolute; right: 0; top: 0; bottom: 0; width: 31em; background: #e4ece4; overflow: hidden;
+  background-image: radial-gradient(circle at 30% 70%, #d6e6d3 0 18%, transparent 19%), radial-gradient(circle at 80% 30%, #d6e6d3 0 12%, transparent 13%); }
+.mk-tela.t-imovel .rua { position: absolute; background: #fff; box-shadow: 0 0 0 1px #d5ddd5; }
+.mk-tela.t-imovel .r1 { left: -10%; right: -10%; top: 40%; height: 1.2em; transform: rotate(-12deg); } .mk-tela.t-imovel .r2 { top: -10%; bottom: -10%; left: 48%; width: 1em; transform: rotate(8deg); } .mk-tela.t-imovel .r3 { left: -10%; right: -10%; top: 78%; height: .7em; transform: rotate(6deg); }
+.mk-tela.t-imovel .rio { position: absolute; right: -4em; top: -2em; width: 9em; height: 46em; border-radius: 50%; background: #c7dbe6; transform: rotate(18deg); }
+.mk-tela.t-imovel .pin { position: absolute; z-index: 2; background: #fff; border-radius: 99em; padding: .45em .8em; font-size: .85em; font-weight: 700; box-shadow: 0 .5em 1.2em -.4em rgba(15,36,27,.4); }
+.mk-tela.t-imovel .pin::after { content: ""; position: absolute; left: 50%; bottom: -.35em; width: .7em; height: .7em; background: inherit; transform: translateX(-50%) rotate(45deg); }
+.mk-tela.t-imovel .pin.on { background: #0f241b; color: #fff; transform: scale(1.12); }
+.mk-tela.t-imovel .im { left: 3.2em; bottom: 2.4em; width: 16em; overflow: hidden; color: #0f241b; }
+.mk-tela.t-imovel .im .th { position: relative; height: 8em; } .mk-tela.t-imovel .im .th span { position: absolute; left: .7em; top: .7em; font-size: .65em; background: rgba(15,36,27,.75); color: #fff; padding: .4em .6em; border-radius: .4em; }
+.mk-tela.t-imovel .im > div:last-child { padding: .8em 1em 1em; } .mk-tela.t-imovel .im b { font-size: 1.4em; letter-spacing: -.03em; } .mk-tela.t-imovel .im p { font-size: .82em; color: #4b5d54; margin: .15em 0 .5em; }
+.mk-tela.t-imovel .im a { display: inline-flex; align-items: center; gap: .4em; color: #1f5a43; font-weight: 700; font-size: .9em; }
+
+/* ── Café: título preenchido com a foto e selo ── */
+.t-cafe { background: #140d08; color: #f6efe6; }
+.mk-tela.t-cafe nav { justify-content: space-between; } .mk-tela.t-cafe nav span { color: #d9c9b6; }
+.mk-tela.t-cafe .ab, .cel-tela.t-cafe .ab { display: inline-flex !important; align-items: center; gap: .5em; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.18); border-radius: 99em; padding: .5em 1em; font-size: .85em !important; color: #f6efe6 !important; }
+.mk-tela.t-cafe .ab i { width: .55em; height: .55em; border-radius: 50%; background: #4ade80; box-shadow: 0 0 .6em #4ade80; }
+.mk-tela.t-cafe .titulo, .cel-tela.t-cafe .titulo { font-family: 'Instrument Serif', serif; line-height: .78; letter-spacing: -.04em; background-size: cover; background-position: center 40%; -webkit-background-clip: text; background-clip: text; color: transparent; filter: brightness(1.5) contrast(1.15) saturate(1.2); }
+.mk-tela.t-cafe .titulo { position: absolute; left: .14em; top: .32em; font-size: 14em; }
+.mk-tela.t-cafe .tag { position: absolute; left: 2.4em; bottom: 8.4em; font-size: .78em; color: #d4a373; }
+.mk-tela.t-cafe .b1 { position: absolute; left: 2.4em; bottom: 2.4em; background: #25d366; color: #fff; }
+.mk-tela.t-cafe .menu, .cel-tela.t-cafe .menu { background: rgba(246,239,230,.08); border: 1px solid rgba(246,239,230,.2); color: #f6efe6; box-shadow: none; }
+.mk-tela.t-cafe .menu { right: 2.4em; bottom: 2.4em; width: 18em; padding: 1.2em 1.3em; }
+.mk-tela.t-cafe .menu b { font-family: 'Instrument Serif', serif; font-weight: 400; font-size: 1.6em; display: block; margin-bottom: .3em; }
+.mk-tela.t-cafe .menu p, .cel-tela.t-cafe .menu p { display: flex; align-items: baseline; gap: .4em; font-size: .95em; padding: .3em 0; }
+.mk-tela.t-cafe .menu p i, .cel-tela.t-cafe .menu p i { flex: 1; border-bottom: 1.5px dotted rgba(246,239,230,.3); }
+.mk-tela.t-cafe .menu p span:last-child { font-weight: 600; color: #d4a373; }
+.mk-tela.t-cafe .selo { right: 23em; bottom: 10em; background: #d4a373; color: #140d08; } .mk-tela.t-cafe .selo text { fill: #140d08; }
+
+/* ── Celular ── */
+.cel { --cel: 260px; width: var(--cel); font-size: calc(var(--cel) / 26); aspect-ratio: 9 / 19.2; padding: .55em; border-radius: 3.2em; background: #111; box-shadow: 0 2.4em 5em -1.4em rgba(16,18,14,.55), inset 0 0 0 .18em #333; }
+.cel-tela { position: relative; width: 100%; height: 100%; border-radius: 2.7em; overflow: hidden; font-family: 'DM Sans', system-ui, sans-serif; }
+.cel-tela .ilha { position: absolute; z-index: 9; left: 50%; top: .7em; width: 7em; height: 1.9em; translate: -50% 0; border-radius: 1em; background: #000; }
+.cel-tela .mfoto { position: absolute; left: 0; right: 0; top: 0; height: 52%; }
+.cel-tela .mveu { position: absolute; inset: 0; }
+.cel-tela .mtxt { position: absolute; left: 1.6em; right: 1.6em; bottom: 2.2em; display: flex; flex-direction: column; gap: 1em; }
+.cel-tela h1 { font-size: 2.6em; line-height: .98; letter-spacing: -.035em; }
+.cel-tela .b1 { justify-content: center; font-size: 1.05em; }
+.cel-tela .card { position: static; padding: 1em 1.1em; }
+.cel-tela .mwa { position: absolute; right: 1.2em; top: 44%; z-index: 8; width: 3.6em; height: 3.6em; border-radius: 50%; background: #25d366; color: #fff; display: grid; place-items: center; box-shadow: 0 .6em 1.4em rgba(0,0,0,.3); }
+.cel-tela .mwa svg { width: 1.9em; height: 1.9em; }
+.cel-tela.t-psi .mfoto { left: 2em; right: 2em; top: 3.4em; height: 44%; border-radius: 8em 8em 1.4em 1.4em; } .cel-tela.t-psi::before { content: ""; position: absolute; right: -6em; top: -4em; width: 22em; height: 22em; border-radius: 50%; filter: blur(2.4em); background: conic-gradient(from 200deg, #c9b6ff, #ffc7a8, #cfe8d4, #c9b6ff); }
+.cel-tela.t-psi h1 { font-family: 'Instrument Serif'; font-weight: 400; font-size: 3.6em; line-height: .88; } .cel-tela.t-psi h1 em { color: #a64b2a; } .cel-tela.t-psi .b1 { background: #2b1d16; color: #f6f1ec; }
+.cel-tela.t-clinica { background: #f5f8fb; } .cel-tela.t-clinica .mfoto { left: 1.2em; right: 1.2em; top: 3.4em; height: 40%; border-radius: 1.6em; } .cel-tela.t-clinica h1 { font-family: 'Inter Tight'; font-weight: 600; letter-spacing: -.05em; }
+.cel-tela.t-clinica .t4 { display: flex; background: #fff; border-radius: 1em; padding: .9em 1em; box-shadow: 0 .6em 1.4em -1em rgba(11,18,32,.4); } .cel-tela.t-clinica .b1 { background: linear-gradient(90deg, #00c2a8, #2563eb); color: #fff; }
+.cel-tela.t-escritorio { background: radial-gradient(80% 60% at 70% 20%, #1b2a47, #0a1120); } .cel-tela.t-escritorio .mfoto { left: 3em; right: 3em; top: 3.6em; height: 34%; border-radius: 7em 7em 1em 1em; filter: grayscale(.4); }
+.cel-tela.t-escritorio h1 { font-family: 'Instrument Serif'; font-weight: 400; font-size: 3.3em; } .cel-tela.t-escritorio h1 em { color: #c9a46a; } .cel-tela.t-escritorio .b1 { background: #c9a46a; color: #0a1120; }
+.cel-tela.t-escritorio .painel { position: static; width: auto; padding: .9em 1em; } .cel-tela.t-escritorio .painel small { font-size: .7em; color: #c9a46a; } .cel-tela.t-escritorio .painel b { font-size: 2.2em; }
+.cel-tela.t-mentora { background: #0f0a14; } .cel-tela.t-mentora .mfoto { left: 2.2em; right: 2.2em; top: 3.6em; height: 40%; border-radius: 1.4em; transform: rotate(3deg); box-shadow: 0 0 0 3px #ff2e88; }
+.cel-tela.t-mentora .mveu { background: radial-gradient(60% 35% at 90% 25%, rgba(255,46,136,.55), transparent); } .cel-tela.t-mentora h1 { font-family: 'Unbounded'; font-weight: 700; font-size: 2.3em; } .cel-tela.t-mentora .cont { margin: 0; }
+.cel-tela.t-imovel { background: #e4ece4; } .cel-tela.t-imovel .mfoto { left: 1.2em; right: 1.2em; top: 3.4em; height: 36%; border-radius: 1.4em; }
+.cel-tela.t-imovel h1 { font-family: 'Inter Tight'; font-weight: 500; font-size: 2.9em; letter-spacing: -.055em; color: #0f241b; } .cel-tela.t-imovel .b1 { background: #0f241b; color: #fff; }
+.cel-tela.t-cafe { background: #140d08; } .cel-tela.t-cafe .mfoto { opacity: .35; height: 100%; } .cel-tela.t-cafe .mveu { background: linear-gradient(180deg, transparent 20%, #140d08 70%); }
+.cel-tela.t-cafe .titulo { font-size: 5.4em; color: #f6efe6; -webkit-background-clip: border-box; background: none !important; filter: none; line-height: .82; } .cel-tela.t-cafe .b1 { background: #25d366; color: #fff; } .cel-tela.t-cafe .menu p span:last-child { color: #d4a373; font-weight: 600; }
+
+/* ── Aviso de novo contato ── */
+.mk-aviso { display: grid; grid-template-columns: auto 1fr auto; gap: .9em; align-items: center; width: 25em; padding: 1em 1.1em; border-radius: 1.1em; background: #fff;
+  box-shadow: 0 1.2em 3em -1em rgba(16,18,14,.4), 0 0 0 1px rgba(16,18,14,.06); font-family: 'DM Sans', system-ui, sans-serif; color: #10120e; }
 .mk-aviso i { width: 2.6em; height: 2.6em; border-radius: .8em; background: #25d366; color: #fff; display: grid; place-items: center; }
 .mk-aviso i svg { width: 1.6em; height: 1.6em; }
 .mk-aviso b { display: block; font-size: 1em; font-weight: 600; } .mk-aviso span { font-size: .95em; color: #4f5547; }
 .mk-aviso small { align-self: start; font-size: .8em; color: #7a8070; }
 
 /* Sites pequenos (cards): sem os links do menu. */
-.mk.pequeno .mk-nav span { display: none; }
-.mk.pequeno .mk-txt h3 { font-size: 2.6em; }
+.mk.pequeno .mk-tela nav span:not(.ab) { display: none; }
+.cel-tela.t-cafe .titulo em { color: #d4a373; }
