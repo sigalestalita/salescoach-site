@@ -158,7 +158,7 @@ add(dict(id='sc-frase-escuta', titulo='Frase: quem escuta melhor, vende melhor.'
          pasta=S + 'post-frase-sc-blur', telas=[S + 'post-frase-sc-blur/out/sc-frase-escuta.jpg'], medida='4:5 · 1 tela', serie='Silhueta em movimento',
          legenda=_sec('post-frase-sc-blur/legenda.md', '## Versão 2'),
          nota='Foto gerada por IA (ative o rótulo).'))
-add(dict(id='sc-estagios', titulo='Coaching de vendas em 3 estágios', produto='sales-coach', editoria='Conteúdo', formato='Post',
+add(dict(id='sc-estagios', titulo='Time comercial em 3 estágios', produto='sales-coach', editoria='Conteúdo', formato='Post',
          pasta=S + 'post-sc-estagios', telas=[S + 'post-sc-estagios/out/sc-estagios.jpg'], medida='4:5 · 1 tela',
          legenda=_arq('post-sc-estagios/legenda.md')))
 # ── Atlas ─────────────────────────────────────────────────────────────────

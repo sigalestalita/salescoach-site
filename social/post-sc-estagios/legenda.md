@@ -1,14 +1,15 @@
-# Legenda · post "Coaching de vendas em 3 estágios" (`out/sc-estagios.jpg`)
+# Legenda · post "Time comercial em 3 estágios" (`out/sc-estagios.jpg`)
 
-Todo gestor comercial quer um time que melhora a cada reunião.
-Mas melhorar depende de onde o time está hoje.
+Trocou o CRM, fez treinamento, contratou consultoria… e o time continua vendendo do mesmo jeito?
 
-→ Se ninguém ouve as reuniões, não adianta cobrar resultado. Primeiro é preciso ouvir.
-→ Se o gestor ouve, mas por amostra, cada vendedor é avaliado por um critério diferente. A resposta é a mesma régua para todas as conversas.
-→ Se o feedback chega uma semana depois, a venda já foi (ou já se perdeu). A resposta é orientar na hora.
+O problema quase nunca é falta de investimento. É aplicar a resposta do estágio errado.
 
-O Sales Coach faz os três, em cada reunião: grava no Meet, no Teams ou no Zoom sem robô na chamada, analisa toda conversa com a metodologia da sua empresa e sopra a dica certa para o vendedor enquanto o cliente fala.
+→ Se cada vendedor vende do seu jeito, a resposta é processo. Sem um caminho comum, não dá para saber o que funciona.
+→ Se o processo já está no papel, a resposta é ritual. Processo que não aparece na rotina da semana vira documento esquecido.
+→ Se os rituais já rodam toda semana, a resposta é consistência. É a repetição, reunião após reunião, que transforma método em resultado.
 
-Em que estágio está o seu time hoje? Conta aqui nos comentários.
+O Sales Coach ouve todas as reuniões do time e mostra, com dados, em qual estágio cada vendedor está: quem ainda não segue o processo, quem segue só às vezes e quem já vende com consistência.
 
-#vendas #vendasb2b #gestaocomercial #coachingdevendas #salescoach
+Em que estágio está o seu time hoje?
+
+#vendas #vendasb2b #gestaocomercial #processocomercial #salescoach
