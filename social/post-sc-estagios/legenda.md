@@ -1,9 +1,7 @@
 # Legenda · post "Coaching de vendas em 3 estágios" (`out/sc-estagios.jpg`)
 
-"Já trocamos o CRM. Já fizemos treinamento. Já contratamos consultoria."
-E o time continua vendendo do mesmo jeito.
-
-Quase sempre, o problema não é falta de esforço. É tentar resolver o estágio errado.
+Todo gestor comercial quer um time que melhora a cada reunião.
+Mas melhorar depende de onde o time está hoje.
 
 → Se ninguém ouve as reuniões, não adianta cobrar resultado. Primeiro é preciso ouvir.
 → Se o gestor ouve, mas por amostra, cada vendedor é avaliado por um critério diferente. A resposta é a mesma régua para todas as conversas.
