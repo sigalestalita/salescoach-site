@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8">
+<title>Post · três estágios do coaching de vendas</title>
+<link rel="stylesheet" href="fonts.css"><link rel="stylesheet" href="poppins.css">
+<style>
+/* Post 4:5 (1080×1350) no formato diagrama: "Se <situação> → A resposta é <x>",
+   três linhas e um fecho. Identidade NEXA light: osso, tinta, lima e oliva.
+   Ícones de linha desenhados em SVG: tracejado cinza = o problema,
+   oliva com lima = a resposta. */
+:root { --osso: #f3f4ee; --tinta: #10120e; --lima: #d4f969; --oliva: #587406; --cinza: #a3a698; --linha: #dcded3; --texto: #3a3d33; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { width: 1080px; height: 1350px; overflow: hidden; background: var(--osso); }
+body { position: relative; font-family: 'DM Sans', sans-serif; color: var(--tinta); -webkit-font-smoothing: antialiased; }
+
+.kick { position: absolute; top: 96px; left: 0; right: 0; text-align: center; font-family: 'JetBrains Mono', monospace; font-size: 19px; letter-spacing: .2em; text-transform: uppercase; color: var(--oliva); }
+.kick i { display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: var(--lima); box-shadow: 0 0 0 4px rgba(212,249,105,.35); margin-right: 14px; vertical-align: 2px; }
+
+.linhas { position: absolute; top: 178px; left: 90px; right: 90px; }
+.ln { display: grid; grid-template-columns: 1fr 150px 1fr; align-items: center; height: 280px; border-bottom: 2px solid var(--linha); }
+.lado { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 22px; }
+.lado svg { width: 200px; height: 120px; overflow: visible; }
+.se { font-size: 31px; line-height: 1.22; letter-spacing: -.01em; color: var(--texto); }
+.resp small { display: block; font-size: 25px; color: #6e7166; letter-spacing: -.005em; }
+.resp b { display: block; margin-top: 2px; font-family: 'Space Grotesk'; font-weight: 600; font-size: 46px; letter-spacing: -.035em; line-height: 1; color: var(--tinta); }
+.seta { display: flex; justify-content: center; margin-top: -60px; }
+.seta svg { width: 120px; height: 20px; }
+
+.fecho { position: absolute; top: 1052px; left: 90px; right: 90px; text-align: center; font-family: 'Space Grotesk'; font-weight: 500; font-size: 44px; letter-spacing: -.035em; line-height: 1.15; }
+.fecho em { font-style: normal; background: linear-gradient(transparent 58%, var(--lima) 58%, var(--lima) 92%, transparent 92%); padding: 0 .08em; }
+
+.marca { position: absolute; bottom: 70px; left: 0; right: 0; display: flex; justify-content: center; align-items: center; gap: 18px; font-family: 'Poppins'; font-size: 22px; color: #55584d; }
+.marca img { height: 19px; }
+.marca span { width: 1px; height: 22px; background: #c7c9bd; }
+.marca b { font-weight: 600; color: var(--tinta); }
+</style></head>
+<body>
+<div class="kick"><i></i>Coaching de vendas em 3 estágios</div>
+
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <!-- balão de fala, 44×34 com rabinho -->
+    <path id="bal" d="M8 1h28a7 7 0 0 1 7 7v14a7 7 0 0 1-7 7H17l-8 6v-6H8a7 7 0 0 1-7-7V8a7 7 0 0 1 7-7z"/>
+  </defs>
+</svg>
+
+<div class="linhas">
+  <!-- 1 · ninguém ouve → ouvir todas -->
+  <div class="ln">
+    <div class="lado">
+      <svg viewBox="0 0 200 120">
+        <g fill="none" stroke="var(--cinza)" stroke-width="2.4" stroke-dasharray="5 5">
+          <use href="#bal" x="14" y="12"/><use href="#bal" x="78" y="12"/><use href="#bal" x="142" y="12"/>
+          <use href="#bal" x="14" y="70"/><use href="#bal" x="78" y="70"/><use href="#bal" x="142" y="70"/>
+        </g>
+      </svg>
+      <div class="se">Se ninguém ouve<br>as reuniões do time</div>
+    </div>
+    <div class="seta"><svg viewBox="0 0 120 20"><path d="M2 10h112M104 2l10 8-10 8" fill="none" stroke="var(--tinta)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+    <div class="lado">
+      <svg viewBox="0 0 200 120">
+        <g fill="var(--lima)" stroke="var(--oliva)" stroke-width="2.6">
+          <use href="#bal" x="14" y="12"/><use href="#bal" x="78" y="12"/><use href="#bal" x="142" y="12"/>
+          <use href="#bal" x="14" y="70"/><use href="#bal" x="78" y="70"/><use href="#bal" x="142" y="70"/>
+        </g>
+      </svg>
+      <div class="resp"><small>A resposta é</small><b>ouvir todas</b></div>
+    </div>
+  </div>
+
+  <!-- 2 · ouve por amostra → a mesma régua -->
+  <div class="ln">
+    <div class="lado">
+      <svg viewBox="0 0 200 120">
+        <g fill="none" stroke="var(--cinza)" stroke-width="2.4" stroke-dasharray="5 5">
+          <use href="#bal" x="78" y="12"/><use href="#bal" x="142" y="12"/>
+          <use href="#bal" x="14" y="70"/><use href="#bal" x="78" y="70"/><use href="#bal" x="142" y="70"/>
+        </g>
+        <use href="#bal" x="14" y="12" fill="var(--lima)" stroke="var(--oliva)" stroke-width="2.6"/>
+      </svg>
+      <div class="se">Se você ouve,<br>mas por amostra</div>
+    </div>
+    <div class="seta"><svg viewBox="0 0 120 20"><path d="M2 10h112M104 2l10 8-10 8" fill="none" stroke="var(--tinta)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+    <div class="lado">
+      <svg viewBox="0 0 200 120">
+        <!-- três reuniões medidas pela mesma régua -->
+        <g fill="var(--lima)" stroke="var(--oliva)" stroke-width="2.6">
+          <use href="#bal" x="14" y="6"/><use href="#bal" x="78" y="6"/><use href="#bal" x="142" y="6"/>
+        </g>
+        <g stroke="var(--oliva)" stroke-width="2.6" stroke-linecap="round">
+          <path d="M6 96h188"/>
+          <path d="M6 86v20M194 86v20M100 88v16"/>
+          <path d="M28 90v12M53 90v12M76 90v12M124 90v12M147 90v12M172 90v12" stroke-width="2"/>
+        </g>
+        <g fill="var(--oliva)"><circle cx="36" cy="62" r="5"/><circle cx="100" cy="62" r="5"/><circle cx="164" cy="62" r="5"/></g>
+        <g stroke="var(--oliva)" stroke-width="2" stroke-dasharray="3 4"><path d="M36 67v20M100 67v20M164 67v20"/></g>
+      </svg>
+      <div class="resp"><small>A resposta é</small><b>a mesma régua</b></div>
+    </div>
+  </div>
+
+  <!-- 3 · feedback uma semana depois → na hora -->
+  <div class="ln">
+    <div class="lado">
+      <svg viewBox="0 0 200 120">
+        <g stroke="var(--cinza)" stroke-width="2.4" fill="none" stroke-linecap="round">
+          <path d="M28 70h146" stroke-dasharray="5 6"/>
+        </g>
+        <circle cx="22" cy="70" r="9" fill="none" stroke="var(--cinza)" stroke-width="2.4"/>
+        <use href="#bal" x="156" y="18" fill="none" stroke="var(--cinza)" stroke-width="2.4" stroke-dasharray="5 5"/>
+        <circle cx="178" cy="70" r="9" fill="none" stroke="var(--cinza)" stroke-width="2.4" stroke-dasharray="4 4"/>
+        <text x="22" y="108" text-anchor="middle" font-family="JetBrains Mono" font-size="13" fill="#8c8f82">reunião</text>
+        <text x="178" y="108" text-anchor="middle" font-family="JetBrains Mono" font-size="13" fill="#8c8f82">+7 dias</text>
+      </svg>
+      <div class="se">Se o feedback chega<br>uma semana depois</div>
+    </div>
+    <div class="seta"><svg viewBox="0 0 120 20"><path d="M2 10h112M104 2l10 8-10 8" fill="none" stroke="var(--tinta)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+    <div class="lado">
+      <svg viewBox="0 0 200 120">
+        <!-- a fala acontecendo e a dica no mesmo instante -->
+        <g stroke="var(--oliva)" stroke-width="2.6" stroke-linecap="round">
+          <path d="M8 70v0M20 62v16M32 54v32M44 64v12M56 50v40M68 60v20M80 56v28M92 66v8M104 48v44M116 58v24M128 64v12M140 54v32M152 62v16M164 66v8M176 70v0"/>
+        </g>
+        <use href="#bal" x="82" y="0" fill="var(--lima)" stroke="var(--oliva)" stroke-width="2.6"/>
+        <path d="M98 9l-4 8h6l-4 8" fill="none" stroke="var(--oliva)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+        <text x="104" y="108" text-anchor="middle" font-family="JetBrains Mono" font-size="13" fill="var(--oliva)">agora</text>
+      </svg>
+      <div class="resp"><small>A resposta é</small><b>na hora</b></div>
+    </div>
+  </div>
+</div>
+
+<div class="fecho">O Sales Coach faz os três,<br><em>em cada reunião.</em></div>
+
+<div class="marca"><b>Sales Coach</b><span></span><img src="img/nexa-tinta.svg" alt="NEXA"></div>
+
+<script>window.ready = document.fonts.ready;</script>
+</body></html>
