@@ -1,72 +1,84 @@
 <!doctype html>
 <html lang="pt-BR"><head><meta charset="utf-8">
-<title>Post · três estágios do coaching de vendas</title>
-<link rel="stylesheet" href="fonts.css"><link rel="stylesheet" href="poppins.css">
+<title>Post · time comercial em 3 estágios</title>
+<link rel="stylesheet" href="fonts.css"><link rel="stylesheet" href="poppins.css"><link rel="stylesheet" href="instrument.css">
 <style>
-/* Post 4:5 (1080×1350) no formato diagrama: "Se <situação> → A resposta é <x>",
-   três linhas e um fecho. Identidade NEXA light: osso, tinta, lima e oliva.
-   Ícones de linha desenhados em SVG: tracejado cinza = o problema,
-   oliva com lima = a resposta. */
-:root { --osso: #f3f4ee; --tinta: #10120e; --lima: #d4f969; --oliva: #587406; --cinza: #a3a698; --linha: #dcded3; --texto: #3a3d33; }
+/* Post 4:5 (1080×1350) no formato "Se <situação> → A resposta é <x>", na pegada
+   dos posts do Sales Coach: fundo aurora azul-marinho, Space Grotesk com itálico
+   em Instrument Serif, kicker mono com ponto lima, cartões de vidro e o rodapé
+   "Sales Coach · um produto NEXA". Ícones de linha em SVG: tracejado claro = o
+   problema, lima = a resposta. */
+:root { --lima: #d9fb7a; --texto: rgba(235,240,255,.86); --apagado: rgba(200,210,240,.45); }
 * { box-sizing: border-box; margin: 0; padding: 0; }
-html, body { width: 1080px; height: 1350px; overflow: hidden; background: var(--osso); }
-body { position: relative; font-family: 'DM Sans', sans-serif; color: var(--tinta); -webkit-font-smoothing: antialiased; }
+html, body { width: 1080px; height: 1350px; overflow: hidden; background: #070b1d; }
+body { position: relative; font-family: 'DM Sans', sans-serif; color: #fff; -webkit-font-smoothing: antialiased; }
 
-.kick { position: absolute; top: 96px; left: 0; right: 0; text-align: center; font-family: 'JetBrains Mono', monospace; font-size: 19px; letter-spacing: .2em; text-transform: uppercase; color: var(--oliva); }
-.kick i { display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: var(--lima); box-shadow: 0 0 0 4px rgba(212,249,105,.35); margin-right: 14px; vertical-align: 2px; }
+.aurora { position: absolute; inset: 0; background:
+  radial-gradient(40% 24% at 90% 6%, rgba(185,170,255,.28), transparent 70%),
+  radial-gradient(55% 30% at 0% 38%, rgba(96,130,255,.40), transparent 72%),
+  radial-gradient(60% 28% at 6% 100%, rgba(176,200,255,.45), transparent 70%),
+  radial-gradient(55% 28% at 100% 100%, rgba(217,251,122,.5), transparent 70%),
+  linear-gradient(180deg, #070b1d 0%, #0d1638 40%, #1a2b72 78%, #3552b4 100%); }
+.aurora::after { content: ""; position: absolute; inset: 0; opacity: .15; mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 1.1 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>"); }
 
-.linhas { position: absolute; top: 166px; left: 90px; right: 90px; }
-.ln { display: grid; grid-template-columns: 1fr 150px 1fr; align-items: center; height: 266px; border-bottom: 2px solid var(--linha); }
-.lado { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 22px; }
-.lado svg { width: 200px; height: 120px; overflow: visible; }
-.se { font-size: 31px; line-height: 1.22; letter-spacing: -.01em; color: var(--texto); }
-.resp small { display: block; font-size: 25px; color: #6e7166; letter-spacing: -.005em; }
-.resp b { display: block; margin-top: 2px; font-family: 'Space Grotesk'; font-weight: 600; font-size: 46px; letter-spacing: -.035em; line-height: 1; color: var(--tinta); }
-.seta { display: flex; justify-content: center; margin-top: -60px; }
-.seta svg { width: 120px; height: 20px; }
+#topo { position: absolute; left: 70px; right: 70px; top: 76px; }
+.kick { font-family: 'JetBrains Mono', monospace; font-size: 19px; letter-spacing: .16em; text-transform: uppercase; color: rgba(255,255,255,.7); display: flex; align-items: center; gap: 12px; }
+.kick i { width: 10px; height: 10px; border-radius: 50%; background: var(--lima); box-shadow: 0 0 12px var(--lima); }
+h1 { margin-top: 22px; font-family: 'Space Grotesk'; font-weight: 400; font-size: 74px; line-height: 1; letter-spacing: -.05em; }
+h1 em { font-family: 'Instrument Serif'; font-style: italic; font-weight: 400; font-size: 92px; letter-spacing: -.02em; background: linear-gradient(95deg, #c9d2ff, #ffffff 45%, #e8fbb0 80%, var(--lima)); -webkit-background-clip: text; color: transparent; padding-right: .08em; }
 
-.fecho { position: absolute; top: 1012px; left: 90px; right: 90px; text-align: center; font-family: 'Space Grotesk'; font-weight: 500; font-size: 44px; letter-spacing: -.035em; line-height: 1.15; }
-.fecho em { font-style: normal; background: linear-gradient(transparent 58%, var(--lima) 58%, var(--lima) 92%, transparent 92%); padding: 0 .08em; }
+.linhas { position: absolute; left: 70px; right: 70px; top: 330px; display: grid; gap: 22px; }
+.ln { position: relative; display: grid; grid-template-columns: 1fr 70px 1fr; align-items: center; height: 214px; padding: 0 34px; border-radius: 28px;
+  background: linear-gradient(160deg, rgba(20,40,79,.78), rgba(11,23,54,.78)); border: 1px solid rgba(255,255,255,.12);
+  box-shadow: 0 30px 60px -34px rgba(0,0,0,.85); }
+.ln .n { position: absolute; top: 22px; left: 34px; font-family: 'JetBrains Mono'; font-size: 16px; letter-spacing: .14em; color: #8fa0cf; }
+.lado { display: flex; align-items: center; gap: 22px; }
+.lado svg { flex: none; width: 104px; height: 84px; overflow: visible; }
+.se { font-size: 28px; line-height: 1.24; letter-spacing: -.01em; color: var(--texto); }
+.resp small { display: block; font-size: 21px; color: #8fa0cf; }
+.resp b { display: block; margin-top: 4px; font-family: 'Space Grotesk'; font-weight: 500; font-size: 46px; letter-spacing: -.045em; line-height: 1; color: var(--lima); }
+.seta svg { width: 60px; height: 20px; }
 
-.sub { position: absolute; top: 1150px; left: 120px; right: 120px; text-align: center; font-size: 26px; line-height: 1.35; color: #5d6055; letter-spacing: -.005em; }
-.marca { position: absolute; bottom: 70px; left: 0; right: 0; display: flex; justify-content: center; align-items: center; gap: 18px; font-family: 'Poppins'; font-size: 22px; color: #55584d; }
-.marca img { height: 19px; }
-.marca span { width: 1px; height: 22px; background: #c7c9bd; }
-.marca b { font-weight: 600; color: var(--tinta); }
+.fecho { position: absolute; left: 70px; right: 70px; top: 1066px; font-family: 'Space Grotesk'; font-size: 50px; letter-spacing: -.045em; line-height: 1.06; }
+.fecho em { font-family: 'Instrument Serif'; font-style: italic; font-size: 62px; letter-spacing: -.015em; background: linear-gradient(95deg, #e8fbb0, var(--lima)); -webkit-background-clip: text; color: transparent; padding-right: .08em; }
+.fecho small { display: block; margin-top: 16px; font-family: 'DM Sans'; font-size: 25px; letter-spacing: -.005em; line-height: 1.35; color: var(--texto); }
+
+.marca { position: absolute; left: 70px; bottom: 56px; display: flex; align-items: center; gap: 12px; font-family: 'Poppins'; font-size: 22px; font-weight: 300; color: rgba(255,255,255,.85); }
+.marca b { font-weight: 600; } .marca img { height: 22px; filter: brightness(0) invert(1); }
+.nexa { position: absolute; right: 70px; bottom: 60px; display: flex; align-items: center; gap: 12px; font-size: 16px; letter-spacing: .16em; text-transform: uppercase; color: rgba(255,255,255,.6); }
+.nexa svg { height: 18px; width: auto; }
 </style></head>
 <body>
-<div class="kick"><i></i>Time comercial em 3 estágios</div>
+<div class="aurora"></div>
 
-<svg width="0" height="0" style="position:absolute">
-  <defs>
-    <!-- balão de fala, 44×34 com rabinho -->
-    <path id="bal" d="M8 1h28a7 7 0 0 1 7 7v14a7 7 0 0 1-7 7H17l-8 6v-6H8a7 7 0 0 1-7-7V8a7 7 0 0 1 7-7z"/>
-  </defs>
-</svg>
+<div id="topo">
+  <div class="kick"><i></i>Gestão de vendas</div>
+  <h1>Cada estágio do time<br><em>pede uma resposta.</em></h1>
+</div>
 
 <div class="linhas">
   <!-- 1 · cada um vende do seu jeito → processo -->
   <div class="ln">
+    <span class="n">01</span>
     <div class="lado">
-      <svg viewBox="0 0 200 120">
-        <g fill="none" stroke="var(--cinza)" stroke-width="2.4">
-          <rect x="46" y="18" width="48" height="44" rx="3" transform="rotate(-12 70 40)"/>
-          <rect x="96" y="6" width="48" height="44" rx="3" transform="rotate(9 120 28)"/>
-          <rect x="60" y="56" width="48" height="44" rx="3" transform="rotate(15 84 78)"/>
-          <rect x="108" y="58" width="48" height="44" rx="3" transform="rotate(-18 132 80)"/>
-          <rect x="78" y="30" width="48" height="44" rx="3" transform="rotate(28 102 52)"/>
-          <rect x="120" y="32" width="40" height="36" rx="3" transform="rotate(-6 140 50)"/>
-          <rect x="40" y="60" width="40" height="36" rx="3" transform="rotate(4 60 78)"/>
+      <svg viewBox="0 0 104 84">
+        <g fill="none" stroke="var(--apagado)" stroke-width="2.2">
+          <rect x="14" y="10" width="34" height="30" rx="3" transform="rotate(-12 31 25)"/>
+          <rect x="50" y="4" width="34" height="30" rx="3" transform="rotate(9 67 19)"/>
+          <rect x="22" y="40" width="34" height="30" rx="3" transform="rotate(15 39 55)"/>
+          <rect x="56" y="42" width="34" height="30" rx="3" transform="rotate(-18 73 57)"/>
+          <rect x="34" y="22" width="34" height="30" rx="3" transform="rotate(28 51 37)"/>
         </g>
       </svg>
       <div class="se">Se cada vendedor<br>vende do seu jeito</div>
     </div>
-    <div class="seta"><svg viewBox="0 0 120 20"><path d="M2 10h112M104 2l10 8-10 8" fill="none" stroke="var(--tinta)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+    <div class="seta"><svg viewBox="0 0 60 20"><path d="M2 10h52M46 3l8 7-8 7" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" opacity=".8"/></svg></div>
     <div class="lado">
-      <svg viewBox="0 0 200 120">
-        <g fill="var(--lima)" stroke="var(--oliva)" stroke-width="2.6">
-          <rect x="54" y="8" width="42" height="42" rx="4"/><rect x="104" y="8" width="42" height="42" rx="4"/>
-          <rect x="54" y="58" width="42" height="42" rx="4"/><rect x="104" y="58" width="42" height="42" rx="4"/>
+      <svg viewBox="0 0 104 84">
+        <g fill="rgba(217,251,122,.16)" stroke="var(--lima)" stroke-width="2.4">
+          <rect x="16" y="4" width="34" height="34" rx="4"/><rect x="56" y="4" width="34" height="34" rx="4"/>
+          <rect x="16" y="44" width="34" height="34" rx="4"/><rect x="56" y="44" width="34" height="34" rx="4"/>
         </g>
       </svg>
       <div class="resp"><small>A resposta é</small><b>processo</b></div>
@@ -75,26 +87,27 @@ body { position: relative; font-family: 'DM Sans', sans-serif; color: var(--tint
 
   <!-- 2 · o processo está no papel → ritual -->
   <div class="ln">
+    <span class="n">02</span>
     <div class="lado">
-      <svg viewBox="0 0 200 120">
-        <rect x="74" y="20" width="52" height="64" rx="4" fill="none" stroke="var(--cinza)" stroke-width="2.4" stroke-dasharray="6 5"/>
-        <g stroke="var(--cinza)" stroke-width="2.4" stroke-linecap="round"><path d="M86 38h28M86 50h28M86 62h18"/></g>
+      <svg viewBox="0 0 104 84">
+        <rect x="30" y="8" width="44" height="58" rx="4" fill="none" stroke="var(--apagado)" stroke-width="2.2" stroke-dasharray="5 5"/>
+        <g stroke="var(--apagado)" stroke-width="2.2" stroke-linecap="round"><path d="M40 24h24M40 35h24M40 46h15"/></g>
       </svg>
       <div class="se">Se o processo<br>já está no papel</div>
     </div>
-    <div class="seta"><svg viewBox="0 0 120 20"><path d="M2 10h112M104 2l10 8-10 8" fill="none" stroke="var(--tinta)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+    <div class="seta"><svg viewBox="0 0 60 20"><path d="M2 10h52M46 3l8 7-8 7" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" opacity=".8"/></svg></div>
     <div class="lado">
-      <svg viewBox="0 0 200 120">
+      <svg viewBox="0 0 104 84">
         <!-- a mesma reunião, toda semana -->
-        <g fill="var(--lima)" stroke="var(--oliva)" stroke-width="2.6">
-          <rect x="8" y="34" width="36" height="36" rx="4"/><rect x="58" y="34" width="36" height="36" rx="4"/>
-          <rect x="108" y="34" width="36" height="36" rx="4"/><rect x="158" y="34" width="36" height="36" rx="4"/>
+        <g fill="rgba(217,251,122,.16)" stroke="var(--lima)" stroke-width="2.2">
+          <rect x="2" y="22" width="22" height="22" rx="3"/><rect x="28" y="22" width="22" height="22" rx="3"/>
+          <rect x="54" y="22" width="22" height="22" rx="3"/><rect x="80" y="22" width="22" height="22" rx="3"/>
         </g>
-        <g fill="none" stroke="var(--oliva)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M18 52l6 6 11-12M68 52l6 6 11-12M118 52l6 6 11-12M168 52l6 6 11-12"/>
+        <g fill="none" stroke="var(--lima)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M8 33l3.5 3.5 6.5-7M34 33l3.5 3.5 6.5-7M60 33l3.5 3.5 6.5-7M86 33l3.5 3.5 6.5-7"/>
         </g>
-        <g font-family="JetBrains Mono" font-size="12" fill="var(--oliva)" text-anchor="middle">
-          <text x="26" y="94">sem 1</text><text x="76" y="94">sem 2</text><text x="126" y="94">sem 3</text><text x="176" y="94">sem 4</text>
+        <g font-family="JetBrains Mono" font-size="9" fill="#8fa0cf" text-anchor="middle">
+          <text x="13" y="62">S1</text><text x="39" y="62">S2</text><text x="65" y="62">S3</text><text x="91" y="62">S4</text>
         </g>
       </svg>
       <div class="resp"><small>A resposta é</small><b>ritual</b></div>
@@ -103,20 +116,21 @@ body { position: relative; font-family: 'DM Sans', sans-serif; color: var(--tint
 
   <!-- 3 · os rituais já rodam → consistência -->
   <div class="ln">
+    <span class="n">03</span>
     <div class="lado">
-      <svg viewBox="0 0 200 120">
-        <rect x="78" y="36" width="44" height="44" rx="4" fill="none" stroke="var(--cinza)" stroke-width="2.4"/>
+      <svg viewBox="0 0 104 84">
+        <rect x="34" y="20" width="36" height="36" rx="4" fill="none" stroke="var(--apagado)" stroke-width="2.2"/>
       </svg>
       <div class="se">Se os rituais já<br>rodam toda semana</div>
     </div>
-    <div class="seta"><svg viewBox="0 0 120 20"><path d="M2 10h112M104 2l10 8-10 8" fill="none" stroke="var(--tinta)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+    <div class="seta"><svg viewBox="0 0 60 20"><path d="M2 10h52M46 3l8 7-8 7" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" opacity=".8"/></svg></div>
     <div class="lado">
-      <svg viewBox="0 0 200 120">
+      <svg viewBox="0 0 104 84">
         <!-- uma em cima da outra: o resultado que se acumula -->
-        <g fill="var(--lima)" stroke="var(--oliva)" stroke-width="2.6">
-          <rect x="40" y="82" width="30" height="30" rx="3"/><rect x="76" y="82" width="30" height="30" rx="3"/><rect x="112" y="82" width="30" height="30" rx="3"/><rect x="148" y="82" width="30" height="30" rx="3"/>
-          <rect x="76" y="46" width="30" height="30" rx="3"/><rect x="112" y="46" width="30" height="30" rx="3"/><rect x="148" y="46" width="30" height="30" rx="3"/>
-          <rect x="112" y="10" width="30" height="30" rx="3"/><rect x="148" y="10" width="30" height="30" rx="3"/>
+        <g fill="rgba(217,251,122,.16)" stroke="var(--lima)" stroke-width="2.2">
+          <rect x="4" y="58" width="22" height="22" rx="3"/><rect x="30" y="58" width="22" height="22" rx="3"/><rect x="56" y="58" width="22" height="22" rx="3"/><rect x="82" y="58" width="22" height="22" rx="3"/>
+          <rect x="30" y="32" width="22" height="22" rx="3"/><rect x="56" y="32" width="22" height="22" rx="3"/><rect x="82" y="32" width="22" height="22" rx="3"/>
+          <rect x="56" y="6" width="22" height="22" rx="3"/><rect x="82" y="6" width="22" height="22" rx="3"/>
         </g>
       </svg>
       <div class="resp"><small>A resposta é</small><b>consistência</b></div>
@@ -124,10 +138,11 @@ body { position: relative; font-family: 'DM Sans', sans-serif; color: var(--tint
   </div>
 </div>
 
-<div class="fecho">O erro é usar a resposta<br><em>do estágio errado.</em></div>
-<div class="sub">O Sales Coach ouve cada reunião e mostra<br>em que estágio o seu time está.</div>
+<div class="fecho">O erro é usar a resposta <em>do estágio errado.</em>
+  <small>O Sales Coach ouve todas as reuniões e mostra em que estágio o seu time está.</small></div>
 
-<div class="marca"><b>Sales Coach</b><span></span><img src="img/nexa-tinta.svg" alt="NEXA"></div>
+<div class="marca"><img src="img/mark.png" alt=""><span><b>Sales</b> Coach</span></div>
+<div class="nexa">um produto <svg viewBox="0 0 800 150"><path fill="none" stroke="rgba(255,255,255,.75)" stroke-width="13" stroke-linecap="round" d="M8 139V12L175 139V12M200 12H366M200 12V139H366M200 75H366M390 12L558 139M558 12L390 139M580 139L685 12L792 139M618 95H755"/></svg></div>
 
 <script>window.ready = document.fonts.ready;</script>
 </body></html>
