@@ -154,9 +154,9 @@ const POSTS = [
   },
   {
     id: 's5', marca: 'sc', slug: 'black-friday-desconto', tipo: 'conteúdo', telas: [
-      { tipo: 'capa', modo: 'gig', foto: 's5-capa', texto: 'black friday, 17h40.\no cliente pede\n20% de desconto.' },
+      { tipo: 'capa', modo: 'chat', foto: 's5-capa', kick: 'black friday · 17h40', quem: 'cliente · décima reunião do dia', fala: '“se fizer 20%, eu fecho agora.”', texto: 'e agora, *o que você responde?*' },
       { tipo: 'cur', foto: 's5-ctx', titulo: 'essa é a ana.',
-        texto: 'vendedora há dois anos, **nove reuniões** só hoje. a décima começou atrasada, o cliente está com pressa e a pergunta chega antes da apresentação: “se fizer 20%, eu fecho agora.”' },
+        texto: 'vendedora há dois anos, **nove reuniões** só hoje. a décima começou atrasada, o cliente está com pressa e o pedido de desconto chegou **antes da apresentação**.' },
       { tipo: 'textoimg', foto: 's5-txt',
         a: 'ela tem uns **dez segundos** pra responder.',
         b: 'ninguém ensinou a ana o que fazer nessa hora. ela aprendeu sozinha, **com o cliente na frente**. e quando ninguém ensina, o desconto vira a resposta mais fácil.' },
