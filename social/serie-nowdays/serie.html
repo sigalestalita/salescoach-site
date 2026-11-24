@@ -51,8 +51,8 @@ em { font-style: italic; font-weight: 700; }
 .chat-kick i { width: 14px; height: 14px; border-radius: 50%; background: #ff4d4d; box-shadow: 0 0 0 6px rgba(255,77,77,.25); }
 .chat-baixo { position: absolute; left: 90px; right: 90px; bottom: 190px; z-index: 3; }
 .chat-quem { font-size: 22px; letter-spacing: .18em; text-transform: uppercase; opacity: .8; margin: 0 0 14px 6px; }
-.chat-bal { display: inline-block; background: #fff; color: #0b0b0b; font-weight: 600; font-size: 50px; line-height: 1.12; letter-spacing: -.02em;
-  padding: 30px 40px 34px; border-radius: 40px 40px 40px 10px; box-shadow: 0 30px 70px -20px rgba(0,0,0,.6); max-width: 820px; }
+.chat-bal { display: inline-block; background: #fff; color: #0b0b0b; font-weight: 600; font-size: 46px; line-height: 1.12; letter-spacing: -.02em; white-space: nowrap;
+  padding: 28px 38px 32px; border-radius: 40px 40px 40px 10px; box-shadow: 0 30px 70px -20px rgba(0,0,0,.6); }
 .chat-dig { display: inline-flex; gap: 10px; background: rgba(255,255,255,.16); backdrop-filter: blur(8px); padding: 20px 26px; border-radius: 30px 30px 30px 8px; margin: 18px 0 0; }
 .chat-dig b { width: 14px; height: 14px; border-radius: 50%; background: #fff; opacity: .8; }
 .chat-dig b:nth-child(2) { opacity: .55; } .chat-dig b:nth-child(3) { opacity: .3; }
@@ -169,7 +169,7 @@ function assinatura(claro) {
 const R = {
   capa: () => t.modo === 'chat' ? [`tela grao`, `${foto(t.foto)}<div class="chat-sombra"></div><div class="chat-kick"><i></i>${t.kick}</div>
     <div class="chat-baixo"><div class="chat-quem">${t.quem}</div><div class="chat-bal">${t.fala}</div><br><div class="chat-dig"><b></b><b></b><b></b></div>
-    <div class="chat-perg">${md(t.texto)}</div></div>`]
+    <div class="chat-perg">${md(t.texto).split('\n').join('<br>')}</div></div>`]
   : [`tela grao`, `${foto(t.foto)}<div class="capa-txt ${t.modo || 'peq'}">${t.modo === 'gig' ? t.texto
     : t.texto.split('\n').join('<br>')}</div>`],
   contexto: () => [`tela esc grao`, `${t.foto ? foto(t.foto, 'escura') : ''}<div class="bloco" style="bottom:170px"><div class="titulo">${md(t.titulo)}</div><p>${md(t.texto)}</p></div>`],
