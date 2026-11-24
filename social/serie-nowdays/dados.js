@@ -88,7 +88,7 @@ const POSTS = [
         b: 'ia não deixa a empresa imune ao dólar. ela deixa a empresa **menos dependente de contratar** para crescer.' },
       { tipo: 'citacao', frase: 'em tempo de custo alto, eficiência é estratégia.', cred: 'nexa' },
       { tipo: 'fecha', texto: 'o melhor momento para implementar ia é **antes** de precisar cortar.', cta: 'salva pra discutir com seu time' },
-      { tipo: 'marca', cta: 'sales coach · atlas · fábrica de soluções — link na bio' },
+      { tipo: 'marca', sub: 'ia acelera. pessoas dão direção.', cta: 'link na bio' },
     ],
   },
   // ───────────────────────────── SALES COACH ─────────────────────────────
