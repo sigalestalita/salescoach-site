@@ -98,6 +98,24 @@ pro gestor fica o time inteiro numa tela e um assistente que conhece todas as re
 
 a partir de r$ 89,90 por usuário/mês, sem limite de uso. o link para testar no seu time está na bio 🚀
 
+## s5 · Sales Coach · conteúdo · black friday: o cliente pede 20% de desconto
+
+sexta, 17h40. décima reunião do dia. o cliente diz: "se fizer 20%, eu fecho agora."
+
+quem está na call tem uns dez segundos pra decidir. e quando ninguém ensinou o que fazer nessa hora, o desconto vira a resposta mais fácil.
+
+na black friday, desconto nem sempre é estratégia. às vezes é cansaço. três frases que ajudam a segurar o preço:
+
+→ "20% em relação a quê?"
+→ "consigo, se a gente fechar 12 meses."
+→ "o que te faria fechar sem desconto?"
+
+o sales coach acompanha a call, sugere a pergunta certa na hora e mostra pro gestor onde o preço caiu, pra treinar o time antes da próxima campanha.
+
+manda pro gestor do seu time 💙
+
+#blackfriday #vendas #vendasb2b #gestaocomercial #salescoach
+
 ## a1 · Atlas · educativo · clima ou 360: qual pesquisa o seu time precisa?
 
 as duas escutam, mas escutam coisas diferentes. a pesquisa de clima mostra onde está o problema, por área e de forma anônima. o 360 mostra como cada liderança é percebida por quem está em volta. e o eNPS é o termômetro rápido entre uma e outra.

@@ -24,6 +24,7 @@ Sales Coach e Atlas levam "um produto NEXA" na assinatura. Os logos são os ofic
 | s2 | Sales Coach | conteúdo (curadoria) | o que responder quando o cliente diz "tá caro" | 7 |
 | s3 | Sales Coach | conteúdo | seu melhor vendedor saiu. e o método dele? | 6 |
 | s4 | Sales Coach | comercial | um coach em cada reunião do seu time (R$ 89,90) | 6 |
+| s5 | Sales Coach | conteúdo | black friday: o cliente pede 20% de desconto (história de uma vendedora; fotos Unsplash, créditos em `fotos/s5-fotos.md`) | 9 |
 | a1 | Atlas | educativo | clima ou 360: qual pesquisa o seu time precisa? | 8 |
 | a2 | Atlas | conteúdo (curadoria) | o clima do seu time está pior do que parece? | 7 |
 | a3 | Atlas | educativo | nr-1: seu rh já mede risco psicossocial? | 7 |

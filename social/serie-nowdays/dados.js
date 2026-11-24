@@ -152,6 +152,28 @@ const POSTS = [
       { tipo: 'marca', cta: 'um coach em cada reunião do seu time' },
     ],
   },
+  {
+    id: 's5', marca: 'sc', slug: 'black-friday-desconto', tipo: 'conteúdo', telas: [
+      { tipo: 'capa', modo: 'gig', foto: 's5-capa', texto: 'black friday, 17h40.\no cliente pede\n20% de desconto.' },
+      { tipo: 'cur', foto: 's5-ctx', titulo: 'essa é a ana.',
+        texto: 'vendedora há dois anos, **nove reuniões** só hoje. a décima começou atrasada, o cliente está com pressa e a pergunta chega antes da apresentação: “se fizer 20%, eu fecho agora.”' },
+      { tipo: 'textoimg', foto: 's5-txt',
+        a: 'ela tem uns **dez segundos** pra responder.',
+        b: 'ninguém ensinou a ana o que fazer nessa hora. ela aprendeu sozinha, **com o cliente na frente**. e quando ninguém ensina, o desconto vira a resposta mais fácil.' },
+      { tipo: 'virada', titulo: 'desconto nem sempre é estratégia. às vezes é cansaço.',
+        texto: 'black friday é mais reunião, menos tempo e mais pressão. é nessa semana que o preço cai sem ninguém ter decidido baixar.' },
+      { tipo: 'info', titulo: 'o que a ana podia ter dito', itens: [
+        ['“20% em relação a quê?”', 'perguntar antes de ceder quase sempre mostra o que o cliente precisa. às vezes não é preço, é prazo.'],
+        ['“consigo, se a gente fechar 12 meses.”', 'condição melhor só em troca de algo: contrato maior, decisão hoje ou uma indicação.'],
+        ['“o que te faria fechar sem desconto?”', 'a resposta vira o argumento da próxima frase.'],
+      ] },
+      { tipo: 'cur', foto: 's5-fim', titulo: 'ninguém vende bem sozinho.',
+        texto: 'o sales coach acompanha a call e sugere a pergunta certa na hora. depois, mostra pro gestor onde o preço caiu, pra treinar o time **antes da próxima campanha**.' },
+      { tipo: 'citacao', frase: 'o melhor desconto é o que o seu vendedor não precisou dar.', cred: 'sales coach' },
+      { tipo: 'fecha', texto: 'nesta black friday, cuide de **quem está na call**, não só do preço.', cta: 'manda pro gestor do seu time' },
+      { tipo: 'marca', cta: 'um coach em cada reunião — link na bio' },
+    ],
+  },
 
   // ───────────────────────────── ATLAS ─────────────────────────────
   {
