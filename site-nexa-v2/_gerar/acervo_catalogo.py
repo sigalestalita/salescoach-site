@@ -38,12 +38,13 @@ add(dict(id='destaque-fabrica', titulo='Destaque · Fábrica de soluções', pro
          telas=[S + 'instagram-nexa/jpg/stories/d9-*.jpg'], medida='9:16 · 6 stories', serie='Destaques do perfil',
          texto=_sec('instagram-nexa/destaques/roteiro.md', '## 9 · Fábrica')))
 
-# Série editorial na pegada do @nowdays (12 carrosséis, social/serie-nowdays)
+# Série editorial na pegada do @nowdays (social/serie-nowdays)
 NOWDAYS = [
     ('n1', 'dado-sem-conversa', 'Dado sem conversa é só planilha', 'nexa', 'Educativo'),
     ('n2', 'quantas-conversas', 'Quantas conversas do seu time você ouviu esta semana?', 'nexa', 'Conteúdo'),
     ('n3', 'cinco-livros', '5 livros para quem lidera pessoas', 'nexa', 'Conteúdo'),
     ('n4', 'ecossistema', 'Decidir sobre pessoas com dados', 'nexa', 'Comercial'),
+    ('n5', 'dolar-e-ia', 'O dólar bateu R$ 6. Sua margem sentiu?', 'nexa', 'Conteúdo'),
     ('s1', 'reuniao-boa', 'Como saber se uma reunião de venda foi boa', 'sales-coach', 'Educativo'),
     ('s2', 'objecoes', 'O que responder quando o cliente diz "tá caro"', 'sales-coach', 'Conteúdo'),
     ('s3', 'melhor-vendedor-saiu', 'Seu melhor vendedor saiu. E o método dele?', 'sales-coach', 'Conteúdo'),

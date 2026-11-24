@@ -19,6 +19,7 @@ Sales Coach e Atlas levam "um produto NEXA" na assinatura. Os logos são os ofic
 | n2 | NEXA | conteúdo | quantas conversas do seu time você ouviu esta semana? | 6 |
 | n3 | NEXA | conteúdo (curadoria) | 5 livros para quem lidera pessoas | 8 |
 | n4 | NEXA | comercial | decidir sobre pessoas com dados (os dois produtos) | 6 |
+| n5 | NEXA | conteúdo | o dólar bateu r$ 6: ia como alavanca de produtividade (fotos Unsplash, créditos em `fotos/n5-fotos.md`) | 9 |
 | s1 | Sales Coach | educativo | como saber se uma reunião de venda foi boa | 9 |
 | s2 | Sales Coach | conteúdo (curadoria) | o que responder quando o cliente diz "tá caro" | 7 |
 | s3 | Sales Coach | conteúdo | seu melhor vendedor saiu. e o método dele? | 6 |

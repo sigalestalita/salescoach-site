@@ -41,6 +41,25 @@ são dois produtos com a mesma ideia, escutar em escala. o sales coach escuta as
 
 quer ver os dois funcionando na sua empresa? o link está na bio 🔗
 
+## n5 · NEXA · conteúdo · o dólar bateu r$ 6. sua margem sentiu?
+
+o dólar passou de r$ 6 no dia 23 de novembro e acumula alta de mais de 10% no mês (fonte: cnn brasil).
+
+para quem tem empresa, isso não fica no noticiário. aparece na fatura do software, no equipamento, no insumo importado, no frete. o custo sobe primeiro; o preço, quando dá, sobe depois.
+
+e com custo alto, crescer contratando fica caro. a alavanca que sobra é produtividade: fazer mais com o time que você já tem.
+
+é aqui que a ia deixa de ser tendência e vira gestão:
+→ devolve as horas que iam para tarefa repetitiva (resumo, crm, proposta, relatório)
+→ faz cada oportunidade render mais, com menos lead esquecido e mais reunião com próximo passo
+→ transforma o que clientes e time dizem em dado, antes de virar prejuízo
+
+o câmbio ninguém controla. a produtividade do seu time, sim.
+
+o melhor momento para implementar ia é antes de precisar cortar. salva e manda pra quem decide isso aí na sua empresa 🔗
+
+#gestao #inteligenciaartificial #produtividade #empreendedorismo #nexa
+
 ## s1 · Sales Coach · educativo · como saber se uma reunião de venda foi boa
 
 "reunião boa" é o que mais aparece no campo de observações do crm. e não diz nada.

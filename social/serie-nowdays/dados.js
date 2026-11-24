@@ -69,6 +69,28 @@ const POSTS = [
     ],
   },
 
+  {
+    id: 'n5', marca: 'nexa', slug: 'dolar-e-ia', tipo: 'conteúdo', telas: [
+      { tipo: 'capa', modo: 'gig', foto: 'n5-capa', texto: 'o dólar bateu r$\u00a06.\nsua margem sentiu?' },
+      { tipo: 'contexto', foto: 'n5-ctx', titulo: 'o câmbio entra pela porta dos fundos',
+        texto: 'software, equipamento, insumo importado, frete, assinatura cobrada em dólar. quando o câmbio sobe, o custo da empresa sobe junto, quase sempre **antes** de dar para reajustar o preço.' },
+      { tipo: 'dado', foto: 'n5-dado', texto: 'o dólar subiu mais de 10% em novembro e chegou a r$\u00a06 no dia 23',
+        fonte: 'cnn brasil · 23/11/2026' },
+      { tipo: 'virada', titulo: 'com custo alto, crescer contratando fica caro.',
+        texto: 'a alavanca que sobra é a produtividade: fazer mais com o time que você já tem, sem esperar o câmbio ajudar.' },
+      { tipo: 'info', titulo: 'onde a ia devolve margem', itens: [
+        ['tempo que ia para tarefa repetitiva', 'resumo de reunião, crm, proposta, relatório. horas por semana que voltam para o que vende.'],
+        ['cada oportunidade mais bem aproveitada', 'menos lead esquecido, menos reunião sem próximo passo, mais conversão com a mesma equipe.'],
+        ['decisão no tempo certo', 'o que o cliente e o time estão dizendo vira dado antes de virar prejuízo.'],
+      ] },
+      { tipo: 'textoimg', foto: 'n5-txt',
+        a: 'o câmbio você não controla. **a produtividade do seu time, sim.**',
+        b: 'ia não deixa a empresa imune ao dólar. ela deixa a empresa **menos dependente de contratar** para crescer.' },
+      { tipo: 'citacao', frase: 'em tempo de custo alto, eficiência é estratégia.', cred: 'nexa' },
+      { tipo: 'fecha', texto: 'o melhor momento para implementar ia é **antes** de precisar cortar.', cta: 'salva pra discutir com seu time' },
+      { tipo: 'marca', cta: 'sales coach · atlas · fábrica de soluções — link na bio' },
+    ],
+  },
   // ───────────────────────────── SALES COACH ─────────────────────────────
   {
     id: 's1', marca: 'sc', slug: 'reuniao-boa', tipo: 'educativo', telas: [
