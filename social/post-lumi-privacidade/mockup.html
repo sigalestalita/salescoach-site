@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Lumi · confiança</title>
+<link rel="stylesheet" href="fonts/fonts.css">
+<style>
+  /* Identidade do site applumi.io: Newsreader + Figtree, azul #0E398D, verde #8EE03F, papel e céu */
+  :root { --blue: #0E398D; --deep: #0B2A63; --deeper: #071B43; --green: #8EE03F; --green-t: #3D7010; --paper: #FAFBFD; --sky: #EAF0FB; --sky2: #DDE7F8; --ink: #101B33; --muted: #5A6784; --chalk: #DCE6F8; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 1080px; height: 1350px; overflow: hidden; }
+  body { font-family: 'Figtree', sans-serif; color: var(--ink); position: relative;
+    background: radial-gradient(900px 600px at 85% -5%, #e6f6d4 0, transparent 60%), radial-gradient(1000px 800px at 0% 100%, var(--sky) 0, transparent 65%), var(--paper); -webkit-font-smoothing: antialiased; }
+  .serif { font-family: 'Newsreader', serif; }
+  em { font-family: 'Newsreader', serif; font-style: italic; font-weight: 400; }
+
+  .topo { position: absolute; top: 64px; left: 72px; right: 72px; display: flex; justify-content: space-between; align-items: center; }
+  .topo img { height: 40px; }
+  .topo span { font-size: 17px; font-weight: 500; color: var(--muted); letter-spacing: .02em; display: flex; align-items: center; gap: 10px; }
+  .topo span i { width: 9px; height: 9px; border-radius: 50%; background: var(--green); display: block; }
+
+  h1 { position: absolute; left: 72px; right: 72px; top: 160px; font-family: 'Newsreader', serif; font-weight: 400; font-size: 76px; line-height: 1.04; letter-spacing: -.02em; color: var(--deeper); }
+  h1 em { color: var(--blue); }
+
+  .dados { position: absolute; left: 72px; right: 72px; top: 460px; display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .card { border-radius: 28px; padding: 36px 36px 30px; position: relative; }
+  .card.a { background: #fff; box-shadow: 0 30px 60px -30px rgba(14,57,141,.25), 0 0 0 1px rgba(14,57,141,.06); }
+  .card.b { background: var(--blue); color: #fff; }
+  .rot { font-size: 15px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+  .card.b .rot { color: var(--chalk); }
+  .big { font-family: 'Newsreader', serif; font-weight: 400; font-size: 132px; line-height: .9; letter-spacing: -.03em; margin-top: 18px; color: var(--deeper); }
+  .big small { font-size: 60px; letter-spacing: -.01em; }
+  .card p { margin-top: 18px; font-size: 22px; line-height: 1.35; }
+  .fonte { margin-top: 20px; font-size: 13px; line-height: 1.45; color: var(--muted); }
+  .card.b .fonte { color: #9DB0D4; }
+  .barra { margin-top: 22px; }
+  .barra .l { display: flex; justify-content: space-between; align-items: baseline; font-size: 18px; color: var(--chalk); }
+  .barra .l b { font-family: 'Newsreader', serif; font-weight: 400; font-size: 58px; color: #fff; letter-spacing: -.02em; }
+  .barra .t { margin-top: 8px; height: 14px; border-radius: 99px; background: rgba(255,255,255,.14); overflow: hidden; }
+  .barra .t i { display: block; height: 100%; border-radius: 99px; background: #fff; }
+  .barra.cai .t i { background: var(--green); }
+  .barra.cai .l b { color: var(--green); }
+
+  /* Dois mundos */
+  .mundos { position: absolute; left: 72px; right: 72px; top: 930px; height: 270px; display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .m { background: rgba(255,255,255,.75); border-radius: 26px; padding: 26px 28px; box-shadow: 0 0 0 1px rgba(14,57,141,.07); position: relative; }
+  .m .h { display: flex; justify-content: space-between; align-items: center; font-size: 15px; font-weight: 600; color: var(--deep); padding-bottom: 14px; border-bottom: 1px solid rgba(14,57,141,.08); }
+  .m .h small { font-weight: 500; color: var(--muted); font-size: 13px; display: flex; gap: 6px; align-items: center; }
+  .bal { margin-top: 14px; max-width: 86%; padding: 12px 16px; border-radius: 18px; font-size: 17px; line-height: 1.35; }
+  .bal.eu { margin-left: auto; background: var(--blue); color: #fff; border-bottom-right-radius: 6px; }
+  .bal.luz { background: var(--sky); color: var(--ink); border-bottom-left-radius: 6px; }
+  .lin { display: grid; grid-template-columns: 1fr 110px 120px; align-items: center; gap: 12px; padding: 12px 0; font-size: 17px; border-bottom: 1px solid rgba(14,57,141,.06); }
+  .lin:last-child { border-bottom: 0; }
+  .lin .q { color: var(--muted); font-size: 14px; }
+  .lin .s { justify-self: end; font-weight: 600; padding: 6px 12px; border-radius: 10px; font-size: 15px; }
+  .s.ok { background: #e6f6d4; color: var(--green-t); }
+  .s.at { background: #fdf0d5; color: #8a5a00; }
+  .s.oc { background: var(--sky2); color: var(--muted); display: flex; gap: 6px; align-items: center; }
+  .tag { position: absolute; top: -16px; left: 24px; background: var(--deeper); color: #fff; font-size: 13px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; padding: 7px 14px; border-radius: 99px; }
+  .tag.v { background: var(--green); color: var(--deeper); }
+
+  .rod { position: absolute; left: 72px; right: 72px; bottom: 54px; display: flex; justify-content: space-between; align-items: center; font-size: 19px; color: var(--deep); }
+  .rod b { font-weight: 600; }
+  .rod em { font-size: 24px; color: var(--blue); }
+  svg.cad { width: 14px; height: 14px; }
+</style>
+</head>
+<body>
+<div class="topo"><img src="assets/logo-lumi.svg" alt="Lumi"><span><i></i>Saúde mental no trabalho · NR-1</span></div>
+
+<h1>Ferramenta de saúde mental não falta. <em>O que falta é confiança.</em></h1>
+
+<div class="dados">
+  <div class="card a">
+    <div class="rot">Brasil · 2025</div>
+    <div class="big">546<small> mil</small></div>
+    <p>afastamentos do trabalho por transtornos mentais. O maior número da última década.</p>
+    <div class="fonte">Benefícios por incapacidade temporária concedidos pela Previdência Social em 2025 (546.254).</div>
+  </div>
+  <div class="card b">
+    <div class="rot">Quem se sente à vontade para falar</div>
+    <div class="barra"><div class="l"><span>com um psicólogo</span><b>50%</b></div><div class="t"><i style="width:50%"></i></div></div>
+    <div class="barra cai"><div class="l"><span>se ele foi indicado<br>pela empresa</span><b>36%</b></div><div class="t"><i style="width:36%"></i></div></div>
+    <div class="fonte">Pesquisa Saúde Mental em Foco, Vittude e Opinion Box, com 2.007 trabalhadores (2020).</div>
+  </div>
+</div>
+
+<div class="mundos">
+  <div class="m">
+    <span class="tag v">O mundo da pessoa</span>
+    <div class="h">Luz · sua conversa <small><svg class="cad" viewBox="0 0 16 16"><rect x="3" y="7" width="10" height="7" rx="2" fill="#5A6784"/><path d="M5 7V5a3 3 0 0 1 6 0v2" stroke="#5A6784" stroke-width="1.6" fill="none"/></svg>só você vê</small></div>
+    <div class="bal eu">essa semana tá pesada, não tô dando conta de tudo</div>
+    <div class="bal luz">Bora organizar isso por partes? Antes, que tal uma pausa guiada de 3 minutos?</div>
+  </div>
+  <div class="m">
+    <span class="tag">O mundo do RH</span>
+    <div class="h">Painel · carga de trabalho <small>por setor</small></div>
+    <div class="lin"><span>Comercial</span><span class="q">18 pessoas</span><span class="s at">atenção</span></div>
+    <div class="lin"><span>Operação</span><span class="q">42 pessoas</span><span class="s ok">saudável</span></div>
+    <div class="lin"><span>Jurídico</span><span class="q">3 pessoas</span><span class="s oc"><svg class="cad" viewBox="0 0 16 16"><rect x="3" y="7" width="10" height="7" rx="2" fill="#5A6784"/><path d="M5 7V5a3 3 0 0 1 6 0v2" stroke="#5A6784" stroke-width="1.6" fill="none"/></svg>oculto</span></div>
+  </div>
+</div>
+
+<div class="rod"><span>A IA conversa com a pessoa. <em>O RH enxerga o grupo.</em></span><b>applumi.io</b></div>
+<script>window.ready = document.fonts.ready.then(() => new Promise(r => { const i = new Image(); i.onload = i.onerror = r; i.src = 'assets/logo-lumi.svg'; }));</script>
+</body>
+</html>
