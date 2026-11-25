@@ -33,5 +33,7 @@ pra quem constrói produto com IA, principalmente em área sensível: em que mom
 - 50% → 36%: pesquisa "Saúde Mental em Foco", Vittude + Opinion Box, 2.007 trabalhadores, publicada em dez/2020 (via Medicina S/A).
 
 ## Imagem
+- **Usar:** `print-pesquisa-confianca.png`: print real (celular) da matéria da Medicina S/A sobre a pesquisa Vittude/Opinion Box, com o trecho do 36% marcado em amarelo. Gerado com `print.cjs`.
+- Versão antiga (descartada, muito "template"):
 - `lumi-confianca.png` (1080×1350 @2x), gerada por `node render.mjs` a partir de `mockup.html`.
 - Logo, cores e fontes (Newsreader + Figtree) tirados do site applumi.io.
