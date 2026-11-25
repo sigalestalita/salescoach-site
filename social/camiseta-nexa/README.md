@@ -19,3 +19,11 @@ Polo preta premium e minimalista. Na frente, só o logo NEXA pequeno, bordado no
 - **Detalhe escondido:** fita interna da gola em preto com "ia acelera. pessoas dão direção." em lima (Instrument Serif itálico). Só quem veste vê.
 
 Mockup: `polo.html` → `polo.png`.
+
+# Polo NEXA nude (VB Camisetas)
+
+Camisa Polo Piquet Feminina, cor nude, no editor da VB Camisetas.
+
+- **Arte final:** `vb/nexa-polo-peito-arte.png`. Logo NEXA com "AI & TECH SOLUTIONS" menor embaixo, em preto tinta `#10120e`. PNG com fundo transparente, RGB, 300 DPI, tamanho real 8 × 2,5 cm, 100% de opacidade. Gerada a partir de `vb/arte.html`.
+- **Posição:** área "Peito Esquerdo" do editor, no topo da área.
+- Mockup: `polo-nude.html` → `polo-nude.png`.
