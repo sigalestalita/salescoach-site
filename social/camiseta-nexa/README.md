@@ -8,3 +8,14 @@ A frase "pessoas dão direção." fica escondida na camiseta e só aparece com o
 - **Detalhe:** etiqueta tecida lima na barra.
 
 Mockup: `mockup.html` → `mockup.png` (render com Playwright, 1600×1200 @2x).
+
+# Polo NEXA · "Quase nada" (conceito)
+
+Polo preta premium e minimalista. Na frente, só o logo NEXA pequeno, bordado no peito esquerdo de quem veste.
+
+- **Tecido:** piquet de algodão pima, preto profundo.
+- **Logo:** NEXA bordado em linha osso fosca, cerca de 5,5 cm de largura, no peito esquerdo.
+- **Acabamento:** carcela de dois botões foscos tom sobre tom, gola e punhos em ribana, barra com fenda lateral.
+- **Detalhe escondido:** fita interna da gola em preto com "ia acelera. pessoas dão direção." em lima (Instrument Serif itálico). Só quem veste vê.
+
+Mockup: `polo.html` → `polo.png`.
