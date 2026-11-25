@@ -46,20 +46,21 @@
   .capa h1 { position: absolute; left: 72px; right: 60px; top: 900px; font-size: 100px; line-height: .98; font-weight: 500; letter-spacing: -.04em; }
   .capa h1 em { font-size: 114px; }
 
-  /* ── 02 casos ── */
-  .casos h2 { position: absolute; left: 72px; top: 150px; font-size: 64px; line-height: 1.02; font-weight: 500; letter-spacing: -.035em; }
-  .casos h2 em { color: var(--lima); font-size: 72px; }
-  .tab { position: absolute; left: 72px; right: 72px; top: 352px; }
-  .tab .lin { display: grid; grid-template-columns: 210px 250px 1fr; gap: 28px; padding: 30px 0 28px; border-top: 1px solid rgba(243,244,238,.18); align-items: start; }
-  .tab .lin:last-child { border-bottom: 1px solid rgba(243,244,238,.18); }
-  .tab .emp { font-size: 15px; color: #a9ac9c; padding-top: 14px; }
-  .tab .emp b { display: block; margin-top: 8px; font-family: 'Inter Tight'; font-size: 34px; font-weight: 500; letter-spacing: -.02em; text-transform: none; color: var(--osso); }
-  .tab .n { font-size: 108px; line-height: .9; letter-spacing: -.03em; }
-  .tab .n small { display: block; margin-top: 10px; font-family: 'JetBrains Mono'; font-size: 14px; letter-spacing: .08em; text-transform: uppercase; color: var(--lima); }
-  .tab .d { font-size: 22px; line-height: 1.4; color: #d6d8ce; padding-top: 10px; }
-  .tab .d q { font-style: normal; color: var(--osso); quotes: none; }
-  .aviso { position: absolute; left: 72px; right: 72px; top: 1150px; display: flex; gap: 14px; font-size: 15px; line-height: 1.5; color: #c4c7b8; letter-spacing: .03em; }
-  .aviso i { flex: 0 0 auto; width: 10px; height: 10px; background: var(--lima); margin-top: 6px; }
+  /* ── 02 casos: waffle, cada ponto = 1 pessoa ── */
+  .casos h2 { position: absolute; left: 72px; top: 150px; font-size: 76px; line-height: 1; font-weight: 500; letter-spacing: -.035em; }
+  .casos h2 em { color: var(--lima); font-size: 88px; }
+  .waffle { position: absolute; left: 72px; top: 300px; width: 936px; display: grid; grid-template-columns: repeat(30, 1fr); row-gap: 9px; }
+  .waffle i { display: block; width: 22px; height: 22px; border-radius: 50%; margin: 0 auto; }
+  .waffle i.in { background: var(--lima); }
+  .waffle i.bv { background: var(--osso); }
+  .waffle i.it { background: #8c9c56; }
+  .waffle i.vz { border: 1.5px dashed rgba(243,244,238,.35); }
+  .leg3 { position: absolute; left: 72px; right: 72px; top: 960px; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 36px; }
+  .leg3 .k { display: flex; align-items: center; gap: 10px; font-size: 15px; color: #a9ac9c; }
+  .leg3 .k i { width: 14px; height: 14px; border-radius: 50%; display: block; }
+  .leg3 .n { font-size: 84px; line-height: .9; letter-spacing: -.03em; margin-top: 12px; }
+  .leg3 p { margin-top: 10px; font-size: 19px; line-height: 1.4; color: #c9cbbf; }
+  .casos .aviso { position: absolute; left: 72px; right: 72px; top: 1196px; font-size: 14px; color: #8d907f; letter-spacing: .04em; line-height: 1.5; }
 
   /* ── 03 foto ── */
   .foto .img { position: absolute; inset: 0; background: url(fotos/mesa.jpg) center 30% / cover; filter: contrast(1.05) brightness(.92); }
@@ -86,49 +87,56 @@
   .mil .cit::before { content: ''; display: block; width: 40px; height: 1px; background: var(--lima); margin: 0 auto 22px; }
   .mil .rod { color: #a6a999; }
 
-  /* ── 05 produtividade ── */
-  .prod h2 { position: absolute; left: 72px; top: 150px; font-size: 70px; line-height: 1; font-weight: 500; letter-spacing: -.035em; }
-  .prod h2 em { font-size: 80px; color: var(--oliva); }
-  .prod .estudo { position: absolute; left: 72px; top: 320px; font-size: 16px; color: var(--cinza); line-height: 1.6; }
-  .barras { position: absolute; left: 72px; right: 72px; top: 450px; }
-  .barra { display: grid; grid-template-columns: 360px 1fr; gap: 30px; align-items: end; padding: 44px 0; border-top: 1px solid rgba(16,18,14,.16); }
-  .barra:last-child { border-bottom: 1px solid rgba(16,18,14,.16); }
-  .barra .n { font-size: 190px; line-height: .8; letter-spacing: -.045em; }
-  .barra .n sup { font-size: 60px; vertical-align: top; position: relative; top: 10px; }
-  .barra .r { font-size: 28px; line-height: 1.35; padding-bottom: 6px; }
-  .barra .r .mono { display: block; font-size: 13px; color: var(--cinza); margin-bottom: 10px; }
-  .barra .trilho { margin-top: 20px; height: 18px; background: var(--osso-2); border-radius: 2px; position: relative; overflow: hidden; }
-  .barra .trilho i { position: absolute; left: 0; top: 0; bottom: 0; background: var(--tinta); }
-  .barra .trilho i.l { background: var(--lima); box-shadow: inset 0 0 0 1px rgba(16,18,14,.25); }
-  .prod .insight { position: absolute; left: 72px; right: 72px; top: 1030px; font-size: 46px; line-height: 1.12; letter-spacing: -.025em; font-weight: 500; }
-  .prod .insight em { font-size: 54px; }
+  /* ── 05 produtividade: colunas que sobem ── */
+  .prod { background: #2e3a07; color: var(--osso); }
+  .prod .cab { color: var(--osso); }
+  .prod h2 { position: absolute; left: 72px; top: 150px; font-size: 68px; line-height: 1; font-weight: 500; letter-spacing: -.035em; }
+  .prod h2 em { font-size: 78px; color: var(--lima); }
+  .prod .estudo { position: absolute; left: 72px; top: 262px; font-size: 14px; color: #b9c08f; line-height: 1.6; }
+  .prod .insight { position: absolute; left: 72px; width: 520px; top: 400px; font-size: 38px; line-height: 1.12; letter-spacing: -.025em; font-weight: 500; }
+  .prod .insight em { font-size: 44px; color: var(--lima); }
+  .colu { position: absolute; bottom: 0; width: 420px; border-radius: 6px 6px 0 0; padding: 30px 34px; }
+  .colu .n { font-size: 200px; line-height: .8; letter-spacing: -.05em; }
+  .colu .n sup { font-size: 72px; vertical-align: top; position: relative; top: 14px; }
+  .colu .r { margin-top: 18px; font-size: 24px; line-height: 1.3; }
+  .colu.a { left: 72px; height: 340px; background: rgba(243,244,238,.1); border: 1px solid rgba(243,244,238,.25); border-bottom: 0; }
+  .colu.b { right: 72px; height: 780px; background: var(--lima); color: var(--tinta); }
+  .colu .tag { position: absolute; left: 0; top: -40px; font-size: 14px; color: #b9c08f; }
+  .prod .rod { color: #b9c08f; z-index: 20; }
+  .prod .rod .pag { color: var(--tinta); }
 
-  /* ── 06 duas contas ── */
-  .contas h2 { position: absolute; left: 72px; top: 150px; font-size: 68px; width: 900px; line-height: 1; font-weight: 500; letter-spacing: -.035em; }
-  .contas h2 em { font-size: 78px; }
-  .col { position: absolute; top: 400px; width: 448px; height: 790px; border-radius: 4px; padding: 40px 38px; display: flex; flex-direction: column; }
-  .col.a { left: 72px; border: 1px solid rgba(16,18,14,.28); }
-  .col.b { right: 72px; background: var(--tinta); color: var(--osso); }
-  .col .mono { font-size: 15px; color: var(--cinza); }
-  .col.b .mono { color: var(--lima); }
-  .col h3 { margin-top: 22px; font-size: 48px; line-height: 1.04; font-weight: 500; letter-spacing: -.03em; }
-  .col h3 em { font-size: 56px; }
-  .col.b h3 em { color: var(--lima); }
-  .col svg { margin-top: auto; width: 100%; height: 250px; overflow: visible; }
-  .col ul { list-style: none; margin-top: 34px; font-size: 25px; line-height: 1.4; }
-  .col ul li { padding: 12px 0; border-top: 1px solid rgba(16,18,14,.14); }
-  .col.b ul li { border-color: rgba(243,244,238,.16); }
+  /* ── 06 duas contas: tela dividida ── */
+  .contas { background: linear-gradient(90deg, var(--osso) 50%, var(--tinta) 50%); }
+  .contas .cab span { color: var(--osso); }
+  .contas .cab::after { display: none; }
+  .meio { position: absolute; left: 540px; top: 190px; transform: translateX(-50%); width: 160px; height: 160px; border-radius: 50%; background: var(--lima); display: grid; place-items: center; text-align: center; font-size: 17px; line-height: 1.5; z-index: 5; }
+  .lado { position: absolute; top: 400px; width: 540px; height: 820px; padding: 0 64px 0 72px; }
+  .lado.a { left: 0; }
+  .lado.b { left: 540px; padding: 0 72px 0 64px; color: var(--osso); }
+  .lado .mono { font-size: 15px; color: var(--cinza); }
+  .lado.b .mono { color: var(--lima); }
+  .lado h3 { margin-top: 20px; font-size: 62px; line-height: 1; font-weight: 500; letter-spacing: -.035em; }
+  .lado h3 em { font-size: 70px; }
+  .lado.b h3 em { color: var(--lima); }
+  .lado p { margin-top: 28px; font-size: 24px; line-height: 1.45; color: #43463d; }
+  .lado.b p { color: #c9cbbf; }
+  .lado svg { position: absolute; left: 72px; right: 64px; bottom: 60px; width: 400px; height: 230px; overflow: visible; }
+  .lado.b svg { left: 64px; }
+  .contas .titulo { position: absolute; left: 72px; top: 160px; font-size: 15px; color: var(--cinza); width: 300px; line-height: 1.6; }
+  .contas .titulo2 { position: absolute; right: 72px; top: 160px; font-size: 15px; color: #a9ac9c; width: 300px; text-align: right; line-height: 1.6; }
+  .contas .rod .fonte { color: var(--cinza); }
 
-  /* ── 07 três práticas ── */
-  .prat h2 { position: absolute; left: 72px; top: 150px; font-size: 76px; line-height: 1; font-weight: 500; letter-spacing: -.035em; width: 900px; }
-  .prat h2 em { font-size: 88px; color: var(--oliva); }
-  .itens { position: absolute; left: 72px; right: 72px; top: 420px; }
-  .item { display: grid; grid-template-columns: 160px 1fr; gap: 20px; padding: 46px 0; border-top: 1px solid rgba(16,18,14,.2); }
-  .item:last-child { border-bottom: 1px solid rgba(16,18,14,.2); }
-  .item .i { font-size: 120px; line-height: .8; letter-spacing: -.03em; color: var(--oliva); }
-  .item h3 { font-size: 46px; line-height: 1.05; font-weight: 500; letter-spacing: -.025em; }
-  .item p { margin-top: 14px; font-size: 26px; line-height: 1.42; color: #43463d; }
-  .item p b { font-weight: 600; color: var(--tinta); background: linear-gradient(transparent 62%, var(--lima) 62%); }
+  /* ── 07 três trocas: tipografia riscada ── */
+  .prat h2 { position: absolute; left: 72px; top: 150px; font-size: 48px; line-height: 1.15; font-weight: 500; letter-spacing: -.02em; width: 900px; }
+  .prat h2 em { font-size: 56px; color: var(--oliva); }
+  .trocas { position: absolute; left: 72px; right: 72px; top: 350px; }
+  .troca + .troca { margin-top: 78px; }
+  .troca .mono { font-size: 15px; color: var(--oliva); }
+  .troca .big { margin-top: 10px; font-size: 90px; line-height: 1; font-weight: 500; letter-spacing: -.045em; }
+  .troca .big s { text-decoration: none; position: relative; color: #a3a69a; font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; letter-spacing: -.01em; margin-right: 10px; }
+  .troca .big s::after { content: ''; position: absolute; left: -4px; right: -4px; top: 54%; height: 5px; background: var(--tinta); }
+  .troca .big b { font-weight: 500; background: linear-gradient(transparent 64%, var(--lima) 64%, var(--lima) 94%, transparent 94%); }
+  .troca p { margin-top: 16px; font-size: 24px; line-height: 1.42; color: #43463d; max-width: 860px; }
 
   /* ── 08 frase ── */
   .frase .aspas { position: absolute; left: 64px; top: 150px; font-size: 320px; line-height: 1; color: var(--lima); }
@@ -154,6 +162,8 @@ const cab = (txt, c = '#10120e') => `<div class="cab mono">${LOGO(c)}<span>${txt
 const rod = (n, fonte) => `<div class="rod mono"><span class="fonte">${fonte || ''}</span><span class="pag">${String(n).padStart(2, '0')} / 09${n < 9 ? ' &nbsp;→' : ''}</span></div>`;
 
 // 60 pontos = ~600 pessoas (cada ponto, 10)
+const cores = [...Array(200).fill('in'), ...Array(275).fill('bv'), ...Array(123).fill('it'), 'vz', 'vz'];
+const waffle = cores.map(c => `<i class="${c}"></i>`).join('');
 const pontos = Array.from({ length: 60 }, (_, i) => `<i class="${i < 60 ? '' : 'v'}"></i>`).join('');
 
 const S = {
@@ -169,15 +179,15 @@ const S = {
 
   2: { cls: 'casos escuro', html: `
     ${cab('O que aconteceu', '#f3f4ee')}
-    <h2>Quatro casos, <em>um mesmo mês.</em></h2>
-    <div class="tab">
-      <div class="lin"><div class="emp mono">Banco digital<b>Inter</b></div><div class="n serif">200+<small>~4,7% do quadro</small></div><div class="d">Empresa confirma <q>“mudanças na estrutura e no modelo de atuação”</q>, sem número.</div></div>
-      <div class="lin"><div class="emp mono">Banco<b>BV</b></div><div class="n serif">275<small>~6% do quadro</small></div><div class="d">Justificativa relatada: <q>“aumento da produtividade e da eficiência operacional”</q>.</div></div>
-      <div class="lin"><div class="emp mono">Itaú · Emp+<b>Itaú</b></div><div class="n serif">123<small>de 554 na reestruturação</small></div><div class="d">Área substituída por uma plataforma de IA generativa. <q>324 foram realocadas.</q></div></div>
-      <div class="lin"><div class="emp mono">Fraude<b>Nubank</b></div><div class="n serif">30+<small>em 03/11</small></div><div class="d">Análise passou a ser automatizada com IA, segundo funcionários. A empresa segue contratando.</div></div>
+    <h2>Cada ponto é <em>uma pessoa.</em></h2>
+    <div class="waffle">${waffle}</div>
+    <div class="leg3">
+      <div><div class="k mono"><i style="background:#d4f969"></i>Inter</div><div class="n serif">200+</div><p>~4,7% do quadro. Mudança no “modelo de atuação”.</p></div>
+      <div><div class="k mono"><i style="background:#f3f4ee"></i>BV</div><div class="n serif">275</div><p>~6% do quadro. “Aumento da produtividade e da eficiência.”</p></div>
+      <div><div class="k mono"><i style="background:#8c9c56"></i>Itaú</div><div class="n serif">123</div><p>Área trocada por IA generativa. Outros 324 foram realocados.</p></div>
     </div>
-    <div class="aviso"><i></i><span>Números de sindicatos e reportagens. As empresas não confirmaram totais, e só o caso Itaú cita IA de forma direta.</span></div>
-    ${rod(2, 'Fontes: Revista Fórum (25/11), Folha via Piranot (05/11)')}` },
+    <div class="aviso mono">Números de sindicatos. As empresas não confirmaram totais.</div>
+    ${rod(2, 'Fonte: Revista Fórum (25/11/2026)')}` },
 
   3: { cls: 'foto escuro', html: `
     <div class="img"></div><div class="vela"></div>
@@ -200,47 +210,45 @@ const S = {
     <div class="cit">“A tecnologia deveria servir às pessoas, não para retirar delas seu emprego e sua fonte de sustento.”<br><span class="mono" style="font-size:13px;color:#8d907f">Neiva Ribeiro · Sindicato dos Bancários de SP</span></div>
     ${rod(4, 'Fonte: Valor Econômico, via Let’s Money (24/11/2026) · foto: Kevin Matos / Unsplash')}` },
 
-  5: { cls: 'prod', html: `
-    ${cab('O outro lado da conta')}
+  5: { cls: 'prod escuro', html: `
+    ${cab('O outro lado da conta', '#f3f4ee')}
     <h2>O ganho de produtividade <em>é real.</em></h2>
-    <div class="estudo mono">Estudo com 5.179 atendentes usando IA generativa<br>Brynjolfsson, Li &amp; Raymond · Quarterly Journal of Economics, 2025</div>
-    <div class="barras">
-      <div class="barra"><div class="n serif">+14<sup>%</sup></div><div class="r"><span class="mono">Média do time</span>problemas resolvidos por hora<div class="trilho"><i style="width:14%"></i></div></div></div>
-      <div class="barra"><div class="n serif">+34<sup>%</sup></div><div class="r"><span class="mono">Quem estava começando</span>o maior salto foi de quem tinha menos experiência<div class="trilho"><i class="l" style="width:34%"></i></div></div></div>
-    </div>
+    <div class="estudo mono">5.179 atendentes com IA generativa · Brynjolfsson, Li &amp; Raymond, QJE 2025</div>
     <div class="insight">A IA não substituiu os melhores. <em>Espalhou o que eles sabiam</em> para o resto do time.</div>
-    ${rod(5, 'Generative AI at Work · QJE, vol. 140, 2025')}` },
+    <div class="colu a"><span class="tag mono">Média do time</span><div class="n serif">+14<sup>%</sup></div><div class="r">problemas resolvidos por hora</div></div>
+    <div class="colu b"><span class="tag mono">Quem estava começando</span><div class="n serif">+34<sup>%</sup></div><div class="r">o maior salto foi de quem tinha menos experiência</div></div>
+    ${rod(5)}` },
 
   6: { cls: 'contas', html: `
     ${cab('A decisão')}
-    <h2>A mesma tecnologia.<br><em>Duas contas.</em></h2>
-    <div class="col a">
+    <div class="titulo mono">A mesma tecnologia.</div>
+    <div class="titulo2 mono">Duas contas.</div>
+    <div class="meio mono">mesma<br>IA</div>
+    <div class="lado a">
       <span class="mono">Conta 1</span>
       <h3>Fazer o mesmo <em>com menos gente.</em></h3>
-      <ul><li>Corta custo uma vez</li><li>Leva junto quem conhece o cliente</li><li>A capacidade fica igual</li></ul>
-      <svg viewBox="0 0 372 250"><line x1="0" y1="249" x2="372" y2="249" stroke="#10120e" stroke-opacity=".3"/>
-        <path d="M0 70 H140 L170 170 H372" fill="none" stroke="#10120e" stroke-width="2.5"/>
-        <circle cx="372" cy="170" r="6" fill="#10120e"/>
-        <text x="0" y="56" font-family="JetBrains Mono" font-size="12" letter-spacing="1" fill="#6b6e64">CUSTO</text></svg>
+      <p>O custo cai uma vez. Quem conhecia o cliente vai embora junto.</p>
+      <svg viewBox="0 0 400 230"><line x1="0" y1="229" x2="400" y2="229" stroke="#10120e" stroke-opacity=".25"/>
+        <path d="M0 60 H170 L200 160 H400" fill="none" stroke="#10120e" stroke-width="3"/><circle cx="400" cy="160" r="7" fill="#10120e"/>
+        <text x="0" y="40" font-family="JetBrains Mono" font-size="13" letter-spacing="1.5" fill="#6b6e64">CUSTO</text></svg>
     </div>
-    <div class="col b">
+    <div class="lado b">
       <span class="mono">Conta 2</span>
       <h3>Fazer mais <em>com as mesmas pessoas.</em></h3>
-      <ul><li>Ganho que se acumula todo mês</li><li>Experiência vira vantagem</li><li>A capacidade cresce</li></ul>
-      <svg viewBox="0 0 372 250"><line x1="0" y1="249" x2="372" y2="249" stroke="#f3f4ee" stroke-opacity=".3"/>
-        <path d="M0 200 C120 196 170 150 230 110 S330 30 372 18" fill="none" stroke="#d4f969" stroke-width="2.5"/>
-        <circle cx="372" cy="18" r="6" fill="#d4f969"/>
-        <text x="0" y="172" font-family="JetBrains Mono" font-size="12" letter-spacing="1" fill="#a9ac9c">CAPACIDADE</text></svg>
+      <p>A capacidade cresce todo mês. A experiência do time vira vantagem.</p>
+      <svg viewBox="0 0 400 230"><line x1="0" y1="229" x2="400" y2="229" stroke="#f3f4ee" stroke-opacity=".25"/>
+        <path d="M0 200 C130 196 180 150 240 105 S350 25 400 14" fill="none" stroke="#d4f969" stroke-width="3"/><circle cx="400" cy="14" r="7" fill="#d4f969"/>
+        <text x="0" y="176" font-family="JetBrains Mono" font-size="13" letter-spacing="1.5" fill="#a9ac9c">CAPACIDADE</text></svg>
     </div>
     ${rod(6)}` },
 
   7: { cls: 'prat', html: `
     ${cab('O que separa as duas')}
-    <h2>Três decisões<br>antes de <em>qualquer corte.</em></h2>
-    <div class="itens">
-      <div class="item"><div class="i serif">01</div><div><h3>Mapear tarefas, não cargos.</h3><p>IA automatiza partes do trabalho. Quase nunca o trabalho inteiro de uma pessoa.</p></div></div>
-      <div class="item"><div class="i serif">02</div><div><h3>Requalificar quem conhece o cliente.</h3><p>Contexto não se compra pronto. No próprio Itaú, <b>324 de 554 pessoas foram realocadas.</b></p></div></div>
-      <div class="item"><div class="i serif">03</div><div><h3>Medir produtividade em resultado.</h3><p>Receita por pessoa, tempo de resposta, cliente retido. Headcount é custo, não é métrica de eficiência.</p></div></div>
+    <h2>Três trocas antes de <em>qualquer corte.</em></h2>
+    <div class="trocas">
+      <div class="troca"><span class="mono">01</span><div class="big">Mapear <s>cargos</s> <b>tarefas.</b></div><p>IA automatiza partes do trabalho. Quase nunca o trabalho inteiro de uma pessoa.</p></div>
+      <div class="troca"><span class="mono">02</span><div class="big"><s>Demitir</s> <b>requalificar.</b></div><p>Quem conhece o cliente é o mais difícil de repor. No próprio Itaú, 324 das 554 pessoas da reestruturação foram realocadas.</p></div>
+      <div class="troca"><span class="mono">03</span><div class="big">Medir <s>headcount</s> <b>resultado.</b></div><p>Receita por pessoa, tempo de resposta, cliente retido.</p></div>
     </div>
     ${rod(7)}` },
 
