@@ -27,3 +27,4 @@ Camisa Polo Piquet Feminina, cor nude, no editor da VB Camisetas.
 - **Arte final:** `vb/nexa-polo-peito-arte.png`. Logo NEXA com "AI & TECH SOLUTIONS" menor embaixo, em preto tinta `#10120e`. PNG com fundo transparente, RGB, 300 DPI, tamanho real 8 × 2,5 cm, 100% de opacidade. Gerada a partir de `vb/arte.html`.
 - **Posição:** área "Peito Esquerdo" do editor, no topo da área.
 - Mockup: `polo-nude.html` → `polo-nude.png`.
+- **Costas:** `vb/nexa-polo-costas-arte.png`. "ia acelera. pessoas dão direção." em Inter Tight, preto tinta, 8 × 0,6 cm, 300 DPI, fundo transparente. Centralizada, cerca de 4 cm abaixo da costura da gola. Gerada a partir de `vb/arte-costas.html`. Mockup: `polo-nude-costas.png`.
