@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Camiseta NEXA · Calor humano</title>
+<link rel="stylesheet" href="../serie-nowdays/inter.css">
+<link rel="stylesheet" href="../serie-nowdays/instrument.css">
+<style>
+  :root { --osso: #f3f4ee; --tinta: #10120e; --lima: #d4f969; --oliva: #46590a; }
+  * { box-sizing: border-box; margin: 0; }
+  body { width: 1600px; height: 1200px; background: var(--osso); color: var(--tinta); font-family: 'Inter Tight', sans-serif; position: relative; overflow: hidden; }
+  .topo { position: absolute; left: 90px; top: 72px; right: 90px; display: flex; justify-content: space-between; align-items: flex-end; }
+  .kick { font-size: 15px; letter-spacing: .32em; font-weight: 700; text-transform: uppercase; color: var(--oliva); }
+  h1 { font-family: 'Instrument Serif', serif; font-weight: 400; font-size: 96px; line-height: .95; letter-spacing: -.02em; margin-top: 14px; }
+  h1 em { font-style: italic; }
+  .topo p { max-width: 520px; font-size: 21px; line-height: 1.4; color: #3a3d35; }
+  .camisas { position: absolute; top: 300px; left: 60px; right: 60px; display: flex; justify-content: space-around; }
+  .cam { width: 640px; text-align: center; }
+  .cam svg { width: 600px; height: auto; filter: drop-shadow(0 30px 40px rgba(16,18,14,.22)); }
+  .cam .leg { margin-top: 18px; font-size: 15px; letter-spacing: .26em; text-transform: uppercase; font-weight: 700; }
+  .cam .leg span { display: block; margin-top: 8px; font-weight: 400; letter-spacing: 0; text-transform: none; font-size: 19px; color: #4a4d44; }
+  .seta { position: absolute; top: 590px; left: 50%; transform: translateX(-50%); font-family: 'Instrument Serif', serif; font-style: italic; font-size: 34px; color: var(--oliva); text-align: center; line-height: 1; }
+  .seta b { display: block; font-family: 'Inter Tight'; font-style: normal; font-size: 46px; font-weight: 400; margin-top: 6px; }
+  .rod { position: absolute; left: 90px; right: 90px; bottom: 60px; display: flex; justify-content: space-between; font-size: 14px; letter-spacing: .2em; text-transform: uppercase; color: #6a6d62; }
+</style>
+</head>
+<body>
+<div class="topo">
+  <div><div class="kick">NEXA · camiseta · conceito</div><h1>Calor <em>humano.</em></h1></div>
+  <p>A frase "pessoas dão direção." fica escondida na camiseta. Ela só aparece com calor humano: um abraço, uma mão no ombro, um dia de trabalho. A IA acelera, mas quem revela o caminho é gente.</p>
+</div>
+
+<div class="camisas">
+  <div class="cam" id="a"></div>
+  <div class="cam" id="b"></div>
+</div>
+<div class="seta">um abraço<b>→</b></div>
+
+<div class="rod"><span>tinta termocrômica · ativa a 31 °C</span><span>IA acelera. pessoas dão direção.</span></div>
+
+<script>
+function camisa(revelada) {
+  const id = revelada ? 'b' : 'a';
+  const frase = `<text x="300" y="392" text-anchor="middle" font-family="Instrument Serif" font-style="italic" font-size="62" letter-spacing="-1">pessoas dão</text>
+    <text x="300" y="462" text-anchor="middle" font-family="Instrument Serif" font-style="italic" font-size="62" letter-spacing="-1">direção.</text>`;
+  return `<svg viewBox="0 0 600 640" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <clipPath id="corpo-${id}"><path d="M128 44 L232 14 Q300 58 368 14 L472 44 L584 130 L532 224 L480 194 L480 628 Q300 640 120 628 L120 194 L68 224 L16 130 Z"/></clipPath>
+    <radialGradient id="calor-${id}" cx="50%" cy="50%" r="50%">
+      <stop offset="0" stop-color="#fff" stop-opacity="1"/><stop offset=".55" stop-color="#fff" stop-opacity=".9"/><stop offset="1" stop-color="#fff" stop-opacity="0"/>
+    </radialGradient>
+    <mask id="m-${id}">
+      <ellipse cx="250" cy="410" rx="230" ry="120" fill="url(#calor-${id})"/>
+      <ellipse cx="390" cy="380" rx="150" ry="110" fill="url(#calor-${id})"/>
+    </mask>
+    <radialGradient id="luz-${id}" cx="35%" cy="20%" r="80%"><stop offset="0" stop-color="#2a2e25"/><stop offset="1" stop-color="#0d0f0b"/></radialGradient>
+  </defs>
+  <path d="M128 44 L232 14 Q300 58 368 14 L472 44 L584 130 L532 224 L480 194 L480 628 Q300 640 120 628 L120 194 L68 224 L16 130 Z" fill="url(#luz-${id})"/>
+  <g clip-path="url(#corpo-${id})">
+    <path d="M120 194 Q142 400 122 628" stroke="#000" stroke-opacity=".35" stroke-width="10" fill="none"/>
+    <path d="M480 194 Q458 400 478 628" stroke="#000" stroke-opacity=".35" stroke-width="10" fill="none"/>
+    <path d="M232 14 Q300 74 368 14" stroke="#262a22" stroke-width="16" fill="none"/>
+    <!-- peito: logo NEXA pequeno -->
+    <g transform="translate(220 180) scale(.2)"><path fill="none" stroke="#f3f4ef" stroke-width="12" stroke-linecap="round" d="M8 139V12L175 139V12M200 12H366M200 12V139H366M200 75H366M390 12L558 139M558 12L390 139M580 139L685 12L792 139M618 95H755"/></g>
+    <text x="300" y="268" text-anchor="middle" font-family="Inter Tight" font-weight="700" font-size="22" letter-spacing="7" fill="#f3f4ef" opacity=".9">IA ACELERA.</text>
+    <!-- frase escondida: tinta termocrômica preta sobre base lima -->
+    <g fill="#191c15">${frase}</g>
+    ${revelada ? `<g fill="#d4f969" mask="url(#m-${id})">${frase}</g>
+      <g mask="url(#m-${id})" opacity=".18"><ellipse cx="300" cy="400" rx="300" ry="160" fill="#d4f969"/></g>` : ''}
+    <!-- barra: etiqueta tecida -->
+    <rect x="434" y="596" width="30" height="16" rx="2" fill="#d4f969"/>
+  </g>
+</svg>
+<div class="leg">${revelada ? 'com calor humano' : 'temperatura ambiente'}<span>${revelada ? 'onde o corpo encosta, o preto some e a lima aparece.' : 'a frase está ali, quase invisível, preto sobre preto.'}</span></div>`;
+}
+document.getElementById('a').innerHTML = camisa(false);
+document.getElementById('b').innerHTML = camisa(true);
+window.ready = document.fonts.ready;
+</script>
+</body>
+</html>
