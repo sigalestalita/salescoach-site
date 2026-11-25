@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Layoffs × produtividade com IA</title>
+<link rel="stylesheet" href="../serie-nowdays/inter.css">
+<link rel="stylesheet" href="../serie-nowdays/instrument.css">
+<link rel="stylesheet" href="../instagram-nexa/nexa-fonts.css">
+<style>
+  /* Estética "relatório": serifa grande para números, mono para dados,
+     fios finos, notas de fonte como em jornal. Osso, tinta, lima. */
+  :root { --osso: #f3f4ee; --osso-2: #e7e9df; --tinta: #10120e; --lima: #d4f969; --oliva: #46590a; --cinza: #6b6e64; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 1080px; height: 1350px; overflow: hidden; }
+  body { font-family: 'Inter Tight', sans-serif; color: var(--tinta); background: var(--osso); position: relative; -webkit-font-smoothing: antialiased; }
+  .serif { font-family: 'Instrument Serif', serif; font-weight: 400; }
+  .mono { font-family: 'JetBrains Mono', monospace; letter-spacing: .08em; text-transform: uppercase; }
+  em { font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; letter-spacing: -.01em; }
+
+  .grao::after { content: ''; position: absolute; inset: 0; z-index: 50; pointer-events: none; opacity: .09; mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>"); }
+  .escuro.grao::after { mix-blend-mode: screen; opacity: .07; }
+
+  /* Cabeçalho e rodapé de relatório */
+  .cab { position: absolute; top: 64px; left: 72px; right: 72px; display: flex; justify-content: space-between; align-items: center; font-size: 17px; z-index: 10; }
+  .cab::after { content: ''; position: absolute; left: 0; right: 0; bottom: -20px; height: 1px; background: currentColor; opacity: .22; }
+  .rod { position: absolute; bottom: 58px; left: 72px; right: 72px; display: flex; justify-content: space-between; align-items: flex-end; font-size: 14px; color: var(--cinza); z-index: 10; gap: 40px; }
+  .rod .fonte { max-width: 760px; line-height: 1.5; letter-spacing: .04em; }
+  .rod .pag { white-space: nowrap; }
+  .escuro { background: var(--tinta); color: var(--osso); }
+  .escuro .rod { color: #8d907f; }
+  .lima-bg { background: var(--lima); }
+  .marca-txt { display: inline-block; background: linear-gradient(transparent 58%, var(--lima) 58%, var(--lima) 92%, transparent 92%); padding: 0 4px; }
+
+  .logo { width: 112px; height: 21px; display: block; }
+
+  /* ── 01 capa ── */
+  .capa .num { position: absolute; left: 52px; top: 150px; font-size: 560px; line-height: .8; letter-spacing: -.055em; }
+    .capa .pontos { position: absolute; right: 72px; top: 330px; width: 280px; display: grid; grid-template-columns: repeat(10, 1fr); gap: 10px; }
+  .capa .pontos i { width: 18px; height: 18px; border-radius: 50%; background: var(--tinta); display: block; }
+  .capa .pontos i.v { background: transparent; border: 1.5px solid var(--tinta); opacity: .5; }
+  .capa .pontos-leg { position: absolute; right: 72px; top: 520px; width: 280px; font-size: 13px; line-height: 1.6; color: var(--cinza); }
+  .capa .linha { position: absolute; left: 72px; right: 72px; top: 650px; height: 1px; background: var(--tinta); opacity: .9; }
+  .capa .sub { position: absolute; left: 72px; top: 690px; width: 560px; font-size: 28px; line-height: 1.38; }
+  .capa .sub b { font-weight: 600; }
+  .capa h1 { position: absolute; left: 72px; right: 60px; top: 900px; font-size: 100px; line-height: .98; font-weight: 500; letter-spacing: -.04em; }
+  .capa h1 em { font-size: 114px; }
+
+  /* ── 02 casos ── */
+  .casos h2 { position: absolute; left: 72px; top: 150px; font-size: 64px; line-height: 1.02; font-weight: 500; letter-spacing: -.035em; }
+  .casos h2 em { color: var(--lima); font-size: 72px; }
+  .tab { position: absolute; left: 72px; right: 72px; top: 352px; }
+  .tab .lin { display: grid; grid-template-columns: 210px 250px 1fr; gap: 28px; padding: 30px 0 28px; border-top: 1px solid rgba(243,244,238,.18); align-items: start; }
+  .tab .lin:last-child { border-bottom: 1px solid rgba(243,244,238,.18); }
+  .tab .emp { font-size: 15px; color: #a9ac9c; padding-top: 14px; }
+  .tab .emp b { display: block; margin-top: 8px; font-family: 'Inter Tight'; font-size: 34px; font-weight: 500; letter-spacing: -.02em; text-transform: none; color: var(--osso); }
+  .tab .n { font-size: 108px; line-height: .9; letter-spacing: -.03em; }
+  .tab .n small { display: block; margin-top: 10px; font-family: 'JetBrains Mono'; font-size: 14px; letter-spacing: .08em; text-transform: uppercase; color: var(--lima); }
+  .tab .d { font-size: 22px; line-height: 1.4; color: #d6d8ce; padding-top: 10px; }
+  .tab .d q { font-style: normal; color: var(--osso); quotes: none; }
+  .aviso { position: absolute; left: 72px; right: 72px; top: 1150px; display: flex; gap: 14px; font-size: 15px; line-height: 1.5; color: #c4c7b8; letter-spacing: .03em; }
+  .aviso i { flex: 0 0 auto; width: 10px; height: 10px; background: var(--lima); margin-top: 6px; }
+
+  /* ── 03 foto ── */
+  .foto .img { position: absolute; inset: 0; background: url(fotos/mesa.jpg) center 30% / cover; filter: contrast(1.05) brightness(.92); }
+  .foto .vela { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(16,18,14,.0) 30%, rgba(16,18,14,.55) 55%, rgba(16,18,14,.94) 82%); }
+  .foto .cab { color: var(--osso); }
+  .foto .etq { position: absolute; left: 72px; top: 150px; background: var(--lima); color: var(--tinta); padding: 10px 16px; font-size: 15px; }
+  .foto .txt { position: absolute; left: 72px; right: 72px; bottom: 170px; color: var(--osso); }
+  .foto h2 { font-size: 78px; line-height: 1; font-weight: 500; letter-spacing: -.035em; }
+  .foto h2 em { font-size: 88px; color: var(--lima); }
+  .foto p { margin-top: 30px; font-size: 25px; line-height: 1.45; color: #d9dbd0; max-width: 840px; }
+  .foto .rod { color: #a6a999; }
+
+  /* ── 04 15,2 mil ── */
+  .mil .img { position: absolute; left: 0; right: 0; top: 0; height: 1350px; background: url(fotos/predios.jpg) center / cover; filter: grayscale(1) contrast(1.15) brightness(.55); }
+  .mil .vela { position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 46%, rgba(16,18,14,.2), rgba(16,18,14,.85) 75%); }
+  .mil .cab { color: var(--osso); }
+  .mil .bloco { position: absolute; left: 0; right: 0; top: 330px; text-align: center; color: var(--osso); }
+  .mil .k { font-size: 17px; color: var(--lima); }
+  .mil .grande { font-size: 330px; line-height: .86; letter-spacing: -.05em; margin-top: 30px; }
+  .mil .grande span { font-size: 150px; letter-spacing: -.02em; }
+  .mil .leg { margin: 40px auto 0; width: 760px; font-size: 32px; line-height: 1.32; letter-spacing: -.01em; }
+  .mil .leg em { font-size: 38px; color: var(--lima); }
+  .mil .cit { position: absolute; left: 140px; right: 140px; top: 1000px; text-align: center; color: #c9cbbf; font-size: 22px; line-height: 1.45; }
+  .mil .cit::before { content: ''; display: block; width: 40px; height: 1px; background: var(--lima); margin: 0 auto 22px; }
+  .mil .rod { color: #a6a999; }
+
+  /* ── 05 produtividade ── */
+  .prod h2 { position: absolute; left: 72px; top: 150px; font-size: 70px; line-height: 1; font-weight: 500; letter-spacing: -.035em; }
+  .prod h2 em { font-size: 80px; color: var(--oliva); }
+  .prod .estudo { position: absolute; left: 72px; top: 320px; font-size: 16px; color: var(--cinza); line-height: 1.6; }
+  .barras { position: absolute; left: 72px; right: 72px; top: 450px; }
+  .barra { display: grid; grid-template-columns: 360px 1fr; gap: 30px; align-items: end; padding: 44px 0; border-top: 1px solid rgba(16,18,14,.16); }
+  .barra:last-child { border-bottom: 1px solid rgba(16,18,14,.16); }
+  .barra .n { font-size: 190px; line-height: .8; letter-spacing: -.045em; }
+  .barra .n sup { font-size: 60px; vertical-align: top; position: relative; top: 10px; }
+  .barra .r { font-size: 28px; line-height: 1.35; padding-bottom: 6px; }
+  .barra .r .mono { display: block; font-size: 13px; color: var(--cinza); margin-bottom: 10px; }
+  .barra .trilho { margin-top: 20px; height: 18px; background: var(--osso-2); border-radius: 2px; position: relative; overflow: hidden; }
+  .barra .trilho i { position: absolute; left: 0; top: 0; bottom: 0; background: var(--tinta); }
+  .barra .trilho i.l { background: var(--lima); box-shadow: inset 0 0 0 1px rgba(16,18,14,.25); }
+  .prod .insight { position: absolute; left: 72px; right: 72px; top: 1030px; font-size: 46px; line-height: 1.12; letter-spacing: -.025em; font-weight: 500; }
+  .prod .insight em { font-size: 54px; }
+
+  /* ── 06 duas contas ── */
+  .contas h2 { position: absolute; left: 72px; top: 150px; font-size: 68px; width: 900px; line-height: 1; font-weight: 500; letter-spacing: -.035em; }
+  .contas h2 em { font-size: 78px; }
+  .col { position: absolute; top: 400px; width: 448px; height: 790px; border-radius: 4px; padding: 40px 38px; display: flex; flex-direction: column; }
+  .col.a { left: 72px; border: 1px solid rgba(16,18,14,.28); }
+  .col.b { right: 72px; background: var(--tinta); color: var(--osso); }
+  .col .mono { font-size: 15px; color: var(--cinza); }
+  .col.b .mono { color: var(--lima); }
+  .col h3 { margin-top: 22px; font-size: 48px; line-height: 1.04; font-weight: 500; letter-spacing: -.03em; }
+  .col h3 em { font-size: 56px; }
+  .col.b h3 em { color: var(--lima); }
+  .col svg { margin-top: auto; width: 100%; height: 250px; overflow: visible; }
+  .col ul { list-style: none; margin-top: 34px; font-size: 25px; line-height: 1.4; }
+  .col ul li { padding: 12px 0; border-top: 1px solid rgba(16,18,14,.14); }
+  .col.b ul li { border-color: rgba(243,244,238,.16); }
+
+  /* ── 07 três práticas ── */
+  .prat h2 { position: absolute; left: 72px; top: 150px; font-size: 76px; line-height: 1; font-weight: 500; letter-spacing: -.035em; width: 900px; }
+  .prat h2 em { font-size: 88px; color: var(--oliva); }
+  .itens { position: absolute; left: 72px; right: 72px; top: 420px; }
+  .item { display: grid; grid-template-columns: 160px 1fr; gap: 20px; padding: 46px 0; border-top: 1px solid rgba(16,18,14,.2); }
+  .item:last-child { border-bottom: 1px solid rgba(16,18,14,.2); }
+  .item .i { font-size: 120px; line-height: .8; letter-spacing: -.03em; color: var(--oliva); }
+  .item h3 { font-size: 46px; line-height: 1.05; font-weight: 500; letter-spacing: -.025em; }
+  .item p { margin-top: 14px; font-size: 26px; line-height: 1.42; color: #43463d; }
+  .item p b { font-weight: 600; color: var(--tinta); background: linear-gradient(transparent 62%, var(--lima) 62%); }
+
+  /* ── 08 frase ── */
+  .frase .aspas { position: absolute; left: 64px; top: 150px; font-size: 320px; line-height: 1; color: var(--lima); }
+  .frase blockquote { position: absolute; left: 72px; right: 72px; top: 400px; font-family: 'Instrument Serif', serif; font-size: 116px; line-height: 1; letter-spacing: -.025em; }
+  .frase blockquote em { color: var(--lima); }
+  .frase blockquote .sep { display: block; width: 120px; height: 1px; background: rgba(243,244,238,.35); margin: 54px 0 44px; }
+  .frase .ass { position: absolute; left: 72px; top: 1130px; font-size: 15px; color: #a9ac9c; }
+
+  /* ── 09 marca ── */
+  .fim .logo-g { position: absolute; left: 72px; top: 170px; width: 420px; height: 79px; }
+  .fim h2 { position: absolute; left: 72px; right: 72px; top: 420px; font-size: 112px; line-height: .98; font-weight: 500; letter-spacing: -.045em; }
+  .fim h2 em { font-size: 126px; }
+  .fim p { position: absolute; left: 72px; top: 800px; width: 760px; font-size: 32px; line-height: 1.42; }
+  .fim .cta { position: absolute; left: 72px; top: 1050px; display: inline-flex; align-items: center; gap: 18px; background: var(--tinta); color: var(--osso); padding: 24px 34px; border-radius: 999px; font-size: 26px; font-weight: 500; letter-spacing: -.01em; }
+  .fim .cta i { width: 12px; height: 12px; border-radius: 50%; background: var(--lima); display: block; }
+</style>
+</head>
+<body>
+<div id="raiz"></div>
+<script>
+const LOGO = c => `<svg class="logo" viewBox="0 0 800 150"><path fill="none" stroke="${c}" stroke-width="16" stroke-linecap="round" d="M8 139V12L175 139V12M200 12H366M200 12V139H366M200 75H366M390 12L558 139M558 12L390 139M580 139L685 12L792 139M618 95H755"/></svg>`;
+const cab = (txt, c = '#10120e') => `<div class="cab mono">${LOGO(c)}<span>${txt}</span></div>`;
+const rod = (n, fonte) => `<div class="rod mono"><span class="fonte">${fonte || ''}</span><span class="pag">${String(n).padStart(2, '0')} / 09${n < 9 ? ' &nbsp;→' : ''}</span></div>`;
+
+// 60 pontos = ~600 pessoas (cada ponto, 10)
+const pontos = Array.from({ length: 60 }, (_, i) => `<i class="${i < 60 ? '' : 'v'}"></i>`).join('');
+
+const S = {
+  1: { cls: 'capa', html: `
+    ${cab('Setor financeiro · nov. 2026')}
+    <div class="num serif">600</div>
+    <div class="pontos">${pontos}</div>
+    <div class="pontos-leg mono">cada ponto = 10 pessoas<br>Inter · BV · Itaú</div>
+    <div class="linha"></div>
+    <div class="sub">bancários desligados em novembro em <b>três instituições financeiras</b>, segundo os sindicatos.*</div>
+    <h1>A palavra que explica os cortes: <em>produtividade.</em></h1>
+    ${rod(1, '* Estimativa de sindicatos dos bancários, via Revista Fórum (25/11/2026). Totais não confirmados pelas empresas.')}` },
+
+  2: { cls: 'casos escuro', html: `
+    ${cab('O que aconteceu', '#f3f4ee')}
+    <h2>Quatro casos, <em>um mesmo mês.</em></h2>
+    <div class="tab">
+      <div class="lin"><div class="emp mono">Banco digital<b>Inter</b></div><div class="n serif">200+<small>~4,7% do quadro</small></div><div class="d">Empresa confirma <q>“mudanças na estrutura e no modelo de atuação”</q>, sem número.</div></div>
+      <div class="lin"><div class="emp mono">Banco<b>BV</b></div><div class="n serif">275<small>~6% do quadro</small></div><div class="d">Justificativa relatada: <q>“aumento da produtividade e da eficiência operacional”</q>.</div></div>
+      <div class="lin"><div class="emp mono">Itaú · Emp+<b>Itaú</b></div><div class="n serif">123<small>de 554 na reestruturação</small></div><div class="d">Área substituída por uma plataforma de IA generativa. <q>324 foram realocadas.</q></div></div>
+      <div class="lin"><div class="emp mono">Fraude<b>Nubank</b></div><div class="n serif">30+<small>em 03/11</small></div><div class="d">Análise passou a ser automatizada com IA, segundo funcionários. A empresa segue contratando.</div></div>
+    </div>
+    <div class="aviso"><i></i><span>Números de sindicatos e reportagens. As empresas não confirmaram totais, e só o caso Itaú cita IA de forma direta.</span></div>
+    ${rod(2, 'Fontes: Revista Fórum (25/11), Folha via Piranot (05/11)')}` },
+
+  3: { cls: 'foto escuro', html: `
+    <div class="img"></div><div class="vela"></div>
+    ${cab('Nubank · 03/11', '#f3f4ee')}
+    <div class="etq mono">Investigação de fraude</div>
+    <div class="txt">
+      <h2>A tarefa foi automatizada.<br><em>A cadeira ficou vazia.</em></h2>
+      <p>Pouco mais de 30 pessoas da área que investigava fraudes foram desligadas depois que a análise passou a ser feita com IA, segundo funcionários. O Nubank fala em reestruturação de uma área administrativa.</p>
+    </div>
+    ${rod(3, 'Fonte: Folha de S.Paulo, via Piranot (05/11/2026) · foto: Annie Spratt / Unsplash')}` },
+
+  4: { cls: 'mil escuro', html: `
+    <div class="img"></div><div class="vela"></div>
+    ${cab('Em 12 meses', '#f3f4ee')}
+    <div class="bloco">
+      <div class="k mono">Os 5 maiores bancos de varejo do país</div>
+      <div class="grande serif">15,2<span> mil</span></div>
+      <div class="leg">postos de trabalho a menos.<br><em>Enquanto a tecnologia avança.</em></div>
+    </div>
+    <div class="cit">“A tecnologia deveria servir às pessoas, não para retirar delas seu emprego e sua fonte de sustento.”<br><span class="mono" style="font-size:13px;color:#8d907f">Neiva Ribeiro · Sindicato dos Bancários de SP</span></div>
+    ${rod(4, 'Fonte: Valor Econômico, via Let’s Money (24/11/2026) · foto: Kevin Matos / Unsplash')}` },
+
+  5: { cls: 'prod', html: `
+    ${cab('O outro lado da conta')}
+    <h2>O ganho de produtividade <em>é real.</em></h2>
+    <div class="estudo mono">Estudo com 5.179 atendentes usando IA generativa<br>Brynjolfsson, Li &amp; Raymond · Quarterly Journal of Economics, 2025</div>
+    <div class="barras">
+      <div class="barra"><div class="n serif">+14<sup>%</sup></div><div class="r"><span class="mono">Média do time</span>problemas resolvidos por hora<div class="trilho"><i style="width:14%"></i></div></div></div>
+      <div class="barra"><div class="n serif">+34<sup>%</sup></div><div class="r"><span class="mono">Quem estava começando</span>o maior salto foi de quem tinha menos experiência<div class="trilho"><i class="l" style="width:34%"></i></div></div></div>
+    </div>
+    <div class="insight">A IA não substituiu os melhores. <em>Espalhou o que eles sabiam</em> para o resto do time.</div>
+    ${rod(5, 'Generative AI at Work · QJE, vol. 140, 2025')}` },
+
+  6: { cls: 'contas', html: `
+    ${cab('A decisão')}
+    <h2>A mesma tecnologia.<br><em>Duas contas.</em></h2>
+    <div class="col a">
+      <span class="mono">Conta 1</span>
+      <h3>Fazer o mesmo <em>com menos gente.</em></h3>
+      <ul><li>Corta custo uma vez</li><li>Leva junto quem conhece o cliente</li><li>A capacidade fica igual</li></ul>
+      <svg viewBox="0 0 372 250"><line x1="0" y1="249" x2="372" y2="249" stroke="#10120e" stroke-opacity=".3"/>
+        <path d="M0 70 H140 L170 170 H372" fill="none" stroke="#10120e" stroke-width="2.5"/>
+        <circle cx="372" cy="170" r="6" fill="#10120e"/>
+        <text x="0" y="56" font-family="JetBrains Mono" font-size="12" letter-spacing="1" fill="#6b6e64">CUSTO</text></svg>
+    </div>
+    <div class="col b">
+      <span class="mono">Conta 2</span>
+      <h3>Fazer mais <em>com as mesmas pessoas.</em></h3>
+      <ul><li>Ganho que se acumula todo mês</li><li>Experiência vira vantagem</li><li>A capacidade cresce</li></ul>
+      <svg viewBox="0 0 372 250"><line x1="0" y1="249" x2="372" y2="249" stroke="#f3f4ee" stroke-opacity=".3"/>
+        <path d="M0 200 C120 196 170 150 230 110 S330 30 372 18" fill="none" stroke="#d4f969" stroke-width="2.5"/>
+        <circle cx="372" cy="18" r="6" fill="#d4f969"/>
+        <text x="0" y="172" font-family="JetBrains Mono" font-size="12" letter-spacing="1" fill="#a9ac9c">CAPACIDADE</text></svg>
+    </div>
+    ${rod(6)}` },
+
+  7: { cls: 'prat', html: `
+    ${cab('O que separa as duas')}
+    <h2>Três decisões<br>antes de <em>qualquer corte.</em></h2>
+    <div class="itens">
+      <div class="item"><div class="i serif">01</div><div><h3>Mapear tarefas, não cargos.</h3><p>IA automatiza partes do trabalho. Quase nunca o trabalho inteiro de uma pessoa.</p></div></div>
+      <div class="item"><div class="i serif">02</div><div><h3>Requalificar quem conhece o cliente.</h3><p>Contexto não se compra pronto. No próprio Itaú, <b>324 de 554 pessoas foram realocadas.</b></p></div></div>
+      <div class="item"><div class="i serif">03</div><div><h3>Medir produtividade em resultado.</h3><p>Receita por pessoa, tempo de resposta, cliente retido. Headcount é custo, não é métrica de eficiência.</p></div></div>
+    </div>
+    ${rod(7)}` },
+
+  8: { cls: 'frase escuro', html: `
+    ${cab('Para levar', '#f3f4ee')}
+    <div class="aspas serif">“</div>
+    <blockquote>IA que corta gente economiza <em>uma vez.</em><span class="sep"></span>IA que multiplica gente rende <em>todo mês.</em></blockquote>
+    <div class="ass mono">NEXA · AI &amp; Tech Solutions</div>
+    ${rod(8)}` },
+
+  9: { cls: 'fim lima-bg', html: `
+    <svg class="logo-g" viewBox="0 0 800 150"><path fill="none" stroke="#10120e" stroke-width="13" stroke-linecap="round" d="M8 139V12L175 139V12M200 12H366M200 12V139H366M200 75H366M390 12L558 139M558 12L390 139M580 139L685 12L792 139M618 95H755"/></svg>
+    <h2>IA acelera.<br><em>Pessoas dão direção.</em></h2>
+    <p>A gente mapeia, departamento por departamento, onde a IA multiplica o seu time, antes de alguém pensar em cortar.</p>
+    <div class="cta"><i></i>Fale com a NEXA · link na bio</div>
+    ${rod(9, 'Fontes completas na legenda')}` },
+};
+
+const n = +(new URLSearchParams(location.search).get('s') || 1);
+const s = S[n];
+document.body.className = s.cls + ' grao';
+document.getElementById('raiz').innerHTML = s.html;
+window.ready = document.fonts.ready.then(() => Promise.all([...document.querySelectorAll('.img')].map(el => new Promise(r => {
+  const u = getComputedStyle(el).backgroundImage.slice(5, -2); const i = new Image(); i.onload = i.onerror = r; i.src = u;
+}))));
+</script>
+</body>
+</html>
