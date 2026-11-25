@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../serie-nowdays/inter.css">
+<style>
+  * { box-sizing: border-box; margin: 0; }
+  html, body { width: 1080px; height: 1350px; overflow: hidden; }
+  body { font-family: 'Inter Tight', sans-serif; position: relative; }
+  .bg { position: absolute; left: 0; bottom: 0; width: 1080px; -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 16%); mask-image: linear-gradient(to bottom, transparent 0, #000 16%); }
+  .logo { position: absolute; top: 92px; left: 50%; transform: translateX(-50%); width: 150px; height: 28px; }
+  .esq .logo { left: 96px; transform: none; }
+  .txt { position: absolute; top: 190px; left: 90px; right: 90px; text-align: center; }
+  .esq .txt { text-align: left; top: 210px; right: 300px; left: 96px; }
+  h1 { font-weight: 700; font-size: 84px; line-height: 1.02; letter-spacing: -.035em; }
+  .esq h1 { font-size: 64px; font-weight: 500; line-height: 1.06; letter-spacing: -.025em; }
+  h1 .ac { font-weight: 700; }
+  h1 .leve { font-weight: 400; }
+  .sub { margin-top: 22px; font-size: 28px; font-weight: 400; letter-spacing: -.01em; opacity: .85; }
+  .pill { display: inline-flex; align-items: center; gap: 10px; margin-top: 34px; padding: 10px 22px; border: 1.6px solid currentColor; border-radius: 999px; font-size: 20px; font-weight: 500; }
+  /* temas */
+  .claro { color: #10120e; } .claro .ac { color: #46590a; }
+  .escuro { color: #f3f4ee; } .escuro .ac { color: #d4f969; }
+  .lima { color: #10120e; } .lima .ac { color: #2f3c05; }
+</style>
+</head>
+<body>
+<div id="raiz"></div>
+<script>
+const P = {
+  p1: { fundo: '#fefdf8', tema: 'claro', img: 'img/p1.jpg', titulo: 'Sua empresa é mais<br>do que <span class="ac">planilhas.</span>' },
+  p2: { fundo: '#000000', tema: 'escuro', layout: 'esq', img: 'img/p2.jpg', titulo: 'E se o seu time<br><span class="ac">pudesse ir</span><br><span class="ac">mais longe?</span>', pill: 'Leia a legenda ↘' },
+  p3: { fundo: '#0b0b09', tema: 'escuro', img: 'img/p3.jpg', titulo: 'IA não substitui<br><span class="ac">o seu time.</span>', sub: 'Multiplica o que ele já faz bem.' },
+  p4: { fundo: '#e8fb9d', tema: 'lima', img: 'img/p4.jpg', titulo: '<span class="ac">Produtividade</span><br><span class="leve">não é correr mais.</span>' },
+};
+const p = P[new URLSearchParams(location.search).get('p') || 'p1'];
+const cor = p.tema === 'escuro' ? '#f3f4ee' : '#10120e';
+document.body.className = p.tema + ' ' + (p.layout || '');
+document.body.style.background = p.fundo;
+document.getElementById('raiz').innerHTML = `<img class="bg" src="${p.img}" alt="">
+  <svg class="logo" viewBox="0 0 800 150"><path fill="none" stroke="${cor}" stroke-width="14" stroke-linecap="round" d="M8 139V12L175 139V12M200 12H366M200 12V139H366M200 75H366M390 12L558 139M558 12L390 139M580 139L685 12L792 139M618 95H755"/></svg>
+  <div class="txt"><h1>${p.titulo}</h1>${p.sub ? `<p class="sub">${p.sub}</p>` : ''}${p.pill ? `<span class="pill">${p.pill}</span>` : ''}</div>`;
+window.ready = document.fonts.ready.then(() => new Promise(r => { const i = new Image(); i.onload = i.onerror = r; i.src = p.img; }));
+</script>
+</body>
+</html>
