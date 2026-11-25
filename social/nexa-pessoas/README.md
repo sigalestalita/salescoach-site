@@ -1,15 +1,15 @@
-# Série NEXA "pessoas + vetores"
+# Série NEXA "pessoas"
 
-Quatro posts 4:5 (1080×1350): fotos reais de pessoas recortadas (fundo removido na ElevenLabs, birefnet) com elementos vetoriais da marca (círculos lima, cards de interface, balões de conversa, ícones de linha, brilhos e setas).
+Quatro posts 4:5 (1080×1350) no kit visual do perfil da NEXA (`../instagram-nexa/post.css`): Space Grotesk 500 nos títulos, DM Sans no texto, rótulos em JetBrains Mono, grão de filme e destaque lima. Pessoas reais recortadas (fundo removido na ElevenLabs) e tratadas em P&B, com vetores em linha fina: círculos técnicos, anotação "fig. 01", cards de tarefa, conversa e chips de arquivo.
 
-| Post | Fundo | Pessoa | Título |
-|---|---|---|---|
-| v1 | osso | homem pensando + cards de tarefas feitas | Seu time pensa. A IA executa. |
-| v2 | lima | mulher surpresa no celular + conversa às 23h | Seu cliente chamou às 23h. Alguém respondeu? |
-| v3 | tinta | mulher pensando + ícones ligados por linhas | E se a resposta já estivesse na sua empresa? |
-| v4 | oliva | homem em P&B + círculo e seta | IA acelera. Pessoas dão direção. |
+| Post | Fundo do kit | Título |
+|---|---|---|
+| v1 | creme (`bg-light`) | Seu time pensa. A IA executa. |
+| v2 | lima (`bg-brand`) | O cliente chamou às 23h. Quem respondeu? |
+| v3 | oliva profundo (`bg-deep`) | A resposta já está na sua empresa. Falta encontrar. |
+| v4 | creme (`bg-light`) | IA acelera. Pessoas dão direção. |
 
-Textos e vetores em `post.html`, recortes em `recortes/`, legendas em `legendas.md`.
+Arquivos `v1.html` … `v4.html` + `pessoas.css`, recortes em `recortes/` (`*-pb.png` em P&B), legendas em `legendas.md`.
 
 ```bash
 node render.mjs   # out/v1.jpg … out/v4.jpg

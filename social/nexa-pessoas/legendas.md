@@ -1,29 +1,33 @@
-# Legendas · série NEXA "pessoas + vetores"
+# Legendas · série NEXA "pessoas"
 
 ## v1 · Seu time pensa. A IA executa.
-Proposta enviada, CRM atualizado, follow-up agendado. Tudo isso pode acontecer sem ninguém do seu time parar o que está fazendo.
+Depois de cada conversa com cliente, sobra trabalho: proposta para montar, CRM para atualizar, follow-up para agendar.
 
-Enquanto a IA cuida do operacional, as pessoas ficam com o que só elas fazem: pensar, conversar, decidir.
+Nada disso precisa de alguém parando o que está fazendo. Com IA, essas tarefas saem sozinhas, no padrão da sua empresa. O time fica com o que só gente faz: entender o cliente, negociar e decidir.
 
-É isso que a NEXA implementa na sua empresa. Link na bio.
+NEXA · IA acelera. Pessoas dão direção.
+Link na bio.
 
-## v2 · Seu cliente chamou às 23h. Alguém respondeu?
-Cliente não tem horário comercial. Quando ele está pronto pra comprar, quem responde primeiro leva.
+## v2 · O cliente chamou às 23h. Quem respondeu?
+O cliente não segue o horário comercial. Quando ele decide, quem responde primeiro costuma levar.
 
-Um assistente com IA, treinado com as informações da sua empresa, responde na hora, tira dúvida, manda proposta e passa a conversa pro seu time de manhã, com tudo anotado.
+Um assistente treinado com as informações da sua empresa responde na hora, tira dúvidas, envia a proposta e entrega a conversa para o seu time na manhã seguinte, com tudo registrado.
 
-Quer um assim? Chama a NEXA no direct.
+NEXA · IA acelera. Pessoas dão direção.
+Link na bio.
 
-## v3 · E se a resposta já estivesse na sua empresa?
-Manuais, propostas antigas, conversas com clientes, planilhas. A sua empresa já sabe muita coisa. O problema é achar na hora que precisa.
+## v3 · A resposta já está na sua empresa.
+Manuais, propostas, conversas com clientes. A sua empresa já sabe muita coisa. O difícil é encontrar na hora em que precisa.
 
-A NEXA cria assistentes treinados com os seus próprios materiais, pra qualquer pessoa do time encontrar a resposta em segundos.
+A NEXA cria assistentes treinados com os seus próprios materiais. Qualquer pessoa do time pergunta e recebe a resposta em segundos, com a fonte.
 
+NEXA · IA acelera. Pessoas dão direção.
 Link na bio.
 
 ## v4 · IA acelera. Pessoas dão direção.
-Tecnologia nenhuma escolhe o caminho da sua empresa. Ela só faz você chegar mais rápido.
+Nenhuma tecnologia escolhe o caminho de uma empresa. Ela só encurta a distância até ele.
 
-Na NEXA, a gente acredita nisso desde o primeiro projeto: IA pra tirar peso, pessoas pra decidir pra onde ir.
+É assim que a NEXA trabalha em cada projeto: a IA tira o peso da operação, e as decisões continuam com quem conhece o negócio.
 
-Vamos conversar? Link na bio.
+NEXA · IA acelera. Pessoas dão direção.
+Link na bio.
