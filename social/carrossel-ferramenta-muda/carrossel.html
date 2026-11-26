@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>A ferramenta mudou</title>
+<link rel="stylesheet" href="../instagram-nexa/nexa-fonts.css">
+<style>
+  /* Formato da referência: frase partida em 4 telas, um par de objetos com o ano em cima, fundo branco.
+     Na NEXA: Space Grotesk, oliva no destaque, um toque de lima. */
+  :root { --tinta: #10120e; --oliva: #4d5c12; --lima: #d4f969; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 1080px; height: 1350px; overflow: hidden; background: #fff; }
+  body { font-family: 'Space Grotesk', sans-serif; color: var(--tinta); position: relative; -webkit-font-smoothing: antialiased; }
+  .topo { position: absolute; top: 64px; left: 72px; right: 72px; height: 30px; display: flex; justify-content: space-between; align-items: center; font-size: 22px; font-weight: 500; }
+  .topo svg.logo { width: 104px; height: 20px; }
+  .marca { position: absolute; left: 50%; top: 58px; transform: translateX(-50%); width: 40px; height: 40px; }
+  h1 { position: absolute; left: 0; right: 0; top: 420px; text-align: center; font-weight: 700; font-size: 124px; line-height: 1; letter-spacing: -.05em; color: var(--oliva); }
+  .anos { position: absolute; top: 590px; left: 0; right: 0; font-size: 50px; font-weight: 500; letter-spacing: -.03em; }
+  .anos span { position: absolute; transform: translateX(-50%); }
+  .par { position: absolute; left: 0; top: 660px; width: 1080px; height: 470px; background-repeat: no-repeat; background-position: center; background-size: 1080px 470px; }
+
+  /* tela final */
+  .fim h2 { position: absolute; left: 60px; right: 60px; top: 440px; text-align: center; font-weight: 700; font-size: 66px; line-height: 1.04; letter-spacing: -.035em; color: var(--oliva); text-transform: uppercase; }
+  .fim p { position: absolute; left: 100px; right: 100px; top: 640px; text-align: center; font-family: 'DM Sans', sans-serif; font-size: 40px; line-height: 1.32; letter-spacing: -.02em; }
+  .fim .caixa { position: absolute; left: 92px; right: 92px; top: 900px; padding: 44px 54px; border-radius: 26px; background: #fff; box-shadow: 0 18px 50px rgba(16,18,14,.10), 0 0 0 1px rgba(16,18,14,.04); text-align: center; font-weight: 700; font-size: 36px; line-height: 1.18; letter-spacing: -.02em; text-transform: uppercase; }
+  .fim .caixa i { font-style: normal; background: linear-gradient(transparent 60%, var(--lima) 60%); }
+</style>
+</head>
+<body>
+<div id="raiz"></div>
+<script>
+const LOGO = `<svg class="logo" viewBox="0 0 800 150"><path fill="none" stroke="#10120e" stroke-width="16" stroke-linecap="round" d="M8 139V12L175 139V12M200 12H366M200 12V139H366M200 75H366M390 12L558 139M558 12L390 139M580 139L685 12L792 139M618 95H755"/></svg>`;
+// estrela de 4 pontas (a mesma do hero do site), em lima com contorno oliva para aparecer no branco
+const MARCA = `<svg class="marca" viewBox="0 0 40 40"><path d="M20 2 C21.6 14 26 18.4 38 20 C26 21.6 21.6 26 20 38 C18.4 26 14 21.6 2 20 C14 18.4 18.4 14 20 2Z" fill="#d4f969" stroke="#4d5c12" stroke-width="1.6" stroke-linejoin="round"/></svg>`;
+
+const S = {
+  1: { h: 'A ferramenta…', anos: ['1900', '2026'], img: 'img/par-1.jpg', pos: [434, 708] },
+  2: { h: '…mudou…', anos: ['1920', '2026'], img: 'img/par-2.jpg', pos: [288, 773] },
+  3: { h: '…o que fecha negócio…', anos: ['1960', '2026'], img: 'img/par-3.jpg', pos: [290, 790], menor: true },
+  4: { h: '…não.', anos: ['1950', '2026'], img: 'img/par-4.jpg', pos: [298, 777] },
+};
+const n = +(new URLSearchParams(location.search).get('s') || 1);
+const raiz = document.getElementById('raiz');
+const topo = `<div class="topo">${LOGO}<span>2026</span></div>${MARCA}`;
+if (S[n]) {
+  const s = S[n];
+  raiz.innerHTML = `${topo}
+    <h1 style="${s.menor ? 'font-size:96px' : ''}">${s.h}</h1>
+    <div class="anos"><span style="left:${s.pos[0]}px">${s.anos[0]}</span><span style="left:${s.pos[1]}px">${s.anos[1]}</span></div>
+    <div class="par" style="background-image:url(${s.img})"></div>`;
+} else {
+  document.body.className = 'fim';
+  raiz.innerHTML = `${topo}
+    <h2>A IA muda a ferramenta.<br>Não o que faz você vender.</h2>
+    <p>Proposta, follow-up, CRM: a IA acelera o que é repetitivo. Confiança, escuta e relacionamento continuam sendo trabalho de gente.</p>
+    <div class="caixa">Antes de automatizar, vale perguntar:<br><i>o que só o seu time faz bem?</i></div>`;
+}
+window.ready = document.fonts.ready.then(() => new Promise(r => { const u = S[n] && S[n].img; if (!u) return r(); const i = new Image(); i.onload = i.onerror = r; i.src = u; }));
+</script>
+</body>
+</html>
