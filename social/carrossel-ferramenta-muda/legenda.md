@@ -3,7 +3,7 @@
 Formato inspirado num carrossel de referência (frase partida em telas + par de objetos com ano), com mensagem e identidade da NEXA.
 
 - `carrossel.html?s=1..5` → `node render.mjs` → `out/slide-01..05.jpg`
-- Imagens dos pares geradas no ElevenLabs (gpt-image), recortadas em `img/par-1..4.jpg`. Os anos marcam a época do objeto, não datas de invenção.
+- Imagens dos pares geradas no ElevenLabs (gpt-image), fundo removido (birefnet), em `img/par-1..4.png`; posições em `img/pos.js`. Os anos marcam a época do objeto, não datas de invenção.
 
 ## Legenda
 

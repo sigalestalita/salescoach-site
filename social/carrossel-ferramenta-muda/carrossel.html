@@ -5,57 +5,87 @@
 <title>A ferramenta mudou</title>
 <link rel="stylesheet" href="../instagram-nexa/nexa-fonts.css">
 <style>
-  /* Formato da referência: frase partida em 4 telas, um par de objetos com o ano em cima, fundo branco.
-     Na NEXA: Space Grotesk, oliva no destaque, um toque de lima. */
-  :root { --tinta: #10120e; --oliva: #4d5c12; --lima: #d4f969; }
+  /* Versão premium: fundo osso com luz suave e grão, tipografia leve,
+     objetos recortados com sombra de chão e etiqueta de museu embaixo. */
+  :root { --osso: #f2f2ec; --tinta: #10120e; --oliva: #4d5c12; --lima: #d4f969; --cinza: #8b8e80; }
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  html, body { width: 1080px; height: 1350px; overflow: hidden; background: #fff; }
-  body { font-family: 'Space Grotesk', sans-serif; color: var(--tinta); position: relative; -webkit-font-smoothing: antialiased; }
-  .topo { position: absolute; top: 64px; left: 72px; right: 72px; height: 30px; display: flex; justify-content: space-between; align-items: center; font-size: 22px; font-weight: 500; }
-  .topo svg.logo { width: 104px; height: 20px; }
-  .marca { position: absolute; left: 50%; top: 58px; transform: translateX(-50%); width: 40px; height: 40px; }
-  h1 { position: absolute; left: 0; right: 0; top: 420px; text-align: center; font-weight: 700; font-size: 124px; line-height: 1; letter-spacing: -.05em; color: var(--oliva); }
-  .anos { position: absolute; top: 590px; left: 0; right: 0; font-size: 50px; font-weight: 500; letter-spacing: -.03em; }
-  .anos span { position: absolute; transform: translateX(-50%); }
-  .par { position: absolute; left: 0; top: 660px; width: 1080px; height: 470px; background-repeat: no-repeat; background-position: center; background-size: 1080px 470px; }
+  html, body { width: 1080px; height: 1350px; overflow: hidden; }
+  body { font-family: 'Space Grotesk', sans-serif; color: var(--tinta); position: relative; -webkit-font-smoothing: antialiased;
+    background: radial-gradient(ellipse 70% 55% at 50% 58%, #fbfbf7 0%, var(--osso) 70%, #e9eae2 100%); }
+  body::after { content: ''; position: absolute; inset: 0; pointer-events: none; opacity: .07; mix-blend-mode: multiply; z-index: 50;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>"); }
+  .mono { font-family: 'JetBrains Mono', monospace; font-size: 15px; letter-spacing: .2em; text-transform: uppercase; }
 
-  /* tela final */
-  .fim h2 { position: absolute; left: 60px; right: 60px; top: 440px; text-align: center; font-weight: 700; font-size: 66px; line-height: 1.04; letter-spacing: -.035em; color: var(--oliva); text-transform: uppercase; }
-  .fim p { position: absolute; left: 100px; right: 100px; top: 640px; text-align: center; font-family: 'DM Sans', sans-serif; font-size: 40px; line-height: 1.32; letter-spacing: -.02em; }
-  .fim .caixa { position: absolute; left: 92px; right: 92px; top: 900px; padding: 44px 54px; border-radius: 26px; background: #fff; box-shadow: 0 18px 50px rgba(16,18,14,.10), 0 0 0 1px rgba(16,18,14,.04); text-align: center; font-weight: 700; font-size: 36px; line-height: 1.18; letter-spacing: -.02em; text-transform: uppercase; }
-  .fim .caixa i { font-style: normal; background: linear-gradient(transparent 60%, var(--lima) 60%); }
+  .topo { position: absolute; top: 70px; left: 80px; right: 80px; display: flex; justify-content: space-between; align-items: center; color: var(--cinza); }
+  .topo svg { width: 96px; height: 18px; display: block; }
+
+  h1 { position: absolute; left: 0; right: 0; top: 250px; text-align: center; font-weight: 500; font-size: 94px; line-height: 1; letter-spacing: -.045em; }
+  h1 .r { color: #b4b7a8; font-weight: 400; }
+
+  .chao { position: absolute; left: 0; width: 1080px; top: 1004px; height: 40px; }
+  .chao i { position: absolute; top: 0; height: 30px; border-radius: 50%; background: radial-gradient(closest-side, rgba(16,18,14,.22), rgba(16,18,14,0)); transform: translateX(-50%); }
+  .par { position: absolute; left: 0; top: 520px; width: 1080px; height: 500px; display: block; }
+
+  .linha { position: absolute; top: 1112px; height: 1px; background: rgba(16,18,14,.22); }
+  .linha::before, .linha::after { content: ''; position: absolute; top: -3px; width: 7px; height: 7px; border-radius: 50%; background: var(--tinta); }
+  .linha::before { left: -3px; } .linha::after { right: -3px; background: var(--oliva); box-shadow: 0 0 0 4px rgba(212,249,105,.6); }
+  .etq { position: absolute; top: 1070px; transform: translateX(-50%); text-align: center; white-space: nowrap; }
+  .etq b { display: block; font-weight: 500; font-size: 30px; letter-spacing: -.02em; padding: 0 22px; background: transparent; }
+  .etq .mono { display: block; margin-top: 34px; font-size: 13px; color: var(--cinza); }
+
+  .rod { position: absolute; left: 80px; right: 80px; bottom: 64px; display: flex; justify-content: space-between; color: var(--cinza); font-size: 13px; }
+
+  /* tela final, escura */
+  .fim { background: radial-gradient(ellipse 80% 60% at 50% 40%, #1b1e17 0%, #10120e 70%); color: #f2f2ec; }
+  .fim body::after, .fim::after { mix-blend-mode: screen; opacity: .05; }
+  .fim .topo { color: #7f8374; }
+  .fim .k { position: absolute; left: 80px; top: 300px; color: var(--lima); font-size: 14px; }
+  .fim h2 { position: absolute; left: 80px; right: 80px; top: 350px; font-weight: 500; font-size: 76px; line-height: 1.02; letter-spacing: -.045em; }
+  .fim h2 span { color: var(--lima); }
+  .fim p { position: absolute; left: 80px; width: 760px; top: 600px; font-family: 'DM Sans', sans-serif; font-size: 30px; line-height: 1.45; color: #b9bcae; }
+  .fim .card { position: absolute; left: 80px; right: 80px; top: 880px; padding: 44px 48px; border: 1px solid rgba(212,249,105,.35); border-radius: 22px; background: rgba(255,255,255,.025); }
+  .fim .card .mono { color: var(--lima); font-size: 13px; }
+  .fim .card div { margin-top: 18px; font-weight: 500; font-size: 52px; line-height: 1.05; letter-spacing: -.035em; }
+  .fim .rod { color: #7f8374; }
 </style>
 </head>
 <body>
 <div id="raiz"></div>
+<script src="img/pos.js"></script>
 <script>
-const LOGO = `<svg class="logo" viewBox="0 0 800 150"><path fill="none" stroke="#10120e" stroke-width="16" stroke-linecap="round" d="M8 139V12L175 139V12M200 12H366M200 12V139H366M200 75H366M390 12L558 139M558 12L390 139M580 139L685 12L792 139M618 95H755"/></svg>`;
-// estrela de 4 pontas (a mesma do hero do site), em lima com contorno oliva para aparecer no branco
-const MARCA = `<svg class="marca" viewBox="0 0 40 40"><path d="M20 2 C21.6 14 26 18.4 38 20 C26 21.6 21.6 26 20 38 C18.4 26 14 21.6 2 20 C14 18.4 18.4 14 20 2Z" fill="#d4f969" stroke="#4d5c12" stroke-width="1.6" stroke-linejoin="round"/></svg>`;
-
+const LOGO = c => `<svg viewBox="0 0 800 150"><path fill="none" stroke="${c}" stroke-width="16" stroke-linecap="round" d="M8 139V12L175 139V12M200 12H366M200 12V139H366M200 75H366M390 12L558 139M558 12L390 139M580 139L685 12L792 139M618 95H755"/></svg>`;
 const S = {
-  1: { h: 'A ferramenta…', anos: ['1900', '2026'], img: 'img/par-1.jpg', pos: [434, 708] },
-  2: { h: '…mudou…', anos: ['1920', '2026'], img: 'img/par-2.jpg', pos: [288, 773] },
-  3: { h: '…o que fecha negócio…', anos: ['1960', '2026'], img: 'img/par-3.jpg', pos: [290, 790], menor: true },
-  4: { h: '…não.', anos: ['1950', '2026'], img: 'img/par-4.jpg', pos: [298, 777] },
+  1: { h: 'A ferramenta<span class="r">…</span>', a: ['1900', '2026'], c: ['Telefone de mesa', 'Smartphone'] },
+  2: { h: '<span class="r">…</span>mudou<span class="r">…</span>', a: ['1920', '2026'], c: ['Máquina de escrever', 'Notebook'] },
+  3: { h: '<span class="r">…</span>o que fecha negócio<span class="r">…</span>', a: ['1960', '2026'], c: ['Cafezinho', 'Cafezinho'], menor: 1 },
+  4: { h: '<span class="r">…</span>não.', a: ['1950', '2026'], c: ['Aperto de mão', 'Aperto de mão'] },
 };
+// centros (x) e larguras dos objetos em cada recorte, medidos pelo script de preparo
+const POS = window.POS || {};
 const n = +(new URLSearchParams(location.search).get('s') || 1);
 const raiz = document.getElementById('raiz');
-const topo = `<div class="topo">${LOGO}<span>2026</span></div>${MARCA}`;
+const pg = `0${n} / 05`;
 if (S[n]) {
-  const s = S[n];
-  raiz.innerHTML = `${topo}
-    <h1 style="${s.menor ? 'font-size:96px' : ''}">${s.h}</h1>
-    <div class="anos"><span style="left:${s.pos[0]}px">${s.anos[0]}</span><span style="left:${s.pos[1]}px">${s.anos[1]}</span></div>
-    <div class="par" style="background-image:url(${s.img})"></div>`;
+  const s = S[n], p = POS[n] || { c: [330, 750], w: [300, 300] };
+  raiz.innerHTML = `
+    <div class="topo">${LOGO('#10120e')}<span class="mono">${pg}</span></div>
+    <h1 style="${s.menor ? 'font-size:80px;top:262px' : ''}">${s.h}</h1>
+    <div class="chao">${p.c.map((x, i) => `<i style="left:${x}px;width:${p.w[i] * 1.05}px"></i>`).join('')}</div>
+    <img class="par" src="img/par-${n}.png" alt="">
+    <div class="linha" style="left:${p.c[0]}px;width:${p.c[1] - p.c[0]}px"></div>
+    ${p.c.map((x, i) => `<div class="etq" style="left:${x}px"><b>${s.a[i]}</b><span class="mono">${s.c[i]}</span></div>`).join('')}
+    <div class="rod mono"><span>A ferramenta e o ofício</span><span>NEXA · AI &amp; Tech Solutions</span></div>`;
 } else {
   document.body.className = 'fim';
-  raiz.innerHTML = `${topo}
-    <h2>A IA muda a ferramenta.<br>Não o que faz você vender.</h2>
+  raiz.innerHTML = `
+    <div class="topo">${LOGO('#f2f2ec')}<span class="mono">${pg}</span></div>
+    <div class="k mono">O que fica</div>
+    <h2>A IA muda a ferramenta.<br><span>Não o que faz você vender.</span></h2>
     <p>Proposta, follow-up, CRM: a IA acelera o que é repetitivo. Confiança, escuta e relacionamento continuam sendo trabalho de gente.</p>
-    <div class="caixa">Antes de automatizar, vale perguntar:<br><i>o que só o seu time faz bem?</i></div>`;
+    <div class="card"><span class="mono">Antes de automatizar, pergunte</span><div>O que só o seu time faz bem?</div></div>
+    <div class="rod mono"><span>nexatech.ia.br</span><span>IA acelera. Pessoas dão direção.</span></div>`;
 }
-window.ready = document.fonts.ready.then(() => new Promise(r => { const u = S[n] && S[n].img; if (!u) return r(); const i = new Image(); i.onload = i.onerror = r; i.src = u; }));
+window.ready = document.fonts.ready.then(() => new Promise(r => { const i = document.querySelector('img.par'); if (!i || i.complete) return r(); i.onload = i.onerror = r; }));
 </script>
 </body>
 </html>
