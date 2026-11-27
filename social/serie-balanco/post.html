@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Série frase sobre foto</title>
+<link rel="stylesheet" href="../serie-nowdays/inter.css">
+<style>
+  /* Estilo da referência: foto de filme escurecida e levemente borrada,
+     frase gigante justificada em creme, só o @ no topo. */
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 1080px; height: 1350px; overflow: hidden; background: #14130f; }
+  body { font-family: 'Inter Tight', sans-serif; position: relative; -webkit-font-smoothing: antialiased; }
+  .foto { position: absolute; inset: -30px; background-size: cover; background-position: center;
+    filter: blur(3px) brightness(.62) saturate(.85) sepia(.22) contrast(1.04); transform: scale(1.03); }
+  .veu { position: absolute; inset: 0; background: radial-gradient(ellipse 90% 80% at 50% 50%, rgba(20,18,12,.05), rgba(20,18,12,.55)); }
+  .grao { position: absolute; inset: 0; opacity: .16; mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='260' height='260'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>"); }
+  .at { position: absolute; left: 100px; top: 150px; font-weight: 700; font-size: 26px; letter-spacing: -.02em; }
+  .frase { position: absolute; left: 100px; right: 100px; font-weight: 700; letter-spacing: -.045em; line-height: .92;
+    text-align: justify; text-align-last: left; hyphens: none; word-spacing: .02em; }
+</style>
+</head>
+<body>
+<div class="foto" id="foto"></div><div class="veu"></div>
+<div class="at" id="at"></div>
+<div class="frase" id="frase"></div>
+<div class="grao"></div>
+<script>
+const P = {
+  n1: { at: '@nexatech_ia', cor: '#ecf4c6', foto: 'n1', pos: '50% 50%', t: 'me declaro fã de gente que usa IA pra ganhar tempo e gasta esse tempo com gente.' },
+  n2: { at: '@nexatech_ia', cor: '#ecf4c6', foto: 'n2', pos: '50% 60%', t: 'tem gente com medo da IA. e tem gente que saiu mais cedo hoje.' },
+  n3: { at: '@nexatech_ia', cor: '#ecf4c6', foto: 'n3', pos: '50% 50%', t: 'essa reunião podia ter sido um prompt.' },
+  n4: { at: '@nexatech_ia', cor: '#ecf4c6', foto: 'n4', pos: '50% 50%', t: 'a IA acelera. mas quem escolhe a estrada ainda é você.' },
+  s1: { at: '@salescoach.app.br', cor: '#f6e7b2', foto: 's1', pos: '50% 50%', t: 'me declaro fã de vendedor que escuta mais do que fala.' },
+  s2: { at: '@salescoach.app.br', cor: '#f6e7b2', foto: 's2', pos: '55% 50%', t: 'ninguém nasce sabendo vender. mas ninguém precisa errar sozinho.' },
+  s3: { at: '@salescoach.app.br', cor: '#f6e7b2', foto: 's3', pos: '50% 50%', t: 'a melhor objeção é aquela que você já sabia que ia ouvir.' },
+  s4: { at: '@salescoach.app.br', cor: '#f6e7b2', foto: 's4', pos: '50% 40%', t: 'seu melhor vendedor não deveria ser o único que sabe o que funciona.' },
+};
+const p = P[new URLSearchParams(location.search).get('p') || 'n1'];
+const foto = document.getElementById('foto');
+foto.style.backgroundImage = `url(fotos/${p.foto}.jpg)`; foto.style.backgroundPosition = p.pos;
+const at = document.getElementById('at'), fr = document.getElementById('frase');
+at.textContent = p.at; at.style.color = p.cor; fr.style.color = p.cor; fr.textContent = p.t;
+// maior corpo que cabe na área (largura fixa, altura até 820px), bloco centrado um pouco abaixo do meio
+window.ready = document.fonts.ready.then(() => {
+  let s = 170;
+  fr.style.fontSize = s + 'px';
+  while (fr.scrollHeight > 760 && s > 60) { s -= 2; fr.style.fontSize = s + 'px'; }
+  // garante que nenhuma palavra sozinha estoure a largura
+  const teste = document.createElement('span'); teste.style.cssText = 'position:absolute;visibility:hidden;white-space:nowrap;font-weight:700;letter-spacing:-.045em;font-family:Inter Tight';
+  document.body.appendChild(teste);
+  const maior = () => Math.max(...p.t.split(' ').map(w => { teste.style.fontSize = s + 'px'; teste.textContent = w; return teste.offsetWidth; }));
+  while (maior() > 880 && s > 60) { s -= 2; fr.style.fontSize = s + 'px'; }
+  const h = fr.offsetHeight; fr.style.top = Math.round(700 - h / 2 + 40) + 'px';
+  return new Promise(r => { const i = new Image(); i.onload = i.onerror = r; i.src = `fotos/${p.foto}.jpg`; });
+});
+</script>
+</body>
+</html>
