@@ -21,6 +21,10 @@ Legenda: manda pra quem marcou a última reunião de 1h que podia ser um resumo.
 Legenda: ferramenta nenhuma decide pra onde o seu negócio vai. IA acelera. pessoas dão direção.
 #IA #Lideranca #NEXA
 
+**5 · a IA não vai roubar o seu trabalho. vai roubar só a parte chata dele.**
+Legenda: planilha, relatório, resumo de reunião, follow-up. deixa com a IA. o resto é com você. 😌
+#IA #InteligenciaArtificial #Produtividade #NEXA
+
 ## Sales Coach (@salescoach.app.br)
 
 **1 · me declaro fã de vendedor que escuta mais do que fala.**
@@ -40,5 +44,5 @@ Legenda: o que o seu top performer faz de diferente devia estar no time inteiro.
 #Vendas #GestaoComercial #SalesCoach
 
 ## Fotos (Unsplash)
-- n1: Kalle Saarinen (7mGau0rXUIo) · n2: Krišjānis Kazaks (UmGEVy2C7i4) · n3: Firas Wardhana (dYPbE5tDHo0) · n4: TJ Grewal (kggkJ_qDDGs)
+- n1: Kalle Saarinen (7mGau0rXUIo) · n2: Krišjānis Kazaks (UmGEVy2C7i4) · n3: Firas Wardhana (dYPbE5tDHo0) · n4: TJ Grewal (kggkJ_qDDGs) · n5: Ainur Iman (gK87halGq1g)
 - s1: Haberdoedas (EyNU9nims7c) · s2: Polina Kuzovkova (AIrcbwSR_mA) · s3: Andrey Soldatov (cfnZNs96EhU) · s4: Cris Bosch (aQZCXsHFHzQ)
