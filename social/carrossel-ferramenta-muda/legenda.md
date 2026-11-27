@@ -1,20 +1,18 @@
-# Carrossel NEXA · "A ferramenta mudou, o que fecha negócio não"
+# Carrossel NEXA · "A tecnologia acelera, quem dá a direção continua sendo gente"
 
 Formato inspirado num carrossel de referência (frase partida em telas + par de objetos com ano), com mensagem e identidade da NEXA.
 
 - `carrossel.html?s=1..5` → `node render.mjs` → `out/slide-01..05.jpg`
-- Imagens dos pares geradas no ElevenLabs (gpt-image), fundo removido (birefnet), em `img/par-1..4.png`; posições em `img/pos.js`. Os anos marcam a época do objeto, não datas de invenção.
+- Imagens dos pares geradas no ElevenLabs (gpt-image), fundo removido (birefnet), em `img/par-1..4.png`; posições em `img/pos.js`. Os anos marcam a época do objeto, não dat## Legenda
 
-## Legenda
+O telefone virou smartphone. A máquina de escrever virou notebook. Agora é a vez da IA.
 
-O telefone virou smartphone. A máquina de escrever virou notebook. E agora a IA está mudando de novo a forma como a gente trabalha.
+Cada salto de tecnologia fez o trabalho andar mais rápido. Nenhum deles mudou quem decide pra onde o trabalho vai.
 
-Mas tem coisa que não mudou: o cafezinho antes da reunião, o aperto de mão no fechamento, a confiança que leva meses pra construir.
+É assim que a gente pensa IA na NEXA: ela tira do caminho o que é repetitivo (resumir, organizar, responder, atualizar) pra que o seu time gaste tempo no que só gente faz: pensar, decidir e criar.
 
-A IA acelera o que é repetitivo: proposta, follow-up, atualização de CRM, resumo de reunião. Isso libera tempo pro que só gente faz bem: escutar, entender o contexto e construir relacionamento.
-
-Antes de automatizar, vale perguntar: o que só o seu time faz bem?
+Antes de automatizar, vale perguntar: onde a IA acelera, e onde o seu time decide?
 
 IA acelera. Pessoas dão direção.
 
-#IA #Vendas #Produtividade #NEXA
+#IA #InteligenciaArtificial #Tecnologia #Produtividade #NEXA

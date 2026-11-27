@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
 <meta charset="utf-8">
-<title>A ferramenta mudou</title>
+<title>A tecnologia acelera</title>
 <link rel="stylesheet" href="../instagram-nexa/nexa-fonts.css">
 <style>
   /* Versão premium: fundo osso com luz suave e grão, tipografia leve,
@@ -40,9 +40,9 @@
   .fim body::after, .fim::after { mix-blend-mode: screen; opacity: .05; }
   .fim .topo { color: #7f8374; }
   .fim .k { position: absolute; left: 80px; top: 300px; color: var(--lima); font-size: 14px; }
-  .fim h2 { position: absolute; left: 80px; right: 80px; top: 350px; font-weight: 500; font-size: 76px; line-height: 1.02; letter-spacing: -.045em; }
+  .fim h2 { position: absolute; left: 80px; right: 80px; top: 350px; font-weight: 500; font-size: 90px; line-height: 1.02; letter-spacing: -.045em; }
   .fim h2 span { color: var(--lima); }
-  .fim p { position: absolute; left: 80px; width: 760px; top: 600px; font-family: 'DM Sans', sans-serif; font-size: 30px; line-height: 1.45; color: #b9bcae; }
+  .fim p { position: absolute; left: 80px; width: 820px; top: 620px; font-family: 'DM Sans', sans-serif; font-size: 30px; line-height: 1.45; color: #b9bcae; }
   .fim .card { position: absolute; left: 80px; right: 80px; top: 880px; padding: 44px 48px; border: 1px solid rgba(212,249,105,.35); border-radius: 22px; background: rgba(255,255,255,.025); }
   .fim .card .mono { color: var(--lima); font-size: 13px; }
   .fim .card div { margin-top: 18px; font-weight: 500; font-size: 52px; line-height: 1.05; letter-spacing: -.035em; }
@@ -55,10 +55,10 @@
 <script>
 const LOGO = c => `<svg viewBox="0 0 800 150"><path fill="none" stroke="${c}" stroke-width="16" stroke-linecap="round" d="M8 139V12L175 139V12M200 12H366M200 12V139H366M200 75H366M390 12L558 139M558 12L390 139M580 139L685 12L792 139M618 95H755"/></svg>`;
 const S = {
-  1: { h: 'A ferramenta<span class="r">…</span>', a: ['1900', '2026'], c: ['Telefone de mesa', 'Smartphone'] },
-  2: { h: '<span class="r">…</span>mudou<span class="r">…</span>', a: ['1920', '2026'], c: ['Máquina de escrever', 'Notebook'] },
-  3: { h: '<span class="r">…</span>o que fecha negócio<span class="r">…</span>', a: ['1960', '2026'], c: ['Cafezinho', 'Cafezinho'], menor: 1 },
-  4: { h: '<span class="r">…</span>não.', a: ['1950', '2026'], c: ['Aperto de mão', 'Aperto de mão'] },
+  1: { h: 'A tecnologia<span class="r">…</span>', a: ['1900', '2026'], c: ['Telefone de mesa', 'Smartphone'] },
+  2: { h: '<span class="r">…</span>acelera<span class="r">…</span>', a: ['1920', '2026'], c: ['Máquina de escrever', 'Notebook'] },
+  3: { h: '<span class="r">…</span>mas quem dá a direção<span class="r">…</span>', a: ['1960', '2026'], c: ['Cafezinho', 'Cafezinho'], menor: 1 },
+  4: { h: '<span class="r">…</span>continua sendo gente.', menor: 1, a: ['1950', '2026'], c: ['Aperto de mão', 'Aperto de mão'] },
 };
 // centros (x) e larguras dos objetos em cada recorte, medidos pelo script de preparo
 const POS = window.POS || {};
@@ -69,21 +69,21 @@ if (S[n]) {
   const s = S[n], p = POS[n] || { c: [330, 750], w: [300, 300] };
   raiz.innerHTML = `
     <div class="topo">${LOGO('#10120e')}<span class="mono">${pg}</span></div>
-    <h1 style="${s.menor ? 'font-size:80px;top:262px' : ''}">${s.h}</h1>
+    <h1 style="${s.menor ? 'font-size:76px;top:264px' : ''}">${s.h}</h1>
     <div class="chao">${p.c.map((x, i) => `<i style="left:${x}px;width:${p.w[i] * 1.05}px"></i>`).join('')}</div>
     <img class="par" src="img/par-${n}.png" alt="">
     <div class="linha" style="left:${p.c[0]}px;width:${p.c[1] - p.c[0]}px"></div>
     ${p.c.map((x, i) => `<div class="etq" style="left:${x}px"><b>${s.a[i]}</b><span class="mono">${s.c[i]}</span></div>`).join('')}
-    <div class="rod mono"><span>A ferramenta e o ofício</span><span>NEXA · AI &amp; Tech Solutions</span></div>`;
+    <div class="rod mono"><span>Tecnologia e pessoas</span><span>NEXA · AI &amp; Tech Solutions</span></div>`;
 } else {
   document.body.className = 'fim';
   raiz.innerHTML = `
     <div class="topo">${LOGO('#f2f2ec')}<span class="mono">${pg}</span></div>
-    <div class="k mono">O que fica</div>
-    <h2>A IA muda a ferramenta.<br><span>Não o que faz você vender.</span></h2>
-    <p>Proposta, follow-up, CRM: a IA acelera o que é repetitivo. Confiança, escuta e relacionamento continuam sendo trabalho de gente.</p>
-    <div class="card"><span class="mono">Antes de automatizar, pergunte</span><div>O que só o seu time faz bem?</div></div>
-    <div class="rod mono"><span>nexatech.ia.br</span><span>IA acelera. Pessoas dão direção.</span></div>`;
+    <div class="k mono">O que a NEXA faz</div>
+    <h2>IA acelera.<br><span>Pessoas dão direção.</span></h2>
+    <p>A NEXA cria produtos e soluções com IA que tiram o trabalho repetitivo do caminho, para o seu time gastar tempo no que só gente faz: pensar, decidir e criar.</p>
+    <div class="card"><span class="mono">Antes de automatizar, pergunte</span><div>Onde a IA acelera, e onde o seu time decide?</div></div>
+    <div class="rod mono"><span>nexatech.ia.br</span><span>NEXA · AI &amp; Tech Solutions</span></div>`;
 }
 window.ready = document.fonts.ready.then(() => new Promise(r => { const i = document.querySelector('img.par'); if (!i || i.complete) return r(); i.onload = i.onerror = r; }));
 </script>
